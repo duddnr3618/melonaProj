@@ -1,0 +1,102 @@
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
+
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.3'
+	id 'io.spring.dependency-management' version '1.1.3'
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+}
+
+group = 'com.test'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	//DevTool
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	//TestTool
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	//편의성
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	compileOnly 'org.projectlombok:lombok'
+
+	//Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+
+	//Spring Setting
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	//Query
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	annotationProcessor 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	//JavaScript
+	implementation 'org.webjars.bower:jquery:3.7.0'
+
+	//QueryDslSetting
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
+	implementation "com.querydsl:querydsl-core:${queryDslVersion}"
+	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
+	implementation "com.querydsl:querydsl-codegen:${queryDslVersion}"
+}
+
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+	main.java.srcDir querydslDir
+}
+
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
+	source = file(querydslDir)
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	querydsl.extendsFrom compileClasspath
+}
+
+//If the file exists during compilation, an error occurs. Therefore added
+compileQuerydsl.doFirst {
+	if (file(querydslDir).exists())
+		delete(file(querydslDir))
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
