@@ -29,8 +29,8 @@ public class SpringSecurityConfig {
                 ))
 
                 .formLogin((formLogin) -> formLogin.loginPage("/login")
-                        .usernameParameter("id")
-                        .passwordParameter("pwd")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
                         .defaultSuccessUrl("/"))
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

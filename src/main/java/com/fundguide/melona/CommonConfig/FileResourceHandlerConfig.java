@@ -11,11 +11,11 @@ public class FileResourceHandlerConfig implements WebMvcConfigurer {
     @Value("${testAbsolutePath.dir}")
     private String testAbsolutePath;
     @Value("${testResoucrePath.dir}")
-    private String testResoucrePath;
+    private String testResourcePath;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(testResoucrePath + "**")
+        registry.addResourceHandler(testResourcePath + "**")
                 .addResourceLocations("file:///" + testAbsolutePath);
     }
 }
