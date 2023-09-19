@@ -1,6 +1,7 @@
 Team. YoungCha Melona Project
 
-role :
+<role>
+
 -Require a pull request bofore merging : 코드를 main에 업데이트 하기 전에 이 코드에대해서 모두가 동의 
 
 -Lock branch : main 브랜치에서 푸시x
