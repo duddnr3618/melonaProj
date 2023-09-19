@@ -10,15 +10,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @NoArgsConstructor
 @PropertySource("classpath:application-board.properties")
-public class QnAResourceHandlerConfig implements WebMvcConfigurer {
-    @Value("${qnaAbsolutePath.dir}")
-    private String normalAbsolutePath;
-    @Value("${qnaResourcePath.dir}")
-    private String normalResourcePath;
+public class LeaderBoardResourceHandler implements WebMvcConfigurer {
+    @Value("${leaderAbsolutePath.dir}")
+    private String leaderAbsolutePath;
+    @Value("${leaderResourcePath.dir}")
+    private String leaderResourcePath;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(normalResourcePath + "**")
-                .addResourceLocations("file:///" + normalAbsolutePath);
+        registry.addResourceHandler(leaderResourcePath + "**")
+                .addResourceLocations("file:///" + leaderAbsolutePath);
     }
 }
