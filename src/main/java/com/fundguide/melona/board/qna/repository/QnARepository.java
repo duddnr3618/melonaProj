@@ -1,4 +1,4 @@
-package com.fundguide.melona.qna.repository;
+package com.fundguide.melona.board.qna.repository;
 
 public class QnARepository {
 }

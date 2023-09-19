@@ -1,4 +1,4 @@
-package com.fundguide.melona.qna.controller;
+package com.fundguide.melona.board.qna.controller;
 
 public class QnAController {
 }
