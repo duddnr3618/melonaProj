@@ -1,4 +1,4 @@
-package com.fundguide.melona.Member;
+package com.fundguide.melona.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

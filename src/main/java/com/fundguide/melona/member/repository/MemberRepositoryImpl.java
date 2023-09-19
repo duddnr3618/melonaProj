@@ -1,4 +1,4 @@
-package com.fundguide.melona.Member.QueryDsl;
+package com.fundguide.melona.member.repository;
 
 
 import lombok.RequiredArgsConstructor;

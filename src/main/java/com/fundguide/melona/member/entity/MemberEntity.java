@@ -1,4 +1,4 @@
-package com.fundguide.melona.Member.entity;
+package com.fundguide.melona.member.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
