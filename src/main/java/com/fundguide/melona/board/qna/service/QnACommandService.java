@@ -1,4 +1,4 @@
-package com.fundguide.melona.qna.service;
+package com.fundguide.melona.board.qna.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
