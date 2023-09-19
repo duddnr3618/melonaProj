@@ -10,10 +10,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @NoArgsConstructor
 @PropertySource("classpath:application-board.properties")
-public class QnAResourceHandlerConfig implements WebMvcConfigurer {
-    @Value("${qnaAbsolutePath.dir}")
+public class NormalBoardResourceHandler implements WebMvcConfigurer {
+    @Value("${normalAbsolutePath.dir}")
     private String normalAbsolutePath;
-    @Value("${qnaResourcePath.dir}")
+    @Value("${normalResourcePath.dir}")
     private String normalResourcePath;
 
     @Override
