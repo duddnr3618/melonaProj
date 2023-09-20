@@ -31,18 +31,18 @@ public class NormalBoardController {
     public String boardList(Model model) {
         pagingNormalBoard = queryService.onlyViewPageNormalBoard(pageable);
         model.addAttribute("pagingBoard", pagingNormalBoard);
-        System.out.println(" { 보드 리스트 호출됨" + " }");
         return "board/viewallboard";
     }
 
+    /**노말보드 검색 메서드*/
     @GetMapping("/search/")
     public String boardSearchList(Model model, @ModelAttribute BoardSearchDTO boardSearchDTO) {
         pagingNormalBoard = queryService.onlyViewPageNormalBoard(pageable, model, boardSearchDTO);
         model.addAttribute("pagingBoard", pagingNormalBoard);
-        System.out.println(" { 보드 서치 리스트 호출됨" + " }");
         return "board/viewsearchboard";
     }
 
+    /**노말보드 상세 페이지 메서드*/
     @GetMapping("/viewDetail/{boardId}")
     public String boardViewDetail(Model model, @PathVariable(name = "boardId") Long boardId) {
         NormalBoardEntity boardEntity = queryService.onlyViewDetailNormalBoard(boardId);
