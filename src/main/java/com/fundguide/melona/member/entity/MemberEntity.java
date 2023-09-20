@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Data
 @Builder
@@ -17,6 +19,14 @@ public class MemberEntity {
   private Long id;
 
   @Column @Email
-  private String email;
+  private String memberEmail;
+  private String memberName;
+
+  private String memberPassword;
+  private String memberRole;
+  private String memberAddress;
+  private LocalDate memberJoinData;
+  private String memberAvailable;
+  private String memberNickname;
 
 }

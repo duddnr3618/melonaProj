@@ -28,9 +28,9 @@ public class SpringSecurityConfig {
                         new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)
                 ))
 
-                .formLogin((formLogin) -> formLogin.loginPage("/login")
-                        .usernameParameter("email")
-                        .passwordParameter("password")
+                .formLogin((formLogin) -> formLogin.loginPage("/loginFrom")
+                        .usernameParameter("memberEmail")
+                        .passwordParameter("memberPassword")
                         .defaultSuccessUrl("/"))
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

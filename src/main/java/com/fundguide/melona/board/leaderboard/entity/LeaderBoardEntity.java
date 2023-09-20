@@ -1,4 +1,6 @@
 package com.fundguide.melona.board.leaderboard.entity;
 
-public class LeaderBoardEntity {
+import com.fundguide.melona.board.common.entity.BaseBoardEntity;
+
+public class LeaderBoardEntity extends BaseBoardEntity {
 }
