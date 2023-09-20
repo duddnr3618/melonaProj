@@ -1,0 +1,30 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<div layout:fragment="content">
+    <form id="BoardSearchForm">
+        <label for="BoardSearchKeyword">검색창</label>
+        <input type="text" name="searchKeyword" id="BoardSearchKeyword">
+        
+        <label for="BoardSearchOption">옵션값</label>
+        <select name="searchOption" id="BoardSearchOption">
+            <option value="All" th:selected="All" selected>모든 값에서 찾기</option>
+            <option value="NickName" th:selected="NickName">닉네임으로 찾기</option>
+            <!--more add option plz-->
+        </select>
+        <button id="BoardSearchFormButton">검색하기</button>
+    </form>
+    <script type="module" src="/js/boardjs/CommonBoardJS.js"></script>
+    
+    <!--<div>
+        보드 값 테스트
+        <div th:each="board, i : ${pagingBoard}">
+            <div th:text="${i.count}"></div>
+            <div th:text="${board.getId()}"></div>
+            <div th:text="${board.getContent()}"></div>
+            <div th:text="${board.getWriterUserId()}"></div>
+        </div>
+    </div>-->
+</div>
