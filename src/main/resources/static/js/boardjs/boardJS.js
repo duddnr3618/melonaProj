@@ -5,8 +5,6 @@ $(function () {
 
 const id_BoardSearchForm = $('#BoardSearchForm');
 const id_BoardSearchFromButton = $('#BoardSearchFormButton');
-
-
 /**검색 버튼 Axios 절대로 FormData 변수 let 건드리지 말것!!!*/
 id_BoardSearchFromButton.click(function (event) {
     event.preventDefault();
@@ -24,6 +22,11 @@ function handleBoardTableRowClick() {
     })
 }
 
+const cls_pageLink = $('.page-link');
+cls_pageLink.click(function (event) {
+    event.preventDefault();
+    let pageValue = $(this).data('page');
+})
 
 
 /**키워드 검색 데이터 전송*/
