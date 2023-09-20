@@ -23,20 +23,24 @@ public class NormalBoardController {
     private final NormalBoardQueryService queryService;
     private Page<NormalBoardEntity> pagingNormalBoard = null;
 
+    private final Sort sort = Sort.by("createdTime").descending();
+    private final Pageable pageable = PageRequest.of(0, 15, sort);
 
     /**노말보드 메인 리스트*/
-    @GetMapping("")
+    @GetMapping
     public String boardList(Model model) {
-        Sort sort = Sort.by("id").descending();
-        Pageable pageable = PageRequest.of(0, 15, sort);
         pagingNormalBoard = queryService.onlyViewPageNormalBoard(pageable);
         model.addAttribute("pagingBoard", pagingNormalBoard);
+        System.out.println(" { 보드 리스트 호출됨" + " }");
         return "board/viewallboard";
     }
 
-    @GetMapping("/search")
-    public void boardSearchList(Model model, @ModelAttribute BoardSearchDTO boardSearchDTO) {
-
+    @GetMapping("/search/")
+    public String boardSearchList(Model model, @ModelAttribute BoardSearchDTO boardSearchDTO) {
+        pagingNormalBoard = queryService.onlyViewPageNormalBoard(pageable, model, boardSearchDTO);
+        model.addAttribute("pagingBoard", pagingNormalBoard);
+        System.out.println(" { 보드 서치 리스트 호출됨" + " }");
+        return "board/viewsearchboard";
     }
 
     @GetMapping("/viewDetail/{boardId}")
