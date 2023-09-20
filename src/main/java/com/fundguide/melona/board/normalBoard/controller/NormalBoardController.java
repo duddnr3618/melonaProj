@@ -1,6 +1,6 @@
 package com.fundguide.melona.board.normalBoard.controller;
 
-import com.fundguide.melona.board.dto.CommonBoardSearchDTO;
+import com.fundguide.melona.board.common.dto.BoardSearchDTO;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardQueryService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller @RequiredArgsConstructor
 @Log4j2
@@ -32,7 +35,7 @@ public class NormalBoardController {
     }
 
     @GetMapping("/search")
-    public void boardSearchList(Model model, @ModelAttribute CommonBoardSearchDTO boardSearchDTO) {
+    public void boardSearchList(Model model, @ModelAttribute BoardSearchDTO boardSearchDTO) {
 
     }
 
