@@ -13,6 +13,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.concurrent.locks.Condition;
+
+/*import static com.fundguide.melona.board.normalBoard.entity;*/
 import static com.fundguide.melona.board.normalBoard.entity.QNormalBoardEntity.normalBoardEntity;
 
 @Repository

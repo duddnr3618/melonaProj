@@ -1,6 +1,6 @@
 package com.fundguide.melona.board.normalBoard.controller;
 
-import com.fundguide.melona.board.common.dto.BoardSearchDTO;
+import com.fundguide.melona.board.dto.CommonBoardSearchDTO;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardQueryService;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +27,10 @@ public class NormalBoardController {
     private final Pageable pageable = PageRequest.of(0, 15, sort);
 
     /**노말보드 메인 리스트*/
-    @GetMapping
+    @GetMapping("")
     public String boardList(Model model) {
+        Sort sort = Sort.by("id").descending();
+        Pageable pageable = PageRequest.of(0, 15, sort);
         pagingNormalBoard = queryService.onlyViewPageNormalBoard(pageable);
         model.addAttribute("pagingBoard", pagingNormalBoard);
         return "board/viewallboard";

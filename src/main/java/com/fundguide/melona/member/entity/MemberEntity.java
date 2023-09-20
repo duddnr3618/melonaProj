@@ -3,13 +3,13 @@ package com.fundguide.melona.member.entity;
 import com.fundguide.melona.member.role.MemberLimitConvert;
 import com.fundguide.melona.member.role.MemberLimitState;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 
 @Entity
 @Data
