@@ -1,4 +1,4 @@
-package com.fundguide.melona.CommonConfig;
+package com.fundguide.melona.commonconfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,8 +29,8 @@ public class SpringSecurityConfig {
                 ))
 
                 .formLogin((formLogin) -> formLogin.loginPage("/login")
-                        .usernameParameter("id")
-                        .passwordParameter("pwd")
+                        .usernameParameter("email")
+                        .passwordParameter("password")
                         .defaultSuccessUrl("/"))
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
