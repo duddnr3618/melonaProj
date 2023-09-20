@@ -1,0 +1,42 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<div layout:fragment="content">
+    <form id="BoardSearchForm">
+        <label for="BoardSearchKeyword">검색창</label>
+        <input type="text" name="searchKeyword" id="BoardSearchKeyword">
+        
+        <label for="BoardSearchOption">옵션값</label>
+        <select name="searchOption" id="BoardSearchOption">
+            <option value="All" th:selected="All" selected>모든 값에서 찾기</option>
+            <option value="NickName" th:selected="NickName">닉네임으로 찾기</option>
+            <!--more add option plz-->
+        </select>
+        <button id="BoardSearchFormButton">검색하기</button>
+    </form>
+    <script type="module" src="js/boardjs/CommonBoardJS.js"></script>
+    
+    <!--임시로 넣은 값들입니다. 더 추가해야합니다.-->
+    <table>
+        <thead>
+        <tr>
+            <td>count</td>
+            <td>boardId</td>
+            <td>boardTitle</td>
+            <td>boardWriter</td>
+        </tr>
+        </thead>
+        
+        <tbody>
+        <tr th:each="board, i : ${pagingBoard}" class="boardTableValue" th:data-boardid="${board.getBoardId()}"
+            style="border: 1px solid red">
+            <th th:text="${i.count}"></th>
+            <td th:text="${board.getBoardId()}"></td>
+            <td th:text="${board.getBoardTitle()}"></td>
+            <td th:text="${board.getBoardWriter()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
