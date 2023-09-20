@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+
+<div layout:fragment="content">
+    <br>
+    <table>
+        <tr>
+            <th>글 번호</th>
+            <td th:text="${leaderBoard.id}"></td>
+        </tr>
+        <tr>
+            <th>제목</th>
+            <td th:text="${leaderBoard.boardTitle}"></td>
+        </tr>
+        <tr>
+            <th>작성자</th>
+            <td th:text="${leaderBoard.boardWriter}"></td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td th:text="${leaderBoard.boardContents}"></td>
+        </tr>
+        <tr>
+            <th>게시일</th>
+            <td th:text="${leaderBoard.createdTime}"></td>
+        </tr>
+    </table>
+    <a th:href="@{/leaderBoard/update/{id}(id=${leaderBoard.id})}">수정</a>
+    <a th:href="@{/leaderBoard/delete/{id}(id=${leaderBoard.id})}">삭제</a>
+    <a th:href="@{list}">목록으로 가기</a>
+
+</div>
+
+
+</html>
