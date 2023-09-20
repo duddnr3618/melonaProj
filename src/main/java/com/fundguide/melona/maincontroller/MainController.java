@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MainController {
 
   @GetMapping("/")
-  @ResponseBody
+
   public String index () {
 
-    return "컨트롤러 작동 확인";
+    return "index";
   }
 
 }

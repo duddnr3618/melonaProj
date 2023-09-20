@@ -1,4 +1,4 @@
-package com.fundguide.melona.board.dto;
+package com.fundguide.melona.board.common.dto;
 
 import lombok.Builder;
 
