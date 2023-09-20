@@ -1,0 +1,330 @@
+<!--게시판은 그 nav를 누르면 세로가 아닌 가로로 나오는 형식으로 하는 것으로-->
+
+<!--각 들어가는 것은 가이드/뉴스정보/차트/이벤트-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * { /*모든 선택자*/
+            margin: 0;
+            padding: 0;
+            /* 모든 태그에는 margin값과 padding값이 기본으로 적용 */
+        }
+
+        li {
+            list-style: none;
+        }
+
+        /* disk를 출력하지 않도록 설정 */
+        a {
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .menu {
+            width: 800px;
+            /*border: 1px solid red;*/
+            overflow: hidden;
+            margin: 150px auto; /* 중앙에 정렬 */
+        }
+
+        .menu > li {
+            width: 20%; /* 20% * 5 = 100%  (800px) */
+            float: left;
+            text-align: center;
+            line-height: 40px; /* 라인과 라인의 간격 */
+            background-color: #5778ff;
+        }
+
+        /* 링크 파일의 글자색을 흰색으로 처리 : 후손 선택자 */
+
+        .menu a {
+            color: white;
+        }
+
+        .submenu > li {
+            line-height: 50px;
+            background-color: #94a9ff;
+
+        }
+
+        /* 기본 출력시 submenu는 화면에서 출력되면 안됨 */
+        .submenu {
+            /* 높이가 0 이므로 출력되지 않음 */
+            height: 0;
+
+            /* 화면에 출력되지 않도록 한다. */
+            /* display: none; */
+
+            /* 보이게 한다.  */
+            /* visibility: visible; */
+
+            /* 범위를 벗어나는 부분은 보이지 않도록 처리 */
+            overflow: hidden
+        }
+
+        .submenu > li:hover {
+            background-color: #5778ff;
+        }
+
+        .menu > li:hover {
+            background-color: #94a9ff;
+            transition: 0.1s;
+        }
+
+        .menu > li:hover .submenu { /* li를 hover했을때 submenu*/
+            height: 250px;
+            transition: 1s;
+        }
+
+
+        /* 기본적인 태그의 margin, padding을 확인  */
+        body {
+            border: 1px solid red;
+        }
+
+        /* li {
+            border: 1px solid red;
+            padding: 10px;
+            margin: 10px;
+        } */
+    </style>
+</head>
+<body>
+<!--
+    css를 사용한 상단 메뉴 - 드롭 다운 메뉴 (top)
+
+    div :  전체 구조를 파악하기 어렵다.
+    ul li를 사용한 메뉴 구성 : 구조 파악하기가 쉽다.
+-->
+
+<ul class="menu">
+    <li><a href="#">MENU 1</a>    <!-- 상위 메뉴 -->
+        <ul class="submenu">                <!-- 하위 메뉴 -->
+            <li><a href="#">submenu 01</a></li>
+            <li><a href="#">submenu 02</a></li>
+            <li><a href="#">submenu 03</a></li>
+            <li><a href="#">submenu 04</a></li>
+            <li><a href="#">submenu 05</a></li>
+        </ul>
+    </li>
+    <li><a href="#">MENU 2</a>    <!-- 상위 메뉴 -->
+        <ul class="submenu">                <!-- 하위 메뉴 -->
+            <li><a href="#">submenu 01</a></li>
+            <li><a href="#">submenu 02</a></li>
+            <li><a href="#">submenu 03</a></li>
+            <li><a href="#">submenu 04</a></li>
+            <li><a href="#">submenu 05</a></li>
+        </ul>
+    </li>
+    <li><a href="#">MENU 3</a>    <!-- 상위 메뉴 -->
+        <ul class="submenu">                <!-- 하위 메뉴 -->
+            <li><a href="#">submenu 01</a></li>
+            <li><a href="#">submenu 02</a></li>
+            <li><a href="#">submenu 03</a></li>
+            <li><a href="#">submenu 04</a></li>
+            <li><a href="#">submenu 05</a></li>
+        </ul>
+    </li>
+    <li><a href="#">MENU 4</a>    <!-- 상위 메뉴 -->
+        <ul class="submenu">                <!-- 하위 메뉴 -->
+            <li><a href="#">submenu 01</a></li>
+            <li><a href="#">submenu 02</a></li>
+            <li><a href="#">submenu 03</a></li>
+            <li><a href="#">submenu 04</a></li>
+            <li><a href="#">submenu 05</a></li>
+        </ul>
+    </li>
+    <li><a href="#">MENU 5</a>    <!-- 상위 메뉴 -->
+        <ul class="submenu">                <!-- 하위 메뉴 -->
+            <li><a href="#">submenu 01</a></li>
+            <li><a href="#">submenu 02</a></li>
+            <li><a href="#">submenu 03</a></li>
+            <li><a href="#">submenu 04</a></li>
+            <li><a href="#">submenu 05</a></li>
+        </ul>
+    </li>
+</ul>
+</body>
+</html>
+<div class="ud-main-content-wrapper">
+    <div class="ud-app-loader ud-component--header-v6--header ud-header" data-module-id="common/desktop" data-module-args="{&quot;isLoggedIn&quot;:true,&quot;isInstructorSignupEnabled&quot;:false,&quot;mobileAppLink&quot;:{&quot;url&quot;:&quot;/mobile/&quot;},&quot;tryUFBPlacements&quot;:{&quot;bar&quot;:&quot;logged-in-nav&quot;,&quot;mobile&quot;:&quot;logged-in-nav&quot;,&quot;profile&quot;:&quot;account-menu&quot;},&quot;currentLocale&quot;:&quot;ko_KR&quot;,&quot;searchPhrase&quot;:null,&quot;persistentSearch&quot;:false,&quot;showAutocompletePopularQueriesOnEmptyState&quot;:&quot;disabled&quot;}" data-module-priority="-10"><div data-unique-id="94" style="display:none"></div><div class="desktop-header-module--mobile-header--azBaJ"><div data-testid="mobile-header-placeholder" class="desktop-header-module--mobile-header-placeholder--1VoUw"></div></div><span class="desktop-header-module--mark--3iJdI"></span><div class="ud-header ud-text-sm desktop-header-module--header--3nb6v desktop-header-module--flex-middle--1e7c8" data-purpose="header"><div class="skip-to-content-button-module--skip-to-content--2FwlU"><a class="ud-btn ud-btn-large ud-btn-primary ud-heading-md skip-to-content-button-module--skip-to-content-btn--13D7B" href="#main-content-anchor"><span aria-hidden="true" class="skip-to-content-button-module--skip-to-content-shadow--1g-_y"></span><span style="margin:0">콘텐츠로 건너 뛰기</span></a></div><a href="/" class="desktop-header-module--flex-middle--1e7c8 desktop-header-module--logo--2Qf0r"><img src="https://www.udemy.com/staticx/udemy/images/v7/logo-udemy.svg" alt="Udemy" width="91" height="34" loading="lazy" /></a><nav class="popper-module--popper--2BpLn desktop-header-module--gap-button--1Ua9W browse-nav-module--placeholder-header-button--mKoRf"><div class="browse-nav-module--placeholder-header-button--mKoRf" id="u94-popper-trigger--1" aria-expanded="false" tabindex="0">카테고리</div><div class="popper-module--popper-content--3cLBV desktop-header-module--dropdown--2R_M9" id="u94-popper-content--2" aria-labelledby="u94-popper-trigger--1" style="top:100%;left:0"><div class="popper-module--animation-wrapper--2ogNt"><div class="popover-module--popover--1kskS popover-module--popover-bottom--N6gdN"><div class="popover-module--inner--Sbv-I"><div class="list-menu-module--list-menu-container--3d8ZF browse-nav-module--nav-container--1J6dv" data-testid="browse-nav"><div class="js-browse-nav-level-one browse-nav-module--nav--205F5" data-testid="browse-nav-list"><ul class="ud-unstyled-list ud-block-list list-menu-module--section--1WKRq"><li><div class="list-menu-module--item--3f005 ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral ud-text-sm"><div class="ud-block-list-item-content ud-block-list-item-content-loading"> </div></div></li><li><div class="list-menu-module--item--3f005 ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral ud-text-sm"><div class="ud-block-list-item-content ud-block-list-item-content-loading"> </div></div></li><li><div class="list-menu-module--item--3f005 ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral ud-text-sm"><div class="ud-block-list-item-content ud-block-list-item-content-loading"> </div></div></li><li><div class="list-menu-module--item--3f005 ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral ud-text-sm"><div class="ud-block-list-item-content ud-block-list-item-content-loading"> </div></div></li><li><div class="list-menu-module--item--3f005 ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral ud-text-sm"><div class="ud-block-list-item-content ud-block-list-item-content-loading"> </div></div></li><li><div class="list-menu-module--item--3f005 ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral ud-text-sm"><div class="ud-block-list-item-content ud-block-list-item-content-loading"> </div></div></li><li><div class="list-menu-module--item--3f005 ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral ud-text-sm"><div class="ud-block-list-item-content ud-block-list-item-content-loading"> </div></div></li><li><div class="list-menu-module--item--3f005 ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral ud-text-sm"><div class="ud-block-list-item-content ud-block-list-item-content-loading"> </div></div></li><li><div class="list-menu-module--item--3f005 ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral ud-text-sm"><div class="ud-block-list-item-content ud-block-list-item-content-loading"> </div></div></li><li><div class="list-menu-module--item--3f005 ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral ud-text-sm"><div class="ud-block-list-item-content ud-block-list-item-content-loading"> </div></div></li><li><div class="list-menu-module--item--3f005 ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral ud-text-sm"><div class="ud-block-list-item-content ud-block-list-item-content-loading"> </div></div></li><li><div class="list-menu-module--item--3f005 ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral ud-text-sm"><div class="ud-block-list-item-content ud-block-list-item-content-loading"> </div></div></li><li><div class="list-menu-module--item--3f005 ud-block-list-item ud-block-list-item-small ud-block-list-item-neutral ud-text-sm"><div class="ud-block-list-item-content ud-block-list-item-content-loading"> </div></div></li></ul></div><div id="header-browse-nav-level-two" class="js-browse-nav-level-two browse-nav-module--nav--205F5" style="display:none" data-testid="browse-nav-list"></div><div id="header-browse-nav-level-three" class="js-browse-nav-level-three browse-nav-module--nav--205F5" style="display:none" data-testid="browse-nav-list"></div></div></div></div></div></div></nav><div locale="ko_KR" lang="ko" class="ud-search-form-autocomplete desktop-header-module--search-bar--2V17S ud-form-group"><label class="ud-sr-only ud-form-label ud-heading-sm" for="u94-search-form-autocomplete--3">무엇이든 검색하기</label><form action="/courses/search/" class="ud-search-form-autocomplete-input-group ud-search-form-autocomplete-input-group-reversed"><input type="hidden" name="src" value="ukw" /><input type="text" aria-invalid="false" name="q" data-testid="search-input" placeholder="무엇이든 검색하기" autoComplete="off" value role="combobox" aria-autocomplete="both" aria-haspopup="true" aria-expanded="false" aria-controls="u94-search-form-autocomplete--3-menu-content-items" id="u94-search-form-autocomplete--3" class="ud-text-input ud-text-input-small ud-text-sm ud-search-form-autocomplete-input js-header-search-field" /><button type="submit" disabled class="ud-btn ud-btn-large ud-btn-ghost ud-heading-md ud-btn-disabled ud-btn-icon ud-btn-icon-large" tabindex="-1"><svg aria-label="검색 제출" role="img" focusable="false" class="ud-icon ud-icon-medium ud-icon-color-neutral"><use xlink:href="#icon-search"></use></svg></button></form></div><div style="flex:1"></div></div></div>
+    <nav aria-hidden="true" style="position:fixed;top:0;left:-28rem;width:28rem;height:100%;">
+        <a data-id="288" class="js-side-nav-cat" href="/courses/development/" tabindex="-1">개발</a>
+        <div>
+            <a data-id="8" class="js-side-nav-cat js-subcat" href="/courses/development/web-development/" tabindex="-1">웹 개발</a>
+            <a data-id="558" class="js-side-nav-cat js-subcat" href="/courses/development/data-science/" tabindex="-1">데이터 과학</a>
+            <a data-id="10" class="js-side-nav-cat js-subcat" href="/courses/development/mobile-apps/" tabindex="-1">모바일 개발</a>
+            <a data-id="12" class="js-side-nav-cat js-subcat" href="/courses/development/programming-languages/" tabindex="-1">프로그래밍 언어</a>
+            <a data-id="14" class="js-side-nav-cat js-subcat" href="/courses/development/game-development/" tabindex="-1">게임 개발</a>
+            <a data-id="16" class="js-side-nav-cat js-subcat" href="/courses/development/databases/" tabindex="-1">데이터베이스 설계 및 개발</a>
+            <a data-id="18" class="js-side-nav-cat js-subcat" href="/courses/development/software-testing/" tabindex="-1">소프트웨어 테스팅</a>
+            <a data-id="20" class="js-side-nav-cat js-subcat" href="/courses/development/software-engineering/" tabindex="-1">소프트웨어 엔지니어링</a>
+            <a data-id="362" class="js-side-nav-cat js-subcat" href="/courses/development/development-tools/" tabindex="-1">소프트웨어 개발 도구</a>
+            <a data-id="575" class="js-side-nav-cat js-subcat" href="/courses/development/no-code-development/" tabindex="-1">노코드 개발</a>
+        </div>
+        <a data-id="268" class="js-side-nav-cat" href="/courses/business/" tabindex="-1">비즈니스</a>
+        <div>
+            <a data-id="26" class="js-side-nav-cat js-subcat" href="/courses/business/entrepreneurship/" tabindex="-1">기업가 정신</a>
+            <a data-id="28" class="js-side-nav-cat js-subcat" href="/courses/business/communications/" tabindex="-1">커뮤니케이션</a>
+            <a data-id="30" class="js-side-nav-cat js-subcat" href="/courses/business/management/" tabindex="-1">경영</a>
+            <a data-id="32" class="js-side-nav-cat js-subcat" href="/courses/business/sales/" tabindex="-1">영업</a>
+            <a data-id="34" class="js-side-nav-cat js-subcat" href="/courses/business/strategy/" tabindex="-1">비즈니스 전략</a>
+            <a data-id="36" class="js-side-nav-cat js-subcat" href="/courses/business/operations/" tabindex="-1">운영</a>
+            <a data-id="38" class="js-side-nav-cat js-subcat" href="/courses/business/project-management/" tabindex="-1">프로젝트 관리</a>
+            <a data-id="40" class="js-side-nav-cat js-subcat" href="/courses/business/business-law/" tabindex="-1">상법</a>
+            <a data-id="44" class="js-side-nav-cat js-subcat" href="/courses/business/analytics-and-intelligence/" tabindex="-1">비즈니스 분석 및 인텔리전스</a>
+            <a data-id="48" class="js-side-nav-cat js-subcat" href="/courses/business/human-resources/" tabindex="-1">인사 관리</a>
+            <a data-id="50" class="js-side-nav-cat js-subcat" href="/courses/business/industry/" tabindex="-1">산업</a>
+            <a data-id="354" class="js-side-nav-cat js-subcat" href="/courses/business/e-commerce/" tabindex="-1">전자 상거래</a>
+            <a data-id="52" class="js-side-nav-cat js-subcat" href="/courses/business/media/" tabindex="-1">미디어</a>
+            <a data-id="58" class="js-side-nav-cat js-subcat" href="/courses/business/real-estate/" tabindex="-1">부동산</a>
+            <a data-id="60" class="js-side-nav-cat js-subcat" href="/courses/business/other-business/" tabindex="-1">기타 비즈니스</a>
+        </div>
+        <a data-id="328" class="js-side-nav-cat" href="/courses/finance-and-accounting/" tabindex="-1">재무 및 회계</a>
+        <div>
+            <a data-id="530" class="js-side-nav-cat js-subcat" href="/courses/finance-and-accounting/accounting-bookkeeping/" tabindex="-1">회계 및 부기</a>
+            <a data-id="532" class="js-side-nav-cat js-subcat" href="/courses/finance-and-accounting/compliance/" tabindex="-1">준법</a>
+            <a data-id="534" class="js-side-nav-cat js-subcat" href="/courses/finance-and-accounting/cryptocurrency-and-blockchain/" tabindex="-1">암호화폐 및 블록체인</a>
+            <a data-id="536" class="js-side-nav-cat js-subcat" href="/courses/finance-and-accounting/economics/" tabindex="-1">경제학</a>
+            <a data-id="540" class="js-side-nav-cat js-subcat" href="/courses/finance-and-accounting/finance-management/" tabindex="-1">금융</a>
+            <a data-id="542" class="js-side-nav-cat js-subcat" href="/courses/finance-and-accounting/finance-certification-and-exam-prep/" tabindex="-1">재무 자격증 및 시험 준비</a>
+            <a data-id="544" class="js-side-nav-cat js-subcat" href="/courses/finance-and-accounting/financial-modeling-and-analysis/" tabindex="-1">금융 모델링 및 분석</a>
+            <a data-id="546" class="js-side-nav-cat js-subcat" href="/courses/finance-and-accounting/investing-and-trading/" tabindex="-1">투자 및 주식 매매</a>
+            <a data-id="548" class="js-side-nav-cat js-subcat" href="/courses/finance-and-accounting/money-management-tools/" tabindex="-1">자금 관리 도구</a>
+            <a data-id="550" class="js-side-nav-cat js-subcat" href="/courses/finance-and-accounting/taxes/" tabindex="-1">조세</a>
+            <a data-id="552" class="js-side-nav-cat js-subcat" href="/courses/finance-and-accounting/other-finance-and-accounting/" tabindex="-1">기타 재무 및 회계</a>
+        </div>
+        <a data-id="294" class="js-side-nav-cat" href="/courses/it-and-software/" tabindex="-1">IT 및 소프트웨어</a>
+        <div>
+            <a data-id="132" class="js-side-nav-cat js-subcat" href="/courses/it-and-software/it-certification/" tabindex="-1">IT 인증</a>
+            <a data-id="134" class="js-side-nav-cat js-subcat" href="/courses/it-and-software/network-and-security/" tabindex="-1">네트워크 및 보안</a>
+            <a data-id="136" class="js-side-nav-cat js-subcat" href="/courses/it-and-software/hardware/" tabindex="-1">하드웨어</a>
+            <a data-id="138" class="js-side-nav-cat js-subcat" href="/courses/it-and-software/operating-systems/" tabindex="-1">운영 체제 및 서버</a>
+            <a data-id="140" class="js-side-nav-cat js-subcat" href="/courses/it-and-software/other-it-and-software/" tabindex="-1">기타 IT 및 소프트웨어</a>
+        </div>
+        <a data-id="292" class="js-side-nav-cat" href="/courses/office-productivity/" tabindex="-1">사무 생산성</a>
+        <div>
+            <a data-id="96" class="js-side-nav-cat js-subcat" href="/courses/office-productivity/microsoft/" tabindex="-1">마이크로소프트</a>
+            <a data-id="98" class="js-side-nav-cat js-subcat" href="/courses/office-productivity/apple/" tabindex="-1">애플</a>
+            <a data-id="100" class="js-side-nav-cat js-subcat" href="/courses/office-productivity/google/" tabindex="-1">구글</a>
+            <a data-id="102" class="js-side-nav-cat js-subcat" href="/courses/office-productivity/sap/" tabindex="-1">SAP</a>
+            <a data-id="106" class="js-side-nav-cat js-subcat" href="/courses/office-productivity/oracle/" tabindex="-1">오라클</a>
+            <a data-id="108" class="js-side-nav-cat js-subcat" href="/courses/office-productivity/other-productivity/" tabindex="-1">기타 사무 생산성</a>
+        </div>
+        <a data-id="296" class="js-side-nav-cat" href="/courses/personal-development/" tabindex="-1">자기 계발</a>
+        <div>
+            <a data-id="142" class="js-side-nav-cat js-subcat" href="/courses/personal-development/personal-transformation/" tabindex="-1">자기 혁신</a>
+            <a data-id="144" class="js-side-nav-cat js-subcat" href="/courses/personal-development/productivity/" tabindex="-1">개인 생산성</a>
+            <a data-id="146" class="js-side-nav-cat js-subcat" href="/courses/personal-development/leadership/" tabindex="-1">리더십</a>
+            <a data-id="150" class="js-side-nav-cat js-subcat" href="/courses/personal-development/career-development/" tabindex="-1">경력 개발</a>
+            <a data-id="152" class="js-side-nav-cat js-subcat" href="/courses/personal-development/parenting-and-relationships/" tabindex="-1">육아 및 관계</a>
+            <a data-id="156" class="js-side-nav-cat js-subcat" href="/courses/personal-development/happiness/" tabindex="-1">행복</a>
+            <a data-id="577" class="js-side-nav-cat js-subcat" href="/courses/lifestyle/esoteric-practices/" tabindex="-1">밀교 수련</a>
+            <a data-id="158" class="js-side-nav-cat js-subcat" href="/courses/personal-development/religion-and-spirituality/" tabindex="-1">종교 및 영성</a>
+            <a data-id="160" class="js-side-nav-cat js-subcat" href="/courses/personal-development/personal-brand-building/" tabindex="-1">개인 브랜드 구축</a>
+            <a data-id="164" class="js-side-nav-cat js-subcat" href="/courses/personal-development/creativity/" tabindex="-1">창의력</a>
+            <a data-id="166" class="js-side-nav-cat js-subcat" href="/courses/personal-development/influence/" tabindex="-1">영향력</a>
+            <a data-id="168" class="js-side-nav-cat js-subcat" href="/courses/personal-development/self-esteem-and-confidence/" tabindex="-1">자존감과 자신감</a>
+            <a data-id="170" class="js-side-nav-cat js-subcat" href="/courses/personal-development/stress-management/" tabindex="-1">스트레스 관리</a>
+            <a data-id="172" class="js-side-nav-cat js-subcat" href="/courses/personal-development/memory/" tabindex="-1">기억력 및 공부 스킬</a>
+            <a data-id="176" class="js-side-nav-cat js-subcat" href="/courses/personal-development/motivation/" tabindex="-1">동기부여</a>
+            <a data-id="178" class="js-side-nav-cat js-subcat" href="/courses/personal-development/other-personal-development/" tabindex="-1">기타 자기 계발</a>
+        </div>
+        <a data-id="269" class="js-side-nav-cat" href="/courses/design/" tabindex="-1">디자인</a>
+        <div>
+            <a data-id="6" class="js-side-nav-cat js-subcat" href="/courses/design/web-design/" tabindex="-1">웹 디자인</a>
+            <a data-id="110" class="js-side-nav-cat js-subcat" href="/courses/design/graphic-design-and-illustration/" tabindex="-1">그래픽 디자인 및 일러스트레이션</a>
+            <a data-id="112" class="js-side-nav-cat js-subcat" href="/courses/design/design-tools/" tabindex="-1">디자인 도구</a>
+            <a data-id="114" class="js-side-nav-cat js-subcat" href="/courses/design/user-experience/" tabindex="-1">사용자 경험 디자인</a>
+            <a data-id="116" class="js-side-nav-cat js-subcat" href="/courses/design/game-design/" tabindex="-1">게임 디자인</a>
+            <a data-id="120" class="js-side-nav-cat js-subcat" href="/courses/design/3d-and-animation/" tabindex="-1">3D 및 애니메이션</a>
+            <a data-id="122" class="js-side-nav-cat js-subcat" href="/courses/design/fashion/" tabindex="-1">패션 디자인</a>
+            <a data-id="124" class="js-side-nav-cat js-subcat" href="/courses/design/architectural-design/" tabindex="-1">건축 디자인</a>
+            <a data-id="128" class="js-side-nav-cat js-subcat" href="/courses/design/interior-design/" tabindex="-1">인테리어 디자인</a>
+            <a data-id="130" class="js-side-nav-cat js-subcat" href="/courses/design/other-design/" tabindex="-1">기타 디자인</a>
+        </div>
+        <a data-id="290" class="js-side-nav-cat" href="/courses/marketing/" tabindex="-1">마케팅</a>
+        <div>
+            <a data-id="62" class="js-side-nav-cat js-subcat" href="/courses/marketing/digital-marketing/" tabindex="-1">디지털 마케팅</a>
+            <a data-id="64" class="js-side-nav-cat js-subcat" href="/courses/marketing/search-engine-optimization/" tabindex="-1">검색 엔진 최적화</a>
+            <a data-id="66" class="js-side-nav-cat js-subcat" href="/courses/marketing/social-media-marketing/" tabindex="-1">소셜 미디어 마케팅</a>
+            <a data-id="68" class="js-side-nav-cat js-subcat" href="/courses/marketing/branding/" tabindex="-1">브랜딩</a>
+            <a data-id="70" class="js-side-nav-cat js-subcat" href="/courses/marketing/marketing-fundamentals/" tabindex="-1">마케팅 기초</a>
+            <a data-id="72" class="js-side-nav-cat js-subcat" href="/courses/marketing/analytics-and-automation/" tabindex="-1">마케팅 분석 및 자동화</a>
+            <a data-id="74" class="js-side-nav-cat js-subcat" href="/courses/marketing/public-relations/" tabindex="-1">홍보</a>
+            <a data-id="76" class="js-side-nav-cat js-subcat" href="/courses/marketing/advertising/" tabindex="-1">유료 광고</a>
+            <a data-id="78" class="js-side-nav-cat js-subcat" href="/courses/marketing/video-and-mobile-marketing/" tabindex="-1">비디오 및 모바일 마케팅</a>
+            <a data-id="80" class="js-side-nav-cat js-subcat" href="/courses/marketing/content-marketing/" tabindex="-1">콘텐츠 마케팅</a>
+            <a data-id="86" class="js-side-nav-cat js-subcat" href="/courses/marketing/growth-hacking/" tabindex="-1">그로스 해킹 (Growth Hacking)</a>
+            <a data-id="88" class="js-side-nav-cat js-subcat" href="/courses/marketing/affiliate-marketing/" tabindex="-1">제휴 마케팅</a>
+            <a data-id="90" class="js-side-nav-cat js-subcat" href="/courses/marketing/product-marketing/" tabindex="-1">제품 마케팅</a>
+            <a data-id="94" class="js-side-nav-cat js-subcat" href="/courses/marketing/other-marketing/" tabindex="-1">기타 마케팅</a>
+        </div>
+        <a data-id="274" class="js-side-nav-cat" href="/courses/lifestyle/" tabindex="-1">라이프스타일</a>
+        <div>
+            <a data-id="180" class="js-side-nav-cat js-subcat" href="/courses/lifestyle/arts-and-crafts/" tabindex="-1">예술 및 공예</a>
+            <a data-id="184" class="js-side-nav-cat js-subcat" href="/courses/lifestyle/beauty-and-makeup/" tabindex="-1">미용 및 화장</a>
+            <a data-id="577" class="js-side-nav-cat js-subcat" href="/courses/lifestyle/esoteric-practices/" tabindex="-1">밀교 수련</a>
+            <a data-id="182" class="js-side-nav-cat js-subcat" href="/courses/lifestyle/food-and-beverage/" tabindex="-1">식음료</a>
+            <a data-id="188" class="js-side-nav-cat js-subcat" href="/courses/lifestyle/gaming/" tabindex="-1">게임</a>
+            <a data-id="190" class="js-side-nav-cat js-subcat" href="/courses/lifestyle/home-improvement/" tabindex="-1">주택 개조와 정원 가꾸기</a>
+            <a data-id="192" class="js-side-nav-cat js-subcat" href="/courses/lifestyle/pet-care-and-training/" tabindex="-1">애완동물 관리 및 훈련</a>
+            <a data-id="186" class="js-side-nav-cat js-subcat" href="/courses/lifestyle/travel/" tabindex="-1">여행</a>
+            <a data-id="194" class="js-side-nav-cat js-subcat" href="/courses/lifestyle/other-lifestyle/" tabindex="-1">기타 라이프스타일</a>
+        </div>
+        <a data-id="273" class="js-side-nav-cat" href="/courses/photography-and-video/" tabindex="-1">사진 및 영상</a>
+        <div>
+            <a data-id="370" class="js-side-nav-cat js-subcat" href="/courses/photography-and-video/digital-photography/" tabindex="-1">디지털 사진</a>
+            <a data-id="196" class="js-side-nav-cat js-subcat" href="/courses/photography-and-video/photography-fundamentals/" tabindex="-1">사진</a>
+            <a data-id="204" class="js-side-nav-cat js-subcat" href="/courses/photography-and-video/portraits/" tabindex="-1">인물 사진</a>
+            <a data-id="198" class="js-side-nav-cat js-subcat" href="/courses/photography-and-video/photography-tools/" tabindex="-1">사진 도구</a>
+            <a data-id="208" class="js-side-nav-cat js-subcat" href="/courses/photography-and-video/commercial-photography/" tabindex="-1">상업용 사진</a>
+            <a data-id="218" class="js-side-nav-cat js-subcat" href="/courses/photography-and-video/video-design/" tabindex="-1">영상 디자인</a>
+            <a data-id="220" class="js-side-nav-cat js-subcat" href="/courses/photography-and-video/other-photography-and-video/" tabindex="-1">기타 사진 및 영상</a>
+        </div>
+        <a data-id="276" class="js-side-nav-cat" href="/courses/health-and-fitness/" tabindex="-1">건강 및 피트니스</a>
+        <div>
+            <a data-id="222" class="js-side-nav-cat js-subcat" href="/courses/health-and-fitness/fitness/" tabindex="-1">피트니스</a>
+            <a data-id="224" class="js-side-nav-cat js-subcat" href="/courses/health-and-fitness/general-health/" tabindex="-1">일반 건강</a>
+            <a data-id="226" class="js-side-nav-cat js-subcat" href="/courses/health-and-fitness/sports/" tabindex="-1">스포츠</a>
+            <a data-id="228" class="js-side-nav-cat js-subcat" href="/courses/health-and-fitness/nutrition/" tabindex="-1">영양과 식단</a>
+            <a data-id="230" class="js-side-nav-cat js-subcat" href="/courses/health-and-fitness/yoga/" tabindex="-1">요가</a>
+            <a data-id="232" class="js-side-nav-cat js-subcat" href="/courses/health-and-fitness/mental-health/" tabindex="-1">정신 건강</a>
+            <a data-id="236" class="js-side-nav-cat js-subcat" href="/courses/health-and-fitness/self-defense/" tabindex="-1">무술과 호신술</a>
+            <a data-id="238" class="js-side-nav-cat js-subcat" href="/courses/health-and-fitness/safety-and-first-aid/" tabindex="-1">안전 및 응급 처치</a>
+            <a data-id="240" class="js-side-nav-cat js-subcat" href="/courses/health-and-fitness/dance/" tabindex="-1">춤</a>
+            <a data-id="242" class="js-side-nav-cat js-subcat" href="/courses/health-and-fitness/meditation/" tabindex="-1">명상</a>
+            <a data-id="244" class="js-side-nav-cat js-subcat" href="/courses/health-and-fitness/other-health-and-fitness/" tabindex="-1">기타 건강 및 피트니스</a>
+        </div>
+        <a data-id="278" class="js-side-nav-cat" href="/courses/music/" tabindex="-1">음악</a>
+        <div>
+            <a data-id="296" class="js-side-nav-cat js-subcat" href="/courses/music/instruments/" tabindex="-1">악기</a>
+            <a data-id="298" class="js-side-nav-cat js-subcat" href="/courses/music/production/" tabindex="-1">음악 프로덕션</a>
+            <a data-id="300" class="js-side-nav-cat js-subcat" href="/courses/music/music-fundamentals/" tabindex="-1">음악의 기초</a>
+            <a data-id="302" class="js-side-nav-cat js-subcat" href="/courses/music/vocal/" tabindex="-1">보컬</a>
+            <a data-id="304" class="js-side-nav-cat js-subcat" href="/courses/music/music-techniques/" tabindex="-1">음악 기법</a>
+            <a data-id="306" class="js-side-nav-cat js-subcat" href="/courses/music/music-software/" tabindex="-1">음악 소프트웨어</a>
+            <a data-id="308" class="js-side-nav-cat js-subcat" href="/courses/music/other-music/" tabindex="-1">기타 음악</a>
+        </div>
+        <a data-id="300" class="js-side-nav-cat" href="/courses/teaching-and-academics/" tabindex="-1">교육 및 학문</a>
+        <div>
+            <a data-id="366" class="js-side-nav-cat js-subcat" href="/courses/teaching-and-academics/engineering/" tabindex="-1">엔지니어링</a>
+            <a data-id="380" class="js-side-nav-cat js-subcat" href="/courses/teaching-and-academics/humanities/" tabindex="-1">인문학</a>
+            <a data-id="310" class="js-side-nav-cat js-subcat" href="/courses/teaching-and-academics/math/" tabindex="-1">수학</a>
+            <a data-id="312" class="js-side-nav-cat js-subcat" href="/courses/teaching-and-academics/science/" tabindex="-1">과학</a>
+            <a data-id="523" class="js-side-nav-cat js-subcat" href="/courses/teaching-and-academics/online-education/" tabindex="-1">온라인 교육</a>
+            <a data-id="376" class="js-side-nav-cat js-subcat" href="/courses/teaching-and-academics/social-science/" tabindex="-1">사회 과학</a>
+            <a data-id="521" class="js-side-nav-cat js-subcat" href="/courses/teaching-and-academics/language/" tabindex="-1">언어 배우기</a>
+            <a data-id="527" class="js-side-nav-cat js-subcat" href="/courses/teaching-and-academics/teacher-training/" tabindex="-1">강사 연수</a>
+            <a data-id="529" class="js-side-nav-cat js-subcat" href="/courses/teaching-and-academics/test-prep/" tabindex="-1">시험 준비</a>
+            <a data-id="525" class="js-side-nav-cat js-subcat" href="/courses/teaching-and-academics/other-teaching-academics/" tabindex="-1">기타 교육 및 학문</a>
+        </div>
+        <div data-id="8" class="js-side-nav-popular-topics">
+        </div>
+    </nav>
+</div>
