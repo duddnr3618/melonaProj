@@ -26,13 +26,20 @@ public class NormalBoardController {
     public String boardList(Model model) {
         Sort sort = Sort.by("id").descending();
         Pageable pageable = PageRequest.of(0, 15, sort);
-        pagingNormalBoard = queryService.onlyViewNormalBoard(pageable);
+        pagingNormalBoard = queryService.onlyViewPageNormalBoard(pageable);
         model.addAttribute("pagingBoard", pagingNormalBoard);
-        return "normalboard";
+        return "board/viewallboard";
     }
 
     @GetMapping("/search")
     public void boardSearchList(Model model, @ModelAttribute CommonBoardSearchDTO boardSearchDTO) {
 
+    }
+
+    @GetMapping("/viewDetail/{boardId}")
+    public String boardViewDetail(Model model, @PathVariable(name = "boardId") Long boardId) {
+        NormalBoardEntity boardEntity = queryService.onlyViewDetailNormalBoard(boardId);
+        model.addAttribute("detail", boardEntity);
+        return "board/viewDetail";
     }
 }

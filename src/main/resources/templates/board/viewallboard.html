@@ -16,15 +16,27 @@
         </select>
         <button id="BoardSearchFormButton">검색하기</button>
     </form>
-    <script type="module" src="/js/boardjs/CommonBoardJS.js"></script>
+    <script type="module" src="js/boardjs/CommonBoardJS.js"></script>
     
-    <!--<div>
-        보드 값 테스트
-        <div th:each="board, i : ${pagingBoard}">
-            <div th:text="${i.count}"></div>
-            <div th:text="${board.getId()}"></div>
-            <div th:text="${board.getContent()}"></div>
-            <div th:text="${board.getWriterUserId()}"></div>
-        </div>
-    </div>-->
+    <!--임시로 넣은 값들입니다. 더 추가해야합니다.-->
+    <table>
+        <thead>
+        <tr>
+            <td>count</td>
+            <td>boardId</td>
+            <td>boardTitle</td>
+            <td>boardWriter</td>
+        </tr>
+        </thead>
+        
+        <tbody>
+        <tr th:each="board, i : ${pagingBoard}" class="boardTableValue" th:data-boardid="${board.getBoardId()}"
+            style="border: 1px solid red">
+            <th th:text="${i.count}"></th>
+            <td th:text="${board.getBoardId()}"></td>
+            <td th:text="${board.getBoardTitle()}"></td>
+            <td th:text="${board.getBoardWriter()}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>

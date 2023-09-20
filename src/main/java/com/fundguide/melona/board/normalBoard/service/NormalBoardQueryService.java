@@ -13,7 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class NormalBoardQueryService {
     private final NormalBoardRepository normalBoardRepository;
 
-    public Page<NormalBoardEntity> onlyViewNormalBoard(Pageable pageable) {
+    public Page<NormalBoardEntity> onlyViewPageNormalBoard(Pageable pageable) {
         return normalBoardRepository.onlyViewNormalBoard(pageable);
+    }
+
+    public NormalBoardEntity onlyViewDetailNormalBoard(Long boardId) {
+        return normalBoardRepository.findAllByBoardId(boardId);
     }
 }

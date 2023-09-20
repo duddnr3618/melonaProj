@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.Query;
 public interface NormalBoardRepository extends JpaRepository<NormalBoardEntity, Long>, NormalBoardRepositoryCustom {
     @Query("select nbe from NormalBoardEntity nbe")
     Page<NormalBoardEntity> onlyViewNormalBoard(Pageable pageable);
+    NormalBoardEntity findAllByBoardId(Long boardId);
 }
