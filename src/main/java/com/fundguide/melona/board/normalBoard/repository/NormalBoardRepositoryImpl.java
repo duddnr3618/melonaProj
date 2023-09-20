@@ -23,15 +23,16 @@ public class NormalBoardRepositoryImpl implements NormalBoardRepositoryCustom {
     private JPAQuery<NormalBoardEntity> boardEntityJPAQuery = null;
     private BooleanExpression booleanExpression = null;
 
-   @Override
+    @Override
     public PageImpl<NormalBoardEntity> searchViewBoard(Pageable pageable, BoardSearchDTO searchDTO) {
-     String likeKeyword = "%" + searchDTO.searchKeyword().toLowerCase() + "%";
-     String searchOption = searchDTO.searchOption().toLowerCase();
+        String likeKeyword = "%" + searchDTO.searchKeyword().toLowerCase() + "%";
+        String searchOption = searchDTO.searchOption().toLowerCase();
+
         if ("all".equals(searchOption) || searchOption.isEmpty()) {
-            booleanExpression =
-                    normalBoardEntity.boardWriter.like(likeKeyword)
-                            .or(normalBoardEntity.boardTitle.like(likeKeyword)
-                            );
+            booleanExpression = normalBoardEntity.boardWriter.like(likeKeyword)
+                    .or(normalBoardEntity.boardTitle.like(likeKeyword))
+                    .or(normalBoardEntity.boardContents.like(likeKeyword))
+                    ;
         } else if ("content".equals(searchOption)) {
             booleanExpression = normalBoardEntity.boardContents.like(likeKeyword);
         } else if ("writeruser".equals(searchDTO.searchOption())) {
