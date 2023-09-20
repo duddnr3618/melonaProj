@@ -19,7 +19,7 @@ import static com.fundguide.melona.member.entity.QMemberEntity.memberEntity;
 @SuppressWarnings("FieldCanBeLocal")
 @Repository @RequiredArgsConstructor
 public class MemberRepositoryImpl implements MemberRepositoryCustom {
-    
+
     private final JPAQueryFactory queryFactory;
     private BooleanExpression expression = null;
 

@@ -1,9 +1,14 @@
 package com.fundguide.melona.member.repository;
 
-import com.fundguide.melona.member.entity.MemberEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface MemberRepository extends JpaRepository<MemberEntity, Long>, MemberRepositoryCustom {
+import com.fundguide.melona.member.entity.MemberEntity;
+
+import java.util.List;
+
+public interface MemberRepository {
+    void memberSave(MemberEntity memberEntity);
+
+    List<MemberEntity> findMember(String email , Integer age);
+
+    MemberEntity findByEmail(String username);
 }

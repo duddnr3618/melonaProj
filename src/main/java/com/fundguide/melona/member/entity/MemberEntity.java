@@ -23,10 +23,8 @@ public class MemberEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column @Email
   private String memberEmail;
   private String memberName;
-
   private String memberPassword;
   private String memberRole;
   private String memberAddress;
