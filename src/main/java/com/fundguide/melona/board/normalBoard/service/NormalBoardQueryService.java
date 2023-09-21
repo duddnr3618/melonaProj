@@ -24,11 +24,17 @@ public class NormalBoardQueryService {
     public Page<NormalBoardEntity> onlyViewPageNormalBoard(Pageable pageable, Model model, BoardSearchDTO searchDTO) {
         model.addAttribute("searchKeyword", searchDTO.searchKeyword());
         model.addAttribute("searchOption", searchDTO.searchOption());
+        model.addAttribute("searchPageValue", searchDTO.searchPageValue());
         return normalBoardRepository.searchViewBoard(pageable, searchDTO);
     }
 
     /**노말 보드 디테일값 반환*/
     public NormalBoardEntity onlyViewDetailNormalBoard(Long boardId) {
         return normalBoardRepository.findAllByBoardId(boardId);
+    }
+
+
+    private void addSearchDataModel() {
+
     }
 }
