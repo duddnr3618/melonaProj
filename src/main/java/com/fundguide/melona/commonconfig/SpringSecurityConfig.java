@@ -40,7 +40,9 @@ public class SpringSecurityConfig {
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/")
-                        .invalidateHttpSession(true));
+                        .invalidateHttpSession(true))
+                        .csrf().disable();
+
         return httpSecurity.build();
     }
 
