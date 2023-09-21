@@ -42,7 +42,7 @@ public class NormalBoardController {
         return "board/viewsearchboard";
     }
 
-    /**노말보드 상세 페이지 메서드*/
+    /**노말보드 상세 페이지 이동*/
     @GetMapping("/viewDetail/{boardId}")
     public String boardViewDetail(Model model, @PathVariable(name = "boardId") Long boardId) {
         NormalBoardEntity boardEntity = queryService.onlyViewDetailNormalBoard(boardId);
