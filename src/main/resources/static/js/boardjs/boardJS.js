@@ -26,6 +26,8 @@ const cls_pageLink = $('.page-link');
 cls_pageLink.click(function (event) {
     event.preventDefault();
     let pageValue = $(this).data('page');
+
+    axios.get("/normalboard/search/?"+pageValue);
 })
 
 
