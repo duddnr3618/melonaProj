@@ -14,11 +14,14 @@
             <option value="NickName" th:selected="${searchOption eq 'nickname'}">닉네임으로 찾기</option>
             <!--more add option plz-->
         </select>
+        
+        <input type="hidden" name="searchPageValue" id="BoardSearchPageValue" th:value="${searchPageValue}">
         <button id="BoardSearchFormButton">검색하기</button>
     </form>
     <script type="module" src="js/boardjs/boardJS.js"></script>
     
     <!--임시로 넣은 값들입니다. 더 추가해야합니다.-->
+    <!--SUDO 더 나은 방식이 존재한것으로 기억함... 나중에 수정해볼것-->
     <div id="BoardTableBox">
         <table>
             <thead>
@@ -50,7 +53,7 @@
                     </a>
                 </li>
                 <li th:each="page: ${#numbers.sequence(0, pagingBoard.totalPages -1)}"
-                    th:if ="${page >= pagingBoard.number -5 and page <= pagingBoard.number +5}"
+                    th:if="${page >= pagingBoard.number -5 and page <= pagingBoard.number +5}"
                     th:classappend="${page == pagingBoard.number} ? 'active'"
                     class="page-item">
                     <a th:text="${page}  +1" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
@@ -64,3 +67,4 @@
         </div>
     </div>
 </div>
+</html>
