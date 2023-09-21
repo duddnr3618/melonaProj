@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Data
 @Builder
@@ -30,6 +32,9 @@ public class LeaderBoardEntity extends BaseBoardEntity {
     private long boardHits; //조회수
     @Column(name = "boardLikes")
     private long boardLikes; //좋아요
+
+    @ManyToMany
+    Set<LeaderBoardEntity> goodLeaderBoard;
 
     // dto -> entity변환
     public static LeaderBoardEntity toSaveEntity (LeaderBoardDto leaderBoardDto) {

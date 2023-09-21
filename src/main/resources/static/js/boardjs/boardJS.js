@@ -54,6 +54,8 @@ function sendSearchData(formData) {
     axios.get(`/normalboard/search/?${params.toString()}`)
         .then(function (response) {
             id_BoardTableBox.html(response.data);
+        })
+        .then(function () {
             handleBoardTableRowClick();
             handlePageLinkClick();
         })
