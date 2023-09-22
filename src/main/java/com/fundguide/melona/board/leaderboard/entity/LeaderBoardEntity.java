@@ -21,7 +21,7 @@ public class LeaderBoardEntity extends BaseBoardEntity {
     @Id
     @Column(name = "boardId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long boardId;
+    private Long id;
     @Column(name = "boardWriter")
     private String boardWriter;
     @Column(name = "boardTitle")
@@ -30,8 +30,6 @@ public class LeaderBoardEntity extends BaseBoardEntity {
     private String boardContents;
     @Column(name = "boardHits")
     private long boardHits; //조회수
-    @Column(name = "boardLikes")
-    private long boardLikes; //좋아요
 
     @ManyToMany
     Set<LeaderBoardEntity> goodLeaderBoard;
@@ -47,4 +45,14 @@ public class LeaderBoardEntity extends BaseBoardEntity {
     }
 
 
+    public static LeaderBoardEntity toUpdateEntity(LeaderBoardDto leaderBoardDto) {
+
+        LeaderBoardEntity leaderBoardEntity = new LeaderBoardEntity();
+        leaderBoardEntity.setId(leaderBoardDto.getId());
+        leaderBoardEntity.setBoardWriter(leaderBoardDto.getBoardWriter());
+        leaderBoardEntity.setBoardTitle(leaderBoardDto.getBoardTitle());
+        leaderBoardEntity.setBoardContents(leaderBoardDto.getBoardContents());
+        leaderBoardEntity.setBoardHits(leaderBoardDto.getBoardHits());
+        return leaderBoardEntity;
+    }
 }
