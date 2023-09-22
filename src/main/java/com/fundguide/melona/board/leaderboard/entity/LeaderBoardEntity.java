@@ -31,8 +31,6 @@ public class LeaderBoardEntity extends BaseBoardEntity {
     @Column(name = "boardHits")
     private long boardHits; //조회수
 
-    @ManyToMany
-    Set<LeaderBoardEntity> goodLeaderBoard;
 
     // dto -> entity변환
     public static LeaderBoardEntity toSaveEntity (LeaderBoardDto leaderBoardDto) {

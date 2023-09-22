@@ -47,6 +47,11 @@ public class LeaderBoardService {
         }
     }
 
+    @Transactional
+    public void updateTime(Long id) {
+        leaderBoardRepository.updateTime(id);
+    }
+
     public LeaderBoardDto update(LeaderBoardDto leaderBoardDto) {
         LeaderBoardEntity leaderBoardEntity = LeaderBoardEntity.toUpdateEntity(leaderBoardDto);
         leaderBoardRepository.save(leaderBoardEntity);
