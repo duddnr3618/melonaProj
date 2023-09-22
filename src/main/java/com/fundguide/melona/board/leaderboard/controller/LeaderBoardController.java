@@ -2,6 +2,7 @@ package com.fundguide.melona.board.leaderboard.controller;
 
 import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import com.fundguide.melona.board.leaderboard.service.LeaderBoardService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,7 +25,7 @@ public class LeaderBoardController {
     
     // 게시글 작성 처리
     @PostMapping("/writePro")
-    public String writepro(@ModelAttribute LeaderBoardDto leaderBoardDto) {
+    public String writepro(@ModelAttribute @Valid LeaderBoardDto leaderBoardDto) {
         System.out.println(">>>>>>>>>> leaderBoardDto : " + leaderBoardDto );
         leaderBoardService.save(leaderBoardDto);
         return "index";
@@ -35,7 +36,6 @@ public class LeaderBoardController {
     public String findAll (Model model) {
         List<LeaderBoardDto> leaderBoardDtoList = leaderBoardService.findAll();
         model.addAttribute("leaderboardList" , leaderBoardDtoList);
-
         return "board/leader/list";
     }
     
@@ -48,6 +48,7 @@ public class LeaderBoardController {
         return "/board/leader/detail";
     }
 
+    // 게시글 수정폼
     @GetMapping("/update/{id}")
     public String updateForm(@PathVariable("id") Long id ,  Model model) {
         LeaderBoardDto leaderBoardDto = leaderBoardService.findById(id);
@@ -59,10 +60,10 @@ public class LeaderBoardController {
 
     // 게시글 수정 처리
     @PostMapping("/update")
-    public String update (@ModelAttribute LeaderBoardDto leaderBoardDto , Model model) {
+    public String update (@ModelAttribute @Valid LeaderBoardDto leaderBoardDto , Model model) {
        LeaderBoardDto board =  leaderBoardService.update(leaderBoardDto);
        model.addAttribute("board" , board);
-       return "board/leader/detail";
+       return "redirect:/board/leader/list";
     }
 
 

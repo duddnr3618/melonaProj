@@ -7,13 +7,13 @@
 
 <div layout:fragment="content">
     <br>
-    <form action="/leaderboard/writePro" method="post">
+    <form action="/leaderBoard/writePro" method="post">
         제목 : <input type="text" name="boardTitle"><br>
         작성자 : <input type="text" name="boardWriter"><br>
         내용 :
         <textarea name="boardContents" cols="60" rows="10"></textarea><br>
         <input type="submit" value="글작성">
-        <button href="/board/leader/list" value="취소"></button>
+        <button href="/board/leader/list">취소</button>
     </form>
 </div>
 </html>
