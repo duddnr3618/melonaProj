@@ -13,11 +13,5 @@ import java.util.prefs.PreferencesFactory;
 public class LeaderBoardQueryService {
     private final LeaderBoardRepository leaderBoardRepository;
 
-    /*public void searchLeaderBoard(Long boardId) {
-        Optional<LeaderBoardEntity> optionalLeaderBoard =
-                leaderBoardRepository.findById(boardId);
-        optionalLeaderBoard.ifPresent(
-                optionalLeaderBoard.get().getGoodLeaderBoard().add;
-        );
-    }*/
+
 }

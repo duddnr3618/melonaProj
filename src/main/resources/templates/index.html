@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>index page</title>
-</head>
-<body>
-  인덱스페이지입니다.
-</body>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+
+<div layout:fragment="content">
+  <br>
+  <a th:href="@{normalboard}">일반가이드 리스트</a>
+  <a th:href="@{leaderBoard/writeForm}">리더가이드 작성</a>
+  <a th:href="@{leaderBoard/list}">리더가이드 리스트</a>
+</div>
 </html>
