@@ -1,11 +1,11 @@
 package com.fundguide.melona.member.entity;
 
+import com.fundguide.melona.member.role.MemberLimitConvert;
+import com.fundguide.melona.member.role.MemberLimitState;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 
@@ -34,4 +34,8 @@ public class MemberEntity {
   private String memberAvailable;
   private String memberNickname;
 
+  @Convert(converter = MemberLimitConvert.class)
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false, columnDefinition = "NORMAL")
+  private MemberLimitState memberLimitState;
 }
