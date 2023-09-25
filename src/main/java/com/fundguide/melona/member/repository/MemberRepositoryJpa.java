@@ -41,12 +41,11 @@ public class MemberRepositoryJpa implements MemberRepository {
 
     @Transactional(readOnly = true)
     public List<MemberEntity> findMember(String email, Integer age) {
-        List<MemberEntity> result = query
+        return query
                 .select(memberEntity)
                 .from(memberEntity)
                 .where(memberName(email), nickname(age))
                 .fetch();
-        return result;
     }
 
 

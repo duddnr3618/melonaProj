@@ -16,4 +16,5 @@ public interface MemberRepository {
     MemberEntity findByEmail(String username);
 
     Page<MemberEntity> memberLimitStatePage(MemberLimitState state, Pageable pageable);
+
 }
