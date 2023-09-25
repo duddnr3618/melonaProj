@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Data
@@ -23,8 +24,15 @@ public class MemberEntity {
   private String memberPassword;
   private String memberRole;
   private String memberAddress;
-  private LocalDate memberJoinData;
+  private LocalDate memberJoinDate;
   private String memberAvailable;
   private String memberNickname;
+
+
+
+ /* @PrePersist
+  protected void onCreate() {
+    memberJoinDate = LocalDate.now();
+  }*/
 
 }

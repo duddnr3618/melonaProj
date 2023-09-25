@@ -1,15 +1,97 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Insert title here</title>
+
+    <!--부트스트랩 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+    <!-- css 링크 -->
+    <!--fix : /css/layout1.css -> css/layout1.css
+    because : 로컬 환경에서는 스프링부트 시스템으로 인해 추론이 가능해를 자동 삭제되지만
+     jar 배포 환경에서는 추론 시스템이 작동하지 않아 이중 슬래쉬(/)처리 되어
+     리소스 핸들러 환경을 인식할 수 없음. 특수한 상황을 제외한 모든 html 및 컨트롤 경로는
+     /를 제외한 경로로 지정할것. -->
+    <link th:href="@{css/layout1.css}"  rel="stylesheet">
+
+
+    <th:block layout:fragment="script"></th:block>
+    <th:block layout:fragment="css"></th:block>
+
 </head>
 <body>
-<form action="./login" method="post" enctype="application/x-www-form-urlencoded">
-    <input type="text" name="memberEmail"> <br/>
-    <input type="password" name="memberPassword"><br/>
-    <input type="submit" value="전송"><br/>
 
-</form>
+<div th:replace="fragments/header::header"></div>
+
+<div layout:fragment="content" class ="content">
+   <!-- <form action="./memberLogin" method="post" enctype="application/x-www-form-urlencoded">
+        <input type="text" name="memberEmail"> <br/>
+        <input type="password" name="memberPassword"><br/>
+        <input type="submit" value="전송"><br/>
+        <a href="./oauth2/authorization/google">adssdsd</a>
+        <a href="./oauth2/authorization/naver">naver</a>
+        <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=14e449b0b8d84a6d3c7a8f3bf3f15b5d&redirect_uri=http://localhost:7777/login/oauth2/code/kakao">kakao</a>
+    </form>-->
+    <form action="/member/login" method="post" enctype="application/x-www-form-urlencoded">
+
+        <div class="row">
+            <div class="col-4">
+
+            </div>
+            <div class="col-4">
+                <label for="memberEmail" th:text="${param.wrong != null ? param.wrong : '이메일'}"></label>
+                <input type="text" id="memberEmail" name="memberEmail" class="form-control" required
+                >
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <label for="memberPassword">비밀번호</label>
+                <input type="text" id="memberPassword" name="memberPassword" class="form-control" required
+                >
+            </div>
+            <div class="col-4"></div>
+        </div>
+
+        <br/>
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 justify-content-center" id="logDiv">
+                <a href="./oauth2/authorization/google"><img src="/img/google.png" th:src="@{/img/google.png}"></a>
+                <a href="./oauth2/authorization/naver"><img src="/img/naver.png" th:src="@{/img/naver.png}"></a>
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <br/>
+        <div class="row align-items-center">
+            <div class="col-4"></div>
+            <div class="col-4"><a href="findInfo">아이디/비밀번호찾기</a></div>
+            <div class="col-4"></div>
+
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <button class="w-100 btn btn-outline-success btn-lg" type="submit">로그인</button>
+            </div>
+            <div class="col-4"></div>
+        </div>
+
+    </form>
+</div>
+
+<br>
+<!--<div th:replace="fragments/footer::footer"></div>-->
+
+
 </body>
 </html>

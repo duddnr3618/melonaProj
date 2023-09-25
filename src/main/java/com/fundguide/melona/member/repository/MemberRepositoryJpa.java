@@ -33,35 +33,53 @@ public class MemberRepositoryJpa implements MemberRepository {
         em.persist(memberEntity);
     }
     @Transactional(readOnly = true)
-    public List<MemberEntity> findMember(String email , Integer age){
+    public MemberEntity findMember(String memberEmail , String memberNickname){
         List<MemberEntity> result = query
                 .select(memberEntity)
                 .from(memberEntity)
-                .where(memberName(email),nickname(age))
+                .where(memberName(memberEmail),nickname(memberNickname))
                 .fetch();
-    return result;
+
+        if (result.isEmpty()) {
+            MemberEntity memberEntity1 =null;
+            result.add(memberEntity1);
+        }
+
+
+    return result.get(0);
     }
 
 
-    private BooleanExpression memberName(String email) {
-        if (StringUtils.hasText(email)) {
-            return memberEntity.memberEmail.like("%" + email + "%");
+    private BooleanExpression memberName(String memberEmail) {
+        if (StringUtils.hasText(memberEmail)) {
+            return memberEntity.memberEmail.eq(memberEmail);
+            //  return memberEntity.memberEmail.like("%" + memberEmail + "%");
         }
         return null;
     }
-    private BooleanExpression nickname(Integer age) {
-        if(age != null){
-            return memberEntity.id.loe(age);
+
+    private BooleanExpression nickname(String memberNickname) {
+        if (StringUtils.hasText(memberNickname)) {
+            return memberEntity.memberNickname.eq(memberNickname);
+            // return memberEntity.memberNickname.like("%" + memberNickname + "%");
         }
         return null;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MemberEntity findByEmail(String username) {
         TypedQuery<MemberEntity> query = em.createQuery(
                 "SELECT m FROM MemberEntity m WHERE m.memberEmail=:email", MemberEntity.class);
         query.setParameter("email", username);
         List<MemberEntity> resultList = query.getResultList();
         return resultList.get(0);
+    }
+
+    @Override
+    @Transactional
+    public void updatePassword(Long memberId, String newPassword) {
+        MemberEntity memberEntity = em.find(MemberEntity.class, memberId);
+        memberEntity.setMemberPassword(newPassword);
     }
 }

@@ -1,5 +1,7 @@
 package com.fundguide.melona.commonconfig;
 
+import com.fundguide.melona.member.service.OAuth2UserDetailService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,26 +19,37 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableMethodSecurity
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SpringSecurityConfig {
+
+    private final OAuth2UserDetailService oAuth2UserDetailService;
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity
-                .authorizeHttpRequests((authorizeHttpRequests) ->
-                        authorizeHttpRequests
-                                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-
+                .authorizeRequests()
+                .requestMatchers("/user/**").authenticated()
+                .requestMatchers("/user/**").access("hasAnyRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_LEADER')")
+                .requestMatchers("/leader/**").access("hasAnyRole('ROLE_LEADER')or hasRole('ROLE_ADMIN')")
+                .requestMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN')")
+                .requestMatchers("/","/logout").permitAll()
+                .and()
                 .headers((headers) -> headers.addHeaderWriter(
                         new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)
                 ))
 
                 .formLogin((formLogin) -> formLogin
-                        .loginPage("/loginFrom")
-                        .loginProcessingUrl("/login")
+                        .loginPage("/member/loginFrom")
+                        .loginProcessingUrl("/member/login")
                         .usernameParameter("memberEmail")
                         .passwordParameter("memberPassword")
                         .failureUrl("/fail")
                         .defaultSuccessUrl("/success"))
+                        .oauth2Login(oauth -> oauth.loginPage("/loginForm")
+                        .defaultSuccessUrl("/success")
+                        .failureUrl("/fail")
+                        .userInfoEndpoint(userInfoEndpointConfig-> userInfoEndpointConfig.userService(oAuth2UserDetailService)))
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/")
@@ -44,8 +57,8 @@ public class SpringSecurityConfig {
         return httpSecurity.build();
     }
 
-    @Bean
-    PasswordEncoder passwordEncoder() {return new BCryptPasswordEncoder();}
+  /*  @Bean
+    PasswordEncoder passwordEncoder() {return new BCryptPasswordEncoder();}*/
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();

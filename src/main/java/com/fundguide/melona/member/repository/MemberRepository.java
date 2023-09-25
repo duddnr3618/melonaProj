@@ -8,7 +8,9 @@ import java.util.List;
 public interface MemberRepository {
     void memberSave(MemberEntity memberEntity);
 
-    List<MemberEntity> findMember(String email , Integer age);
+    MemberEntity findMember(String email , String memberNickname);
 
     MemberEntity findByEmail(String username);
+
+    void updatePassword(Long memberId, String newPassword);
 }
