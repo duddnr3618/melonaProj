@@ -12,8 +12,8 @@ public interface LeaderBoardRepository extends JpaRepository<LeaderBoardEntity ,
     void updateHits(@Param("id") Long id);
 
     @Modifying
-    @Query(value = "update LeaderBoardEntity b set b.updatedTime = current_timestamp where b.id = :id")
-    void updateTime(@Param("id") Long id);
+    @Query("UPDATE LeaderBoardEntity b SET b.updatedTime = CURRENT_TIMESTAMP WHERE b.id = :id")
+    void updateBoardUpdateTime(@Param("id") Long id);
 
 
 }

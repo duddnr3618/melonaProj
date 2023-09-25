@@ -28,8 +28,20 @@ public class LeaderBoardEntity extends BaseBoardEntity {
     private String boardTitle;
     @Column(name = "boardContents")
     private String boardContents;
+
     @Column(name = "boardHits")
-    private long boardHits; //조회수
+    private Long boardHits = 0L; // 조회수
+
+// getter와 setter 메서드 추가
+
+    public Long getBoardHits() {
+        return boardHits;
+    }
+
+    public void setBoardHits(Long boardHits) {
+        this.boardHits = boardHits;
+    }
+
 
 
     // dto -> entity변환
@@ -38,13 +50,12 @@ public class LeaderBoardEntity extends BaseBoardEntity {
         leaderBoardEntity.setBoardWriter(leaderBoardDto.getBoardWriter());
         leaderBoardEntity.setBoardTitle(leaderBoardDto.getBoardTitle());
         leaderBoardEntity.setBoardContents(leaderBoardDto.getBoardContents());
-        leaderBoardEntity.setBoardHits(0);
+        leaderBoardEntity.setBoardHits(0L);
         return leaderBoardEntity;
     }
 
 
     public static LeaderBoardEntity toUpdateEntity(LeaderBoardDto leaderBoardDto) {
-
         LeaderBoardEntity leaderBoardEntity = new LeaderBoardEntity();
         leaderBoardEntity.setId(leaderBoardDto.getId());
         leaderBoardEntity.setBoardWriter(leaderBoardDto.getBoardWriter());
