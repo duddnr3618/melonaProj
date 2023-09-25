@@ -15,7 +15,7 @@
         <textarea name="boardContents" cols="60" rows="10" th:text="${leaderBoardUpdate.boardContents}"></textarea><br>
         <input type="hidden" name="boardHits" th:value="${leaderBoardUpdate.boardHits}">
         <input type="submit" value="수정">
-        <button th:href="@{/leaderBoard/list}" value="취소">취소</button>
+        <a th:href="@{/leaderBoard/list}" value="취소">취소</a>
     </form>
 </div>
 

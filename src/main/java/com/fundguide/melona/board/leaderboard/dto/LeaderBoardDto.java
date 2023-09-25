@@ -25,7 +25,13 @@ public class LeaderBoardDto {
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
 
-
+    public LeaderBoardDto(Long id, String boardWriter, String boardTitle, long boardHits, LocalDateTime createdTime) {
+        this.id = id;
+        this.boardWriter = boardWriter;
+        this.boardTitle = boardTitle;
+        this.boardHits = boardHits;
+        this.createdTime = createdTime;
+    }
 
     public static LeaderBoardDto toLeaderBoardDto (LeaderBoardEntity leaderBoardEntity) {
         LeaderBoardDto leaderBoardDto = new LeaderBoardDto();
