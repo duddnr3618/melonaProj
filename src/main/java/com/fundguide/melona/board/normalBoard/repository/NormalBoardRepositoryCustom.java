@@ -7,4 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface NormalBoardRepositoryCustom {
     Page<NormalBoardEntity> searchViewBoard(Pageable pageable, BoardSearchDTO searchDTO);
+    Page<NormalBoardEntity> filterViewBoard(Pageable pageable);
 }
