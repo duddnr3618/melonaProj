@@ -35,6 +35,7 @@ managementCategoryMap.forEach((managementList, viewCategory) => {
     });
 })
 
+/**게시판 관리*/
 id_DetailBoardFilter.find('li').click(function () {
     const categoryData = $(this).parents('ul').data('board-category');
     const filterData = $(this).data('board-filter');
@@ -45,6 +46,30 @@ id_DetailBoardFilter.find('li').click(function () {
 
     console.log(params.toString());
     axios.get(`management/board_filter_page?${params.toString()}`)
+        .then()
+        .catch();
+})
+
+/**유저 제재 관리*/
+id_DetailUserFilter.find('li').click(function () {
+    const filterData = $(this).data('user-filter');
+    const params = new URLSearchParams();
+    params.append('filter', filterData);
+
+    axios.get(`management/member_filter_page?${params.toString()}`)
+        .then(function (memberData) {
+
+        })
+        .catch();
+})
+
+/**유저 권한 관리*/
+id_DetailRoleFilter.find('li').click(function () {
+    const filterData = $(this).data('user-filter');
+    const params = new URLSearchParams();
+    params.append('filter', filterData);
+
+    axios.get(`management/member_role_filter_page?${params.toString()}`)
         .then()
         .catch();
 })
