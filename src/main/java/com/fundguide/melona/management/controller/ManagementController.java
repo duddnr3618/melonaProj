@@ -42,9 +42,6 @@ public class ManagementController {
     ) {
         System.out.println("보드 필터에서 넘어옴 -> 패스값 { " + category + " }");
         System.out.println("보드 필터에서 넘어옴 -> 패스값 { " + filter + " }");
-        //test
-        //test
-        //test
         return null;
     }
 
