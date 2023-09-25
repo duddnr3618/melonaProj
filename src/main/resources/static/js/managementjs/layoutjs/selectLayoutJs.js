@@ -58,35 +58,45 @@ id_DetailUserFilter.find('li').click(function () {
     const params = new URLSearchParams();
     params.append('filter', filterData);
 
+    let tableHTML = '<table>';
+    tableHTML += '<tr>';
+    tableHTML += '<th>Email</th>';
+    tableHTML += '<th>Name</th>';
+    tableHTML += '<th>Nickname</th>';
+    tableHTML += '<th>Role</th>';
+    tableHTML += '<th>LimitState</th>'
+    tableHTML += '</tr>';
+
     axios.get(`management/member_filter_page?${params.toString()}`)
         .then(function (memberData) {
-            //TODO 패스워드 넘어오지 않게 쿼리 수정할것
-            const memberPaging = memberData.data.content;
-            let tableHTML = '<table>';
 
-            tableHTML += '<tr>';
-            tableHTML += '<th>Email</th>';
-            tableHTML += '<th>Name</th>';
-            tableHTML += '<th>Nickname</th>';
-            tableHTML += '<th>Role</th>';
-            tableHTML += '<th>LimitState</th>'
-            tableHTML += '</tr>';
-
-            for (const index in memberPaging) {
+            const dataLength = memberData.data.content.length;
+            if (dataLength === 0) {
                 tableHTML += '<tr>';
-                tableHTML += `<td>${memberPaging[index].id}</td>`;
-                tableHTML += `<td>${memberPaging[index].memberEmail}</td>`;
-                tableHTML += `<td>${memberPaging[index].memberName}</td>`;
-                tableHTML += `<td>${memberPaging[index].memberNickname}</td>`;
-                tableHTML += `<td>${memberPaging[index].memberLimitState}</td>`;
+                tableHTML += `<td>관리할 대상이 존재하지 않습니다. 한가하시겠군요?</td>`
+                tableHTML += '</tr>';
+            }
+
+            const memberPaging = memberData.data.content;
+            for (const index in memberPaging) {
+                let member = memberPaging[index];
+
+                tableHTML += '<tr>';
+                tableHTML += `<td>${member.memberEmail}</td>`;
+                tableHTML += `<td>${member.memberName}</td>`;
+                tableHTML += `<td>${member.memberNickname}</td>`;
+                tableHTML += `<td>${member.memberRole}</td>`
+                tableHTML += `<td>${member.memberLimitState}</td>`;
                 tableHTML += `</tr>`;
             }
             tableHTML += '</table>';
 
             id_ResultTable.html(tableHTML);
-            console.log(tableHTML);
         })
-        .catch();
+        .catch(function () {
+            tableHTML += '<tr>';
+            tableHTML += `<td>오류! 기술자에게 연락하세요!</td>`;
+        });
 })
 
 /**유저 권한 관리*/

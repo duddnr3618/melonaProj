@@ -13,9 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.parser.Entity;
 import java.util.zip.DataFormatException;
@@ -34,35 +32,30 @@ public class ManagementController {
         return "management/management";
     }
 
-    @GetMapping("/board_filter_page{category}{filter}")
+    @GetMapping("/board_filter_page")
     public Page<Entity> getBoardCategoryFilterPagingResult(
-            @PathVariable("category") String category
-            , @PathVariable("filter") String filter
+            @RequestParam("category") String category
+            , @RequestParam("filter") String filter
             , Model model
     ) {
-        System.out.println("보드 필터에서 넘어옴 -> 패스값 { " + category + " }");
-        System.out.println("보드 필터에서 넘어옴 -> 패스값 { " + filter + " }");
         return null;
     }
 
-    @GetMapping("/member_filter_page{filter}")
-    public void getMemberLimitStatePagingResult(
-            @PathVariable("filter") String filter
+    @GetMapping("/member_filter_page")
+    @ResponseBody
+    public Page<MemberEntity> getMemberLimitStatePagingResult(
+            @RequestParam("filter") String filter
             , Model model
             ) throws DataFormatException {
 
         Sort sort = Sort.by("memberJoinData").descending();
         Pageable pageable = PageRequest.of(0,20, sort);
 
-        System.out.println("매니지먼트 컨트롤에서 넘어옴 -> filter? { " + filter + " }");
-        Page<MemberEntity> memberFilterPaging;
         if (filter.equals("all")) {
-            memberFilterPaging = memberService.getMemberPage(pageable);
+            return memberService.getMemberPage(pageable);
         } else {
-            memberFilterPaging = managementService.getMemberLimitStatePaging(pageable, filter);
+            return managementService.getMemberLimitStatePaging(pageable, filter);
         }
-
-        model.addAttribute("filterResult", memberFilterPaging);
     }
 
     @GetMapping("/member_role_filter_page{filter}")
