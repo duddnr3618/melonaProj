@@ -20,6 +20,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
          * 는 웹소켓을 지원하지 않는 브라우저에
          * 폴백 옵션을 활성화하는데 사용됩니다.
          * */
+
+
+
     }
 
     @Override
