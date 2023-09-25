@@ -1,28 +1,13 @@
 @charset "UTF-8";
 
-html {
-    position: relative;
-    min-height: 100%;
+html, body {
+    height: 100%;
     margin: 0;
-}
-body {
-    min-height: 100%;
+    padding: 0;
 }
 
-.footer {
-    background-color: #f8f9fa;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    padding: 15px 0;
-    text-align: center;
-    margin: 3px 0;
+body {
+    padding-bottom: 60px;  /* 푸터의 높이보다 조금 더 클 수 있도록 설정 (여기서는 60px로 예시) */
 }
-.content{
-    margin-bottom:100px;
-    margin-top: 50px;
-    margin-left: 200px;
-    margin-right: 200px;
-}
+
+
