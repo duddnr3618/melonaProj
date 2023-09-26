@@ -5,9 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+
 @RequiredArgsConstructor
 public class NormalBoardCategoryHandler implements FilterCategoryHandler {
-    private NormalBoardRepository normalBoardRepository;
+    private final NormalBoardRepository normalBoardRepository;
 
     @Override
     public Page<?> handleFilterCategory(String filter, Pageable pageable) {

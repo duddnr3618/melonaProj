@@ -27,10 +27,10 @@ public class ManagementService {
      * @return FilterPage*/
     public Page<?> getBoardCategoryFilterPaging(String category, String filter, Pageable pageable) throws IllegalAccessException {
         if (category.equals("normal")) {
-            NormalBoardCategoryHandler normalBoardCategoryHandler = new NormalBoardCategoryHandler();
+            NormalBoardCategoryHandler normalBoardCategoryHandler = new NormalBoardCategoryHandler(normalBoardRepository);
             return normalBoardCategoryHandler.handleFilterCategory(filter, pageable);
         } else if (category.equals("leader")) {
-            LeaderBoardCategoryHandler leaderBoardCategoryHandler = new LeaderBoardCategoryHandler();
+            LeaderBoardCategoryHandler leaderBoardCategoryHandler = new LeaderBoardCategoryHandler(leaderBoardRepository);
             return leaderBoardCategoryHandler.handleFilterCategory(filter, pageable);
         } else {
             throw new IllegalAccessException("정의된 카테고리 값이 아닙니다.");

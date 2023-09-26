@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 @RequiredArgsConstructor
 public class LeaderBoardCategoryHandler implements FilterCategoryHandler {
-    private LeaderBoardRepository leaderBoardRepository;
+    private final LeaderBoardRepository leaderBoardRepository;
 
     @Override
     public Page<?> waringPage(Pageable pageable) {
