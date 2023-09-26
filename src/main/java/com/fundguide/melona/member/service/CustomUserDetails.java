@@ -34,7 +34,6 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
             return memberEntity.getMemberRole();
         });
         return grantedAuthorities;
-
     }
 
     @Override
