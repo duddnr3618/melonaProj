@@ -89,18 +89,22 @@ public class MemberRepositoryJpa implements MemberRepository {
     }
 
     @Override
-    public Page<MemberEntity> memberRoleStatePage(Pageable pageable) {
+    public Page<MemberRoleFilterDTO> memberRoleStatePage(Pageable pageable) {
         JPQLQuery<MemberRoleFilterDTO> subquery = JPAExpressions
-                .select(new QMemberRoleFilterDTO(memberEntity.memberName, memberEntity.memberNickname, memberEntity.memberRole, memberEntity.memberLimitState))
+                .select(new QMemberRoleFilterDTO(
+                        memberEntity.memberName,
+                        memberEntity.memberNickname,
+                        memberEntity.memberRole,
+                        memberEntity.memberLimitState
+                ))
                 .from(memberEntity);
 
-
-        return null;
+        return getMemberEntities(subquery, pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public PageImpl<MemberRoleState> memberRoleStatePage(String filter, Pageable pageable) {
+    public Page<MemberRoleFilterDTO> memberRoleStatePage(String filter, Pageable pageable) {
         switch (filter) {
             case "autoGet" -> {
                 expression = memberEntity.memberRole.eq(MemberRoleState.ROLE_AUTO_LEADER);
@@ -111,8 +115,13 @@ public class MemberRepositoryJpa implements MemberRepository {
             default -> throw new IllegalArgumentException("정의되지 않은 필터 값입니다.");
         }
 
-        JPAQuery<MemberRoleState> jpaQuery = this.query
-                .select(memberEntity.memberRole)
+        JPAQuery<MemberRoleFilterDTO> jpaQuery = this.query
+                .select(new QMemberRoleFilterDTO(
+                        memberEntity.memberName,
+                        memberEntity.memberNickname,
+                        memberEntity.memberRole,
+                        memberEntity.memberLimitState
+                ))
                 .from(memberEntity)
                 .where(expression);
 
@@ -120,6 +129,15 @@ public class MemberRepositoryJpa implements MemberRepository {
     }
 
     private <Member> PageImpl<Member> getMemberEntities(JPAQuery<Member> jpaQuery ,Pageable pageable) {
+        long total = jpaQuery.fetch().size();
+        List<Member> memberEntities = jpaQuery
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        return new PageImpl<>(memberEntities, pageable, total);
+    }
+
+    private <Member> PageImpl<Member> getMemberEntities(JPQLQuery<Member> jpaQuery ,Pageable pageable) {
         long total = jpaQuery.fetch().size();
         List<Member> memberEntities = jpaQuery
                 .offset(pageable.getOffset())

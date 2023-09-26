@@ -2,6 +2,7 @@ package com.fundguide.melona.management.controller;
 
 import com.fundguide.melona.board.normalBoard.service.NormalBoardCommandService;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardQueryService;
+import com.fundguide.melona.management.dto.MemberRoleFilterDTO;
 import com.fundguide.melona.management.service.ManagementService;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.role.MemberRoleState;
@@ -60,7 +61,7 @@ public class ManagementController {
 
     @GetMapping("/member_role_filter_page")
     @ResponseBody
-    public Page<MemberRoleState> getMemberRolePagingResult(
+    public Page<MemberRoleFilterDTO> getMemberRolePagingResult(
             @RequestParam("filter") String filter) {
         return managementService.getMemberRoleStatePaging(filter, pageable_Member);
     }

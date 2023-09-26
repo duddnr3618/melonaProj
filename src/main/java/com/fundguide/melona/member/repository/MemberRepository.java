@@ -1,6 +1,7 @@
 package com.fundguide.melona.member.repository;
 
 
+import com.fundguide.melona.management.dto.MemberRoleFilterDTO;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.role.MemberRoleState;
@@ -19,6 +20,6 @@ public interface MemberRepository {
 
     Page<MemberEntity> memberLimitStatePage(MemberLimitState state, Pageable pageable);
 
-    Page<MemberEntity> memberRoleStatePage(Pageable pageable);
-    Page<MemberRoleState> memberRoleStatePage(String filter , Pageable pageable);
+    Page<MemberRoleFilterDTO> memberRoleStatePage(Pageable pageable);
+    Page<MemberRoleFilterDTO> memberRoleStatePage(String filter , Pageable pageable);
 }

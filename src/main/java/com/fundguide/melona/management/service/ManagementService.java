@@ -2,6 +2,7 @@ package com.fundguide.melona.management.service;
 
 import com.fundguide.melona.board.leaderboard.repository.LeaderBoardRepository;
 import com.fundguide.melona.board.normalBoard.repository.NormalBoardRepository;
+import com.fundguide.melona.management.dto.MemberRoleFilterDTO;
 import com.fundguide.melona.management.service.filter.LeaderBoardCategoryHandler;
 import com.fundguide.melona.management.service.filter.NormalBoardCategoryHandler;
 import com.fundguide.melona.member.entity.MemberEntity;
@@ -9,9 +10,7 @@ import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
 import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.role.MemberRoleState;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -46,7 +45,7 @@ public class ManagementService {
         return memberRepository.memberLimitStatePage(limitState, pageable);
     }
 
-    public Page<MemberRoleState> getMemberRoleStatePaging(String filter, Pageable pageable) throws NoSuchElementException {
+    public Page<MemberRoleFilterDTO> getMemberRoleStatePaging(String filter, Pageable pageable) throws NoSuchElementException {
         switch (filter) {
             case "minSatisfy" -> {
                 return null;
