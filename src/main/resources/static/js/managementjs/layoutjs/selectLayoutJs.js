@@ -1,3 +1,6 @@
+
+// noinspection JSUnresolvedReference
+
 $(function () {
 
 })
@@ -73,7 +76,7 @@ id_DetailUserFilter.find('li').click(function () {
             const dataLength = memberData.data.content.length;
             if (dataLength === 0) {
                 tableHTML += '<tr>';
-                tableHTML += `<td>관리할 대상이 존재하지 않습니다. 한가하시겠군요?</td>`
+                tableHTML += `<td colspan="5">관리할 대상이 존재하지 않습니다. 한가하시겠군요?</td>`
                 tableHTML += '</tr>';
             }
 
