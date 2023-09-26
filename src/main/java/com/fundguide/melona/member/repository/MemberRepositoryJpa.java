@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.fundguide.melona.member.entity.QMemberEntity.memberEntity;
@@ -90,5 +91,18 @@ public class MemberRepositoryJpa implements MemberRepository {
         memberEntity1.setMemberNickname(memberEntity.getMemberNickname());
         memberEntity1.setMemberName(memberEntity.getMemberName());
         memberEntity1.setMemberAddress(memberEntity.getMemberAddress());
+    }
+
+    @Override
+    @Transactional
+    public void withdraw(Long id) {
+        MemberEntity memberEntity = em.find(MemberEntity.class, id);
+            memberEntity.setMemberAvailable("no");
+            memberEntity.setMemberEmail("탈퇴한사용자"+ memberEntity.getId());
+            memberEntity.setMemberNickname("탈퇴한사용자"+memberEntity.getId()+new Date());
+            memberEntity.setMemberRole("탈퇴한사용자");
+            memberEntity.setMemberAddress("탈퇴한사용자");
+            memberEntity.setMemberName("탈퇴한사용자");
+
     }
 }

@@ -101,23 +101,7 @@ public class MemberController {
         memberService.findPassword(memberEmail);
         return "ok";
     }
-    @GetMapping("user/member/beforeChangePasswordForm")  // 탈퇴/비밀번호 변경전에 본인확인폼
-    public String beforeChangePasswordForm(@AuthenticationPrincipal CustomUserDetails customUserDetails,Model model,RedirectAttributes redirectAttributes){
-        if(redirectAttributes.getAttribute("wrong")!=null){
-            model.addAttribute("wrong",redirectAttributes.getAttribute("wrong"));
-        }
-        model.addAttribute("id", customUserDetails.getMemberEntity().getId());
-        return "member/beforChangePasswordForm";
-    }
-    @PostMapping("user/member/passwordConfirmPro")   // 탈퇴/비밀번호 변경전 본인확인
-    public String passwordConfirmPro(@ModelAttribute MemberDto memberDto,RedirectAttributes redirectAttributes){
-        boolean result = memberService.beforeMemberDelteCheckPassword(memberDto);
-        if(result) return "redirect:/";
-        else {
-            redirectAttributes.addAttribute("wrong","비밀번호를확인하세요." );
-            return "redirect:/user/member/beforeChangePasswordForm";
-        }
-        }
+
     @GetMapping("user/member/updateForm")   // 회원정보수정 폼으로 이동
     public String memberUpdateForm(Model model,@AuthenticationPrincipal CustomUserDetails customUserDetails){
         Long id = customUserDetails.getMemberEntity().getId();
@@ -129,5 +113,33 @@ public class MemberController {
     public String memberUpdate(@ModelAttribute MemberDto memberDto){
         memberService.memberUpdate(memberDto);
         return "redirect:/";
+    }
+    @GetMapping("user/member/beforeChangePasswordForm")  // 탈퇴/비밀번호 변경전에 본인확인폼
+    public String beforeChangePasswordForm(@AuthenticationPrincipal CustomUserDetails customUserDetails,Model model,RedirectAttributes redirectAttributes){
+        if(redirectAttributes.getAttribute("wrong")!=null){
+            model.addAttribute("wrong",redirectAttributes.getAttribute("wrong"));
+        }
+        model.addAttribute("id", customUserDetails.getMemberEntity().getId());
+        return "member/beforChangePasswordForm";
+    }
+    @PostMapping("user/member/passwordConfirmPro")   // 탈퇴/비밀번호 변경전 본인확인
+    public String passwordConfirmPro(@ModelAttribute MemberDto memberDto,RedirectAttributes redirectAttributes){
+        boolean result = memberService.beforeMemberDelteCheckPassword(memberDto);
+        if(result) return "redirect:/user/member/withdrawForm";
+        else {
+            redirectAttributes.addAttribute("wrong","비밀번호를확인하세요." );
+            return "redirect:/user/member/beforeChangePasswordForm";
+        }
+    }
+    @GetMapping("user/member/withdrawForm")  // 탈퇴버튼페이지
+    public String withdrawForm(){
+        return "member/withdrawUser";
+    }
+    @GetMapping("/user/member/withdraw")   // 탈퇴
+    @ResponseBody
+    public String withdraw(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+        Long id = customUserDetails.getMemberEntity().getId();
+        memberService.withdraw(id);
+        return "/logout";
     }
 }

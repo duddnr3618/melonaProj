@@ -15,4 +15,6 @@ public interface MemberRepository {
     void updatePassword(Long memberId, String newPassword);
 
     void memberUpdate(MemberEntity memberEntity);
+
+    void withdraw(Long id);
 }

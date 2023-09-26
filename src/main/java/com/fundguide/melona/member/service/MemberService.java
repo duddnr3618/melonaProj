@@ -97,4 +97,9 @@ public class MemberService {
         boolean matches = utilsPasswordEncoder.matches(memberDto.getMemberPassword(), memberEntity.getMemberPassword());
     return matches;
     }
+
+    public void withdraw(Long id) {
+        memberRepository.withdraw(id);
+
+    }
 }
