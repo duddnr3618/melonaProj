@@ -1,5 +1,6 @@
 package com.fundguide.melona.member.controller;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.fundguide.melona.member.dto.MemberDto;
 import com.fundguide.melona.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -25,16 +26,15 @@ public class MemberController {
 
     @GetMapping("/joinForm")
     public String joinForm(){
-
         return "member/joinFrom";
     }
-    @PostMapping("/join")
-    public String memberSave(@ModelAttribute MemberDto memberDto) {
-        /*memberService.memberSave(memberDto);*/
-
-        memberService.memberSave(memberDto);
-        return "member/success";
-    }
+//    @PostMapping("/join")
+//    public String memberSave(@ModelAttribute MemberDto memberDto) {
+//        /*memberService.memberSave(memberDto);*/
+//
+//        memberService.memberSave(memberDto);
+//        return "member/success";
+//    }
     @GetMapping("/success")
     public String success(){
         return "member/success";

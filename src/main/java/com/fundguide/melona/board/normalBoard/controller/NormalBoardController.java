@@ -1,6 +1,6 @@
 package com.fundguide.melona.board.normalBoard.controller;
 
-import com.fundguide.melona.board.dto.CommonBoardSearchDTO;
+import com.fundguide.melona.board.common.dto.BoardSearchDTO;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardQueryService;
 import lombok.RequiredArgsConstructor;

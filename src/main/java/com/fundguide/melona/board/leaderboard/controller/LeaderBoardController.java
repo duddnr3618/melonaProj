@@ -47,10 +47,11 @@ public class LeaderBoardController {
 
     // 게시글 상세보기
     @GetMapping("/{id}")
-    public String findById (@PathVariable Long id , Model model) {
+    public String findById (@PathVariable Long id , Model model , @PageableDefault (page = 1)Pageable pageable) {
         leaderBoardService.updateHits(id);
         LeaderBoardDto leaderBoardDto =  leaderBoardService.findById(id);
         model.addAttribute("leaderBoard" , leaderBoardDto);
+        model.addAttribute("page",pageable.getPageNumber());
         return "/board/leader/detail";
     }
 

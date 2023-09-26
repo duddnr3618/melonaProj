@@ -3,6 +3,7 @@ package com.fundguide.melona.member.service;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.dto.MemberDto;
+import com.fundguide.melona.member.repository.MemberRepositoryData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,11 +16,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class MemberService {
 
-    private MemberRepository memberRepository;
 
-/*    public Page<MemberEntity> getMemberPage(Pageable pageable) {
-        return memberRepository.findAll (pageable);
-    }*/
+    private MemberRepositoryData memberRepositoryData;
+
+    public Page<MemberEntity> getMemberPage(Pageable pageable) {
+        return memberRepositoryData.findAll(pageable);
+    }
 
 
     private final PasswordEncoder BCryptPasswordEncoder;
