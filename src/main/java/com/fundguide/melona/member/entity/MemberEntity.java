@@ -30,9 +30,9 @@ public class MemberEntity {
 
 
 
- /* @PrePersist
+  @PrePersist
   protected void onCreate() {
     memberJoinDate = LocalDate.now();
-  }*/
+  }
 
 }

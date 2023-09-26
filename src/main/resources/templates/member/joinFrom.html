@@ -132,7 +132,7 @@
             </div>
             <div class="col-4">
                 <label for="memberAddress">주소</label>
-                <input type="text" required id="memberAddress" th:field="*{memberAddress}" class="form-control"
+                <input type="text"  id="memberAddress" th:field="*{memberAddress}" class="form-control"
                        th:errorclass="field-error" placeholder="주소는 입력 하셔도 되고 안하셔도 됩니다."
                        maxlength="100">
                 <div class="field-error" th:errors="*{memberAddress}"/>
@@ -199,12 +199,12 @@
             let url = "duplicatedCheck";
             let data;
             if (btnId === 'email') {
-                emailDupleCheck = true;
+
                 data = {
                     "memberEmail": memberEmail
                 }
             } else {
-                nicknameDupleCheck = true;
+
                 data = {
                     "memberNickname": memberNickname
                 }
@@ -212,6 +212,15 @@
             axios.post(url, data)
                 .then(function (response) {
                     alert(response.data);
+                    if (btnId === 'email') {
+                        if(response.data==='ok'){
+                            emailDupleCheck = true;
+                        }
+                    }else{
+                        if(response.data==='ok'){
+                            nicknameDupleCheck = true;
+                        }
+                    }
                     console.log(response.data);
                 })
                 .catch(function (error) {

@@ -13,4 +13,6 @@ public interface MemberRepository {
     MemberEntity findByEmail(String username);
 
     void updatePassword(Long memberId, String newPassword);
+
+    void memberUpdate(MemberEntity memberEntity);
 }

@@ -82,4 +82,13 @@ public class MemberRepositoryJpa implements MemberRepository {
         MemberEntity memberEntity = em.find(MemberEntity.class, memberId);
         memberEntity.setMemberPassword(newPassword);
     }
+
+    @Override
+    @Transactional
+    public void memberUpdate(MemberEntity memberEntity) {
+        MemberEntity memberEntity1 = em.find(MemberEntity.class, memberEntity.getId());
+        memberEntity1.setMemberNickname(memberEntity.getMemberNickname());
+        memberEntity1.setMemberName(memberEntity.getMemberName());
+        memberEntity1.setMemberAddress(memberEntity.getMemberAddress());
+    }
 }

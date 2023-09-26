@@ -101,16 +101,33 @@ public class MemberController {
         memberService.findPassword(memberEmail);
         return "ok";
     }
-   /* @GetMapping("user/member/beforeChangePasswordForm")  // 탈퇴/비밀번호 변경전에 본인확인폼
-    public String beforeChangePasswordForm(@AuthenticationPrincipal CustomUserDetails customUserDetails,Model model,MemberDto memberDto){
-        model.addAttribute("memberDto", memberDto);
-        model.addAttribute("memberId", customUserDetails.getMemberEntity().getId());
+    @GetMapping("user/member/beforeChangePasswordForm")  // 탈퇴/비밀번호 변경전에 본인확인폼
+    public String beforeChangePasswordForm(@AuthenticationPrincipal CustomUserDetails customUserDetails,Model model,RedirectAttributes redirectAttributes){
+        if(redirectAttributes.getAttribute("wrong")!=null){
+            model.addAttribute("wrong",redirectAttributes.getAttribute("wrong"));
+        }
+        model.addAttribute("id", customUserDetails.getMemberEntity().getId());
         return "member/beforChangePasswordForm";
     }
     @PostMapping("user/member/passwordConfirmPro")   // 탈퇴/비밀번호 변경전 본인확인
-    public String passwordConfirmPro(@ModelAttribute MemberDto memberDto){
-        System.out.println("여기오니");
-        log.info("pass={}",memberDto.getMemberPassword());
+    public String passwordConfirmPro(@ModelAttribute MemberDto memberDto,RedirectAttributes redirectAttributes){
+        boolean result = memberService.beforeMemberDelteCheckPassword(memberDto);
+        if(result) return "redirect:/";
+        else {
+            redirectAttributes.addAttribute("wrong","비밀번호를확인하세요." );
+            return "redirect:/user/member/beforeChangePasswordForm";
+        }
+        }
+    @GetMapping("user/member/updateForm")   // 회원정보수정 폼으로 이동
+    public String memberUpdateForm(Model model,@AuthenticationPrincipal CustomUserDetails customUserDetails){
+        Long id = customUserDetails.getMemberEntity().getId();
+        MemberDto memberDto = memberService.findById(id);
+        model.addAttribute("memberDto", memberDto);
+        return "member/memberUpdateForm";
+    }
+    @PostMapping("/user/member/updatePro")  // 회원정보수정
+    public String memberUpdate(@ModelAttribute MemberDto memberDto){
+        memberService.memberUpdate(memberDto);
         return "redirect:/";
-    }*/
+    }
 }

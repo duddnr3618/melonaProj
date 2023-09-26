@@ -4,6 +4,7 @@ import com.fundguide.melona.member.dto.MemberDto;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.mapper.MemberTransMapper;
 import com.fundguide.melona.member.repository.MemberRepository;
+import com.fundguide.melona.member.repository.MemberRepositoryData;
 import com.fundguide.melona.member.utils.MainSend;
 import com.fundguide.melona.member.utils.UtilsPasswordEncoder;
 import lombok.RequiredArgsConstructor;
@@ -13,13 +14,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 @Slf4j
 public class MemberService {
-
+    private final MemberRepositoryData memberRepositoryData;
     private final MemberRepository memberRepository;
     private final PasswordEncoder utilsPasswordEncoder ;
     private final MainSend mainSend;
@@ -33,8 +35,6 @@ public class MemberService {
         memberRepository.memberSave(memberEntity);
     }
 
-    public void memberUpdate() {
-    }
 
     public MemberDto duplicatedCheck(MemberDto memberDto) {
         MemberEntity member = memberRepository.findMember(memberDto.getMemberEmail(), memberDto.getMemberNickname());
@@ -72,4 +72,29 @@ public class MemberService {
         return newPassword;
     }
 
+    public MemberDto findById(Long id) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepositoryData.findById(id);
+        if(optionalMemberEntity.isPresent()){
+            MemberDto memberDto = MemberTransMapper.INSTANCE.entityToDto(optionalMemberEntity.get());
+            return memberDto;
+        }else{
+            MemberDto memberDto = new MemberDto();
+            memberDto.setMemberEmail("no data");
+            return memberDto;
+        }
+
+    }
+
+    public void memberUpdate(MemberDto memberDto) {
+        MemberEntity memberEntity = MemberTransMapper.INSTANCE.dtoToEntity(memberDto);
+        memberRepository.memberUpdate(memberEntity);
+    }
+
+    public boolean beforeMemberDelteCheckPassword(MemberDto memberDto) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepositoryData.findById(memberDto.getId());
+        MemberEntity memberEntity = optionalMemberEntity.orElseGet(() ->{
+        return new MemberEntity();});
+        boolean matches = utilsPasswordEncoder.matches(memberDto.getMemberPassword(), memberEntity.getMemberPassword());
+    return matches;
+    }
 }

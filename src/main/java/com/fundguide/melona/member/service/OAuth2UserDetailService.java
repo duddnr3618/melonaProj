@@ -42,7 +42,7 @@ public class OAuth2UserDetailService extends DefaultOAuth2UserService {
         if(memberEntity==null){
             var uuid = UUID.randomUUID();
             String variable = uuid.toString().substring(0, 7);
-            String role ="ROLE_TEMP";
+            String role ="ROLE_USER";
             String available = "yes";
             memberEntity = new MemberEntity();
             memberEntity.setMemberEmail(oauth2Member.getMemberEmail());
