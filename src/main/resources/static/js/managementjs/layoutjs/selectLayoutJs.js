@@ -3,7 +3,7 @@
 $(function () {
 
 })
-
+const PUTINWORK = "관리할 대상이 존재하지 않습니다. 일거리를 더 만들어내세요.";
 const id_ResultTable = $('#ResultTable');
 const id_ResultPageLinkButton = $('#ResultPageLinkButton');
 
@@ -41,7 +41,7 @@ id_DetailBoardFilter.find('li').click(function () {
             TableHtmlHandler(titleArray, boardPaging, boardKey);
         })
         .catch(function () {
-            TableErrorHandler(titleArray.length);
+            TableErrorHandler(titleArray);
         });
 })
 
@@ -51,31 +51,40 @@ id_DetailUserFilter.find('li').click(function () {
     const params = new URLSearchParams();
     params.append('filter', filterData);
 
-    let titleArray = ["Email", "Name", "Nickname", "Role", "LimitState"];
+    let titleArray = ["Name", "Nickname", "Role", "LimitState"];
     axios.get(`management/member_filter_page?${params.toString()}`)
         .then(function (memberData) {
 
             const memberPaging = memberData.data.content;
-            const memberKey = ["memberEmail", "memberName", "memberNickname", "memberRole", "memberLimitState"];
+            const memberKey = ["memberName", "memberNickname", "memberRole", "memberLimitState"];
 
             TableHtmlHandler(titleArray, memberPaging, memberKey);
 
             /**TODO 하단 페이지 이동 버튼 생성*/
         })
         .catch(function () {
-            TableErrorHandler(titleArray.length);
+            TableErrorHandler(titleArray);
         });
 })
 
 /**유저 권한 관리*/
 id_DetailRoleFilter.find('li').click(function () {
-    const filterData = $(this).data('user-filter');
+    const filterData = $(this).data('role-filter');
     const params = new URLSearchParams();
     params.append('filter', filterData);
 
+    let titleArray = ["Name", "Nickname", "Role", "LimitState"];
     axios.get(`management/member_role_filter_page?${params.toString()}`)
-        .then()
-        .catch();
+        .then(function (roleData) {
+            const memberPaging = roleData.data.content;
+            const memberKey = ["memberName", "memberNickname", "memberRole", "memberLimitState"];
+            console.log(roleData);
+
+            TableHtmlHandler(titleArray, memberPaging, memberKey);
+        })
+        .catch(function () {
+            TableErrorHandler(titleArray);
+        });
 })
 
 
@@ -111,11 +120,10 @@ function TableHtmlHandler(titleArray, targetPaging, targetPagingKey) {
         tableHTML += `<th>${index}</th>`;
     });
     tableHTML += '</tr>';
-
     const dataLength = targetPaging.length;
     if (dataLength === 0) {
         tableHTML += '<tr>';
-        tableHTML += `<td colspan="${titleArray.length}">관리할 대상이 존재하지 않습니다. 한가하시겠군요?</td>`
+        tableHTML += `<td colspan="${titleArray.length}">${PUTINWORK}</td>`
         tableHTML += '</tr>';
     }
 
@@ -132,9 +140,21 @@ function TableHtmlHandler(titleArray, targetPaging, targetPagingKey) {
 }
 
 /**테이블 반환하는 Axios에서 에러시 반환하는 테이블값*/
-function TableErrorHandler(length) {
-    let tableHTML = '<tr>';
-    tableHTML += `<td colspan="${length}">오류! 기술자에게 연락하세요!</td>`;
+function TableErrorHandler(titleArray) {
+    let tableHTML = '<table>';
+    tableHTML += '<tr>';
+    if (titleArray === undefined) {
+        tableHTML += '<td>오류!!</td>';
+        tableHTML += '</tr>';
+        tableHTML += `<td>오류! 기술자에게 연락하세요!</td>`;
+    } else {
+        titleArray.forEach((index) => {
+            tableHTML += `<th>${index}</th>`;
+        });
+        tableHTML += '</tr>';
+        tableHTML += `<td colspan="${titleArray.length}">오류! 기술자에게 연락하세요!</td>`;
+    }
+    tableHTML += '</table>';
     id_ResultTable.html(tableHTML);
 }
 

@@ -1,8 +1,13 @@
 package com.fundguide.melona.member.repository;
 
+import com.fundguide.melona.management.dto.MemberRoleFilterDTO;
+import com.fundguide.melona.management.dto.QMemberRoleFilterDTO;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.role.MemberLimitState;
+import com.fundguide.melona.member.role.MemberRoleState;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -16,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
-
 import static com.fundguide.melona.member.entity.QMemberEntity.memberEntity;
 
 @Repository
@@ -74,18 +78,53 @@ public class MemberRepositoryJpa implements MemberRepository {
 
     /**memberRepositoryCustom -> this.class 병합*/
     @Override
+    @Transactional(readOnly = true)
     public Page<MemberEntity> memberLimitStatePage(MemberLimitState state, Pageable pageable) {
         expression = memberEntity.memberLimitState.eq(state);
 
-        JPAQuery<MemberEntity> query = this.query.selectFrom(memberEntity);
-        long total = query.fetch().size();
+        JPAQuery<MemberEntity> jpaQuery = this.query.selectFrom(memberEntity)
+                .where(expression);
 
-        List<MemberEntity> memberList = query
-                .where(expression)
+        return getMemberEntities(jpaQuery, pageable);
+    }
+
+    @Override
+    public Page<MemberEntity> memberRoleStatePage(Pageable pageable) {
+        JPQLQuery<MemberRoleFilterDTO> subquery = JPAExpressions
+                .select(new QMemberRoleFilterDTO(memberEntity.memberName, memberEntity.memberNickname, memberEntity.memberRole, memberEntity.memberLimitState))
+                .from(memberEntity);
+
+
+        return null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PageImpl<MemberRoleState> memberRoleStatePage(String filter, Pageable pageable) {
+        switch (filter) {
+            case "autoGet" -> {
+                expression = memberEntity.memberRole.eq(MemberRoleState.ROLE_AUTO_LEADER);
+            }
+            case "setAdmin" -> {
+                expression = memberEntity.memberRole.eq(MemberRoleState.ROLE_SET_LEADER);
+            }
+            default -> throw new IllegalArgumentException("정의되지 않은 필터 값입니다.");
+        }
+
+        JPAQuery<MemberRoleState> jpaQuery = this.query
+                .select(memberEntity.memberRole)
+                .from(memberEntity)
+                .where(expression);
+
+        return getMemberEntities(jpaQuery, pageable);
+    }
+
+    private <Member> PageImpl<Member> getMemberEntities(JPAQuery<Member> jpaQuery ,Pageable pageable) {
+        long total = jpaQuery.fetch().size();
+        List<Member> memberEntities = jpaQuery
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
-
-        return new PageImpl<>(memberList, pageable, total);
+        return new PageImpl<>(memberEntities, pageable, total);
     }
 }

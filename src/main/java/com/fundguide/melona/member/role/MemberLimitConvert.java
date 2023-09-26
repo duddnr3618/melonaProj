@@ -3,6 +3,8 @@ package com.fundguide.melona.member.role;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
+import java.util.NoSuchElementException;
+
 @Converter
 public class MemberLimitConvert implements AttributeConverter<MemberLimitState, String> {
 
@@ -18,6 +20,6 @@ public class MemberLimitConvert implements AttributeConverter<MemberLimitState, 
                 return memberLimitState;
             }
         }
-        throw new RuntimeException("유저 상태값 존재하지 않음");
+        throw new NoSuchElementException("유저 상태값 존재하지 않음");
     }
 }

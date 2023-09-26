@@ -4,7 +4,7 @@ import com.fundguide.melona.board.normalBoard.service.NormalBoardCommandService;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardQueryService;
 import com.fundguide.melona.management.service.ManagementService;
 import com.fundguide.melona.member.entity.MemberEntity;
-import com.fundguide.melona.member.role.MemberLimitState;
+import com.fundguide.melona.member.role.MemberRoleState;
 import com.fundguide.melona.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,41 +27,41 @@ public class ManagementController {
     private final NormalBoardQueryService normalBoardQueryService;
     private final ManagementService managementService;
 
+    Sort sort_Member = Sort.by("memberJoinData").descending();
+    Pageable pageable_Member = PageRequest.of(0, 20, sort_Member);
+    Sort sort_Board = Sort.by("createdTime").descending();
+    Pageable pageable_Board = PageRequest.of(0, 20, sort_Board);
+
     @GetMapping
     public String mainManagementView() {
         return "management/management";
     }
 
     @GetMapping("/board_filter_page")
-    public Page<Entity> getBoardCategoryFilterPagingResult(
+    @ResponseBody
+    public Page<?> getBoardCategoryFilterPagingResult(
             @RequestParam("category") String category
-            , @RequestParam("filter") String filter
-            , Model model
-    ) {
-        return null;
+            , @RequestParam("filter") String filter) throws IllegalAccessException {
+
+        return managementService.getBoardCategoryFilterPaging(category, filter, pageable_Board);
     }
 
     @GetMapping("/member_filter_page")
     @ResponseBody
     public Page<MemberEntity> getMemberLimitStatePagingResult(
-            @RequestParam("filter") String filter
-            , Model model
-            ) throws DataFormatException {
-
-        Sort sort = Sort.by("memberJoinData").descending();
-        Pageable pageable = PageRequest.of(0,20, sort);
+            @RequestParam("filter") String filter) {
 
         if (filter.equals("all")) {
-            return memberService.getMemberPage(pageable);
+            return memberService.getMemberPage(pageable_Member);
         } else {
-            return managementService.getMemberLimitStatePaging(pageable, filter);
+            return managementService.getMemberLimitStatePaging(filter, pageable_Member);
         }
     }
 
-    @GetMapping("/member_role_filter_page{filter}")
-    public Page<MemberEntity> getMemberRolePagingResult(
-            @PathVariable("filter") String role
-    ) {
-        return null;
+    @GetMapping("/member_role_filter_page")
+    @ResponseBody
+    public Page<MemberRoleState> getMemberRolePagingResult(
+            @RequestParam("filter") String filter) {
+        return managementService.getMemberRoleStatePaging(filter, pageable_Member);
     }
 }

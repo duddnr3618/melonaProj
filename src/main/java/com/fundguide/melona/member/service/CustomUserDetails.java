@@ -1,6 +1,7 @@
 package com.fundguide.melona.member.service;
 
 import com.fundguide.melona.member.entity.MemberEntity;
+import com.fundguide.melona.member.role.MemberRoleState;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -16,13 +17,16 @@ import java.util.Collection;
 public class CustomUserDetails implements UserDetails {
 
     private final MemberEntity memberEntity;
+    private final Collection<MemberRoleState> memberRoleStateCollection;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        grantedAuthorities.add(memberEntity::getMemberRole);
-        return grantedAuthorities;
 
+        for (MemberRoleState role : memberRoleStateCollection) {
+            grantedAuthorities.add(role.toGrantedAuthority());
+        }
+        return grantedAuthorities;
     }
 
     @Override
