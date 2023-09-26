@@ -57,7 +57,8 @@ public class ManagementController {
         System.out.println("매니지먼트 컨트롤에서 넘어옴 -> filter? { " + filter + " }");
         Page<MemberEntity> memberFilterPaging;
         if (filter.equals("all")) {
-            memberFilterPaging = memberService.getMemberPage(pageable);
+            memberFilterPaging = null;
+            /*memberFilterPaging = memberService.getMemberPage(pageable);*/
         } else {
             memberFilterPaging = managementService.getMemberLimitStatePaging(pageable, filter);
         }

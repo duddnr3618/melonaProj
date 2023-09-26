@@ -15,23 +15,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class MemberService {
 
-    private final MemberRepository memberRepository;
+    private MemberRepository memberRepository;
 
-    public Page<MemberEntity> getMemberPage(Pageable pageable) {
-        return memberRepository.findAll(pageable);
-    }
+/*    public Page<MemberEntity> getMemberPage(Pageable pageable) {
+        return memberRepository.findAll (pageable);
+    }*/
+
 
     private final PasswordEncoder BCryptPasswordEncoder;
-
-    public void memberSave(MemberDto memberDto) {
-
-        MemberEntity memberEntity = new MemberEntity();
-        memberEntity.setMemberPassword(BCryptPasswordEncoder.encode(memberDto.getMemberPassword()));
-        memberEntity.setMemberName(memberDto.getMemberName());
-        memberEntity.setMemberAddress(memberDto.getMemberAddress());
-        memberEntity.setMemberNickname(memberDto.getMemberNickname());
-        memberEntity.setMemberEmail(memberDto.getMemberEmail());
-        memberEntity.setMemberRole("ROLE_MEMBER");
-        memberRepository.memberSave(memberEntity);
-    }
 }

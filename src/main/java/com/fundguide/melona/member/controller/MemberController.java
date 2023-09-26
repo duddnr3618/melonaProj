@@ -30,6 +30,8 @@ public class MemberController {
     }
     @PostMapping("/join")
     public String memberSave(@ModelAttribute MemberDto memberDto) {
+        /*memberService.memberSave(memberDto);*/
+
         memberService.memberSave(memberDto);
         return "member/success";
     }
