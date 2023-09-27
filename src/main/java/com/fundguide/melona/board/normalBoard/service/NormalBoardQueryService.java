@@ -1,6 +1,7 @@
 package com.fundguide.melona.board.normalBoard.service;
 
 import com.fundguide.melona.board.common.dto.BoardSearchDTO;
+import com.fundguide.melona.board.normalBoard.dto.NormalBoardDto;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.board.normalBoard.repository.NormalBoardRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+
+import java.security.Key;
+import java.util.Map;
+import java.util.Objects;
 
 @Service @RequiredArgsConstructor @Transactional(readOnly = true)
 public class NormalBoardQueryService {
@@ -29,6 +34,10 @@ public class NormalBoardQueryService {
 
     /**노말 보드 디테일값 반환*/
     public NormalBoardEntity onlyViewDetailNormalBoard(Long boardId) {
-        return normalBoardRepository.findAllByBoardId(boardId);
+        return normalBoardRepository.findAllById(boardId);
+    }
+
+    public NormalBoardDto onlyViewDetailNormalBoardDTO(Long id) {
+        return normalBoardRepository.detailNormalBoard(id);
     }
 }

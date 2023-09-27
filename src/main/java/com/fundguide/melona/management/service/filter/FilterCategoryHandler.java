@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 public interface FilterCategoryHandler {
 
     default Page<?> handleFilterCategory(String filter, Pageable pageable) {
-
         switch (filter) {
             case "waring" -> {
                 return waringPage(pageable);
