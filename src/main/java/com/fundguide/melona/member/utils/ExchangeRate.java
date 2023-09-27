@@ -17,7 +17,7 @@ public class ExchangeRate  {
 
 
         public ArrayList<ExchangeDto> requestApi() {
-            
+
             String authKey = "W3m9j0w1gMB5Y8GNtk5nvnK4VQpCeAuG";
             String searchDate = "20230927";
             String data = "AP01";
