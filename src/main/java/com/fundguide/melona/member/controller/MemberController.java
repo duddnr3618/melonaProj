@@ -1,10 +1,12 @@
 package com.fundguide.melona.member.controller;
 
+import com.fundguide.melona.member.dto.ExchangeDto;
 import com.fundguide.melona.member.dto.MemberDto;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.mapper.MemberTransMapper;
 import com.fundguide.melona.member.service.CustomUserDetails;
 import com.fundguide.melona.member.service.MemberService;
+import com.fundguide.melona.member.utils.ExchangeRate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,6 +16,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.ArrayList;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -32,6 +36,7 @@ public class MemberController {
 
     @GetMapping("member/joinForm")  // 회원가입페이지로 가는거
     public String joinForm(@ModelAttribute MemberDto memberDto, Model model) {
+
         model.addAttribute("memberDto", memberDto);
         return "member/joinFrom";
     }
@@ -169,5 +174,11 @@ public class MemberController {
         memberService.changePassword(id,memberDto.getMemberPassword());
         return "redirect:/";
     }
-
+    @GetMapping("test")
+    public String test(Model model){
+        ExchangeRate exchangeRate = new ExchangeRate();
+        ArrayList<ExchangeDto> exchangeDtos = exchangeRate.requestApi();
+        model.addAttribute("test", exchangeDtos);
+        return "member/test";
+    }
 }
