@@ -39,7 +39,6 @@ public class MemberRoleFilterDTO {
         }
     }
 
-    @SuppressWarnings("unused")
     public static QBean<MemberRoleFilterDTO> projections () {
         return Projections.bean(
                 MemberRoleFilterDTO.class

@@ -3,7 +3,9 @@ package com.fundguide.melona.board.normalBoard.repository;
 
 import com.fundguide.melona.board.common.dto.BoardSearchDTO;
 import com.fundguide.melona.board.common.querydsl_repeatcode.BoardQueryDsl_RepeatCode;
+import com.fundguide.melona.board.normalBoard.dto.NormalBoardDto;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -13,6 +15,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import static com.fundguide.melona.board.normalBoard.entity.QNormalBoardEntity.normalBoardEntity;
 
@@ -50,5 +56,14 @@ public class NormalBoardRepositoryImpl implements NormalBoardRepositoryCustom {
     public Page<NormalBoardEntity> filterViewBoard(Pageable pageable) {
         booleanExpression.eq(normalBoardEntity.boardLikes.gt(200));
         return null;
+    }
+
+    @Override
+    public NormalBoardDto detailNormalBoard(Long id) {
+        booleanExpression.eq(normalBoardEntity.id.eq(id));
+        return queryFactory.select(NormalBoardDto.projections())
+                .from(normalBoardEntity)
+                .where(booleanExpression)
+                .fetchOne();
     }
 }

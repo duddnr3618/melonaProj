@@ -16,7 +16,7 @@ public class NormalBoardEntity extends BaseBoardEntity {
   @Id
   @Column(name = "boardId")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long boardId;
+  private Long id;
   @Column(name = "boardWriter")
   private String boardWriter;
   @Column(name = "boardTitle")

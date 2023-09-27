@@ -3,7 +3,7 @@ $(function () {
 
 })
 
-const PUTINWORK = "관리할 대상이 존재하지 않습니다. 일거리를 더 만들어내세요.";
+const PUTINWORK = "관리할 대상이 존재하지 않습니다. 한가하시겠군요.";
 const id_ResultTable = $('#ResultTable');
 const id_ResultPageLinkButton = $('#ResultPageLinkButton');
 
@@ -36,7 +36,7 @@ id_DetailBoardFilter.find('li').click(function () {
     axios.get(`management/board_filter_page?${params.toString()}`)
         .then(function (boardData) {
             const boardPaging = boardData.data.content;
-            const boardKey = ["boardId", "boardTitle", "boardWriter"];
+            const boardKey = ["id", "boardTitle", "boardWriter"];
 
             TableHtmlHandler(titleArray, boardPaging, boardKey);
         })
@@ -110,10 +110,12 @@ managementCategoryMap.forEach((managementList, viewCategory) => {
 /**
  * 테이블을 타이틀, 타겟키값으로 자동으로 html 파싱까지 완료하는 함수
  * @param {Array} titleArray 테이블 타이틀로 지정할 이름의 배열을 전달할것.
- * @param {targetPaging} targetPaging axios 데이터로 넘겨받은 데이터를 전달할것.
+ * @param {DataView} targetPaging axios 데이터로 넘겨받은 데이터를 전달할것.
  * @param {Array} targetPagingKey axios 데이터로 넘겨받은 데이터중 추출할 키값의 배열을 전달할것.
  */
-function TableHtmlHandler(titleArray, targetPaging, targetPagingKey) {
+function TableHtmlHandler(
+    titleArray, targetPaging, targetPagingKey) {
+
     let tableHTML = '<table>';
     tableHTML += '<tr>';
     titleArray.forEach((index) => {
@@ -128,13 +130,12 @@ function TableHtmlHandler(titleArray, targetPaging, targetPagingKey) {
     }
 
     for (const data of targetPaging) {
-        tableHTML += '<tr>';
+        tableHTML += `<tr class="result-Table-tr" data-key-id="${data[targetPagingIdKey]}">`;
         for (const key of targetPagingKey) {
             tableHTML += `<td>${data[key]}</td>`;
         }
         tableHTML += '</tr>';
     }
-
     tableHTML += '</table>';
     id_ResultTable.html(tableHTML);
 }
@@ -201,4 +202,26 @@ function PageLinkButtonHandler(resultData) {
     pageLinkHtml += `<a th:text="${page}  +1" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>`;
     pageLinkHtml += `</li>`;
     pageLinkHtml += '</ul>';*/
+}
+
+/** 게시판 디테일 페이지 이동을 위한 메서드
+ * @param {KeyType} targetPagingIdKey 해당 테이블의 ID 컬럼의 값 혹은 그의 준하는 컬럼 값을 전달할것.
+ * @param {HTMLLinkElement} targetRequestLink GetAxios 요청을 보낼 링크값을 전달할것 Params로 인자 전달함.
+ * */
+function boardDetailLink(targetPagingIdKey, targetRequestLink) {
+    const cls_ResultTable_tr = $('.result-Table-tr');
+    cls_ResultTable_tr.click(function () {
+        const data_keyId = this.data('key-id');
+        const params = new URLSearchParams();
+        params.append("id", data_keyId);
+
+        const requestLink = targetRequestLink+params.toString();
+        axios.get(requestLink)
+            .then(function () {
+
+            })
+            .catch(function () {
+
+            });
+    });
 }

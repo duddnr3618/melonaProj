@@ -1,5 +1,6 @@
 package com.fundguide.melona.management.controller;
 
+import com.fundguide.melona.board.normalBoard.dto.NormalBoardDto;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardCommandService;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardQueryService;
 import com.fundguide.melona.management.dto.MemberRoleFilterDTO;
@@ -7,6 +8,7 @@ import com.fundguide.melona.management.service.ManagementService;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +18,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,7 +46,6 @@ public class ManagementController {
     public Page<?> getBoardCategoryFilterPagingResult(
             @RequestParam("category") String category
             , @RequestParam("filter") String filter) throws IllegalAccessException {
-
         return managementService.getBoardCategoryFilterPaging(category, filter, pageable_Board);
     }
 
@@ -57,10 +61,15 @@ public class ManagementController {
         }
     }
 
+    @GetMapping("member_filter_page/detail")
+    public NormalBoardDto getMemberFilterDetail(@RequestParam("id") Long id) {
+        return normalBoardQueryService.onlyViewDetailNormalBoardDTO(id);
+    }
+
     @GetMapping("/member_role_filter_page")
     @ResponseBody
     public Page<MemberRoleFilterDTO> getMemberRolePagingResult(
-            @RequestParam("filter") String filter) throws IllegalAccessException {
+            @RequestParam("filter") String filter) {
         return managementService.getMemberRoleStatePaging(filter, pageable_Member);
     }
 }
