@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 @RequiredArgsConstructor
 public class NormalBoardCategoryHandler implements FilterCategoryHandler {
-    private NormalBoardRepository normalBoardRepository;
+    private final NormalBoardRepository normalBoardRepository;
 
     @Override
     public Page<?> handleFilterCategory(String filter, Pageable pageable) {
@@ -15,17 +15,17 @@ public class NormalBoardCategoryHandler implements FilterCategoryHandler {
     }
 
     @Override
-    public Page<?> waringPage() {
+    public Page<?> waringPage(Pageable pageable) {
         return null;
     }
 
     @Override
-    public Page<?> blockPage() {
+    public Page<?> blockPage(Pageable pageable) {
         return null;
     }
 
     @Override
-    public Page<?> allPage() {
-        return null;
+    public Page<?> allPage(Pageable pageable) {
+        return normalBoardRepository.findAll(pageable);
     }
 }

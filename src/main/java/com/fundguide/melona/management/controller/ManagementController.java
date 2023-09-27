@@ -2,9 +2,9 @@ package com.fundguide.melona.management.controller;
 
 import com.fundguide.melona.board.normalBoard.service.NormalBoardCommandService;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardQueryService;
+import com.fundguide.melona.management.dto.MemberRoleFilterDTO;
 import com.fundguide.melona.management.service.ManagementService;
 import com.fundguide.melona.member.entity.MemberEntity;
-import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,13 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.swing.text.html.parser.Entity;
-import java.util.zip.DataFormatException;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,47 +26,41 @@ public class ManagementController {
     private final NormalBoardQueryService normalBoardQueryService;
     private final ManagementService managementService;
 
+    Sort sort_Member = Sort.by("memberJoinData").descending();
+    Pageable pageable_Member = PageRequest.of(0, 20, sort_Member);
+    Sort sort_Board = Sort.by("createdTime").descending();
+    Pageable pageable_Board = PageRequest.of(0, 20, sort_Board);
+
     @GetMapping
     public String mainManagementView() {
         return "management/management";
     }
 
-    @GetMapping("/board_filter_page{category}{filter}")
-    public Page<Entity> getBoardCategoryFilterPagingResult(
-            @PathVariable("category") String category
-            , @PathVariable("filter") String filter
-            , Model model
-    ) {
-        System.out.println("보드 필터에서 넘어옴 -> 패스값 { " + category + " }");
-        System.out.println("보드 필터에서 넘어옴 -> 패스값 { " + filter + " }");
-        return null;
+    @GetMapping("/board_filter_page")
+    @ResponseBody
+    public Page<?> getBoardCategoryFilterPagingResult(
+            @RequestParam("category") String category
+            , @RequestParam("filter") String filter) throws IllegalAccessException {
+
+        return managementService.getBoardCategoryFilterPaging(category, filter, pageable_Board);
     }
 
-    @GetMapping("/member_filter_page{filter}")
-    public void getMemberLimitStatePagingResult(
-            @PathVariable("filter") String filter
-            , Model model
-            ) throws DataFormatException {
+    @GetMapping("/member_filter_page")
+    @ResponseBody
+    public Page<MemberEntity> getMemberLimitStatePagingResult(
+            @RequestParam("filter") String filter) {
 
-        Sort sort = Sort.by("memberJoinData").descending();
-        Pageable pageable = PageRequest.of(0,20, sort);
-
-        System.out.println("매니지먼트 컨트롤에서 넘어옴 -> filter? { " + filter + " }");
-        Page<MemberEntity> memberFilterPaging;
         if (filter.equals("all")) {
-            memberFilterPaging = null;
-            /*memberFilterPaging = memberService.getMemberPage(pageable);*/
+            return memberService.getMemberPage(pageable_Member);
         } else {
-            memberFilterPaging = managementService.getMemberLimitStatePaging(pageable, filter);
+            return managementService.getMemberLimitStatePaging(filter, pageable_Member);
         }
-
-        model.addAttribute("filterResult", memberFilterPaging);
     }
 
-    @GetMapping("/member_role_filter_page{filter}")
-    public Page<MemberEntity> getMemberRolePagingResult(
-            @PathVariable("filter") String role
-    ) {
-        return null;
+    @GetMapping("/member_role_filter_page")
+    @ResponseBody
+    public Page<MemberRoleFilterDTO> getMemberRolePagingResult(
+            @RequestParam("filter") String filter) throws IllegalAccessException {
+        return managementService.getMemberRoleStatePaging(filter, pageable_Member);
     }
 }

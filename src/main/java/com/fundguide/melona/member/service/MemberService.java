@@ -2,11 +2,16 @@ package com.fundguide.melona.member.service;
 
 import com.fundguide.melona.member.dto.MemberDto;
 import com.fundguide.melona.member.entity.MemberEntity;
+import com.fundguide.melona.member.mapper.MemberTransMapper;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
+import com.fundguide.melona.member.role.MemberRoleState;
+import com.fundguide.melona.member.utils.MainSend;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,8 +29,7 @@ public class MemberService {
     public void memberSave(MemberDto memberDto) {
         MemberEntity memberEntity = MemberTransMapper.INSTANCE.dtoToEntity(memberDto);
 
-
-        memberEntity.setMemberRole("ROLE_USER");
+        memberEntity.setMemberRole(MemberRoleState.ROLE_ADMIN);
         memberEntity.setMemberPassword(utilsPasswordEncoder.encode(memberDto.getMemberPassword()));
         memberRepository.memberSave(memberEntity);
     }
@@ -97,4 +101,10 @@ public class MemberService {
         memberRepository.withdraw(id);
 
     }
+
+    //TODO 패스워드 넘어오지 않게 쿼리 수정할것
+    public Page<MemberEntity> getMemberPage(Pageable pageable) {
+        return memberRepositoryData.findAll(pageable);
+    }
+
 }

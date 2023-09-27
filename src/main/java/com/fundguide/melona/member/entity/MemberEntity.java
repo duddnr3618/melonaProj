@@ -2,6 +2,8 @@ package com.fundguide.melona.member.entity;
 
 import com.fundguide.melona.member.role.MemberLimitConvert;
 import com.fundguide.melona.member.role.MemberLimitState;
+import com.fundguide.melona.member.role.MemberRoleConvert;
+import com.fundguide.melona.member.role.MemberRoleState;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -26,7 +28,12 @@ public class MemberEntity {
   private String memberEmail;
   private String memberName;
   private String memberPassword;
-  private String memberRole;
+
+  @Convert(converter = MemberRoleConvert.class)
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false, columnDefinition = "USER")
+  private MemberRoleState memberRole;
+
   private String memberAddress;
   private LocalDate memberJoinDate;
   private String memberAvailable;
