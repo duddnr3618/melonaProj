@@ -46,15 +46,11 @@ public class ManagementService {
         return memberRepository.memberLimitStatePage(limitState, pageable);
     }
 
-    public Page<MemberRoleFilterDTO> getMemberRoleStatePaging(String filter, Pageable pageable) throws NoSuchElementException, IllegalAccessException {
-        switch (filter) {
-            case "autoGet", "setByAdmin, minSatisfy" -> {
-                return memberRepository.memberRoleStatePage(filter, pageable);
-            }
-            case "all" -> {
-                return memberRepository.memberRoleStatePage(pageable);
-            }
-            default -> throw new IllegalAccessException("정의되지 않은 필터 값 입니다.");
+    public Page<MemberRoleFilterDTO> getMemberRoleStatePaging(String filter, Pageable pageable){
+        if (!"all".equals(filter)) {
+            return memberRepository.memberRoleStatePage(filter, pageable);
+        } else {
+            return memberRepository.memberRoleStatePage(pageable);
         }
     }
 }

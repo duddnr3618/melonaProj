@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 public enum MemberRoleState {
-    ROLE_USER, ROLE_AUTO_LEADER, ROLE_SET_LEADER, ROLE_ADMIN;
+    ROLE_USER, ROLE_AUTO_LEADER, ROLE_SET_LEADER, ROLE_ADMIN, DISABLED;
 
     public static MemberRoleState getRoleState(String role) {
         return memberRoleState(role);

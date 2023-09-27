@@ -2,8 +2,11 @@ package com.fundguide.melona.member.service;
 
 import com.fundguide.melona.member.dto.MemberDto;
 import com.fundguide.melona.member.entity.MemberEntity;
+import com.fundguide.melona.member.mapper.MemberTransMapper;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
+import com.fundguide.melona.member.role.MemberRoleState;
+import com.fundguide.melona.member.utils.MainSend;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,8 +29,7 @@ public class MemberService {
     public void memberSave(MemberDto memberDto) {
         MemberEntity memberEntity = MemberTransMapper.INSTANCE.dtoToEntity(memberDto);
 
-
-        memberEntity.setMemberRole("ROLE_USER");
+        memberEntity.setMemberRole(MemberRoleState.ROLE_ADMIN);
         memberEntity.setMemberPassword(utilsPasswordEncoder.encode(memberDto.getMemberPassword()));
         memberRepository.memberSave(memberEntity);
     }

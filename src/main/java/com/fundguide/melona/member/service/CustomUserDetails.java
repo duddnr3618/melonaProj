@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,16 +18,19 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
 
     private final MemberEntity memberEntity;
     private Map<String, Object> attributes;
+    private final Collection<MemberRoleState> memberRoleStateCollection;
 
     // 일반 로그인용 생성자
-    public CustomUserDetails(MemberEntity memberEntity) {
+    public CustomUserDetails(MemberEntity memberEntity, Collection<MemberRoleState> memberRoleStateCollection) {
         this.memberEntity = memberEntity;
+        this.memberRoleStateCollection = memberRoleStateCollection;
     }
 
     // oauth2용 생성자
-    public CustomUserDetails(MemberEntity memberEntity, Map<String, Object> attributes) {
+    public CustomUserDetails(MemberEntity memberEntity, Map<String, Object> attributes, Collection<MemberRoleState> memberRoleStateCollection) {
         this.memberEntity = memberEntity;
         this.attributes = attributes;
+        this.memberRoleStateCollection = memberRoleStateCollection;
     }
 
     @Override
@@ -75,8 +79,6 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     public String getName() {
         return attributes.get("sub").toString();
     }
-
-}
 
     @Override
     public Map<String, Object> getAttributes() {

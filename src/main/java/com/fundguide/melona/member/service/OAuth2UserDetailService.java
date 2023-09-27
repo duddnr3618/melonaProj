@@ -6,6 +6,7 @@ import com.fundguide.melona.member.oAuth2Object.NaverOauth2Member;
 import com.fundguide.melona.member.oAuth2Object.Oauth2Member;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
+import com.fundguide.melona.member.role.MemberRoleState;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +16,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
@@ -26,6 +28,8 @@ public class OAuth2UserDetailService extends DefaultOAuth2UserService {
     private final PasswordEncoder utilsPasswordEncoder ;
     private final MemberRepositoryData memberRepositoryData;
     private final MemberRepository memberRepositoryJpa;
+    private final Collection<MemberRoleState> memberRoleStateCollection;
+    
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
@@ -48,7 +52,7 @@ public class OAuth2UserDetailService extends DefaultOAuth2UserService {
             memberEntity.setMemberEmail(oauth2Member.getMemberEmail());
             memberEntity.setMemberName(oauth2Member.getMemberName());
             memberEntity.setMemberPassword(utilsPasswordEncoder.encode(variable+new Date()));
-            memberEntity.setMemberRole(role);
+            memberEntity.setMemberRole(MemberRoleState.ROLE_USER);
             memberEntity.setMemberAddress("입력한 주소가 없습니다.");
             memberEntity.setMemberAvailable(available);
             memberEntity.setMemberNickname(registrationId+"_"+variable);
@@ -57,6 +61,6 @@ public class OAuth2UserDetailService extends DefaultOAuth2UserService {
 
 
 
-        return new CustomUserDetails(memberEntity, oAuth2User.getAttributes());
+        return new CustomUserDetails(memberEntity, oAuth2User.getAttributes(), memberRoleStateCollection);
     }
 }

@@ -8,7 +8,8 @@ import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.EnumPath;
 import com.querydsl.core.types.dsl.NumberPath;
 import com.querydsl.core.types.dsl.StringPath;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import static com.fundguide.melona.member.entity.QMemberEntity.memberEntity;
 

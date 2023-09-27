@@ -5,7 +5,6 @@ import com.fundguide.melona.board.normalBoard.service.NormalBoardQueryService;
 import com.fundguide.melona.management.dto.MemberRoleFilterDTO;
 import com.fundguide.melona.management.service.ManagementService;
 import com.fundguide.melona.member.entity.MemberEntity;
-import com.fundguide.melona.member.role.MemberRoleState;
 import com.fundguide.melona.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,11 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import javax.swing.text.html.parser.Entity;
-import java.util.zip.DataFormatException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequiredArgsConstructor
