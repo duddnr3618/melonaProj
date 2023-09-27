@@ -1,20 +1,16 @@
 package com.fundguide.melona.member.repository;
 
 import com.fundguide.melona.member.entity.MemberEntity;
-import com.fundguide.melona.member.role.MemberLimitState;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.fundguide.melona.member.entity.QMemberEntity.memberEntity;
@@ -38,33 +34,40 @@ public class MemberRepositoryJpa implements MemberRepository {
     public void memberSave(MemberEntity memberEntity) {
         em.persist(memberEntity);
     }
-
     @Transactional(readOnly = true)
-    public List<MemberEntity> findMember(String email, Integer age) {
+    public MemberEntity findMember(String memberEmail , String memberNickname){
         List<MemberEntity> result = query
                 .select(memberEntity)
                 .from(memberEntity)
-                .where(memberName(email), nickname(age))
+                .where(memberName(memberEmail),nickname(memberNickname))
                 .fetch();
-        return result;
+
+        if (result.isEmpty()) {
+            MemberEntity memberEntity1 =null;
+            result.add(memberEntity1);
+        }
+
+
+    return result.get(0);
     }
 
 
-    private BooleanExpression memberName(String email) {
-        if (StringUtils.hasText(email)) {
-            return memberEntity.memberEmail.like("%" + email + "%");
+    private BooleanExpression memberName(String memberEmail) {
+        if (StringUtils.hasText(memberEmail)) {
+            return memberEntity.memberEmail.eq(memberEmail);
         }
         return null;
     }
 
-    private BooleanExpression nickname(Integer age) {
-        if (age != null) {
-            return memberEntity.id.loe(age);
+    private BooleanExpression nickname(String memberNickname) {
+        if (StringUtils.hasText(memberNickname)) {
+            return memberEntity.memberNickname.eq(memberNickname);
         }
         return null;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MemberEntity findByEmail(String username) {
         TypedQuery<MemberEntity> query = em.createQuery(
                 "SELECT m FROM MemberEntity m WHERE m.memberEmail=:email", MemberEntity.class);
@@ -72,6 +75,33 @@ public class MemberRepositoryJpa implements MemberRepository {
         List<MemberEntity> resultList = query.getResultList();
         return resultList.get(0);
     }
+
+    @Override
+    @Transactional
+    public void updatePassword(Long memberId, String newPassword) {
+        MemberEntity memberEntity = em.find(MemberEntity.class, memberId);
+        memberEntity.setMemberPassword(newPassword);
+    }
+
+    @Override
+    @Transactional
+    public void memberUpdate(MemberEntity memberEntity) {
+        MemberEntity memberEntity1 = em.find(MemberEntity.class, memberEntity.getId());
+        memberEntity1.setMemberNickname(memberEntity.getMemberNickname());
+        memberEntity1.setMemberName(memberEntity.getMemberName());
+        memberEntity1.setMemberAddress(memberEntity.getMemberAddress());
+    }
+
+    @Override
+    @Transactional
+    public void withdraw(Long id) {
+        MemberEntity memberEntity = em.find(MemberEntity.class, id);
+            memberEntity.setMemberAvailable("no");
+            memberEntity.setMemberEmail("탈퇴한사용자"+ memberEntity.getId());
+            memberEntity.setMemberNickname("탈퇴한사용자"+memberEntity.getId()+new Date());
+            memberEntity.setMemberRole("탈퇴한사용자");
+            memberEntity.setMemberAddress("탈퇴한사용자");
+            memberEntity.setMemberName("탈퇴한사용자");
 
     /**memberRepositoryCustom -> this.class 병합*/
     @Override
