@@ -62,7 +62,7 @@ public class ManagementController {
     @GetMapping("/member_role_filter_page")
     @ResponseBody
     public Page<MemberRoleFilterDTO> getMemberRolePagingResult(
-            @RequestParam("filter") String filter) {
+            @RequestParam("filter") String filter) throws IllegalAccessException {
         return managementService.getMemberRoleStatePaging(filter, pageable_Member);
     }
 }

@@ -25,8 +25,11 @@ public class ManagementService {
     private final NormalBoardRepository normalBoardRepository;
     private final LeaderBoardRepository leaderBoardRepository;
 
-    /**각 카테고리 마다 필터처리된 페이징을 반환하는 서비스 메서드
-     * @return FilterPage*/
+    /**
+     * 각 카테고리 마다 필터처리된 페이징을 반환하는 서비스 메서드
+     *
+     * @return FilterPage
+     */
     public Page<?> getBoardCategoryFilterPaging(String category, String filter, Pageable pageable) throws IllegalAccessException {
         if (category.equals("normal")) {
             NormalBoardCategoryHandler normalBoardCategoryHandler = new NormalBoardCategoryHandler(normalBoardRepository);
@@ -39,23 +42,21 @@ public class ManagementService {
         }
     }
 
-    /**각 제한에 따른 멤버 페이지를 반환하기 위한 서비스 메서드*/
+    /** 각 제한에 따른 멤버 페이지를 반환하기 위한 서비스 메서드 */
     public Page<MemberEntity> getMemberLimitStatePaging(String limit, Pageable pageable) throws NoSuchElementException {
         MemberLimitState limitState = MemberLimitState.getLimitState(limit);
         return memberRepository.memberLimitStatePage(limitState, pageable);
     }
 
-    public Page<MemberRoleFilterDTO> getMemberRoleStatePaging(String filter, Pageable pageable) throws NoSuchElementException {
+    public Page<MemberRoleFilterDTO> getMemberRoleStatePaging(String filter, Pageable pageable) throws NoSuchElementException, IllegalAccessException {
         switch (filter) {
-            case "minSatisfy" -> {
-                return null;
-            }
-            case "autoGet", "setByAdmin" -> {
+            case "autoGet", "setByAdmin, minSatisfy" -> {
                 return memberRepository.memberRoleStatePage(filter, pageable);
             }
-            default -> {
+            case "all" -> {
                 return memberRepository.memberRoleStatePage(pageable);
             }
+            default -> throw new IllegalAccessException("정의되지 않은 필터 값 입니다.");
         }
     }
 }
