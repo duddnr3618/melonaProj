@@ -1,8 +1,8 @@
 // noinspection JSUnresolvedReference
-
 $(function () {
 
 })
+
 const PUTINWORK = "관리할 대상이 존재하지 않습니다. 일거리를 더 만들어내세요.";
 const id_ResultTable = $('#ResultTable');
 const id_ResultPageLinkButton = $('#ResultPageLinkButton');

@@ -9,7 +9,6 @@ import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
 import com.fundguide.melona.member.role.MemberLimitState;
-import com.fundguide.melona.member.role.MemberRoleState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +26,6 @@ public class ManagementService {
 
     /**
      * 각 카테고리 마다 필터처리된 페이징을 반환하는 서비스 메서드
-     *
      * @return FilterPage
      */
     public Page<?> getBoardCategoryFilterPaging(String category, String filter, Pageable pageable) throws IllegalAccessException {

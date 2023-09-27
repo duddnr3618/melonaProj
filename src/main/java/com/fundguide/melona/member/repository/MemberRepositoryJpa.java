@@ -4,9 +4,7 @@ import com.fundguide.melona.management.dto.MemberRoleFilterDTO;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.role.MemberRoleState;
-import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
@@ -19,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.fundguide.melona.member.entity.QMemberEntity.memberEntity;
@@ -42,32 +41,40 @@ public class MemberRepositoryJpa implements MemberRepository {
     public void memberSave(MemberEntity memberEntity) {
         em.persist(memberEntity);
     }
-
     @Transactional(readOnly = true)
-    public List<MemberEntity> findMember(String email, Integer age) {
-        return query
+    public MemberEntity findMember(String memberEmail , String memberNickname){
+        List<MemberEntity> result = query
                 .select(memberEntity)
                 .from(memberEntity)
-                .where(memberName(email), nickname(age))
+                .where(memberName(memberEmail),nickname(memberNickname))
                 .fetch();
+
+        if (result.isEmpty()) {
+            MemberEntity memberEntity1 =null;
+            result.add(memberEntity1);
+        }
+
+
+    return result.get(0);
     }
 
 
-    private BooleanExpression memberName(String email) {
-        if (StringUtils.hasText(email)) {
-            return memberEntity.memberEmail.like("%" + email + "%");
+    private BooleanExpression memberName(String memberEmail) {
+        if (StringUtils.hasText(memberEmail)) {
+            return memberEntity.memberEmail.eq(memberEmail);
         }
         return null;
     }
 
-    private BooleanExpression nickname(Integer age) {
-        if (age != null) {
-            return memberEntity.id.loe(age);
+    private BooleanExpression nickname(String memberNickname) {
+        if (StringUtils.hasText(memberNickname)) {
+            return memberEntity.memberNickname.eq(memberNickname);
         }
         return null;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public MemberEntity findByEmail(String username) {
         TypedQuery<MemberEntity> query = em.createQuery(
                 "SELECT m FROM MemberEntity m WHERE m.memberEmail=:email", MemberEntity.class);

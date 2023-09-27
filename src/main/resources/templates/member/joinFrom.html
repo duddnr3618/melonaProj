@@ -1,17 +1,288 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Insert title here</title>
+
+    <!--부트스트랩 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+
+    <!-- css 링크 -->
+    <!--fix : /css/layout1.css -> css/layout1.css
+    because : 로컬 환경에서는 스프링부트 시스템으로 인해 추론이 가능해를 자동 삭제되지만
+     jar 배포 환경에서는 추론 시스템이 작동하지 않아 이중 슬래쉬(/)처리 되어
+     리소스 핸들러 환경을 인식할 수 없음. 특수한 상황을 제외한 모든 html 및 컨트롤 경로는
+     /를 제외한 경로로 지정할것. -->
+   <!-- <link th:href="@{css/layout1.css}" rel="stylesheet">-->
+
+
+    <th:block layout:fragment="script"></th:block>
+    <th:block layout:fragment="css"></th:block>
+
 </head>
 <body>
-<form  th:action="@{/join}" th:method="post" >
-이메일 <input type="text" name="memberEmail"><br/>
- 이름    <input type="text" name="memberName"><br/>
- 비밀번호   <input type="text" name="memberPassword"><br/>
-  주소  <input type="text" name="memberAddress"><br/>
-  닉네임  <input type="text" name="memberNickname"><br/>
-    < <input type="submit" value="전송">
-</form>
+
+<div th:replace="fragments/header::header"></div>
+
+<div layout:fragment="content" class="content">
+    <form action="JoinPro" th:action="@{JoinPro}" th:object="${memberDto}" method="post"
+          onsubmit="return validateCheck();">
+
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+        </div>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <label for="memberName">이름</label>
+                <input type="text" th:field="*{memberName}" class="form-control"
+                       th:errorclass="field-error" required>
+                <div class="field-error" th:errors="*{memberName}"/>
+
+            </div>
+            <div class="col-4">
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <label for="memberEmail">이메일</label>
+                <input type="email" required th:field="*{memberEmail}" id="memberEmail" class="form-control"
+                       th:errorclass="field-error" placeholder="이메일형식을 지켜주세요" onchange="dupleChange(this);">
+                <div class="field-error" th:errors="*{memberEmail}"/>
+                <br/>
+                <strong id="memberEmailError">아이디로 사용할 이메일을 입력해 주세요.</strong>
+            </div>
+            <div class="col-4"><br/>
+                <button class="btn btn-primary" type="button" id="email" onclick="duplicatedCheck(this);">중복확인</button>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <label for="memberEmailCheck">이메일인증번호</label>
+                <input type="text" required id="memberEmailCheck" class="form-control"
+                       placeholder="인증번호를 입력하세요"> <br/>
+                <strong id="memberConfirmError">발송된 인증번호를 입력해 주세요</strong>
+            </div>
+            <div class="col-4"><br/>
+                <button class="btn btn-primary" type="button" onclick="sendMail();">인증메일발송</button>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <label for="memberPassword">비밀번호</label>
+                <input type="password" required id="memberPassword" th:field="*{memberPassword}" class="form-control"
+                       th:errorclass="field-error" placeholder="비밀번호는 최소10 최대35자까지 가능합니다." minlength="10"
+                       maxlength="35">
+                <div class="field-error" th:errors="*{memberPassword}"/>
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <label for="memberPassword2">비밀번호 확인</label>
+                <input type="password" id="memberPassword2" class="form-control" minlength="10" maxlength="35"
+                       placeholder="비밀번호와 같은값을 입력하세요" required>
+                <br/>
+                <strong id="memberPassword2Error">10자 이상 35자 이하, 비밀번호와 같은 값을 입력해주세요. </strong>
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <label for="memberNickname">닉네임</label>
+                <input type="text" th:field="*{memberNickname}" class="form-control"
+                       th:errorclass="field-error" required maxlength="30" minlength="2" id="memberNickname"
+                       placeholder="2자이상 30자 이하로 만들어주세요" onchange="dupleChange(this);">
+                <div class="field-error" th:errors="*{memberNickname}"/>
+                <br/>
+                <strong id="memberNicknameError">2자 이상 35자이하, 닉네임 중복확인은 필수입니다</strong>
+            </div>
+            <div class="col-4"><br/>
+                <button class="btn btn-primary" type="button" id="nickname" onclick="duplicatedCheck(this);">중복확인
+                </button>
+            </div>
+        </div>
+
+        <br/>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <label for="memberAddress">주소</label>
+                <input type="text"  id="memberAddress" th:field="*{memberAddress}" class="form-control"
+                       th:errorclass="field-error" placeholder="주소는 입력 하셔도 되고 안하셔도 됩니다."
+                       maxlength="100">
+                <div class="field-error" th:errors="*{memberAddress}"/>
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-2">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">회원 가입</button>
+            </div>
+            <div class="col-2">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        th:onclick="|location.href='@{/}'|"
+                        type="button">취소
+                </button>
+            </div>
+            <div class="col-4"></div>
+        </div>
+
+    </form>
+    <input type="hidden" id="confirmCode">
+
+
+
+    <script th:inline="javascript">
+        let emailDupleCheck = false;
+        let nicknameDupleCheck = false;
+
+        function dupleChange(which) {
+            let inputId = which.id
+            if (inputId === "memberNickname") {
+                nicknameDupleCheck = false;
+            } else if (inputId === "memberEmail") {
+                emailDupleCheck = false;
+            }
+
+        }
+
+        function sendMail() {
+            let memberEmail = document.getElementById("memberEmail");
+            if (memberEmail.validity.valid && emailDupleCheck) {
+                let memberEmailVal = memberEmail.value;
+                let url = "sendConfirmEmail?memberEmail=" + encodeURIComponent(memberEmailVal);
+                alert(memberEmailVal);
+                axios.get(url)
+                    .then(function (response) {
+                        let confirmConde = response.data;
+                        document.getElementById("confirmCode").value = confirmConde;
+                    })
+                    .catch(function (error) {
+                        console.error(error);
+                    });
+            } else {
+                alert("유효하지 않은 이메일이거나 이메일 중복확인을 하지 않았습니다. 중복확인을 먼저 해주세요.");
+            }
+        }
+
+        function duplicatedCheck(btn) {
+
+            const btnId = btn.id;
+            let memberEmail = document.getElementById("memberEmail").value;
+            let memberNickname = document.getElementById("memberNickname").value;
+            let url = "duplicatedCheck";
+            let data;
+            if (btnId === 'email') {
+
+                data = {
+                    "memberEmail": memberEmail
+                }
+            } else {
+
+                data = {
+                    "memberNickname": memberNickname
+                }
+            }
+            axios.post(url, data)
+                .then(function (response) {
+                    alert(response.data);
+                    if (btnId === 'email') {
+                        if(response.data==='ok'){
+                            emailDupleCheck = true;
+                        }
+                    }else{
+                        if(response.data==='ok'){
+                            nicknameDupleCheck = true;
+                        }
+                    }
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    alert(error);
+                    console.error(error);
+                });
+
+        }
+
+        function validateCheck() {    // 폼체크
+            let inputConde = document.getElementById("memberEmailCheck").value;       // 사용자가 입력한 인증번호
+            let confirmCode = document.getElementById("confirmCode").value;         // 서버가 준 인증번호
+            let memberPassword = document.getElementById("memberPassword").value;       // 비밀번호
+            let memberPassword2 = document.getElementById("memberPassword2").value;      // 비밀번호 확인
+
+            if (memberPassword !== memberPassword2) {
+                document.getElementById("memberPassword").focus();
+                let memberPassword2Error = document.getElementById("memberPassword2Error");
+                memberPassword2Error.style.color = "red";
+                memberPassword2Error.innerHTML = "비밀번호와 비밀번호확인은 같은 값이여야합니다.";
+                return false;
+            }  else if (emailDupleCheck) {
+                document.getElementById("memberEmail").focus();
+                let memberNameError = document.getElementById("memberNameError");
+                memberNameError.style.color = "red";
+                memberNameError.innerHTML = "이메일 중복체크는 필수입니다";
+                return false;
+            } else if (nicknameDupleCheck) {
+                document.getElementById("memberNickname").focus();
+                let memberNicknameError = document.getElementById("memberNicknameError");
+                memberNicknameError.style.color = "red";
+                memberNicknameError.innerHTML = "닉네임 중복체크는 필수입니다";
+                return false;
+            }else if (confirmCode !== inputConde) {
+                document.getElementById("memberEmailCheck").focus();
+                let memberConfirmError = document.getElementById("memberConfirmError");
+                memberConfirmError.style.color = "red";
+                memberConfirmError.innerHTML = "인증번호를 다시 확인해 주세요.";
+                return false;
+            }
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</div>
+
+<br>
+<!--<div th:replace="fragments/footer::footer"></div>-->
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

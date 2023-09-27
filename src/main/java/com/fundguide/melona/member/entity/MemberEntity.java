@@ -35,9 +35,16 @@ public class MemberEntity {
   private MemberRoleState memberRole;
 
   private String memberAddress;
-  private LocalDate memberJoinData;
+  private LocalDate memberJoinDate;
   private String memberAvailable;
   private String memberNickname;
+
+
+
+  @PrePersist
+  protected void onCreate() {
+    memberJoinDate = LocalDate.now();
+  }
 
   @Convert(converter = MemberLimitConvert.class)
   @Enumerated(EnumType.STRING)

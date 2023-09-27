@@ -8,6 +8,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -43,5 +44,11 @@ public class NormalBoardRepositoryImpl implements NormalBoardRepositoryCustom {
         }
 
         return dslRepeatCode.searchKeywordAndOption(normalBoardEntity, booleanExpression, searchDTO.searchKeyword(), pageable);
+    }
+
+    @Override
+    public Page<NormalBoardEntity> filterViewBoard(Pageable pageable) {
+        booleanExpression.eq(normalBoardEntity.boardLikes.gt(200));
+        return null;
     }
 }

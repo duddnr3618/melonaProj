@@ -3,21 +3,31 @@ package com.fundguide.melona.member.service;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.role.MemberRoleState;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, OAuth2User {
 
     private final MemberEntity memberEntity;
-    private final Collection<MemberRoleState> memberRoleStateCollection;
+    private Map<String, Object> attributes;
+
+    // 일반 로그인용 생성자
+    public CustomUserDetails(MemberEntity memberEntity) {
+        this.memberEntity = memberEntity;
+    }
+
+    // oauth2용 생성자
+    public CustomUserDetails(MemberEntity memberEntity, Map<String, Object> attributes) {
+        this.memberEntity = memberEntity;
+        this.attributes = attributes;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -58,5 +68,18 @@ public class CustomUserDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
+    // --------------------- oauth2
+    @Override
+    public String getName() {
+        return attributes.get("sub").toString();
+    }
+
 }
 
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+}
