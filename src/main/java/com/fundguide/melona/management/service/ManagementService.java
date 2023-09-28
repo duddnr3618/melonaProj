@@ -2,10 +2,9 @@ package com.fundguide.melona.management.service;
 
 import com.fundguide.melona.board.leaderboard.repository.LeaderBoardRepository;
 import com.fundguide.melona.board.normalBoard.repository.NormalBoardRepository;
-import com.fundguide.melona.management.dto.MemberRoleFilterDTO;
+import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.management.service.filter.LeaderBoardCategoryHandler;
 import com.fundguide.melona.management.service.filter.NormalBoardCategoryHandler;
-import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
 import com.fundguide.melona.member.role.MemberLimitState;
@@ -41,16 +40,16 @@ public class ManagementService {
     }
 
     /** 각 제한에 따른 멤버 페이지를 반환하기 위한 서비스 메서드 */
-    public Page<MemberEntity> getMemberLimitStatePaging(String limit, Pageable pageable) throws NoSuchElementException {
+    public Page<MemberLeastDTO> getMemberLimitStatePaging(String limit, Pageable pageable) throws NoSuchElementException {
         MemberLimitState limitState = MemberLimitState.getLimitState(limit);
         return memberRepository.memberLimitStatePage(limitState, pageable);
     }
 
-    public Page<MemberRoleFilterDTO> getMemberRoleStatePaging(String filter, Pageable pageable){
+    public Page<MemberLeastDTO> getMemberRoleStatePaging(String filter, Pageable pageable){
         if (!"all".equals(filter)) {
-            return memberRepository.memberRoleStatePage(filter, pageable);
+            return memberRepository.memberRoleStateFilterPage(filter, pageable);
         } else {
-            return memberRepository.memberRoleStatePage(pageable);
+            return memberRepository.findAllOfMemberLeastData(pageable);
         }
     }
 }

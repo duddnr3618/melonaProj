@@ -1,5 +1,6 @@
 package com.fundguide.melona.member.entity;
 
+import com.fundguide.melona.board.normalBoard.entity.NormalBoardImpeachEntity;
 import com.fundguide.melona.member.role.MemberLimitConvert;
 import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.role.MemberRoleConvert;
@@ -7,6 +8,9 @@ import com.fundguide.melona.member.role.MemberRoleState;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -50,4 +54,7 @@ public class MemberEntity {
   @Enumerated(EnumType.STRING)
   @Column(nullable = false, columnDefinition = "NORMAL")
   private MemberLimitState memberLimitState;
+
+  @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+  private Set<NormalBoardImpeachEntity> boardImpeachEntity = new HashSet<>();
 }

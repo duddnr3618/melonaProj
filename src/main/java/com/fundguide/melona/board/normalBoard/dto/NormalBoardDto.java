@@ -1,9 +1,6 @@
 package com.fundguide.melona.board.normalBoard.dto;
 
-import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
-import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
-import com.fundguide.melona.management.dto.MemberRoleFilterDTO;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.QBean;
 import jakarta.validation.constraints.NotBlank;

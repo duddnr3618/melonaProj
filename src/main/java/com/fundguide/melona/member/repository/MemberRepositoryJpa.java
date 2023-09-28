@@ -1,6 +1,6 @@
 package com.fundguide.melona.member.repository;
 
-import com.fundguide.melona.management.dto.MemberRoleFilterDTO;
+import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.role.MemberRoleState;
@@ -113,15 +113,15 @@ public class MemberRepositoryJpa implements MemberRepository {
 
     }
 
-
     /** memberRepositoryCustom -> this.class 병합 */
     @Override
     @Transactional(readOnly = true)
-    public Page<MemberEntity> memberLimitStatePage(MemberLimitState state, Pageable pageable) {
+    public Page<MemberLeastDTO> memberLimitStatePage(MemberLimitState state, Pageable pageable) {
         expression = memberEntity.memberLimitState.eq(state);
 
-        JPAQuery<MemberEntity> jpaQuery = this.query
-                .selectFrom(memberEntity)
+        JPAQuery<MemberLeastDTO> jpaQuery = this.query
+                .select(MemberLeastDTO.projections())
+                .from(memberEntity)
                 .where(expression);
         return getMemberEntities(jpaQuery, pageable);
     }
@@ -131,9 +131,9 @@ public class MemberRepositoryJpa implements MemberRepository {
      * @return Page-All*/
     @Override
     @Transactional(readOnly = true)
-    public Page<MemberRoleFilterDTO> memberRoleStatePage(Pageable pageable) {
-        JPAQuery<MemberRoleFilterDTO> jpaQuery = query
-                .select(MemberRoleFilterDTO.projections())
+    public Page<MemberLeastDTO> findAllOfMemberLeastData(Pageable pageable) {
+        JPAQuery<MemberLeastDTO> jpaQuery = query
+                .select(MemberLeastDTO.projections())
                 .from(memberEntity);
         return getMemberEntities(jpaQuery, pageable);
     }
@@ -145,18 +145,16 @@ public class MemberRepositoryJpa implements MemberRepository {
      * @return Page*/
     @Override
     @Transactional(readOnly = true)
-    public Page<MemberRoleFilterDTO> memberRoleStatePage(String filter, Pageable pageable) {
+    public Page<MemberLeastDTO> memberRoleStateFilterPage(String filter, Pageable pageable) {
         switch (filter) {
-            case "minSatisfy" -> expression = memberEntity
-                    .memberRole.eq(MemberRoleState.ROLE_USER)
-            ;
+            case "minSatisfy" -> expression = memberEntity.memberRole.eq(MemberRoleState.ROLE_USER);
             case "autoGet" -> expression = memberEntity.memberRole.eq(MemberRoleState.ROLE_AUTO_LEADER);
             case "setByAdmin" -> expression = memberEntity.memberRole.eq(MemberRoleState.ROLE_SET_LEADER);
             default -> throw new IllegalArgumentException("정의되지 않은 필터 값입니다.");
         }
 
-        JPAQuery<MemberRoleFilterDTO> jpaQuery = this.query
-                .select(MemberRoleFilterDTO.projections())
+        JPAQuery<MemberLeastDTO> jpaQuery = this.query
+                .select(MemberLeastDTO.projections())
                 .from(memberEntity)
                 .where(expression);
         return getMemberEntities(jpaQuery, pageable);
