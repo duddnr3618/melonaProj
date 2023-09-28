@@ -4,6 +4,9 @@ import com.fundguide.melona.board.common.entity.BaseBoardEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -27,4 +30,7 @@ public class NormalBoardEntity extends BaseBoardEntity {
   private long boardHits; //조회수
   @Column(name = "boardLikes")
   private long boardLikes; //좋아요
+
+  @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+  private Set<NormalBoardImpeachEntity> impeach = new HashSet<>();
 }
