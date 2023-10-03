@@ -5,7 +5,6 @@ import lombok.ToString;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.zip.DataFormatException;
 
 public enum MemberLimitState {
     NORMAL, TRANSITORY, STRONG, PERMANENT;

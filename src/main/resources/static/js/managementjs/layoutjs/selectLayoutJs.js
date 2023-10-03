@@ -35,10 +35,10 @@ id_DetailBoardFilter.find('li').click(function () {
 
     axios.get(`management/board_filter_page?${params.toString()}`)
         .then(function (boardData) {
+            console.log(boardData);
             const boardPaging = boardData.data.content;
             const boardKey = ["id", "boardTitle", "boardWriter"];
-
-            TableHtmlHandler(titleArray, boardPaging, boardKey);
+            TableHtmlHandler(titleArray, boardPaging, boardKey, "id");
         })
         .catch(function () {
             TableErrorHandler(titleArray);
@@ -58,7 +58,7 @@ id_DetailUserFilter.find('li').click(function () {
             const memberPaging = memberData.data.content;
             const memberKey = ["memberName", "memberNickname", "memberRole", "memberLimitState"];
 
-            TableHtmlHandler(titleArray, memberPaging, memberKey);
+            TableHtmlHandler(titleArray, memberPaging, memberKey, "id");
 
             /**TODO 하단 페이지 이동 버튼 생성*/
         })
@@ -78,9 +78,8 @@ id_DetailRoleFilter.find('li').click(function () {
         .then(function (roleData) {
             const memberPaging = roleData.data.content;
             const memberKey = ["memberName", "memberNickname", "memberRole", "memberLimitState"];
-            console.log(roleData);
 
-            TableHtmlHandler(titleArray, memberPaging, memberKey);
+            TableHtmlHandler(titleArray, memberPaging, memberKey, null);
         })
         .catch(function () {
             TableErrorHandler(titleArray);
@@ -112,10 +111,11 @@ managementCategoryMap.forEach((managementList, viewCategory) => {
  * @param {Array} titleArray 테이블 타이틀로 지정할 이름의 배열을 전달할것.
  * @param {DataView} targetPaging axios 데이터로 넘겨받은 데이터를 전달할것.
  * @param {Array} targetPagingKey axios 데이터로 넘겨받은 데이터중 추출할 키값의 배열을 전달할것.
+ * @param targetPagingIdKey axios 데이터로 넘겨받은 데이터의 PK 혹은 그의 준하는 키값을 넘길것.
  */
 function TableHtmlHandler(
-    titleArray, targetPaging, targetPagingKey) {
-
+    titleArray, targetPaging, targetPagingKey, targetPagingIdKey) {
+    console.log("핸들러 진입");
     let tableHTML = '<table>';
     tableHTML += '<tr>';
     titleArray.forEach((index) => {
@@ -123,6 +123,8 @@ function TableHtmlHandler(
     });
     tableHTML += '</tr>';
     const dataLength = targetPaging.length;
+    console.log("크기 테스트?");
+    console.log(dataLength);
     if (dataLength === 0) {
         tableHTML += '<tr>';
         tableHTML += `<td colspan="${titleArray.length}">${PUTINWORK}</td>`

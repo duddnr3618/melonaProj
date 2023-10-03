@@ -28,6 +28,8 @@ public class ManagementService {
      * @return FilterPage
      */
     public Page<?> getBoardCategoryFilterPaging(String category, String filter, Pageable pageable) throws IllegalAccessException {
+        System.out.println("페이징처리 진입 { " + category + " }");
+        System.out.println("페이징처리 진입 { " + filter + " }");
         if (category.equals("normal")) {
             NormalBoardCategoryHandler normalBoardCategoryHandler = new NormalBoardCategoryHandler(normalBoardRepository);
             return normalBoardCategoryHandler.handleFilterCategory(filter, pageable);

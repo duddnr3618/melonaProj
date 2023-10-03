@@ -12,5 +12,6 @@ import java.util.Objects;
 public interface NormalBoardRepository extends JpaRepository<NormalBoardEntity, Long>, NormalBoardRepositoryCustom {
     @Query("select nbe from NormalBoardEntity nbe")
     Page<NormalBoardEntity> onlyViewNormalBoard(Pageable pageable);
+
     NormalBoardEntity findAllById(Long boardId);
 }

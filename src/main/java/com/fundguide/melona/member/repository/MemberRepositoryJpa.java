@@ -1,5 +1,6 @@
 package com.fundguide.melona.member.repository;
 
+import com.fundguide.melona.management.commonQueryDsl.CommonQueryDsl;
 import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.role.MemberLimitState;
@@ -28,6 +29,7 @@ public class MemberRepositoryJpa implements MemberRepository {
 
     private final EntityManager em;
     private final JPAQueryFactory query;
+    private final CommonQueryDsl commonQueryDsl = new CommonQueryDsl();
     private BooleanExpression expression = null;
 
 
@@ -123,7 +125,7 @@ public class MemberRepositoryJpa implements MemberRepository {
                 .select(MemberLeastDTO.projections())
                 .from(memberEntity)
                 .where(expression);
-        return getMemberEntities(jpaQuery, pageable);
+        return commonQueryDsl.pageableHandler(jpaQuery, pageable);
     }
 
     /**필요값을 DTO로 변환 시켜 출력하는 메서드 readOnly
@@ -135,7 +137,7 @@ public class MemberRepositoryJpa implements MemberRepository {
         JPAQuery<MemberLeastDTO> jpaQuery = query
                 .select(MemberLeastDTO.projections())
                 .from(memberEntity);
-        return getMemberEntities(jpaQuery, pageable);
+        return commonQueryDsl.pageableHandler(jpaQuery, pageable);
     }
 
     /** 필터링된 멤버 Role DTO로 전달해 페이징 처리하는 메서드 readOnly
@@ -157,17 +159,6 @@ public class MemberRepositoryJpa implements MemberRepository {
                 .select(MemberLeastDTO.projections())
                 .from(memberEntity)
                 .where(expression);
-        return getMemberEntities(jpaQuery, pageable);
-    }
-
-    /** 페이징 처리의 공통적인 부분을 메서드화
-     * @return PageImpl<T>*/
-    private <Member> PageImpl<Member> getMemberEntities(JPAQuery<Member> jpaQuery, Pageable pageable) {
-        long total = jpaQuery.fetch().size();
-        List<Member> memberEntities = jpaQuery
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-        return new PageImpl<>(memberEntities, pageable, total);
+        return commonQueryDsl.pageableHandler(jpaQuery, pageable);
     }
 }
