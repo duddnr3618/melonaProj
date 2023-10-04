@@ -20,7 +20,8 @@ import static com.fundguide.melona.member.entity.QMemberEntity.memberEntity;
 public class MemberRepositoryJpa implements MemberRepository {
 
     private final EntityManager em;
-    private  final JPAQueryFactory query;
+    private final JPAQueryFactory query;
+    private BooleanExpression expression = null;
 
 
     public MemberRepositoryJpa(EntityManager em) {
@@ -54,7 +55,6 @@ public class MemberRepositoryJpa implements MemberRepository {
     private BooleanExpression memberName(String memberEmail) {
         if (StringUtils.hasText(memberEmail)) {
             return memberEntity.memberEmail.eq(memberEmail);
-            //  return memberEntity.memberEmail.like("%" + memberEmail + "%");
         }
         return null;
     }
@@ -62,7 +62,6 @@ public class MemberRepositoryJpa implements MemberRepository {
     private BooleanExpression nickname(String memberNickname) {
         if (StringUtils.hasText(memberNickname)) {
             return memberEntity.memberNickname.eq(memberNickname);
-            // return memberEntity.memberNickname.like("%" + memberNickname + "%");
         }
         return null;
     }
@@ -97,12 +96,12 @@ public class MemberRepositoryJpa implements MemberRepository {
     @Transactional
     public void withdraw(Long id) {
         MemberEntity memberEntity = em.find(MemberEntity.class, id);
-            memberEntity.setMemberAvailable("no");
-            memberEntity.setMemberEmail("탈퇴한사용자"+ memberEntity.getId());
-            memberEntity.setMemberNickname("탈퇴한사용자"+memberEntity.getId()+new Date());
-            memberEntity.setMemberRole("탈퇴한사용자");
-            memberEntity.setMemberAddress("탈퇴한사용자");
-            memberEntity.setMemberName("탈퇴한사용자");
+        memberEntity.setMemberAvailable("no");
+        memberEntity.setMemberEmail("탈퇴한사용자" + memberEntity.getId());
+        memberEntity.setMemberNickname("탈퇴한사용자" + memberEntity.getId() + new Date());
+        memberEntity.setMemberRole("탈퇴한사용자");
+        memberEntity.setMemberAddress("탈퇴한사용자");
+        memberEntity.setMemberName("탈퇴한사용자");
 
     }
 }

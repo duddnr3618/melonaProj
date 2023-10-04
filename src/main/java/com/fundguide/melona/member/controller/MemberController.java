@@ -179,6 +179,8 @@ public class MemberController {
         ExchangeRate exchangeRate = new ExchangeRate();
         ArrayList<ExchangeDto> exchangeDtos = exchangeRate.requestApi();
         model.addAttribute("test", exchangeDtos);
-        return "member/test";
+        return "member/exchangeRate";
+
     }
+
 }
