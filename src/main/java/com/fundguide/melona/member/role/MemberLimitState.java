@@ -4,6 +4,7 @@ import lombok.ToString;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.zip.DataFormatException;
 
 public enum MemberLimitState {
@@ -11,28 +12,28 @@ public enum MemberLimitState {
 
     /**해당 열거형에 값을 얻기 위한 메서드
      * @return {{@link MemberLimitState}}*/
-    public static MemberLimitState getLimitState(String limit) throws DataFormatException {
+    public static MemberLimitState getLimitState(String limit) throws NoSuchElementException {
         return memberLimitState(limit);
     }
 
     /**보안성을 위한 private*/
-    private static MemberLimitState memberLimitState(String limit) throws DataFormatException {
+    private static MemberLimitState memberLimitState(String limit) throws NoSuchElementException {
         for (MemberLimitState memberLimitState : MemberLimitState.values()) {
             if (memberLimitState.toString().equals(limit)) {
                 return memberLimitState;
             }
         }
-        throw new DataFormatException("유저 상태값 존재하지 않음");
+        throw new NoSuchElementException("유저 상태값 존재하지 않음");
     }
 
     /**가시성을 위한 String 반환*/
-    public static String memberLimitState(MemberLimitState state) throws DataFormatException {
+    public static String getLimitState(MemberLimitState state) throws NoSuchElementException {
         for (MemberLimitState memberLimitState : MemberLimitState.values()) {
             if (memberLimitState.equals(state)) {
                 return memberLimitState.toString();
             }
         }
-        throw new DataFormatException("유저 상태값 존재하지 않음");
+        throw new NoSuchElementException("유저 상태값 존재하지 않음");
     }
 
     /**각 상태값에 대한 설명을 Map 형식으로 반환하기 위한 메서드*/
