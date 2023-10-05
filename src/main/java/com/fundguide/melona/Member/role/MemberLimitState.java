@@ -1,4 +1,4 @@
-package com.fundguide.melona.Member.role;
+package com.fundguide.melona.member.role;
 
 import lombok.ToString;
 

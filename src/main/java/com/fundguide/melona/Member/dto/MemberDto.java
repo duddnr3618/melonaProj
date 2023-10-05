@@ -1,4 +1,4 @@
-package com.fundguide.melona.Member.dto;
+package com.fundguide.melona.member.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;

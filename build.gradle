@@ -28,7 +28,6 @@ repositories {
 	mavenCentral()
 }
 
-
 dependencies {
 	//DevTool
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -68,6 +67,11 @@ dependencies {
 	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
 	implementation "com.querydsl:querydsl-codegen:${queryDslVersion}"
 
+	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.1.1'
+
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
 	//json
@@ -84,42 +88,11 @@ dependencies {
 
 
 
-
-
-
 }
-
-
 
 def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
 	jpa = true
 	querydslSourcesDir = querydslDir
-}
-
-sourceSets {
-	main.java.srcDir querydslDir
-}
-
-compileQuerydsl {
-	options.annotationProcessorPath = configurations.querydsl
-	source = file(querydslDir)
-}
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-	querydsl.extendsFrom compileClasspath
-}
-
-//If the file exists during compilation, an error occurs. Therefore added
-compileQuerydsl.doFirst {
-	if (file(querydslDir).exists())
-		delete(file(querydslDir))
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
 }

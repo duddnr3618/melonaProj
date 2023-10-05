@@ -1,4 +1,4 @@
-package com.fundguide.melona.Member.mapper;
+package com.fundguide.melona.member.mapper;
 
 import com.fundguide.melona.member.dto.MemberDto;
 import com.fundguide.melona.member.entity.MemberEntity;

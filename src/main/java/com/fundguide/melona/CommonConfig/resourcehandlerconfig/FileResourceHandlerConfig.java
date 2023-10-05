@@ -1,4 +1,4 @@
-package com.fundguide.melona.CommonConfig.resourcehandlerconfig;
+package com.fundguide.melona.commonconfig.resourcehandlerconfig;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

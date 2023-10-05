@@ -1,4 +1,4 @@
-package com.fundguide.melona.Member.config;
+package com.fundguide.melona.member.config;
 
 import com.fundguide.melona.member.utils.MainSend;
 import com.fundguide.melona.member.utils.UtilsPasswordEncoder;

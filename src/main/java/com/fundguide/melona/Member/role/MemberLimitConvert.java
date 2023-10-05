@@ -1,4 +1,4 @@
-package com.fundguide.melona.Member.role;
+package com.fundguide.melona.member.role;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
@@ -6,16 +6,16 @@ import jakarta.persistence.Converter;
 import java.util.NoSuchElementException;
 
 @Converter
-public class MemberLimitConvert implements AttributeConverter<com.fundguide.melona.member.role.MemberLimitState, String> {
+public class MemberLimitConvert implements AttributeConverter<MemberLimitState, String> {
 
     @Override
-    public String convertToDatabaseColumn(com.fundguide.melona.member.role.MemberLimitState attribute) {
+    public String convertToDatabaseColumn(MemberLimitState attribute) {
         return attribute.toString();
     }
 
     @Override
-    public com.fundguide.melona.member.role.MemberLimitState convertToEntityAttribute(String dbData) {
-        for (com.fundguide.melona.member.role.MemberLimitState memberLimitState : com.fundguide.melona.member.role.MemberLimitState.values()) {
+    public MemberLimitState convertToEntityAttribute(String dbData) {
+        for (MemberLimitState memberLimitState : MemberLimitState.values()) {
             if (memberLimitState.toString().equals(dbData)) {
                 return memberLimitState;
             }

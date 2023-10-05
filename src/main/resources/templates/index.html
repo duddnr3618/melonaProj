@@ -1,21 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 
-<head>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"
-          integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
-          crossorigin="anonymous"></script>
-  <title>index</title>
-</head>
-<body>
 
 <div layout:fragment="content">
-  <div class="container text-center my-5">
-    $END$
-  </div>
-
+  <br>
+  <a th:href="@{normalboard}">일반가이드 리스트</a>
+  <a th:href="@{leaderBoard/writeForm}">리더가이드 작성</a>
+  <a th:href="@{leaderBoard/list}">리더가이드 리스트</a>
+  <a th:href="@{leaderBoard/paging}">리더가이드 페이징리스트</a>
 </div>
-</body>
 </html>

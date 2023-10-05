@@ -1,4 +1,4 @@
-package com.fundguide.melona.CommonConfig;
+package com.fundguide.melona.commonconfig;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

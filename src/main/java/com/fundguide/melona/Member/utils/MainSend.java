@@ -1,4 +1,4 @@
-package com.fundguide.melona.Member.utils;
+package com.fundguide.melona.member.utils;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

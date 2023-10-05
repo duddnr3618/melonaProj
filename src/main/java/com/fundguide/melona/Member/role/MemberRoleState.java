@@ -1,4 +1,4 @@
-package com.fundguide.melona.Member.role;
+package com.fundguide.melona.member.role;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

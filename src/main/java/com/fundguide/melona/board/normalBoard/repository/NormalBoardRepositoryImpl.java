@@ -13,8 +13,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import static com.fundguide.melona.board.normalBoard.entity.QNormalBoardEntity.normalBoardEntity;
 
+import static com.fundguide.melona.board.normalBoard.entity.QNormalBoardEntity.normalBoardEntity;
 
 @Repository
 @RequiredArgsConstructor
@@ -34,7 +34,7 @@ public class NormalBoardRepositoryImpl implements NormalBoardRepositoryCustom {
             booleanExpression = normalBoardEntity.boardWriter.like(likeKeyword)
                     .or(normalBoardEntity.boardTitle.like(likeKeyword))
                     .or(normalBoardEntity.boardContents.like(likeKeyword))
-            ;
+                    ;
         } else if ("content".equals(searchOption)) {
             booleanExpression = normalBoardEntity.boardContents.like(likeKeyword);
         } else if ("writeruser".equals(searchDTO.searchOption())) {
@@ -52,4 +52,3 @@ public class NormalBoardRepositoryImpl implements NormalBoardRepositoryCustom {
         return null;
     }
 }
-

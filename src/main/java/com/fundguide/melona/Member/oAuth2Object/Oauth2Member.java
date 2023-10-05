@@ -1,4 +1,4 @@
-package com.fundguide.melona.Member.oAuth2Object;
+package com.fundguide.melona.member.oAuth2Object;
 
 
 public interface Oauth2Member {

@@ -1,4 +1,4 @@
-package com.fundguide.melona.Member.repository;
+package com.fundguide.melona.member.repository;
 
 import com.fundguide.melona.member.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

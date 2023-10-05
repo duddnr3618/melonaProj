@@ -1,4 +1,4 @@
-package com.fundguide.melona.Member.service;
+package com.fundguide.melona.member.service;
 
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;

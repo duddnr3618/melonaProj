@@ -1,8 +1,8 @@
-package com.fundguide.melona.Member.oAuth2Object;
+package com.fundguide.melona.member.oAuth2Object;
 
 import java.util.Map;
 
-public class GoogleOauth2Member implements com.fundguide.melona.member.oAuth2Object.Oauth2Member {
+public class GoogleOauth2Member implements Oauth2Member {
 
     private Map<String,Object> attributes;
 

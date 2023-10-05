@@ -1,4 +1,4 @@
-package com.fundguide.melona.Member.service;
+package com.fundguide.melona.member.service;
 
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.role.MemberRoleState;
@@ -36,10 +36,9 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-
-        for (MemberRoleState role : memberRoleStateCollection) {
-            grantedAuthorities.add(role.toGrantedAuthority());
-        }
+        grantedAuthorities.add(() ->{
+            return memberEntity.getMemberRole().toString();
+        });
         return grantedAuthorities;
     }
 
