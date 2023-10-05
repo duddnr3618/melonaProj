@@ -1,4 +1,4 @@
-package com.news.news.vo;
+package com.fundguide.melona.vo;
 
 import lombok.*;
 

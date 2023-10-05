@@ -1,11 +1,13 @@
-package com.news.news.controller;
+package com.fundguide.melona.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fundguide.melona.vo.NewsVO;
 import com.news.news.vo.NaverResultVO;
-import com.news.news.vo.NewsVO;
+import com.
+        news.news.vo.NewsVO;
 import org.springframework.ui.Model;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
