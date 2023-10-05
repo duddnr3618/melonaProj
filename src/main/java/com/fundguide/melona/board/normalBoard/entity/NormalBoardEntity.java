@@ -1,6 +1,6 @@
 package com.fundguide.melona.board.normalBoard.entity;
 
-import com.fundguide.melona.board.common.entity.BaseBoardEntity;
+import com.fundguide.melona.board.common.entity.BaseMemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "normal_board")
-public class NormalBoardEntity extends BaseBoardEntity {
+public class NormalBoardEntity extends BaseMemberEntity {
 
   @Id
   @Column(name = "boardId")

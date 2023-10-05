@@ -1,6 +1,6 @@
 package com.fundguide.melona.board.leaderboard.entity;
 
-import com.fundguide.melona.board.common.entity.BaseBoardEntity;
+import com.fundguide.melona.board.common.entity.BaseMemberEntity;
 import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "leader_board")
-public class LeaderBoardEntity extends BaseBoardEntity {
+public class LeaderBoardEntity extends BaseMemberEntity {
 
     @Id
     @Column(name = "boardId")
