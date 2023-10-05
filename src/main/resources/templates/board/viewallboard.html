@@ -1,0 +1,70 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<div layout:fragment="content">
+    <form id="BoardSearchForm">
+        <label for="BoardSearchKeyword">검색창</label>
+        <input type="text" name="searchKeyword" id="BoardSearchKeyword" th:value="${searchKeyword}">
+        
+        <label for="BoardSearchOption">옵션값</label>
+        <select name="searchOption" id="BoardSearchOption">
+            <option value="All" th:selected="${searchOption eq 'all'}" selected>모든 값에서 찾기</option>
+            <option value="NickName" th:selected="${searchOption eq 'nickname'}">닉네임으로 찾기</option>
+            <!--more add option plz-->
+        </select>
+        
+        <input type="hidden" name="searchPageValue" id="BoardSearchPageValue" th:value="${searchPageValue}">
+        <button id="BoardSearchFormButton">검색하기</button>
+    </form>
+    <script type="module" src="js/boardjs/boardJS.js"></script>
+    
+    <!--임시로 넣은 값들입니다. 더 추가해야합니다.-->
+    <!--SUDO 더 나은 방식이 존재한것으로 기억함... 나중에 수정해볼것-->
+    <div id="BoardTableBox">
+        <table>
+            <thead>
+            <tr>
+                <td>게시글 수</td>
+                <td>글 번호</td>
+                <td>제목</td>
+                <td>작성자</td>
+            </tr>
+            </thead>
+            
+            <tbody>
+            <tr th:each="board, i : ${pagingBoard}" class="boardTableValue" th:data-boardid="${board.getBoardId()}"
+                style="border: 1px solid red">
+                <th th:text="${i.count}"></th>
+                <td th:text="${board.getBoardId()}"></td>
+                <td th:text="${board.getBoardTitle()}"></td>
+                <td th:text="${board.getBoardWriter()}"></td>
+            </tr>
+            </tbody>
+        </table>
+        
+        <div th:if="${!pagingBoard.isEmpty()}">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${!pagingBoard.hasPrevious} ? 'disabled'">
+                    <a class="page-link"
+                       href="javascript:void(0)" th:data-page="${pagingBoard.number -1}">
+                        <span>이전</span>
+                    </a>
+                </li>
+                <li th:each="page: ${#numbers.sequence(0, pagingBoard.totalPages -1)}"
+                    th:if="${page >= pagingBoard.number -5 and page <= pagingBoard.number +5}"
+                    th:classappend="${page == pagingBoard.number} ? 'active'"
+                    class="page-item">
+                    <a th:text="${page}  +1" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
+                </li>
+                <li class="page-item" th:classappend="${!pagingBoard.hasNext} ? 'disabled'">
+                    <a class="page-link" href="javascript:void(0)" th:data-page="${pagingBoard.number+1}">
+                        <span>다음</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</html>
