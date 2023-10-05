@@ -15,7 +15,13 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-@Table(name = "board_like")
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "board_like",
+                        columnNames = {"community_board_id" , "member_id"}
+                )
+        })
 public class LikeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

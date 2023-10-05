@@ -1,12 +1,16 @@
 package com.fundguide.melona.board.community.dto;
 
+import com.fundguide.melona.board.community.entity.CommunityEntity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.cglib.core.Local;
+import org.modelmapper.ModelMapper;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -14,12 +18,21 @@ import java.time.LocalDateTime;
 @ToString
 public class CommunityDto {
     private Long id;
+    @NotBlank(message = "제목을 입력해주세요")
     private String boardTitle;
+    @NotNull(message = "내용을 입력해주세요.")
     private String boardContents;
     private int boardHits;
-    private String fileName;
-    private String originalFileName;
-    private String fileUrl;
-    private LocalDateTime createdTime;
-    private LocalDateTime updatedTime;
+
+    private List<CommunityFileDto> communityFileDtos = new ArrayList<>();
+
+    private List<Long> communityFileList = new ArrayList<>();       // 파일의 번호 관리를 리스트해서 관리
+
+    /* entity -> dto 변환 */
+    private static ModelMapper modelMapper = new ModelMapper();
+    public static CommunityDto of(CommunityEntity communityEntity){
+      return modelMapper.map(communityEntity, CommunityDto.class);
+    }
+
+
 }

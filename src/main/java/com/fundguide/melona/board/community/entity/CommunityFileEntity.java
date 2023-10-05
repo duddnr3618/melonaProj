@@ -1,10 +1,13 @@
 package com.fundguide.melona.board.community.entity;
 
 import com.fundguide.melona.board.common.entity.BaseMemberEntity;
+import com.fundguide.melona.board.community.dto.CommunityDto;
+import com.fundguide.melona.board.community.dto.CommunityFileDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.modelmapper.ModelMapper;
 
 @Entity
 @Getter
@@ -33,5 +36,12 @@ public class CommunityFileEntity extends BaseMemberEntity {
         this.originalFileName = originalFileName;
         this.fileUrl = fileUrl;
     }
+
+    /* dto -> entity 변환 */
+    private static ModelMapper modelMapper = new ModelMapper();
+    public static CommunityFileEntity of(CommunityFileDto communityFileDto){
+        return modelMapper.map(communityFileDto, CommunityFileEntity.class);
+    }
+
 
 }
