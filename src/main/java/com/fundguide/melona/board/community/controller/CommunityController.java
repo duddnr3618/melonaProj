@@ -2,6 +2,7 @@ package com.fundguide.melona.board.community.controller;
 
 import com.fundguide.melona.board.community.service.CommunityService;
 import com.fundguide.melona.member.entity.MemberEntity;
+import com.fundguide.melona.member.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,10 +25,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
             }
 
             @GetMapping("/wrtieForm")
-            public String writeForm(@AuthenticationPrincipal MemberEntity memberEntity) {
-                memberEntity.getMemberName();
+            public String writeForm(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+                MemberEntity memberEntity = customUserDetails.getMemberEntity();
                 System.out.println("로그인한 사용자의 정보 : " + memberEntity);
-        return "board/writeForm";
+                return "board/writeForm";
     }
 
 }

@@ -1,6 +1,6 @@
 package com.fundguide.melona.board.community.entity;
 
-import com.fundguide.melona.board.common.entity.BaseBoardEntity;
+import com.fundguide.melona.board.common.entity.BaseMemberEntity;
 import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name = "community_board")
-public class CommunityEntity extends BaseBoardEntity {
+public class CommunityEntity extends BaseMemberEntity {
     @Id
     @Column(name = "community_board_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
