@@ -36,10 +36,9 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-
-        for (MemberRoleState role : memberRoleStateCollection) {
-            grantedAuthorities.add(role.toGrantedAuthority());
-        }
+        grantedAuthorities.add(() ->{
+            return memberEntity.getMemberRole().toString();
+        });
         return grantedAuthorities;
     }
 

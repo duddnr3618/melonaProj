@@ -43,9 +43,9 @@ public class SpringSecurityConfig {
                         .usernameParameter("memberEmail")
                         .passwordParameter("memberPassword")
                         .failureUrl("/fail")
-                        .defaultSuccessUrl("/success"))
+                        .defaultSuccessUrl("/"))
                         .oauth2Login(oauth -> oauth.loginPage("/loginForm")
-                        .defaultSuccessUrl("/success")
+                        .defaultSuccessUrl("/")
                         .failureUrl("/fail")
                         .userInfoEndpoint(userInfoEndpointConfig-> userInfoEndpointConfig.userService(oAuth2UserDetailService)))
                 .logout((logout) -> logout
