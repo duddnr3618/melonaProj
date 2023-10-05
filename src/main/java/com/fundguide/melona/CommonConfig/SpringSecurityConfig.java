@@ -1,4 +1,4 @@
-package com.fundguide.melona.commonconfig;
+package com.fundguide.melona.CommonConfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

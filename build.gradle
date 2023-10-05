@@ -28,6 +28,7 @@ repositories {
 	mavenCentral()
 }
 
+
 dependencies {
 	//DevTool
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -66,7 +67,29 @@ dependencies {
 	implementation "com.querydsl:querydsl-core:${queryDslVersion}"
 	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
 	implementation "com.querydsl:querydsl-codegen:${queryDslVersion}"
+
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+	//json
+	implementation group: 'org.json', name: 'json', version: '20230618'
+//	//google
+//	implementation group: 'com.google.code.gson', name: 'gson', version: '2.10.1'
+//	implementation 'org.python:jython-installer:2.7.3'
+//
+//	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+//	implementation 'com.github.KwabenBerko:News-API-Java:1.0.2'
+//
+//	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.10.0'
+//	implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.9'
+
+
+
+
+
+
 }
+
+
 
 def querydslDir = "$buildDir/generated/querydsl"
 

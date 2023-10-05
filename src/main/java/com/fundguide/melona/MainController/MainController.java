@@ -1,4 +1,4 @@
-package com.fundguide.melona.maincontroller;
+package com.fundguide.melona.MainController;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

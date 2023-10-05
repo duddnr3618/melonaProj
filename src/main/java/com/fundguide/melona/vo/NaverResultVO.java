@@ -21,6 +21,6 @@ public class NaverResultVO {
     private int display;
     // 검색 결과의 실제 아이템 목록.
     // NewsVO 객체의 list로, 각 item은 하나의 뉴스로 나타냄.
-    private List<com.news.news.vo.NewsVO> items;
+    private List<NewsVO> items;
 
 }
