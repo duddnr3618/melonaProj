@@ -6,7 +6,6 @@ import com.fundguide.melona.member.oAuth2Object.NaverOauth2Member;
 import com.fundguide.melona.member.oAuth2Object.Oauth2Member;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
-import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.role.MemberRoleState;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +51,6 @@ public class OAuth2UserDetailService extends DefaultOAuth2UserService {
             memberEntity = new MemberEntity();
             memberEntity.setMemberEmail(oauth2Member.getMemberEmail());
             memberEntity.setMemberName(oauth2Member.getMemberName());
-            memberEntity.setMemberLimitState(MemberLimitState.NORMAL);
             memberEntity.setMemberPassword(utilsPasswordEncoder.encode(variable+new Date()));
             memberEntity.setMemberRole(MemberRoleState.ROLE_USER);
             memberEntity.setMemberAddress("입력한 주소가 없습니다.");

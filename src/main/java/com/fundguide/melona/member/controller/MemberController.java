@@ -38,12 +38,12 @@ public class MemberController {
     public String joinForm(@ModelAttribute MemberDto memberDto, Model model) {
 
         model.addAttribute("memberDto", memberDto);
-        return "member/joinForm";
+        return "member/joinFrom";
     }
 
     @PostMapping("member/JoinPro")      // 회원가입 요청
     public String memberSave(@Validated @ModelAttribute MemberDto memberDto, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors()) return "joinForm";
+        if (bindingResult.hasErrors()) return "member/joinFrom";
         memberService.memberSave(memberDto);
         return "redirect:/";
     }
@@ -179,6 +179,6 @@ public class MemberController {
         ExchangeRate exchangeRate = new ExchangeRate();
         ArrayList<ExchangeDto> exchangeDtos = exchangeRate.requestApi();
         model.addAttribute("test", exchangeDtos);
-        return "member/exchangeRate";
+        return "member/test";
     }
 }
