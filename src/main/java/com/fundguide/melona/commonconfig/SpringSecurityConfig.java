@@ -27,6 +27,7 @@ public class SpringSecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity
                 .authorizeRequests()
+                .requestMatchers(("/css/**")).permitAll()
                 .requestMatchers("/user/**").authenticated()
                 .requestMatchers("/user/**").access("hasAnyRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_LEADER')")
                 .requestMatchers("/leader/**").access("hasAnyRole('ROLE_LEADER')or hasRole('ROLE_ADMIN')")
