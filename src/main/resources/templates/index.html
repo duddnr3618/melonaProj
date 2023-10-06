@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+
+<div layout:fragment="content">
+  <br>
+  <div>
+    <ul>
+      <li>뉴스</li>
+
+      <li>가이드
+        <ul>
+        <li><a>리더가이드</a></li>
+        <li><a>일반가이드</a></li>
+      </ul>
+      </li>
+
+      <li><a href="/community/list">커뮤니티</a></li>
+
+
+
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+
+  <a th:href="@{normalboard}">일반가이드 리스트</a>
+  <a th:href="@{leaderBoard/writeForm}">리더가이드 작성</a>
+  <a th:href="@{leaderBoard/list}">리더가이드 리스트</a>
+
+  <a th:href="@{leaderBoard/paging}">리더가이드 페이징리스트</a>
+
+</div>
 </html>

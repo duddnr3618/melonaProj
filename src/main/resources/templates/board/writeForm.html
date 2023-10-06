@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+
+<div layout:fragment="content">
+
+    <br>
+
+    <form action="/community/writePro" method="post">
+        작성자 :<span th:text="${userName}"></span><br>
+        제목 : <input type="text" name="boardTitle"><br>
+        내용 :<br>
+        <textarea name="boardContents" cols="60" rows="10"></textarea><br>
+        <input type="submit" value="글작성">
+        <button href="/board/community/list">취소</button>
+    </form>
+
+</div>
+</html>

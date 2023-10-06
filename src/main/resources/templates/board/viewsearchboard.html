@@ -1,0 +1,21 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<table>
+    <thead>
+    <tr>
+        <td>count</td>
+        <td>boardId</td>
+        <td>boardTitle</td>
+        <td>boardWriter</td>
+    </tr>
+    </thead>
+    
+    <tbody>
+    <tr th:each="board, i : ${pagingBoard}" class="boardTableValue" th:data-boardid="${board.getBoardId()}"
+        style="border: 1px solid red">
+        <th th:text="${i.count}"></th>
+        <td th:text="${board.getBoardId()}"></td>
+        <td th:text="${board.getBoardTitle()}"></td>
+        <td th:text="${board.getBoardWriter()}"></td>
+    </tr>
+    </tbody>
+</table>
