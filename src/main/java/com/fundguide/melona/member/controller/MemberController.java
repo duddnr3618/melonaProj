@@ -181,5 +181,3 @@ public class MemberController {
         return "member/exchangeRate";
     }
 }
-
-// 나중에 활성화컬럼삭제
