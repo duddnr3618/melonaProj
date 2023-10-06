@@ -17,11 +17,11 @@ public interface LeaderBoardRepository extends JpaRepository<LeaderBoardEntity ,
     @Query("UPDATE LeaderBoardEntity b SET b.updatedTime = CURRENT_TIMESTAMP WHERE b.id = :id")
     void updateBoardUpdateTime(@Param("id") Long id);
 
-    @Query("SELECT b FROM LeaderBoardEntity b WHERE b.memberEntity.id = :memberId ORDER BY b.boardHits DESC")
-    List<LeaderBoardEntity> findMyPagePostsOrderByHits(@Param("memberId") Long memberId);
-
-    @Query("SELECT b FROM LeaderBoardEntity b WHERE b.memberEntity.id = :memberId ORDER BY b.createdTime DESC")
-    List<LeaderBoardEntity> findMyPagePostsByMemberIdOrderByCreatedAt(@Param("memberId") Long memberId);
+//    @Query("SELECT b FROM LeaderBoardEntity b WHERE b.memberEntity.id = :memberId ORDER BY b.boardHits DESC")
+//    List<LeaderBoardEntity> findMyPagePostsOrderByHits(@Param("memberId") Long memberId);
+//
+//    @Query("SELECT b FROM LeaderBoardEntity b WHERE b.memberEntity.id = :memberId ORDER BY b.createdTime DESC")
+//    List<LeaderBoardEntity> findMyPagePostsByMemberIdOrderByCreatedAt(@Param("memberId") Long memberId);
 
 
 }
