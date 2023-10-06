@@ -24,7 +24,6 @@ import java.util.ArrayList;
 @Controller
 //@RequestMapping("member")
 public class MemberController {
-
     private final MemberService memberService;
 
 
@@ -174,11 +173,13 @@ public class MemberController {
         memberService.changePassword(id,memberDto.getMemberPassword());
         return "redirect:/";
     }
-    @GetMapping("test")
+    @GetMapping("exchangeRateCalc")
     public String test(Model model){
         ExchangeRate exchangeRate = new ExchangeRate();
         ArrayList<ExchangeDto> exchangeDtos = exchangeRate.requestApi();
         model.addAttribute("test", exchangeDtos);
-        return "member/test";
+        return "member/exchangeRate";
     }
 }
+
+// 나중에 활성화컬럼삭제

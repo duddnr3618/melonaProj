@@ -27,11 +27,12 @@ public class SpringSecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
         httpSecurity
                 .authorizeRequests()
+                .requestMatchers(("/css/**")).permitAll()
                 .requestMatchers("/user/**").authenticated()
                 .requestMatchers("/user/**").access("hasAnyRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_LEADER')")
                 .requestMatchers("/leader/**").access("hasAnyRole('ROLE_LEADER')or hasRole('ROLE_ADMIN')")
                 .requestMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN')")
-                .requestMatchers("/","/logout").permitAll()
+                .requestMatchers("/","/logout","/css").permitAll()
                 .and()
                 .headers((headers) -> headers.addHeaderWriter(
                         new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)
@@ -43,9 +44,9 @@ public class SpringSecurityConfig {
                         .usernameParameter("memberEmail")
                         .passwordParameter("memberPassword")
                         .failureUrl("/fail")
-                        .defaultSuccessUrl("/success"))
+                        .defaultSuccessUrl("/"))
                         .oauth2Login(oauth -> oauth.loginPage("/loginForm")
-                        .defaultSuccessUrl("/success")
+                        .defaultSuccessUrl("/")
                         .failureUrl("/fail")
                         .userInfoEndpoint(userInfoEndpointConfig-> userInfoEndpointConfig.userService(oAuth2UserDetailService)))
                 .logout((logout) -> logout

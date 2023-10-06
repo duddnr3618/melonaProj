@@ -1,18 +1,22 @@
 package com.fundguide.melona.board.leaderboard.entity;
 
-import com.fundguide.melona.board.common.entity.BaseBoardEntity;
+import com.fundguide.melona.board.common.entity.BaseMemberEntity;
 import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "leader_board")
-public class LeaderBoardEntity extends BaseBoardEntity {
+public class LeaderBoardEntity extends BaseMemberEntity {
 
     @Id
     @Column(name = "boardId")
@@ -26,12 +30,12 @@ public class LeaderBoardEntity extends BaseBoardEntity {
     private String boardContents;
 
     @Column(name = "boardHits")
-    private Long boardHits; // 조회수
+    private Long boardHits = 0L; // 조회수
 
 // getter와 setter 메서드 추가
 
     public Long getBoardHits() {
-        return this.boardHits;
+        return boardHits;
     }
 
     public void setBoardHits(Long boardHits) {

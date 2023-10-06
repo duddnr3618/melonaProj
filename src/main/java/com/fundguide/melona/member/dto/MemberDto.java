@@ -1,6 +1,7 @@
 package com.fundguide.melona.member.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
