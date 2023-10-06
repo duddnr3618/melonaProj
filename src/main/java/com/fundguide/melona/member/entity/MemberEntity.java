@@ -1,5 +1,6 @@
 package com.fundguide.melona.member.entity;
 
+import com.fundguide.melona.board.common.entity.BaseMemberEntity;
 import com.fundguide.melona.member.role.MemberLimitConvert;
 import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.role.MemberRoleConvert;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "member")
-public class MemberEntity {
+public class MemberEntity extends BaseMemberEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
