@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "member")
-public class MemberEntity extends BaseMemberEntity {
+public class MemberEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

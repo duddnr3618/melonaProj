@@ -1,5 +1,6 @@
 package com.fundguide.melona.board.leaderboard.entity;
 
+import com.fundguide.melona.board.common.entity.BaseTimeEntity;
 import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "leader_board")
-public class LeaderBoardEntity extends BaseMemberEntity {
+public class LeaderBoardEntity extends BaseTimeEntity {
 
     @Id
     @Column(name = "boardId")

@@ -24,37 +24,37 @@ import java.util.List;
     public class MyPageController {
         private final CommunityService communityService;
         private final LeaderBoardService leaderBoardService;
-        @GetMapping("/community-posts")
-        public String myCommunityPosts(Model model, @AuthenticationPrincipal MemberEntity memberEntity,
-                                       @RequestParam(name = "orderBy", defaultValue = "latest") String orderBy) {
-            Long memberId = memberEntity.getId();
-            List<CommunityDto> posts;
-
-            if ("likes".equals(orderBy)) {
-                posts = communityService.getMyPagePostsOrderByLikes(memberId);
-            } else {
-                posts = communityService.getMyPagePostsOrderByCreatedAt(memberId);
-            }
-
-            model.addAttribute("posts", posts);
-            return "mypage/community-posts";
-
-        }
-        @GetMapping("/leaderboard-posts")
-        public String myLeaderBoardPosts(Model model, @AuthenticationPrincipal MemberEntity memberEntity,
-                                         @RequestParam(name = "orderBy", defaultValue = "hits") String orderBy) {
-            Long memberId = memberEntity.getId();
-            List<LeaderBoardDto> posts;
-
-            if ("hits".equals(orderBy)) {
-                posts = leaderBoardService.getMyPagePostsOrderByHits(memberId);
-            } else {
-                posts = leaderBoardService.getMyPagePostsOrderByCreatedAt(memberId);
-            }
-
-            model.addAttribute("leaderboardPosts", posts);
-            return "mypage/leaderboard-posts";
-        }
+//        @GetMapping("/community-posts")
+//        public String myCommunityPosts(Model model, @AuthenticationPrincipal MemberEntity memberEntity,
+//                                       @RequestParam(name = "orderBy", defaultValue = "latest") String orderBy) {
+//            Long memberId = memberEntity.getId();
+//            List<CommunityDto> posts;
+//
+//            if ("likes".equals(orderBy)) {
+//                posts = communityService.getMyPagePostsOrderByLikes(memberId);
+//            } else {
+//                posts = communityService.getMyPagePostsOrderByCreatedAt(memberId);
+//            }
+//
+//            model.addAttribute("posts", posts);
+//            return "mypage/community-posts";
+//
+//        }
+//        @GetMapping("/leaderboard-posts")
+//        public String myLeaderBoardPosts(Model model, @AuthenticationPrincipal MemberEntity memberEntity,
+//                                         @RequestParam(name = "orderBy", defaultValue = "hits") String orderBy) {
+//            Long memberId = memberEntity.getId();
+//            List<LeaderBoardDto> posts;
+//
+//            if ("hits".equals(orderBy)) {
+//                posts = leaderBoardService.getMyPagePostsOrderByHits(memberId);
+//            } else {
+//                posts = leaderBoardService.getMyPagePostsOrderByCreatedAt(memberId);
+//            }
+//
+//            model.addAttribute("leaderboardPosts", posts);
+//            return "mypage/leaderboard-posts";
+//        }
 
 
     }

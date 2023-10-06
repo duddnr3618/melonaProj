@@ -35,7 +35,7 @@ public class CommunityController {
         if(customUserDetails == null) {
             return "member/loginForm";
         }
-        String userName = customUserDetails.getMemberEntity().getMemberName();  // 이메일  getName1();
+        String userName = customUserDetails.getMemberEntity().getMemberName(); 
         model.addAttribute("userName", userName);
       return "board/writeForm";
     }

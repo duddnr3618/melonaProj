@@ -1,5 +1,6 @@
 package com.fundguide.melona.board.community.entity;
 
+import com.fundguide.melona.board.common.entity.BaseTimeEntity;
 import com.fundguide.melona.board.community.dto.CommunityFileDto;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import org.modelmapper.ModelMapper;
 @Setter
 @NoArgsConstructor
 @Table(name = "community_file")
-public class CommunityFileEntity extends BaseMemberEntity {
+public class CommunityFileEntity extends BaseTimeEntity {
     @Id
     @Column(name = "community_file_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
