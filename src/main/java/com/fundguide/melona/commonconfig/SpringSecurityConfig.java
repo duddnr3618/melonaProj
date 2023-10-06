@@ -32,7 +32,7 @@ public class SpringSecurityConfig {
                 .requestMatchers("/user/**").access("hasAnyRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_LEADER')")
                 .requestMatchers("/leader/**").access("hasAnyRole('ROLE_LEADER')or hasRole('ROLE_ADMIN')")
                 .requestMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN')")
-                .requestMatchers("/","/logout","/css").permitAll()
+                .requestMatchers("/","/logout").permitAll()
                 .and()
                 .headers((headers) -> headers.addHeaderWriter(
                         new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)
