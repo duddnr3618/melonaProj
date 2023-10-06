@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.modelmapper.ModelMapper;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,8 @@ public class CommunityDto {
     @NotNull(message = "내용을 입력해주세요.")
     private String boardContents;
     private int boardHits;
+    private LocalDateTime createdTime;
+    private LocalDateTime updatedTime;
 
     private List<CommunityFileDto> communityFileDtos = new ArrayList<>();
 
