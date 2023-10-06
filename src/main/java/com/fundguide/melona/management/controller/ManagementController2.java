@@ -1,27 +1,25 @@
-/*
 package com.fundguide.melona.management.controller;
 
 import com.fundguide.melona.board.normalBoard.dto.NormalBoardDto;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardCommandService;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardQueryService;
-import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.management.service.ManagementService;
-import com.fundguide.melona.member.dto.MemberDto;
+import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/management")
-public class ManagementController {
+public class ManagementController2 {
     private final MemberService memberService;
     private final NormalBoardCommandService normalBoardCommandService;
     private final NormalBoardQueryService normalBoardQueryService;
@@ -34,24 +32,24 @@ public class ManagementController {
 
     @GetMapping
     public String mainManagementView() {
-        return "management/management";
+        return "management/server_rendering_version/management2";
     }
 
     @GetMapping("/board_filter_page")
-    @ResponseBody
-    public Page<?> getBoardCategoryFilterPagingResult(
+    public String getBoardCategoryFilterPagingResult(
             @RequestParam("category") String category
-            , @RequestParam("filter") String filter) throws IllegalAccessException {
-        return managementService.getBoardCategoryFilterPaging(category, filter, pageable_Board);
+            , @RequestParam("filter") String filter
+            , Model model) throws IllegalAccessException {
+        Page<?> paging = managementService.getBoardCategoryFilterPaging(category, filter, pageable_Board);
+        model.addAttribute("boardPaging", paging);
+        model.addAttribute("filter", filter);
+        return "management/server_rendering_version/board_rendering";
     }
 
     @PutMapping("/board_disabled")
     public ResponseEntity<String> disabledBoard(
             @RequestParam("category") String category
             , @RequestParam("id") Long id) throws IllegalAccessException {
-        System.out.println(" { 요청 들어옴" + " }");
-        System.out.println("카테고리값은? { " + category + " }");
-        System.out.println("아이디값은? { " + id + " }");
         return managementService.modifyDisableBoard(category, id);
     }
 
@@ -79,4 +77,3 @@ public class ManagementController {
         return managementService.getMemberRoleStatePaging(filter, pageable_Member);
     }
 }
-*/

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+
+<div layout:fragment="content">
+    <script type="module" src="js/managementjs/server_rendering_version/server_rendering_main.js"></script>
+    <ul>
+        <li id="LayoutBoard">게시판 관리</li>
+        <li id="LayoutUser">유저 관리</li>
+        <li id="LayoutRole">권한 관리</li>
+    </ul>
+    
+    <div id="AllLayoutBox">
+        <div id="DetailBoardFilter">
+            <ul data-board-category="normal">
+                노말게시판
+                <li data-board-filter="waring">경고적인</li>
+                <li data-board-filter="block">제제된</li>
+                <li data-board-filter="all">전부</li>
+            </ul>
+            
+            <ul data-board-category="leader">
+                리더게시판
+                <li data-board-filter="waring">경고적인</li>
+                <li data-board-filter="block">제제된</li>
+                <li data-board-filter="all">전부</li>
+            </ul>
+        </div>
+        
+        <div id="DetailUserFilter" style="display: none">
+            <ul>
+                <li data-user-filter="TRANSITORY">가벼운 경고</li>
+                <li data-user-filter="STRONG">강력한 경고</li>
+                <li data-user-filter="PERMANENT">권한 상실한</li>
+                <li data-user-filter="all">전부</li>
+            </ul>
+        </div>
+        
+        <div id="DetailRoleFilter" style="display: none">
+            <ul>
+                <li data-role-filter="minSatisfy">최소 요구 충족한</li>
+                <li data-role-filter="autoGet">자동적으로 권한 획득된</li>
+                <li data-role-filter="setByAdmin">관리자가 직접 설정한</li>
+                <li data-role-filter="all">전부</li>
+            </ul>
+        </div>
+    </div>
+    <div id="ResultTable"></div>
+    <div id="ResultPageLinkButton"></div>
+</div>
+</html>
