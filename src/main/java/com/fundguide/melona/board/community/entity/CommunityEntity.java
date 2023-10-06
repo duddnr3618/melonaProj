@@ -1,6 +1,6 @@
 package com.fundguide.melona.board.community.entity;
 
-import com.fundguide.melona.board.common.entity.BaseMemberEntity;
+import com.fundguide.melona.board.common.entity.BaseTimeEntity;
 import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.like.entity.LikeEntity;
 import com.fundguide.melona.member.entity.MemberEntity;
@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Table(name = "community_board")
-public class CommunityEntity extends BaseMemberEntity {
+public class CommunityEntity extends BaseTimeEntity {
     @Id
     @Column(name = "community_board_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

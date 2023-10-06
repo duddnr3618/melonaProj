@@ -1,7 +1,5 @@
 package com.fundguide.melona.board.community.entity;
 
-import com.fundguide.melona.board.common.entity.BaseMemberEntity;
-import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.dto.CommunityFileDto;
 import jakarta.persistence.*;
 import lombok.Getter;

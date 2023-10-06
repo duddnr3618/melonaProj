@@ -1,14 +1,11 @@
 package com.fundguide.melona.board.leaderboard.entity;
 
-import com.fundguide.melona.board.common.entity.BaseMemberEntity;
 import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Set;
 
 @Entity
 @Data
