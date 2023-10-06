@@ -1,7 +1,7 @@
 package com.fundguide.melona.board.normalBoard.entity;
 
+import com.fundguide.melona.board.common.entity.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fundguide.melona.board.common.entity.BaseBoardEntity;
 import com.fundguide.melona.board.common.role.BoardUsing;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,8 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "normal_board")
-public class NormalBoardEntity extends BaseBoardEntity {
-
+public class NormalBoardEntity extends BaseTimeEntity {
 
   @Id
   @Column(name = "boardId")

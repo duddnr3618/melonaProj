@@ -1,0 +1,31 @@
+/*iframe, #newsList {*/
+/*    border: 1px solid black;*/
+/*}*/
+table {
+    border-collapse: collapse; /* This will ensure borders don't double up */
+}
+
+/*table, th, td {*/
+/*    border: 1px solid black;*/
+/*}*/
+/*figure{
+    margin-top: 100px;
+}*/
+/*#container {*/
+/*    flex: 1;*/
+/*}*/
+
+.flex-container {
+    display: flex;
+}
+/*iframe, #newsList {*/
+/*    border: 1px solid black;*/
+/*}*/
+
+.content-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}

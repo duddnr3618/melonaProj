@@ -1,34 +1,51 @@
 package com.fundguide.melona.board.community.controller;
 
+import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.service.CommunityService;
-import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/community")
-        public class CommunityController {
-            private final CommunityService communityService;
-            @GetMapping("/list")
-            public String list (Model model , @PageableDefault(page=1)Pageable pageable) {
+public class CommunityController {
+    private final CommunityService communityService;
 
-                return "board/community/list";
-            }
+    /* 게시글 리스트 페이지 */
+    @GetMapping("/list")
+    public String list(Model model, @PageableDefault(page = 1) Pageable pageable) {
 
-            @GetMapping("/wrtieForm")
-            public String writeForm(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
-                MemberEntity memberEntity = customUserDetails.getMemberEntity();
-                System.out.println("로그인한 사용자의 정보 : " + memberEntity);
-                return "board/writeForm";
+        return "board/community/list";
+    }
+
+    /* 게시글 작성폼 */
+    @GetMapping("/wrtieForm")
+    public String writeForm(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        if(customUserDetails == null) {
+            return "member/loginForm";
+        }
+        String userName = customUserDetails.getMemberEntity().getMemberName(); 
+        model.addAttribute("userName", userName);
+      return "board/writeForm";
+    }
+
+    /* 게시글 수정폼 */
+    @PostMapping("/writePro")
+    public String writePro(@ModelAttribute CommunityDto communityDto) {
+        System.out.println(" >>>>>>>> communityDto : " + communityDto);
+        communityService.writePro(communityDto);
+        return "index";
     }
 
 }
