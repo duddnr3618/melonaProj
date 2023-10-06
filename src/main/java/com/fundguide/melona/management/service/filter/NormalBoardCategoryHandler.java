@@ -1,5 +1,6 @@
 package com.fundguide.melona.management.service.filter;
 
+import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.board.normalBoard.repository.NormalBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,17 +16,17 @@ public class NormalBoardCategoryHandler implements FilterCategoryHandler {
     }
 
     @Override
-    public Page<?> waringPage(Pageable pageable) {
-        return null;
+    public Page<NormalBoardEntity> waringPage(Pageable pageable) {
+        return normalBoardRepository.onlyViewNormalBoardFilterByWaring(pageable);
     }
 
     @Override
-    public Page<?> blockPage(Pageable pageable) {
-        return null;
+    public Page<NormalBoardEntity> blockPage(Pageable pageable) {
+        return normalBoardRepository.onlyViewNormalBoardFilterByBlock(pageable);
     }
 
     @Override
-    public Page<?> allPage(Pageable pageable) {
-        return normalBoardRepository.findAll(pageable);
+    public Page<NormalBoardEntity> allPage(Pageable pageable) {
+        return normalBoardRepository.findAllViewBoard(pageable);
     }
 }

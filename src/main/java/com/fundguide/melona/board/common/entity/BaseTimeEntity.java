@@ -1,10 +1,10 @@
 package com.fundguide.melona.board.common.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.MappedSuperclass;
+import com.fundguide.melona.board.common.role.BoardUsing;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,5 +22,4 @@ public class BaseTimeEntity {
 
   @LastModifiedDate
   private LocalDateTime updatedTime;
-
 }

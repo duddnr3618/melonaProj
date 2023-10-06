@@ -1,6 +1,7 @@
 package com.fundguide.melona.member.service;
 
 import com.fundguide.melona.member.dto.MemberDto;
+import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.mapper.MemberTransMapper;
 import com.fundguide.melona.member.repository.MemberRepository;
@@ -103,9 +104,8 @@ public class MemberService {
 
     }
 
-    //TODO 패스워드 넘어오지 않게 쿼리 수정할것
-    public Page<MemberEntity> getMemberPage(Pageable pageable) {
-        return memberRepositoryData.findAll(pageable);
+    public Page<MemberLeastDTO> getMemberPage(Pageable pageable) {
+        return memberRepository.findAllOfMemberLeastData(pageable);
     }
 
 }
