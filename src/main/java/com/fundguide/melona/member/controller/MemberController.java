@@ -24,7 +24,6 @@ import java.util.ArrayList;
 @Controller
 //@RequestMapping("member")
 public class MemberController {
-
     private final MemberService memberService;
 
 
@@ -182,3 +181,5 @@ public class MemberController {
         return "member/exchangeRate";
     }
 }
+
+// 나중에 활성화컬럼삭제
