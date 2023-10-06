@@ -19,6 +19,7 @@ import java.util.Set;
 @Table(name = "normal_board")
 public class NormalBoardEntity extends BaseTimeEntity {
 
+
   @Id
   @Column(name = "boardId")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
