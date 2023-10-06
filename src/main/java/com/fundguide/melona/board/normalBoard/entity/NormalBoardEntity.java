@@ -1,29 +1,30 @@
 package com.fundguide.melona.board.normalBoard.entity;
 
-import com.fundguide.melona.board.common.entity.BaseBoardEntity;
+import com.fundguide.melona.board.common.entity.BaseMemberEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "normal_board")
-public class NormalBoardEntity extends BaseBoardEntity {
+public class NormalBoardEntity extends BaseMemberEntity {
 
   @Id
+  @Column(name = "boardId")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long boardId;
+  @Column(name = "boardWriter")
   private String boardWriter;
+  @Column(name = "boardTitle")
   private String boardTitle;
+  @Column(name = "boardContents")
   private String boardContents;
+  @Column(name = "boardHits")
   private long boardHits; //조회수
+  @Column(name = "boardLikes")
   private long boardLikes; //좋아요
-
-
-
 }

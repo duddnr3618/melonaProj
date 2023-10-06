@@ -1,8 +1,8 @@
 package com.fundguide.melona.member.service;
 
 import com.fundguide.melona.member.entity.MemberEntity;
+import com.fundguide.melona.member.role.MemberRoleState;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,22 +17,30 @@ import java.util.Map;
 public class CustomUserDetails implements UserDetails, OAuth2User {
 
     private final MemberEntity memberEntity;
-    private Map<String,Object> attributes;
+    private Map<String, Object> attributes;
+    private final Collection<MemberRoleState> memberRoleStateCollection;
 
     // 일반 로그인용 생성자
-    public CustomUserDetails(MemberEntity memberEntity){this.memberEntity = memberEntity;}
-   
-   // oauth2용 생성자
-    public CustomUserDetails(MemberEntity memberEntity,Map<String, Object> attributes){
+    public CustomUserDetails(MemberEntity memberEntity, Collection<MemberRoleState> memberRoleStateCollection) {
+        this.memberEntity = memberEntity;
+        this.memberRoleStateCollection = memberRoleStateCollection;
+    }
+
+    // oauth2용 생성자
+    public CustomUserDetails(MemberEntity memberEntity, Map<String, Object> attributes, Collection<MemberRoleState> memberRoleStateCollection) {
         this.memberEntity = memberEntity;
         this.attributes = attributes;
+        this.memberRoleStateCollection = memberRoleStateCollection;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(() ->{
-            return memberEntity.getMemberRole();
+            return memberEntity.getMemberRole().toString();
         });
+
+
         return grantedAuthorities;
     }
 
@@ -67,7 +75,7 @@ public class CustomUserDetails implements UserDetails, OAuth2User {
     }
 
 
-// --------------------- oauth2
+    // --------------------- oauth2
     @Override
     public String getName() {
         return attributes.get("sub").toString();

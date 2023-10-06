@@ -5,15 +5,16 @@ import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.mapper.MemberTransMapper;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
+import com.fundguide.melona.member.role.MemberLimitState;
+import com.fundguide.melona.member.role.MemberRoleState;
 import com.fundguide.melona.member.utils.MainSend;
-import com.fundguide.melona.member.utils.UtilsPasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,9 +29,8 @@ public class MemberService {
 
     public void memberSave(MemberDto memberDto) {
         MemberEntity memberEntity = MemberTransMapper.INSTANCE.dtoToEntity(memberDto);
-
-
-        memberEntity.setMemberRole("ROLE_USER");
+        memberEntity.setMemberLimitState(MemberLimitState.NORMAL);
+        memberEntity.setMemberRole(MemberRoleState.ROLE_ADMIN);
         memberEntity.setMemberPassword(utilsPasswordEncoder.encode(memberDto.getMemberPassword()));
         memberRepository.memberSave(memberEntity);
     }
@@ -102,4 +102,10 @@ public class MemberService {
         memberRepository.withdraw(id);
 
     }
+
+    //TODO 패스워드 넘어오지 않게 쿼리 수정할것
+    public Page<MemberEntity> getMemberPage(Pageable pageable) {
+        return memberRepositoryData.findAll(pageable);
+    }
+
 }

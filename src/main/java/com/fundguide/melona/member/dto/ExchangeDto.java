@@ -2,13 +2,14 @@ package com.fundguide.melona.member.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 
 @Getter
 @Builder
 public class ExchangeDto {
 
-  //  private Integer result;  // 조회결과  1=성공   2=코드오류 3=인증코드오류 4=일일횟수제한
+    //  private Integer result;  // 조회결과  1=성공   2=코드오류 3=인증코드오류 4=일일횟수제한
     @JsonProperty("cur_unit")
     private String currencyUnit;  // 통화코드
     @JsonProperty("cur_nm")
@@ -26,6 +27,5 @@ public class ExchangeDto {
     private String kftcDeal;  // 서울외국환중개매매기준율
     @JsonProperty("kftc_bkpr")
     private String kftcBkpr;  // 서울외국환중개장부가격
-    
 
 }

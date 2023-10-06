@@ -1,11 +1,18 @@
 package com.fundguide.melona.member.entity;
 
+import com.fundguide.melona.board.common.entity.BaseMemberEntity;
+import com.fundguide.melona.member.role.MemberLimitConvert;
+import com.fundguide.melona.member.role.MemberLimitState;
+import com.fundguide.melona.member.role.MemberRoleConvert;
+import com.fundguide.melona.member.role.MemberRoleState;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Entity
 @Data
@@ -13,16 +20,22 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "member")
-public class MemberEntity {
+public class MemberEntity extends BaseMemberEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "member_id")
   private Long id;
 
   private String memberEmail;
   private String memberName;
   private String memberPassword;
-  private String memberRole;
+
+  @Convert(converter = MemberRoleConvert.class)
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false, columnDefinition = "USER")
+  private MemberRoleState memberRole;
+
   private String memberAddress;
   private LocalDate memberJoinDate;
   private String memberAvailable;
@@ -35,4 +48,8 @@ public class MemberEntity {
     memberJoinDate = LocalDate.now();
   }
 
+  @Convert(converter = MemberLimitConvert.class)
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false, columnDefinition = "NORMAL")
+  private MemberLimitState memberLimitState;
 }
