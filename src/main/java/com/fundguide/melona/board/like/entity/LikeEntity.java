@@ -39,4 +39,8 @@ public class LikeEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "leader_board_id")
     private LeaderBoardEntity LeaderBoardEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "normal_board_id")
+    private LeaderBoardEntity normalBoardEntity;
 }
