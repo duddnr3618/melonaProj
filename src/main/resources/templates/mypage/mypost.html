@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Posts</title>
+</head>
+<body>
+<h1>My Posts</h1>
+
+<!-- 게시글 정렬 옵션 -->
+<form th:action="@{mypage/myPosts}" method="get">
+    <label for="orderBy">정렬 순서:</label>
+    <select id="orderBy" name="orderBy">
+        <option value="createdTime">최신순</option>
+        <option value="mostLiked">좋아요 많은 순</option>
+    </select>
+    <button type="submit">정렬</button>
+</form>
+
+<!-- 게시글 목록 -->
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>제목</th>
+        <th>내용</th>
+        <th>작성일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="community in ${communityPage.content}">
+        <td th:text="${community.id}"></td>
+        <td th:text="${community.boardTitle}"></td>
+        <td th:text="${community.boardContents}"></td>
+        <td th:text="${community.createdTime}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- 페이지네이션 -->
+<div th:if="${communityPage.totalPages > 1}">
+    <ul class="pagination">
+        <li th:if="${communityPage.hasPrevious}" class="page-item">
+            <a class="page-link" th:href="@{mypage/myPosts(page=0, orderBy=${orderBy})}">처음</a>
+        </li>
+        <li th:if="${communityPage.hasPrevious}" class="page-item">
+            <a class="page-link" th:href="@{mypage/myPosts(page=${communityPage.number - 1}, orderBy=${orderBy})}">이전</a>
+        </li>
+        <li th:each="i : ${#numbers.sequence(0, communityPage.totalPages - 1)}" class="page-item">
+            <a class="page-link" th:href="@{mypage/myPosts(page=${i}, orderBy=${orderBy})}" th:text="${i + 1}"></a>
+        </li>
+        <li th:if="${communityPage.hasNext}" class="page-item">
+            <a class="page-link" th:href="@{mypage/myPosts(page=${communityPage.number + 1}, orderBy=${orderBy})}">다음</a>
+        </li>
+        <li th:if="${communityPage.hasNext}" class="page-item">
+            <a class="page-link" th:href="@{mypage/myPosts(page=${communityPage.totalPages - 1}, orderBy=${orderBy})}">마지막</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

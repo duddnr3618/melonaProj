@@ -1,6 +1,7 @@
 package com.fundguide.melona.board.like.entity;
 
 import com.fundguide.melona.board.community.entity.CommunityEntity;
+import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
 import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -34,4 +35,8 @@ public class LikeEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "community_board_id")
     private CommunityEntity communityEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "leader_board_id")
+    private LeaderBoardEntity LeaderBoardEntity;
 }

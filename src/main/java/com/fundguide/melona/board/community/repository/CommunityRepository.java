@@ -1,6 +1,8 @@
 package com.fundguide.melona.board.community.repository;
 
 import com.fundguide.melona.board.community.entity.CommunityEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,6 +12,9 @@ import java.util.List;
 
 @Repository
 public interface CommunityRepository extends JpaRepository<CommunityEntity,Long> {
+    
+    Page<CommunityEntity> findAllByIdInOrderByCreatedTimeDesc(List<Long> mostLikedCommunityIds, Pageable pageable);
 
+    Page<CommunityEntity> findAllByIdInOrderByCreatedTimeDesc(Pageable pageable);
 }
 
