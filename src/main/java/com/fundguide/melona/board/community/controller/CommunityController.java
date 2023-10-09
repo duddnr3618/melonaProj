@@ -12,10 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -30,8 +27,15 @@ public class CommunityController {
     @GetMapping("/list")
     public String list(Model model,
                        @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
-                       @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        Page <CommunityEntity> list = communityService.boardList(pageable);
+                       @AuthenticationPrincipal CustomUserDetails customUserDetails,
+                       String searchKeyword) {
+        Page<CommunityEntity> list = null;
+        if(searchKeyword == null) {
+            list = communityService.boardList(pageable);
+        }else {
+            list = communityService.searchList(searchKeyword, pageable);
+
+        }
         int nowPage = list.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4,1);
         int endPage = Math.min(nowPage + 5,list.getTotalPages()) ;
@@ -55,17 +59,53 @@ public class CommunityController {
         if(customUserDetails == null) {
             return "member/loginForm";
         }
-        String userName = customUserDetails.getMemberEntity().getMemberName(); 
-        model.addAttribute("userName", userName);
+        String userInfo = customUserDetails.getMemberEntity().getMemberEmail();
+        model.addAttribute("userInfo", userInfo);
       return "board/writeForm";
     }
 
-    /* 게시글 수정폼 */
+    /* 게시글 작성처리 */
     @PostMapping("/writePro")
-    public String writePro(@ModelAttribute CommunityDto communityDto) {
+    public String writePro(@ModelAttribute CommunityDto communityDto, Model model) {
         System.out.println(" >>>>>>>> communityDto : " + communityDto);
         communityService.writePro(communityDto);
-        return "index";
+        model.addAttribute("message", "글작성이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/community/list");
+        return "board/message";
     }
+    /* 게시글 상세보기 */
+    @GetMapping("/{id}")
+    public String detail (Model model,@PathVariable Long id ) {
+        communityService.updateHits(id);
+        CommunityDto communityDto = communityService.boardDetail(id);
+        model.addAttribute("board", communityDto);
+        return "board/detail";
+    }
+
+    /* 게시글 수정 폼 */
+    @GetMapping("/modifyForm/{id}")
+    public String modifyForm(@PathVariable("id")Long id, Model model ,
+                             @AuthenticationPrincipal CustomUserDetails customUserDetails ) {
+        CommunityDto communityDto = communityService.boardDetail(id);
+        model.addAttribute("board" , communityDto);
+        return "board/modify";
+    }
+
+    /* 게시글 수정 처리 */
+    @PostMapping("/modifyPro")
+    public String modifyPro(@ModelAttribute CommunityDto communityDto, Model model) {
+        CommunityDto board = communityService.update(communityDto);
+        model.addAttribute("board", board);
+        System.out.printf(" >>>>>>>>>> board : " + board);
+        return "board/detail";
+    }
+
+    /* 게시글 삭제 */
+    @GetMapping("/delete")
+    public String delete(Long id) {
+        communityService.delete(id);
+        return "redirect:/community/list";
+    }
+
 
 }

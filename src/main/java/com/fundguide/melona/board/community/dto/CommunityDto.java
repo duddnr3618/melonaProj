@@ -27,6 +27,7 @@ public class CommunityDto {
     private int boardHits;
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
+    private String memberEmail;
 
     private List<CommunityFileDto> communityFileDtos = new ArrayList<>();
 
