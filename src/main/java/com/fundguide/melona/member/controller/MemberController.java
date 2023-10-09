@@ -200,6 +200,7 @@ public class MemberController {
     @ResponseBody
     public String test4(@RequestParam String search){
         String result = statisticWord.statisticWord(search);
+        System.out.println("result = " + result);
         return result;
     }
 }
