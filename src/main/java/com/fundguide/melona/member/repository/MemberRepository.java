@@ -28,4 +28,6 @@ public interface MemberRepository {
     Page<MemberLeastDTO> findAllOfMemberLeastData(Pageable pageable);
 
     Page<MemberLeastDTO> memberRoleStateFilterPage(String filter , Pageable pageable);
+
+    Page<MemberLeastDTO> evaluatePendingByRule(String filter, Pageable pageable);
 }

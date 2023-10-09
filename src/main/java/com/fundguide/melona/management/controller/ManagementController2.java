@@ -30,41 +30,55 @@ public class ManagementController2 {
     Sort sort_Board = Sort.by("createdTime").descending();
     Pageable pageable_Board = PageRequest.of(0, 20, sort_Board);
 
+    /**관리자 메인 페이지*/
     @GetMapping
     public String mainManagementView() {
         return "management/server_rendering_version/management2";
     }
 
+    /**각 보드의 필터마다 결과를 보여주는 컨트롤 메서드*/
     @GetMapping("/board_filter_page")
-    public String getBoardCategoryFilterPagingResult(
-            @RequestParam("category") String category
+    public String getBoardCategoryFilterPagingResult( @RequestParam("category") String category
             , @RequestParam("filter") String filter
             , Model model) throws IllegalAccessException {
         Page<?> paging = managementService.getBoardCategoryFilterPaging(category, filter, pageable_Board);
         model.addAttribute("boardPaging", paging);
         model.addAttribute("filter", filter);
+
+        String detailHtmlLink;
+        switch (category) {
+            case "normal" -> detailHtmlLink = "/normalboard/viewDetail/";
+            case "leader" -> detailHtmlLink = "/leaderboard/viewDetail/";
+            default -> throw new IllegalAccessException("지정되지 않은 게시판 분류입니다.");
+        }
+        model.addAttribute("detailBoardLink", detailHtmlLink);
         return "management/server_rendering_version/board_rendering";
     }
 
+    /**게시물 비활성화를 위한 컨트롤 메서드*/
     @PutMapping("/board_disabled")
-    public ResponseEntity<String> disabledBoard(
-            @RequestParam("category") String category
+    public ResponseEntity<String> disabledBoard( @RequestParam("category") String category
             , @RequestParam("id") Long id) throws IllegalAccessException {
         return managementService.modifyDisableBoard(category, id);
     }
 
+    /**설정된 게시물의 경고수에 따른 멤버 필터링을 보여주는 컨트롤 메서드*/
     @GetMapping("/member_filter_page")
-    @ResponseBody
-    public Page<MemberLeastDTO> getMemberLimitStatePagingResult(
-            @RequestParam("filter") String filter) {
+    public String getFilteredResultsByRule( @RequestParam("filter") String filter
+            , Model model) {
 
+        Page<MemberLeastDTO> paging;
         if (filter.equals("all")) {
-            return memberService.getMemberPage(pageable_Member);
+            paging = memberService.getMemberPage(pageable_Member);
         } else {
-            return managementService.getMemberLimitStatePaging(filter, pageable_Member);
+            paging = null;
         }
+        model.addAttribute("filter", filter);
+        model.addAttribute("memberPaging", paging);
+        return "management/server_rendering_version/member_rendering";
     }
 
+    /**멤버의 상세 정보를 보여주는 컨트롤 메서드 !!사용중이지 않음!!*/
     @GetMapping("member_filter_page/detail")
     public NormalBoardDto getMemberFilterDetail(@RequestParam("id") Long id) {
         return normalBoardQueryService.onlyViewDetailNormalBoardDTO(id);

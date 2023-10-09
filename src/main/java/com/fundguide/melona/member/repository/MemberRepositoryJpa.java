@@ -161,4 +161,10 @@ public class MemberRepositoryJpa implements MemberRepository {
                 .where(expression);
         return commonQueryDsl.pageableHandler(jpaQuery, pageable);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<MemberLeastDTO> evaluatePendingByRule(String filter, Pageable pageable) {
+        return null;
+    }
 }

@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
+<script>
+    $(function () {
+        $('#board_rendering_js').remove();
+    })
+    
+    $('.boardList').click(function () {
+        let link = $(this).data("link");
+        let id = $(this).data("id");
+        location.href = link + id;
+    });
+</script>
 <table>
     <tr>
         <th>ID</th>
         <th>Title</th>
         <th>Writer</th>
     </tr>
-    <tr th:each="board, i : ${boardPaging}">
+    <tr th:class="boardList" th:each="board, i : ${boardPaging}" th:data-link="${detailBoardLink}" th:data-id="${board.getId}">
         <td th:text="${board.getId}"></td>
         <td th:text="${board.getBoardTitle}"></td>
         <td th:text="${board.getBoardWriter}"></td>

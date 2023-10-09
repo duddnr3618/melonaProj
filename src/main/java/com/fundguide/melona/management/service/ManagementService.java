@@ -71,10 +71,8 @@ public class ManagementService {
         }
     }
 
-    /** 각 제한에 따른 멤버 페이지를 반환하기 위한 서비스 메서드 */
-    public Page<MemberLeastDTO> getMemberLimitStatePaging(String limit, Pageable pageable) throws NoSuchElementException {
-        MemberLimitState limitState = MemberLimitState.getLimitState(limit);
-        return memberRepository.memberLimitStatePage(limitState, pageable);
+    public Page<MemberLeastDTO> getMemberEvaluatePendingByRule() {
+        return null;
     }
 
     public Page<MemberLeastDTO> getMemberRoleStatePaging(String filter, Pageable pageable) {

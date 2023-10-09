@@ -1,6 +1,6 @@
 // noinspection JSUnresolvedReference
 $(function () {
-    id_DetailBoardFilter.find('li').click();
+    id_DetailBoardFilter.find('li').eq(0).click();
 })
 
 const id_ResultTable = $('#ResultTable');
@@ -72,19 +72,12 @@ id_DetailUserFilter.find('li').click(function () {
     const params = new URLSearchParams();
     params.append('filter', filterData);
 
-    let titleArray = ["Name", "Nickname", "Role", "LimitState"];
     axios.get(`management/member_filter_page?${params.toString()}`)
         .then(function (memberData) {
-
-            const memberPaging = memberData.data.content;
-            const memberKey = ["memberName", "memberNickname", "memberRole", "memberLimitState"];
-
-            TableHtmlHandler(titleArray, memberPaging, memberKey, "id");
-
-            /**TODO 하단 페이지 이동 버튼 생성*/
+            id_ResultTable.html(memberData.data);
         })
         .catch(function () {
-            TableErrorHandler(titleArray);
+
         });
 })
 
@@ -100,10 +93,8 @@ id_DetailRoleFilter.find('li').click(function () {
             const memberPaging = roleData.data.content;
             const memberKey = ["memberName", "memberNickname", "memberRole", "memberLimitState"];
 
-            TableHtmlHandler(titleArray, memberPaging, memberKey, null);
         })
         .catch(function () {
-            TableErrorHandler(titleArray);
         });
 })
 

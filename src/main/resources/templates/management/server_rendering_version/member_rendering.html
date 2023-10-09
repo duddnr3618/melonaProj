@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<table>
+    <tr>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Limit</th>
+    </tr>
+    <tr th:each="member, i : ${memberPaging}">
+        <td th:text="${member.getMemberEmail()}"></td>
+        <td th:text="${member.getMemberRole()}"></td>
+        <td th:text="${member.getMemberLimitState()}"></td>
+        <td th:if="${filter} == 'waring'">
+            <button class="disabledButton" th:data-id="${member.getId}">비활성화</button>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
