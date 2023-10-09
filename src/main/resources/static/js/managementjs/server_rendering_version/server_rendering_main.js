@@ -106,6 +106,7 @@ managementCategoryMap.forEach((managementList, clickCategory) => {
         const thisHidden = managementList.is(':hidden');
         if (thisHidden) {
             managementList.show();
+            managementList.find('li').eq(0).click();
         }
 
         /**요소를 클릭시 다른 요소가 자동적으로 닫히도록 하는 each문*/

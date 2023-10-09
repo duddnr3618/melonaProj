@@ -46,7 +46,6 @@ public class NormalBoardController {
     @GetMapping("/viewDetail/{boardId}")
     public String boardViewDetail(Model model, @PathVariable(name = "boardId") Long boardId) {
         NormalBoardEntity boardEntity = queryService.onlyViewDetailNormalBoard(boardId);
-        System.out.println(" { 진입" + " }");
         model.addAttribute("detail", boardEntity);
         return "board/viewDetail";
     }
