@@ -55,14 +55,32 @@
 		axios.get(url)
 				.then(function (response) {
 					let object = response.data;
-					let data = object.StatisticWord.row;
 					let par=document.getElementById("par");
 					par.innerHTML = '';
-					data.forEach(function (item) {
+					if (object.StatisticWord) {
+						let data = object.StatisticWord.row;
+						data.forEach(function (item) {
+							let div = document.createElement("div");
+							div.innerHTML = "<strong>" + item.WORD + ":</strong> " + item.CONTENT;
+							par.appendChild(div);
+						});
+					} else if (object.RESULT) {
+						const result = object.RESULT;
 						let div = document.createElement("div");
-						div.innerHTML = "<strong>" + item.WORD + ":</strong> " + item.CONTENT;
+						div.innerHTML = "<strong>" + result.MESSAGE + "</strong>";
 						par.appendChild(div);
-					});
+					}else {
+						let div = document.createElement("div");
+						div.innerHTML = "<strong>데이터가없습니다.</strong>";
+						par.appendChild(div);
+
+
+					}
+
+
+
+
+
 
 
 
