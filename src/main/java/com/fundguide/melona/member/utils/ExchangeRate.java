@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fundguide.melona.member.dto.ExchangeDto;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -12,15 +13,12 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ConcurrentMap;
-
 public class ExchangeRate  {
 
-
+    @Value("${openapi.key}")
+    private String authKey;
 
     public String requestProcess(String searchDate) {
-        String authKey = "W3m9j0w1gMB5Y8GNtk5nvnK4VQpCeAuG";
         String data = "AP01";
         String requestUrl = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=" + authKey
                 + "&searchdate=" + searchDate + "&data=" + data;
