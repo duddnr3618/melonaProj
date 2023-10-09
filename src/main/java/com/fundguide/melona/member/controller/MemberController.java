@@ -7,8 +7,11 @@ import com.fundguide.melona.member.mapper.MemberTransMapper;
 import com.fundguide.melona.member.service.CustomUserDetails;
 import com.fundguide.melona.member.service.MemberService;
 import com.fundguide.melona.member.utils.ExchangeRate;
+import com.fundguide.melona.member.utils.StatisticList;
+import com.fundguide.melona.member.utils.StatisticWord;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +28,9 @@ import java.util.ArrayList;
 //@RequestMapping("member")
 public class MemberController {
     private final MemberService memberService;
+    private final StatisticList statisticList;
+    private  final ExchangeRate exchangeRate;
+    private  final StatisticWord statisticWord;
 
 
     @GetMapping("member/loginForm")   // 로그인 페이지로 가는거
@@ -173,11 +179,27 @@ public class MemberController {
         memberService.changePassword(id,memberDto.getMemberPassword());
         return "redirect:/";
     }
-    @GetMapping("exchangeRateCalc")
+    @GetMapping("/exchangeRateCalc")
     public String test(Model model){
-        ExchangeRate exchangeRate = new ExchangeRate();
         ArrayList<ExchangeDto> exchangeDtos = exchangeRate.requestApi();
         model.addAttribute("test", exchangeDtos);
         return "member/exchangeRate";
+    }
+    @GetMapping("/statisticList")
+    public String test2(Model model){
+        String statistics = statisticList.statistics();
+        model.addAttribute("test", statistics);
+        return "member/koreaBank";
+    }
+    @GetMapping("/koreaBankSearch")
+    public String test3(){
+        return "member/koreaBankSearch";
+    }
+
+    @GetMapping("/searchPro")
+    @ResponseBody
+    public String test4(@RequestParam String search){
+        String result = statisticWord.statisticWord(search);
+        return result;
     }
 }
