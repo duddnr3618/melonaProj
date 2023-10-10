@@ -1,8 +1,6 @@
 package com.fundguide.melona.chart1;
 
-
-import com.news.news.chart1.dto.ChatDto;
-import org.springframework.beans.factory.annotation.Value;
+import com.fundguide.melona.chart1.dto.ChatDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +21,7 @@ public class DailyChartController {
 
         model.addAttribute("chatDtos", Arrays.asList(chatDtos));
 
-        return "daily-chart"; // Thymeleaf 파일 이름 (chart.html이라고 가정)
+        return "daily-chart"; // Thymeleaf 파일 이름 (coinchart.html이라고 가정)
     }
 }
 
@@ -33,7 +31,7 @@ public class DailyChartController {
 //@RestController
 //public class DailyChartController {
 //
-////    @GetMapping("/daily-chart")
+////    @GetMapping("/daily-coinchart")
 ////    public String getDailyChart() throws Exception {
 ////        URL url = new URL("https://financialmodelingprep.com/api/v3/quote/AAPL?apikey=e423e415ecc6e3cff2738f3b316f7abc");
 ////        StringBuilder response = new StringBuilder();
@@ -48,7 +46,7 @@ public class DailyChartController {
 ////    }
 //
 //
-//    @GetMapping("/daily-chart")
+//    @GetMapping("/daily-coinchart")
 //    public ResponseEntity<List<ChatDto>> getDailyChart() {
 //        String url = "https://financialmodelingprep.com/api/v3/quote/AAPL?apikey=e423e415ecc6e3cff2738f3b316f7abc";
 //        RestTemplate restTemplate = new RestTemplate();

@@ -8,13 +8,13 @@
 <body>
 <h1>Real-time Stock Data Chart</h1>
 
-<!-- Canvas element for the chart -->
+<!-- Canvas element for the coinchart -->
 <canvas id="stockChart" width="800" height="400"></canvas>
 
 <!-- Hidden element to hold the JSON data for JavaScript to access -->
 <textarea id="jsonData" style="display:none;" th:text="${data}"></textarea>
 
-<!-- JavaScript to generate the chart -->
+<!-- JavaScript to generate the coinchart -->
 <script th:inline="javascript">
   let jsonData = JSON.parse(document.getElementById("jsonData").textContent);
 
