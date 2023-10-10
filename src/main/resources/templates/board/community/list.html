@@ -10,7 +10,36 @@
     커뮤니티 리스트 페이지
     <hr>
     <div>
+        <table>
+            <tr>
+                <th>글번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>등록일</th>
+                <th>조회수</th>
+
+            </tr>
+            <tr th:each="board : ${list}">
+                <th th:text="${board.id}"></th>
+                <th><a  th:text="${board.boardTitle}" th:href="@{|${board.id}|}"></a></th>
+                <th th:text="${userInfo}"></th>
+                <th th:text="*{#temporals.format(board.createdTime,'yyyy-MM=dd HH:mm:ss')}"></th>
+                <th th:text="${board.boardHits}"></th>
+            </tr>
+        </table>
+    </div>
+    <div>
         <a href="/community/wrtieForm">글작성</a>
     </div>
+    <a th:href="@{/community/list(page=0)}">처음</a>
+    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+        <a th:if="${page != nowPage}" th:href="@{/community/list(page = ${page - 1}, searKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+        <strong th:if="${page == nowPage}" th:text="${page}" style="color: red"></strong>
+    </th:block>
+    <a th:href="@{/community/list(page=${list.totalPages})}">마지막</a>
+    <form th:action="@{/community/list}" method="get">
+        <input type="text" name="searchKeyword">
+        <button type="submit">검색</button>
+    </form>
 </div>
 </html>
