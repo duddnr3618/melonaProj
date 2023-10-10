@@ -5,9 +5,7 @@ import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.like.entity.LikeEntity;
 import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.modelmapper.ModelMapper;
 
 import java.util.List;
@@ -16,6 +14,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "community_board")
 public class CommunityEntity extends BaseTimeEntity {
     @Id
