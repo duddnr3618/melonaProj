@@ -10,6 +10,10 @@ import com.fundguide.melona.board.community.repository.CommunityRepository;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
+import com.fundguide.melona.board.like.entity.LikeEntity;
+import com.fundguide.melona.board.like.repository.LikeRepository;
+import com.fundguide.melona.member.entity.MemberEntity;
+import com.fundguide.melona.member.repository.MemberRepositoryData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.aspectj.weaver.patterns.PerFromSuper;
@@ -41,6 +45,7 @@ public class CommunityService {
     private final CommunityImpeachRepository communityImpeachRepository;
     private final MemberRepository memberRepository;
     private final MemberRepositoryData memberRepositoryData;
+    private final LikeRepository likeRepository;
 
     public void writePro(CommunityDto communityDto, MultipartFile file) throws Exception {
         System.out.println(" { 커뮤니티 파일 저장중" + " }");
@@ -65,6 +70,10 @@ public class CommunityService {
         System.out.println("최종 결과값은? 파일 이름? { " + communityDto.getFileName() + " }");
 
         CommunityEntity communityEntity = CommunityEntity.toSaveEntity(communityDto);
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(communityDto.getUserInfo());
+        communityEntity.setMemberEntity(memberEntity);
+
         communityRepository.save(communityEntity);
     }
 

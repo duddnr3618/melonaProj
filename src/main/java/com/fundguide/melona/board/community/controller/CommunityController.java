@@ -9,7 +9,9 @@ import com.fundguide.melona.board.community.service.CommunityService;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
+import com.fundguide.melona.board.like.Service.LikeService;
 import com.fundguide.melona.member.service.CustomUserDetails;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,13 +34,13 @@ import java.util.Optional;
 public class CommunityController {
     private final CommunityService communityService;
 
-    
+
     /* 게시글 리스트 페이지 */
     @GetMapping("/list")
     public String list(Model model,
-                       @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                       @AuthenticationPrincipal CustomUserDetails customUserDetails,
-                       String searchKeyword) {
+                       @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
+                       String searchKeyword,
+                       @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         Page<CommunityEntity> list = null;
         if (searchKeyword == null) {
             list = communityService.boardList(pageable);
@@ -66,7 +68,7 @@ public class CommunityController {
     /* 게시글 작성폼 */
     @GetMapping("/wrtieForm")
     public String writeForm(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        String userInfo = customUserDetails.getMemberEntity().getMemberEmail();
+        Long userInfo = customUserDetails.getMemberEntity().getId();
         model.addAttribute("userInfo", userInfo);
         return "board/writeForm";
     }
@@ -87,6 +89,7 @@ public class CommunityController {
         communityService.updateHits(id);
         CommunityDto communityDto = communityService.boardDetail(id);
         model.addAttribute("board", communityDto);
+
         return "board/detail";
     }
 

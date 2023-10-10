@@ -10,6 +10,9 @@ import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.List;
@@ -68,7 +71,6 @@ public class CommunityEntity extends BaseTimeEntity {
         communityEntity.setBoardContents(communityDto.getBoardContents());
         communityEntity.setFilePath(communityDto.getFilePath());
         communityEntity.setBoardHits(0);
-        //communityEntity.setMemberEntity(communityDto.getMemberEntity());
         return communityEntity;
     }
 
@@ -78,7 +80,6 @@ public class CommunityEntity extends BaseTimeEntity {
         communityEntity.setBoardTitle(communityDto.getBoardTitle());
         communityEntity.setBoardContents(communityDto.getBoardContents());
         communityEntity.setBoardHits(communityDto.getBoardHits());
-        //communityEntity.setMemberEntity(communityDto.getMemberEmail());
         communityEntity.setFileName(communityDto.getFileName());
         communityEntity.setFilePath(communityDto.getFilePath());
         return communityEntity;
