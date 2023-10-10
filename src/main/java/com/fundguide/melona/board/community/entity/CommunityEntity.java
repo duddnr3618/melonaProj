@@ -48,10 +48,10 @@ public class CommunityEntity extends BaseTimeEntity {
     @Transient
     private int like_count;
 
-    /*************************************************************************************************/
-    /*신고**/
-    @JsonBackReference
-    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
+    /*---------------------------------------------------------------------------*/
+    /**신고*/
+    /*@JsonBackReference*/
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<CommunityImpeachEntity> impeach = new HashSet<>();
 
     @Enumerated(EnumType.ORDINAL)
@@ -104,4 +104,5 @@ public class CommunityEntity extends BaseTimeEntity {
                 .filePath(communityDto.getFilePath())
                 .build();
     }
+    /*---------------------------------------------------------------------------*/
 }
