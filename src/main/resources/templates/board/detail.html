@@ -4,7 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 
-
 <div layout:fragment="content">
     <br>
     <table>
@@ -32,7 +31,7 @@
             <th>내용</th>
             <td th:text="${board.boardContents}"></td>
         </tr>
-
+    
     </table>
     
     <a th:if="${board.getFilePath() != null}" th:href="@{${board.filePath}}">파일보기</a><br>
@@ -40,5 +39,42 @@
     <a th:href="@{/community/list}">목록</a><br>
     <a th:href="@{/community/modifyForm/{id}(id=${board.id})}">수정</a><br>
     <a th:href="@{/community/delete(id=${board.id})}">삭제</a><br>
+    <button id="impeachButton" data-bs-toggle="modal" data-bs-target="#exampleModal">이 게시글 신고하기</button>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">신고하시는 이유를 알려주세요</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="impeachForm">
+                        <input type="hidden" name="id" th:value="${board.getId()}">
+                        
+                        <label for="cause"></label>
+                        <input id="cause" type="text" name="cause" value="">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="modalCloseButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="sendImpeachButton" type="button" class="btn btn-primary">신고하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const sendImpeachButton = $('#sendImpeachButton');
+        sendImpeachButton.click(function () {
+            let impeachData = new FormData($('#impeachForm')[0]);
+            axios.post("/community/impeach", impeachData, {
+                headers: {'Content-Type': 'application/json'}
+            });
+            $('#modalCloseButton').click();
+        });
+    </script>
+    
 </div>
 </html>

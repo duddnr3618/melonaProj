@@ -1,14 +1,21 @@
 package com.fundguide.melona.board.community.controller;
 
+import com.fundguide.melona.board.common.dto.ImpeachDTO;
 import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
+import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
+import com.fundguide.melona.board.community.repository.CommunityImpeachRepository;
 import com.fundguide.melona.board.community.service.CommunityService;
+import com.fundguide.melona.member.entity.MemberEntity;
+import com.fundguide.melona.member.repository.MemberRepository;
+import com.fundguide.melona.member.repository.MemberRepositoryData;
 import com.fundguide.melona.member.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +32,7 @@ import java.util.Optional;
 public class CommunityController {
     private final CommunityService communityService;
 
+    
     /* 게시글 리스트 페이지 */
     @GetMapping("/list")
     public String list(Model model,
@@ -107,5 +115,9 @@ public class CommunityController {
         return "redirect:/community/list";
     }
 
-
+    /**********************************************************************************************************/
+    @PostMapping("/impeach")
+    public ResponseEntity<String> impeach(Principal principal, @RequestBody ImpeachDTO impeachDTO) {
+        return communityService.impeach(principal, impeachDTO);
+    }
 }

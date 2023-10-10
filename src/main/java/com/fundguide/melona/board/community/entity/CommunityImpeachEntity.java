@@ -11,7 +11,6 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "communityImpeach")
-/*TODO 신고하는 버튼 및 처리 메서드 만들것*/
 public class CommunityImpeachEntity {
 
     @Id

@@ -51,7 +51,7 @@ public class CommunityEntity extends BaseTimeEntity {
     /*************************************************************************************************/
     /*신고**/
     @JsonBackReference
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.EAGER)
     private Set<CommunityImpeachEntity> impeach = new HashSet<>();
 
     @Enumerated(EnumType.ORDINAL)
