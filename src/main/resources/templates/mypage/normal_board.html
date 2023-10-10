@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지 - NormalBoard 게시물</title>
+</head>
+<body>
+<h1>내가 작성한 NormalBoard 게시물</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>작성자</th>
+        <th>제목</th>
+        <th>조회수</th>
+        <th>작성일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 반복문을 통해 게시글 목록을 표시합니다. -->
+    <tr th:each="board : ${pagingBoard.content}">
+        <td th:text="${board.id}"></td>
+        <td th:text="${board.boardWriter}"></td>
+        <td th:text="${board.boardTitle}"></td>
+        <td th:text="${board.boardHits}"></td>
+        <td th:text="${board.createdTime}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
