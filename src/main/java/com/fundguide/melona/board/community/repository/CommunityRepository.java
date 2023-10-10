@@ -8,17 +8,15 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface CommunityRepository extends JpaRepository<CommunityEntity,Long>, CommunityRepositoryCustom {
+public interface CommunityRepository extends JpaRepository<CommunityEntity, Long>, CommunityRepositoryCustom {
     Page<CommunityEntity> findByBoardTitleContaining(String searchKeyword, Pageable pageable);
 
     /* 조회수 증가 */
     @Modifying
     @Query(value = "update CommunityEntity b set b.boardHits=b.boardHits+1 where b.id=:id")
     void updateHits(@Param("id") Long id);
-
 
 }
 

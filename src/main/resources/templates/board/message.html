@@ -4,15 +4,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 
-
 <div layout:fragment="content">
     <br>
     <script th:inline="javascript">
         /*<![CDATA[*/
         var message=[[${message}]];
         alert(message);
-
-        location=replace([[${searchUrl}]]);
+        location.href=([[${searchUrl}]]);
         /*]]>*/
     </script>
 </div>

@@ -6,10 +6,7 @@ import com.fundguide.melona.board.like.entity.LikeEntity;
 import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.modelmapper.ModelMapper;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -50,6 +47,7 @@ public class CommunityEntity extends BaseTimeEntity {
         CommunityEntity communityEntity = new CommunityEntity();
         communityEntity.setBoardTitle(communityDto.getBoardTitle());
         communityEntity.setBoardContents(communityDto.getBoardContents());
+        communityEntity.setFilePath(communityDto.getFilePath());
         communityEntity.setBoardHits(0);
         //communityEntity.setMemberEntity(communityDto.getMemberEntity());
         return communityEntity;

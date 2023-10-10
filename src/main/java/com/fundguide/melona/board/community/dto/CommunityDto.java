@@ -41,6 +41,7 @@ public class CommunityDto {
         communityDto.setBoardHits(communityEntity.getBoardHits());
         communityDto.setCreatedTime(communityEntity.getCreatedTime());
         communityDto.setUpdatedTime(communityEntity.getUpdatedTime());
+        communityDto.setFilePath(communityEntity.getFilePath());
         return communityDto;
     }
 

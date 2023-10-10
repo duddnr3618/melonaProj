@@ -16,10 +16,10 @@
             <th>제목</th>
             <td th:text="${board.boardTitle}"></td>
         </tr>
-        <tr>
+        <!--<tr>
             <th>작성자</th>
             <td th:text="${board.memberEmail}"></td>
-        </tr>
+        </tr>-->
         <tr>
             <th>날짜</th>
             <td th:text="${board.createdTime}"></td>
@@ -34,7 +34,9 @@
         </tr>
 
     </table>
-    <a th:href="@{${board.filePath}}">파일보기</a><br>
+    
+    <a th:if="${board.getFilePath() != null}" th:href="@{${board.filePath}}">파일보기</a><br>
+    <a th:if="${board.getFilePath() == null}">파일이 존재하지 않습니다.</a><br>
     <a th:href="@{/community/list}">목록</a><br>
     <a th:href="@{/community/modifyForm/{id}(id=${board.id})}">수정</a><br>
     <a th:href="@{/community/delete(id=${board.id})}">삭제</a><br>
