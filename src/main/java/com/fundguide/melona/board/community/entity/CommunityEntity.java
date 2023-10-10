@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -50,6 +51,10 @@ public class CommunityEntity extends BaseTimeEntity {
     private boolean like_state;
     @Transient
     private int like_count;
+
+    /* 댓글과 연관관계 */
+    @OneToMany(mappedBy = "communityEntity", cascade = CascadeType.REMOVE)
+    private List<CommentEntity> commentEntitiyList = new ArrayList<>();
 
     /*************************************************************************************************/
     /*신고**/

@@ -1,10 +1,12 @@
 package com.fundguide.melona.board.community.controller;
 
 import com.fundguide.melona.board.common.dto.ImpeachDTO;
+import com.fundguide.melona.board.community.dto.CommentDto;
 import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
 import com.fundguide.melona.board.community.repository.CommunityImpeachRepository;
+import com.fundguide.melona.board.community.service.CommentService;
 import com.fundguide.melona.board.community.service.CommunityService;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
@@ -33,6 +35,7 @@ import java.util.Optional;
 @RequestMapping("/community")
 public class CommunityController {
     private final CommunityService communityService;
+    private final CommentService commentService;
 
 
     /* 게시글 리스트 페이지 */
@@ -88,7 +91,10 @@ public class CommunityController {
     public String detail(Model model, @PathVariable Long id) {
         communityService.updateHits(id);
         CommunityDto communityDto = communityService.boardDetail(id);
+        // 댓글 목록 가져오기
+        List<CommentDto> commentDtoList = commentService.findAll(id);
         model.addAttribute("board", communityDto);
+        model.addAttribute("commentList", commentDtoList);
 
         return "board/detail";
     }
