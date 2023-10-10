@@ -49,6 +49,7 @@ public class ManagementController2 {
         switch (category) {
             case "normal" -> detailHtmlLink = "/normalboard/viewDetail/";
             case "leader" -> detailHtmlLink = "/leaderboard/viewDetail/";
+            case "community" -> detailHtmlLink = "/community/viewDetail/";
             default -> throw new IllegalAccessException("지정되지 않은 게시판 분류입니다.");
         }
         model.addAttribute("detailBoardLink", detailHtmlLink);
