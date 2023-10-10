@@ -32,8 +32,9 @@
             <th>내용</th>
             <td th:text="${board.boardContents}"></td>
         </tr>
-    </table>
 
+    </table>
+    <a th:href="@{${board.filePath}}">파일보기</a><br>
     <a th:href="@{/community/list}">목록</a><br>
     <a th:href="@{/community/modifyForm/{id}(id=${board.id})}">수정</a><br>
     <a th:href="@{/community/delete(id=${board.id})}">삭제</a><br>

@@ -13,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
@@ -56,9 +57,6 @@ public class CommunityController {
     /* 게시글 작성폼 */
     @GetMapping("/wrtieForm")
     public String writeForm(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        if(customUserDetails == null) {
-            return "member/loginForm";
-        }
         String userInfo = customUserDetails.getMemberEntity().getMemberEmail();
         model.addAttribute("userInfo", userInfo);
       return "board/writeForm";
@@ -66,9 +64,8 @@ public class CommunityController {
 
     /* 게시글 작성처리 */
     @PostMapping("/writePro")
-    public String writePro(@ModelAttribute CommunityDto communityDto, Model model) {
-        System.out.println(" >>>>>>>> communityDto : " + communityDto);
-        communityService.writePro(communityDto);
+    public String writePro(@ModelAttribute CommunityDto communityDto, Model model, MultipartFile file)throws Exception {
+        communityService.writePro(communityDto, file);
         model.addAttribute("message", "글작성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/community/list");
         return "board/message";
@@ -93,8 +90,8 @@ public class CommunityController {
 
     /* 게시글 수정 처리 */
     @PostMapping("/modifyPro")
-    public String modifyPro(@ModelAttribute CommunityDto communityDto, Model model) {
-        CommunityDto board = communityService.update(communityDto);
+    public String modifyPro(@ModelAttribute CommunityDto communityDto, Model model, MultipartFile file)throws Exception {
+        CommunityDto board = communityService.update(communityDto,file);
         model.addAttribute("board", board);
         System.out.printf(" >>>>>>>>>> board : " + board);
         return "board/detail";

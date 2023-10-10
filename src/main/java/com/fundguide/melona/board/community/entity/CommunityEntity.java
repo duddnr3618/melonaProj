@@ -9,7 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "community_board")
 public class CommunityEntity extends BaseTimeEntity {
+
     @Id
     @Column(name = "community_board_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +28,9 @@ public class CommunityEntity extends BaseTimeEntity {
     private String boardTitle;
     private String boardContents;
     private int boardHits;
+
+    private String fileName;
+    private String filePath;
 
     /* 회원과의 연관관계 */
     @ManyToOne(fetch = FetchType.LAZY)
@@ -40,10 +46,27 @@ public class CommunityEntity extends BaseTimeEntity {
     private int like_count;
 
     /* dto -> entity 변환 */
-    private static ModelMapper modelMapper = new ModelMapper();
-    public static CommunityEntity of(CommunityDto communityDto){
-        return modelMapper.map(communityDto, CommunityEntity.class);
+    public static CommunityEntity toSaveEntity(CommunityDto communityDto){
+        CommunityEntity communityEntity = new CommunityEntity();
+        communityEntity.setBoardTitle(communityDto.getBoardTitle());
+        communityEntity.setBoardContents(communityDto.getBoardContents());
+        communityEntity.setBoardHits(0);
+        //communityEntity.setMemberEntity(communityDto.getMemberEntity());
+        return communityEntity;
     }
+
+    public static CommunityEntity toUpdateEntity(CommunityDto communityDto){
+        CommunityEntity communityEntity = new CommunityEntity();
+        communityEntity.setId(communityDto.getId());
+        communityEntity.setBoardTitle(communityDto.getBoardTitle());
+        communityEntity.setBoardContents(communityDto.getBoardContents());
+        communityEntity.setBoardHits(communityDto.getBoardHits());
+        //communityEntity.setMemberEntity(communityDto.getMemberEmail());
+        communityEntity.setFileName(communityDto.getFileName());
+        communityEntity.setFilePath(communityDto.getFilePath());
+        return communityEntity;
+    }
+
 
 
 }
