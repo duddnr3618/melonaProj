@@ -39,6 +39,7 @@ public class LeaderBoardEntity extends BaseTimeEntity {
     private MemberEntity memberEntity;
 
 
+
 // getter와 setter 메서드 추가
 
     public Long getBoardHits() {
