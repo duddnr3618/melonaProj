@@ -75,6 +75,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
 	implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
 
+	//json
+	implementation group: 'org.json', name: 'json', version: '20230618'
+
 }
 
 def querydslDir = "$buildDir/generated/querydsl"

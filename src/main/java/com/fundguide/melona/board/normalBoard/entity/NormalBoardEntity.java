@@ -3,11 +3,14 @@ package com.fundguide.melona.board.normalBoard.entity;
 import com.fundguide.melona.board.common.entity.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fundguide.melona.board.common.role.BoardUsing;
+import com.fundguide.melona.board.like.entity.LikeEntity;
+import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -42,6 +45,10 @@ public class NormalBoardEntity extends BaseTimeEntity {
   @JsonBackReference
   @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
   private Set<NormalBoardImpeachEntity> impeach = new HashSet<>();
+
+
+
+
 
   @Enumerated(EnumType.ORDINAL)
   @Column(nullable = false)
