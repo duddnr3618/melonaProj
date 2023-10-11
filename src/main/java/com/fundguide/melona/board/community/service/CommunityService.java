@@ -68,10 +68,10 @@ public class CommunityService {
 
         System.out.println("최종 결과값은? 파일 경로? { " + communityDto.getFilePath() + " }");
         System.out.println("최종 결과값은? 파일 이름? { " + communityDto.getFileName() + " }");
-
-        CommunityEntity communityEntity = CommunityEntity.toSaveEntity(communityDto);
         MemberEntity memberEntity = new MemberEntity();
-        memberEntity.setId(communityDto.getUserInfo());
+        memberEntity.setId(communityDto.getMemberId());
+        CommunityEntity communityEntity = CommunityEntity.toSaveEntity(communityDto);
+        memberEntity.setId(communityDto.getMemberId());
         communityEntity.setMemberEntity(memberEntity);
 
         communityRepository.save(communityEntity);
