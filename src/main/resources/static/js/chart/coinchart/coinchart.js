@@ -1,4 +1,4 @@
-let chart; // 글로벌 차트 변수 선언
+let coinchart; // 글로벌 차트 변수 선언
 
 /**
  * 서버에서 데이터를 요청하여 그래프에 추가하고 다시 요청을 예약합니다.
@@ -16,11 +16,11 @@ async function requestData() {
             const value = parseFloat(ethData.closing_price); // 종가
 
             const point = [date, value];
-            const series = chart.series[0];
+            const series = coinchart.series[0];
             const shift = series.data.length > 20; // 시리즈가 20보다 길면 첫 번째 포인트 제거
 
             // 포인트 추가
-            chart.series[0].addPoint(point, true, shift);
+            coinchart.series[0].addPoint(point, true, shift);
 
             // 1초 후 다시 호출
             setTimeout(requestData, 1000);
@@ -31,7 +31,7 @@ async function requestData() {
 }
 
 window.addEventListener('load', function() {
-    chart = new Highcharts.Chart({
+    coinchart = new Highcharts.Chart({
         chart: {
             renderTo: 'container',
             defaultSeriesType: 'spline',

@@ -1,0 +1,9 @@
+
+.navbar-nav .nav-item {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.navbar-nav {
+    justify-content: center;
+}
