@@ -1,10 +1,12 @@
 package com.fundguide.melona.management.service;
 
 import com.fundguide.melona.board.common.role.BoardUsing;
+import com.fundguide.melona.board.community.repository.CommunityRepository;
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
 import com.fundguide.melona.board.leaderboard.repository.LeaderBoardRepository;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.board.normalBoard.repository.NormalBoardRepository;
+import com.fundguide.melona.management.service.filter.CommunityBoardCategoryHandler;
 import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.management.service.filter.LeaderBoardCategoryHandler;
 import com.fundguide.melona.management.service.filter.NormalBoardCategoryHandler;
@@ -30,6 +32,7 @@ public class ManagementService {
     private final MemberRepositoryData memberRepositoryData;
     private final NormalBoardRepository normalBoardRepository;
     private final LeaderBoardRepository leaderBoardRepository;
+    private final CommunityRepository communityRepository;
 
     /**
      * 각 카테고리 마다 필터처리된 페이징을 반환하는 서비스 메서드
@@ -46,6 +49,10 @@ public class ManagementService {
                 LeaderBoardCategoryHandler leaderBoardCategoryHandler = new LeaderBoardCategoryHandler(leaderBoardRepository);
                 return leaderBoardCategoryHandler.handleFilterCategory(filter, pageable);
             }
+            case "community" -> {
+                CommunityBoardCategoryHandler communityBoardCategoryHandler = new CommunityBoardCategoryHandler(communityRepository);
+                return communityBoardCategoryHandler.handleFilterCategory(filter, pageable);
+            }
             default -> throw new IllegalAccessException("정의된 카테고리 값이 아닙니다.");
         }
     }
@@ -59,7 +66,7 @@ public class ManagementService {
                 optional.ifPresentOrElse(o -> {
                     o.setBoardUsing(BoardUsing.BLOCK);
                     normalBoardRepository.save(o);
-                }, () -> {ResponseEntity.status(HttpStatus.NOT_FOUND).build();});
+                }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
                 return ResponseEntity.ok().build();
             }
             case "leader" -> {
@@ -71,10 +78,8 @@ public class ManagementService {
         }
     }
 
-    /** 각 제한에 따른 멤버 페이지를 반환하기 위한 서비스 메서드 */
-    public Page<MemberLeastDTO> getMemberLimitStatePaging(String limit, Pageable pageable) throws NoSuchElementException {
-        MemberLimitState limitState = MemberLimitState.getLimitState(limit);
-        return memberRepository.memberLimitStatePage(limitState, pageable);
+    public Page<MemberLeastDTO> getMemberEvaluatePendingByRule() {
+        return null;
     }
 
     public Page<MemberLeastDTO> getMemberRoleStatePaging(String filter, Pageable pageable) {
