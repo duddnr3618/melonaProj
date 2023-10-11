@@ -52,7 +52,7 @@ public class NormalBoardQueryService {
 
     public Page<NormalBoardDto> paging(Pageable pageable) {
         int page = pageable.getPageNumber();
-        int pageLimit = 3;
+        int pageLimit = 10;
         Page<NormalBoardEntity> normalBoardEntities = normalBoardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
 
         System.out.println("normalBoardEntities.getContent() = " + normalBoardEntities.getContent()); // 요청 페이지에 해당하는 글

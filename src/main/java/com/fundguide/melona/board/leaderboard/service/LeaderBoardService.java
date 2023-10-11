@@ -69,7 +69,7 @@ public class LeaderBoardService {
 
     public Page<LeaderBoardDto> paging(Pageable pageable) {
         int page = pageable.getPageNumber();
-        int pageLimit = 3;
+        int pageLimit = 10;
         Page<LeaderBoardEntity> leaderBoardEntities =
         leaderBoardRepository.findAll(PageRequest.of(page , pageLimit , Sort.by(Sort.Direction.DESC,"id")));
 

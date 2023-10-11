@@ -15,7 +15,7 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>일반 게시판</h1>
+<h1>리더 게시판</h1>
 <table class="table">
     <thead>
     <tr>
@@ -27,7 +27,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="board : ${normalBoardPage.content}">
+    <tr th:each="board : ${leaderBoardPage.content}">
         <td th:text="${board.id}"></td>
         <td th:text="${board.boardWriter}"></td>
         <td th:text="${board.boardTitle}"></td>
