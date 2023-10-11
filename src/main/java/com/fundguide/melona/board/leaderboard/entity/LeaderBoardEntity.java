@@ -38,13 +38,7 @@ public class LeaderBoardEntity extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 
-    /* 좋아요 연관관계 */
-    @OneToMany(mappedBy = "LeaderBoardEntity", cascade = CascadeType.REMOVE)
-    private List<LikeEntity> boardLike;
-    @Transient
-    private boolean like_state;
-    @Transient
-    private int like_count;
+
 
 // getter와 setter 메서드 추가
 
