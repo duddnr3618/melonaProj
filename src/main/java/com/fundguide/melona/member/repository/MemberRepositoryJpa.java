@@ -1,6 +1,5 @@
 package com.fundguide.melona.member.repository;
 
-import com.fundguide.melona.board.normalBoard.entity.QNormalBoardEntity;
 import com.fundguide.melona.board.normalBoard.entity.QNormalBoardImpeachEntity;
 import com.fundguide.melona.management.commonQueryDsl.CommonQueryDsl;
 import com.fundguide.melona.member.dto.MemberLeastDTO;
@@ -14,7 +13,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

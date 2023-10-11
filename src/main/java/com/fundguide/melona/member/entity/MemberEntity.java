@@ -7,17 +7,15 @@ import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.role.MemberRoleConvert;
 import com.fundguide.melona.member.role.MemberRoleState;
 import jakarta.persistence.*;
-
-import java.time.LocalDate;
-import java.util.HashSet;
-
-import java.util.Set;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity

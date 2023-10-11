@@ -1,6 +1,5 @@
 package com.fundguide.melona.board.community.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fundguide.melona.board.common.entity.BaseTimeEntity;
 import com.fundguide.melona.board.common.role.BoardUsing;
 import com.fundguide.melona.board.community.dto.CommunityDto;
@@ -8,9 +7,6 @@ import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.HashSet;

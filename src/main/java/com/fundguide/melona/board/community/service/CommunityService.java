@@ -1,6 +1,5 @@
 package com.fundguide.melona.board.community.service;
 
-import ch.qos.logback.classic.net.SyslogAppender;
 import com.fundguide.melona.board.common.dto.ImpeachDTO;
 import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
@@ -11,31 +10,20 @@ import com.fundguide.melona.board.community.repository.CommunityRepository;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
-import com.fundguide.melona.board.like.entity.LikeEntity;
-import com.fundguide.melona.board.like.repository.LikeRepository;
-import com.fundguide.melona.member.entity.MemberEntity;
-import com.fundguide.melona.member.repository.MemberRepositoryData;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
-import org.aspectj.weaver.patterns.PerFromSuper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.parameters.P;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.security.Principal;
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -52,7 +40,6 @@ public class CommunityService {
     private final CommunityImpeachRepository communityImpeachRepository;
     private final MemberRepository memberRepository;
     private final MemberRepositoryData memberRepositoryData;
-    private final LikeRepository likeRepository;
 
     public void writePro(CommunityDto communityDto, MultipartFile file) throws Exception {
         System.out.println(" { 커뮤니티 파일 저장중" + " }");

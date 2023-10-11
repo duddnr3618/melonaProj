@@ -3,8 +3,6 @@ package com.fundguide.melona.board.community.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.security.Principal;
 @Setter
 @Getter
 @AllArgsConstructor

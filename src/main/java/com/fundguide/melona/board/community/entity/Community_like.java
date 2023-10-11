@@ -1,11 +1,8 @@
 package com.fundguide.melona.board.community.entity;
 
-import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.io.Serializable;
 
 
 @Entity

@@ -4,16 +4,9 @@ import com.fundguide.melona.board.common.dto.ImpeachDTO;
 import com.fundguide.melona.board.community.dto.CommentDto;
 import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
-import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
-import com.fundguide.melona.board.community.repository.CommunityImpeachRepository;
 import com.fundguide.melona.board.community.service.CommentService;
 import com.fundguide.melona.board.community.service.CommunityService;
-import com.fundguide.melona.member.entity.MemberEntity;
-import com.fundguide.melona.member.repository.MemberRepository;
-import com.fundguide.melona.member.repository.MemberRepositoryData;
-import com.fundguide.melona.board.like.Service.LikeService;
 import com.fundguide.melona.member.service.CustomUserDetails;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,7 +28,6 @@ import java.util.Optional;
 public class CommunityController {
     private final CommunityService communityService;
     private final CommentService commentService;
-    private final LikeService likeService;
 
 
     /* 게시글 리스트 페이지 */

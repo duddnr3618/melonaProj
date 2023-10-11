@@ -1,8 +1,9 @@
 package com.fundguide.melona.board.community.entity;
 
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.EmbeddedId;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
