@@ -13,8 +13,8 @@ import java.util.List;
 @Repository
 public interface CommunityRepository extends JpaRepository<CommunityEntity,Long> {
     
-    Page<CommunityEntity> findAllByIdInOrderByCreatedTimeDesc(List<Long> mostLikedCommunityIds, Pageable pageable);
+    /*Page<CommunityEntity> findAllByIdInOrderByCreatedTimeDesc(List<Long> mostLikedCommunityIds, Pageable pageable);
 
-    Page<CommunityEntity> findAllByIdInOrderByCreatedTimeDesc(Pageable pageable);
+    Page<CommunityEntity> findAllByIdInOrderByCreatedTimeDesc(Pageable pageable);*/
 }
 

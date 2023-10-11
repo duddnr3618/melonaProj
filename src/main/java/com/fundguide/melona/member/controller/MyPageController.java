@@ -1,10 +1,15 @@
 package com.fundguide.melona.member.controller;
 
+import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.community.service.CommunityService;
+import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
+import com.fundguide.melona.board.leaderboard.service.LeaderBoardService;
+import com.fundguide.melona.board.normalBoard.dto.NormalBoardDto;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardQueryService;
 import com.fundguide.melona.member.service.CustomUserDetails;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -19,44 +24,59 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.data.domain.Pageable;
 
 @Controller
+
     @RequestMapping("/mypage")
     public class MyPageController {
         private final NormalBoardQueryService normalBoardQueryService;
         private final CommunityService communityService;
-        public MyPageController(NormalBoardQueryService normalBoardQueryService ,CommunityService communityService) {
+        private final LeaderBoardService leaderBoardService;
+
+
+        public MyPageController(NormalBoardQueryService normalBoardQueryService ,CommunityService communityService , LeaderBoardService leaderBoardService) {
             this.normalBoardQueryService = normalBoardQueryService;
             this.communityService = communityService;
+            this.leaderBoardService = leaderBoardService;
         }
 
         // ...
 
-        @GetMapping("/normalboard")
-        public String myPageNormalBoard(Model model) {
-            // 최신순 정렬을 위한 Pageable 생성
-            Pageable pageable = PageRequest.of(0, 15, Sort.by(Sort.Order.desc("createdTime")));
-
-            // 내가 작성한 NormalBoard 게시글 조회
-            Page<NormalBoardEntity> pagingNormalBoard = normalBoardQueryService.onlyViewPageNormalBoard(pageable);
-
-            model.addAttribute("pagingBoard", pagingNormalBoard);
-
-            return "mypage/normal_board"; //
-        }
-    /* 내가 작성한 CommunityBoard 게시글 목록 페이지 */
-    @GetMapping("/myCommunityBoard")
-    public String myCommunityBoard(Model model, @PageableDefault(page = 1) Pageable pageable,
-                                   @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    @GetMapping("/normal-board")
+    public String viewNormalBoard(Model model, Pageable pageable, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         if (customUserDetails == null) {
-            return "member/loginForm"; // 로그인되어 있지 않다면 로그인 페이지로 리다이렉트
+            return "member/loginForm";
         }
 
-        String userName = customUserDetails.getMemberEntity().getMemberName();
-        model.addAttribute("userName", userName);
+        // 게시판 페이징 처리
+        Page<NormalBoardDto> normalBoardPage = normalBoardQueryService.paging(pageable);
 
-        Page<CommunityEntity> pagingCommunityBoard = communityService.getLatestCommunityBoard(pageable);
-        model.addAttribute("pagingCommunityBoard", pagingCommunityBoard);
+        // 게시글 목록을 모델에 추가
+        model.addAttribute("normalBoardPage", normalBoardPage);
 
-        return "mypage/myCommunityBoard";
+        return "mypage/normal-board";
+    }
+    /* 내가 작성한 CommunityBoard 게시글 목록 페이지 */
+    @GetMapping("/myCommunity")
+    public String myCommunity(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails, Pageable pageable) {
+        if (customUserDetails == null) {
+            return "member/loginForm";
+        }
+
+        int pageLimit = 10; // 페이지당 보여질 게시물 수
+        Page<CommunityDto> communityPage = communityService.paging(pageable);
+
+        model.addAttribute("communityPage", communityPage);
+
+        return "mypage/communityBoard"; // mypage/communityBoard에 대한 뷰를 리턴
+    }
+    @GetMapping("/leaderBoard")
+    public String myLeaderBoardPage(@PageableDefault(page = 0, size = 10, sort = "createdTime", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
+        Page<LeaderBoardDto> leaderBoardPage = leaderBoardService.paging(pageable);
+        model.addAttribute("leaderBoardPage", leaderBoardPage);
+        return "mypage/myLeaderBoard"; // 마이페이지 내에서 보여질 뷰 이름
+    }
+    @GetMapping("/my-written-articles")
+    public String myWrittenArticles() {
+        return "mypage/mywrittenboard";
     }
 
 }

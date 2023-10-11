@@ -48,17 +48,7 @@ public class NormalBoardEntity extends BaseTimeEntity {
 
 
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "member_id")
-  private MemberEntity memberEntity;
 
-  /* 좋아요 연관관계 */
-  @OneToMany(mappedBy = "NormalBoardEntity", cascade = CascadeType.REMOVE)
-  private List<LikeEntity> boardLike;
-  @Transient
-  private boolean like_state;
-  @Transient
-  private int like_count;
 
   @Enumerated(EnumType.ORDINAL)
   @Column(nullable = false)

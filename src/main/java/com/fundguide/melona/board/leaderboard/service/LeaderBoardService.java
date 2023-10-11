@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @Service @RequiredArgsConstructor
 public class LeaderBoardService {
     private final LeaderBoardRepository leaderBoardRepository;
+
     public void save(LeaderBoardDto leaderBoardDto) {
         LeaderBoardEntity leaderBoardEntity = LeaderBoardEntity.toSaveEntity(leaderBoardDto);
         leaderBoardRepository.save(leaderBoardEntity);
@@ -86,27 +87,5 @@ public class LeaderBoardService {
         ));
         return leaderBoardDtos;
     }
-//    public List<LeaderBoardDto> getMyPagePostsOrderByHits(Long memberId) {
-//        List<LeaderBoardEntity> posts = leaderBoardRepository.findMyPagePostsOrderByHits(memberId);
-//        return posts.stream().map(this::convertToDto).collect(Collectors.toList());
-//    }
-//
-//    public List<LeaderBoardDto> getMyPagePostsOrderByCreatedAt(Long memberId) {
-//        List<LeaderBoardEntity> posts = leaderBoardRepository.findMyPagePostsByMemberIdOrderByCreatedAt(memberId);
-//        return posts.stream().map(this::convertToDto).collect(Collectors.toList());
-//    }
-//
-//    // LeaderBoardEntity를 LeaderBoardDto로 변환하는 메서드 (코드 내에서 사용)
-//    private LeaderBoardDto convertToDto(LeaderBoardEntity entity) {
-//        LeaderBoardDto dto = new LeaderBoardDto();
-//        dto.setId(entity.getId());
-//        dto.setBoardWriter(entity.getBoardWriter());
-//        dto.setBoardTitle(entity.getBoardTitle());
-//        dto.setBoardContents(entity.getBoardContents());
-//        dto.setBoardHits(entity.getBoardHits());
-//        dto.setCreatedTime(entity.getCreatedTime());
-//        dto.setUpdatedTime(entity.getUpdatedTime());
-//        return dto;
-//    }
 
 }
