@@ -1,5 +1,17 @@
 Team. YoungCha Melona Project
 
+팀프로젝트 git 병합
+Git 순서
+1.자신의 브랜치 커밋 후 푸시
+2. dev 으로 체크아웃 후 업데이트
+3. dev에 자신의 브랜치 병합(머지) or pull
+4. 오류난거 있으면 오류 수정 이후 수정 머지 완료
+5. 머지 완료시 github홈페이지로 이동하여 request merge요청 후 승인
+6. 자신의 브랜치 삭제 이후 다시 dev에서 브랜치 새로 생성
+
+------------------------------------------------------
+
+
 <role>
 
 -Require a pull request bofore merging : 코드를 main에 업데이트 하기 전에 동의 후 push 
