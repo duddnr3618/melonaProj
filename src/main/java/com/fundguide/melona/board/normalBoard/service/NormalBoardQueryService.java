@@ -13,10 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
-import java.security.Key;
-import java.util.Map;
-import java.util.Objects;
-
 @Service @RequiredArgsConstructor @Transactional(readOnly = true)
 public class NormalBoardQueryService {
     private final NormalBoardRepository normalBoardRepository;

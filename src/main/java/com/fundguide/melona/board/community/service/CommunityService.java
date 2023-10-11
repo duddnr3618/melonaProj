@@ -1,39 +1,29 @@
 package com.fundguide.melona.board.community.service;
 
-import ch.qos.logback.classic.net.SyslogAppender;
 import com.fundguide.melona.board.common.dto.ImpeachDTO;
 import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
+import com.fundguide.melona.board.community.entity.Community_like;
 import com.fundguide.melona.board.community.repository.CommunityImpeachRepository;
 import com.fundguide.melona.board.community.repository.CommunityRepository;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
-import com.fundguide.melona.board.like.entity.LikeEntity;
-import com.fundguide.melona.board.like.repository.LikeRepository;
-import com.fundguide.melona.member.entity.MemberEntity;
-import com.fundguide.melona.member.repository.MemberRepositoryData;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
-import org.aspectj.weaver.patterns.PerFromSuper;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.security.Principal;
-import java.util.Iterator;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -50,7 +40,6 @@ public class CommunityService {
     private final CommunityImpeachRepository communityImpeachRepository;
     private final MemberRepository memberRepository;
     private final MemberRepositoryData memberRepositoryData;
-    private final LikeRepository likeRepository;
 
     public void writePro(CommunityDto communityDto, MultipartFile file) throws Exception {
         System.out.println(" { 커뮤니티 파일 저장중" + " }");
@@ -116,30 +105,6 @@ public class CommunityService {
         return boardDetail(communityDto.getId());
     }
 
-
-    /**********************************************************************************************************/
-    @Transactional(rollbackFor = Exception.class)
-    public ResponseEntity<String> impeach(Principal principal, ImpeachDTO impeachDTO) {
-        MemberEntity memberEntity = memberRepository.findByEmail(principal.getName());
-        Optional<CommunityEntity> communityEntity = communityRepository.findById(impeachDTO.getId());
-
-        try {
-            communityEntity.ifPresentOrElse(oCommunityEntity -> {
-                CommunityImpeachEntity impeach = CommunityImpeachEntity.builder()
-                        .member(memberEntity)
-                        .board(oCommunityEntity)
-                        .cause(impeachDTO.getCause())
-                        .build();
-                oCommunityEntity.getImpeach().add(impeach);
-                communityRepository.save(oCommunityEntity);
-
-            }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-            System.out.println(" { 신고 성공" + " }");
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INSUFFICIENT_STORAGE).build();
-        }
-    }
     public Page<CommunityDto> paging(Pageable pageable) {
         int page = pageable.getPageNumber();
         int pageLimit = 10; // 페이지당 보여질 게시물 수
@@ -169,5 +134,53 @@ public class CommunityService {
         });
 
         return communityDtos;
+    }
+
+
+    /*---------------------------------------------------------------------------------------------*/
+
+    /** 신고 서비스 메서드 */
+    @Transactional(rollbackFor = Exception.class)
+    public ResponseEntity<String> impeach(Principal principal, ImpeachDTO impeachDTO) {
+        MemberEntity memberEntity = memberRepository.findByEmail(principal.getName());
+        Optional<CommunityEntity> communityEntity = communityRepository.findById(impeachDTO.getId());
+
+        try {
+            communityEntity.ifPresentOrElse(oCommunityEntity -> {
+                CommunityImpeachEntity impeach = CommunityImpeachEntity.builder()
+                        .member(memberEntity)
+                        .board(oCommunityEntity)
+                        .cause(impeachDTO.getCause())
+                        .build();
+                oCommunityEntity.getImpeach().add(impeach);
+                communityRepository.save(oCommunityEntity);
+
+            }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+            System.out.println(" { 신고 성공" + " }");
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INSUFFICIENT_STORAGE).build();
+        }
+    }
+
+    /** 좋아요 추가 서비스 메서드 */
+    @Transactional
+    public ResponseEntity<String> likeAdd(Principal principal, Long boardId) {
+        Optional<CommunityEntity> community = communityRepository.findById(boardId);
+        Optional<MemberEntity> member = memberRepository.findByMemberEamilOptional(principal.getName());
+
+        if (community.isPresent() && member.isPresent()) {
+            Community_like like = Community_like.builder()
+                    .id(Community_like.idG(member.get(), community.get()))
+                    .communityEntity(community.get())
+                    .memberEntity(member.get())
+                    .build();
+            CommunityEntity entity = community.get();
+            entity.getBoardLike().add(like);
+            communityRepository.save(entity);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

@@ -41,4 +41,13 @@ public class CommunityRepositoryImpl implements CommunityRepositoryCustom {
         boardEntityJPAQuery = queryFactory.selectFrom(communityEntity).where(booleanExpression);
         return commonQueryDsl.pageableHandler(boardEntityJPAQuery, pageable);
     }
+
+    /**{@inheritDoc}*/
+    @Override
+    public void impeachSave(CommunityEntity entity) {
+        queryFactory
+                .update(communityEntity)
+                .set(communityEntity.impeach, entity.getImpeach())
+                .where(communityEntity.id.eq(entity.getId()));
+    }
 }

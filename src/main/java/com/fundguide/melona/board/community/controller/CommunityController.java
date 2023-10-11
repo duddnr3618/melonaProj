@@ -4,16 +4,9 @@ import com.fundguide.melona.board.common.dto.ImpeachDTO;
 import com.fundguide.melona.board.community.dto.CommentDto;
 import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
-import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
-import com.fundguide.melona.board.community.repository.CommunityImpeachRepository;
 import com.fundguide.melona.board.community.service.CommentService;
 import com.fundguide.melona.board.community.service.CommunityService;
-import com.fundguide.melona.member.entity.MemberEntity;
-import com.fundguide.melona.member.repository.MemberRepository;
-import com.fundguide.melona.member.repository.MemberRepositoryData;
-import com.fundguide.melona.board.like.Service.LikeService;
 import com.fundguide.melona.member.service.CustomUserDetails;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,7 +28,6 @@ import java.util.Optional;
 public class CommunityController {
     private final CommunityService communityService;
     private final CommentService commentService;
-    private final LikeService likeService;
 
 
     /* 게시글 리스트 페이지 */
@@ -129,11 +120,19 @@ public class CommunityController {
         return "redirect:/community/list";
     }
 
-
-
-    /**********************************************************************************************************/
+    /*---------------------------------------------------------------------------------------------*/
+    /**신고 컨트롤 메서드*/
     @PostMapping("/impeach")
     public ResponseEntity<String> impeach(Principal principal, @RequestBody ImpeachDTO impeachDTO) {
         return communityService.impeach(principal, impeachDTO);
+    }
+
+    /**좋어요 컨트롤 메서드*/
+    @PutMapping("/like/{boardId}")
+    public ResponseEntity<String> likeAdd(Principal principal, @PathVariable(name = "boardId") Long boardId) {
+        System.out.println(" { 좋아요 컨트롤 진입" + " }");
+        System.out.println("유저 정보는? { " + principal + " }");
+        System.out.println("보드 아이디 값은? { " + boardId + " }");
+        return communityService.likeAdd(principal, boardId);
     }
 }
