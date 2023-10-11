@@ -15,8 +15,9 @@ import lombok.*;
 @Table(name = "community_like")
 public class Community_like {
 
-    @EmbeddedId
-    private CommentLikeIdG id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "member_id")

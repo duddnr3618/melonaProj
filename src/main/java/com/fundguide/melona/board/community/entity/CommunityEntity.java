@@ -19,6 +19,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 @Table(name = "community_board")
 public class CommunityEntity extends BaseTimeEntity {
 

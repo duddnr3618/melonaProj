@@ -107,8 +107,20 @@
             const boardId = $('#id').val();
             const uri = "/community/like/" + boardId;
             console.log(uri);
-            axios.put(uri);
+            axios.put(uri)
+                .then(function (value) {
+                    console.log("성공");
+                    console.log(value);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    if (error.response.status === 400) {
+                        console.log("이미 좋아요를 누르셨습니다. 취소 하시겠습니까?");
+                        alert("이미 좋아요를 누르셨습니다. 취소 하시겠습니까?");
+                    }
+                });
         })
+        
     </script>
 
     <script th:inline = "javascript">

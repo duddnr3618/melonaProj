@@ -121,7 +121,8 @@ public class CommunityController {
     }
 
     /*---------------------------------------------------------------------------------------------*/
-    /**신고 컨트롤 메서드*/
+    /** TODO 오류 있음 수정할것 (중복된값 들어감)
+     * 신고 컨트롤 메서드*/
     @PostMapping("/impeach")
     public ResponseEntity<String> impeach(Principal principal, @RequestBody ImpeachDTO impeachDTO) {
         return communityService.impeach(principal, impeachDTO);

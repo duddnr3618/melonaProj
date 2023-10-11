@@ -6,6 +6,7 @@ import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
 import com.fundguide.melona.board.community.entity.Community_like;
 import com.fundguide.melona.board.community.repository.CommunityImpeachRepository;
+import com.fundguide.melona.board.community.repository.CommunityLikeRepository;
 import com.fundguide.melona.board.community.repository.CommunityRepository;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
@@ -25,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.security.Principal;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -40,6 +42,7 @@ public class CommunityService {
     private final CommunityImpeachRepository communityImpeachRepository;
     private final MemberRepository memberRepository;
     private final MemberRepositoryData memberRepositoryData;
+    private final CommunityLikeRepository likeRepository;
 
     public void writePro(CommunityDto communityDto, MultipartFile file) throws Exception {
         System.out.println(" { 커뮤니티 파일 저장중" + " }");
@@ -171,14 +174,21 @@ public class CommunityService {
 
         if (community.isPresent() && member.isPresent()) {
             Community_like like = Community_like.builder()
-                    .id(Community_like.idG(member.get(), community.get()))
                     .communityEntity(community.get())
                     .memberEntity(member.get())
                     .build();
-            CommunityEntity entity = community.get();
-            entity.getBoardLike().add(like);
-            communityRepository.save(entity);
-            return ResponseEntity.ok().build();
+
+            boolean check = likeRepository.checkAlreadyLike(like);
+            if (check) {
+                System.out.println(" { 이미 존재합니다. 실패를 반환합니다." + " }");
+                return ResponseEntity.badRequest().build();
+            } else {
+                System.out.println(" { 존재하지 않습니다. 좋아요를 추가합니다." + " }");
+                community.get().getBoardLike().add(like);
+                communityRepository.save(community.get());
+                return ResponseEntity.ok().build();
+            }
+
         } else {
             return ResponseEntity.badRequest().build();
         }
