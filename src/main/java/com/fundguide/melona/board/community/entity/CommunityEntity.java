@@ -4,13 +4,15 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fundguide.melona.board.common.entity.BaseTimeEntity;
 import com.fundguide.melona.board.common.role.BoardUsing;
 import com.fundguide.melona.board.community.dto.CommunityDto;
-import com.fundguide.melona.board.like.entity.LikeEntity;
-import com.fundguide.melona.board.normalBoard.entity.NormalBoardImpeachEntity;
 import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,17 +43,17 @@ public class CommunityEntity extends BaseTimeEntity {
     private MemberEntity memberEntity;
 
     /* 좋아요 연관관계 */
-    @OneToMany(mappedBy = "communityEntity", cascade = CascadeType.REMOVE)
-    private List<LikeEntity> boardLike;
-    @Transient
-    private boolean like_state;
-    @Transient
-    private int like_count;
+    @OneToMany(mappedBy = "communityEntity", cascade = CascadeType.ALL)
+    private Set<Community_like> boardLike;
 
-    /*---------------------------------------------------------------------------*/
-    /**신고*/
-    /*@JsonBackReference*/
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    /* 댓글과 연관관계 */
+    @OneToMany(mappedBy = "communityEntity", cascade = CascadeType.REMOVE)
+    private List<CommentEntity> commentEntitiyList = new ArrayList<>();
+
+    /*----------------------------------------------------------------------------------*/
+    /*신고**/
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     private Set<CommunityImpeachEntity> impeach = new HashSet<>();
 
     @Enumerated(EnumType.ORDINAL)
@@ -59,7 +61,7 @@ public class CommunityEntity extends BaseTimeEntity {
     @ColumnDefault("'0'")
     @Builder.Default
     private BoardUsing boardUsing = BoardUsing.USING;
-    /*************************************************************************************************/
+    /*----------------------------------------------------------------------------------*/
 
     /* dto -> entity 변환 */
     public static CommunityEntity toSaveEntity(CommunityDto communityDto) {
@@ -68,7 +70,6 @@ public class CommunityEntity extends BaseTimeEntity {
         communityEntity.setBoardContents(communityDto.getBoardContents());
         communityEntity.setFilePath(communityDto.getFilePath());
         communityEntity.setBoardHits(0);
-        //communityEntity.setMemberEntity(communityDto.getMemberEntity());
         return communityEntity;
     }
 
@@ -78,7 +79,6 @@ public class CommunityEntity extends BaseTimeEntity {
         communityEntity.setBoardTitle(communityDto.getBoardTitle());
         communityEntity.setBoardContents(communityDto.getBoardContents());
         communityEntity.setBoardHits(communityDto.getBoardHits());
-        //communityEntity.setMemberEntity(communityDto.getMemberEmail());
         communityEntity.setFileName(communityDto.getFileName());
         communityEntity.setFilePath(communityDto.getFilePath());
         return communityEntity;

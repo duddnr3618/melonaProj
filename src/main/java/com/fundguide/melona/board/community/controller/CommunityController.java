@@ -115,9 +115,19 @@ public class CommunityController {
         return "redirect:/community/list";
     }
 
-    /**********************************************************************************************************/
+    /*---------------------------------------------------------------------------------------------*/
+    /**신고 컨트롤 메서드*/
     @PostMapping("/impeach")
     public ResponseEntity<String> impeach(Principal principal, @RequestBody ImpeachDTO impeachDTO) {
         return communityService.impeach(principal, impeachDTO);
+    }
+
+    /**좋어요 컨트롤 메서드*/
+    @PutMapping("/like/{boardId}")
+    public ResponseEntity<String> likeAdd(Principal principal, @PathVariable(name = "boardId") Long boardId) {
+        System.out.println(" { 좋아요 컨트롤 진입" + " }");
+        System.out.println("유저 정보는? { " + principal + " }");
+        System.out.println("보드 아이디 값은? { " + boardId + " }");
+        return communityService.likeAdd(principal, boardId);
     }
 }

@@ -40,6 +40,7 @@
     <a th:href="@{/community/modifyForm/{id}(id=${board.id})}">수정</a><br>
     <a th:href="@{/community/delete(id=${board.id})}">삭제</a><br>
     <button id="impeachButton" data-bs-toggle="modal" data-bs-target="#exampleModal">이 게시글 신고하기</button>
+    <button id="likeButton">좋아요</button>
     
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -51,7 +52,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="impeachForm">
-                        <input type="hidden" name="id" th:value="${board.getId()}">
+                        <input id="id" type="hidden" name="id" th:value="${board.getId()}">
                         
                         <label for="cause"></label>
                         <input id="cause" type="text" name="cause" value="">
@@ -66,14 +67,20 @@
     </div>
     
     <script>
-        const sendImpeachButton = $('#sendImpeachButton');
-        sendImpeachButton.click(function () {
+        $('#sendImpeachButton').click(function () {
             let impeachData = new FormData($('#impeachForm')[0]);
             axios.post("/community/impeach", impeachData, {
                 headers: {'Content-Type': 'application/json'}
             });
             $('#modalCloseButton').click();
         });
+        
+        $('#likeButton').click(function () {
+            const boardId = $('#id').val();
+            const uri = "/community/like/" + boardId;
+            console.log(uri);
+            axios.put(uri);
+        })
     </script>
     
 </div>

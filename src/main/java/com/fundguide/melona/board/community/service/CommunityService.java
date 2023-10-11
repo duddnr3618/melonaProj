@@ -5,6 +5,7 @@ import com.fundguide.melona.board.common.dto.ImpeachDTO;
 import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
+import com.fundguide.melona.board.community.entity.Community_like;
 import com.fundguide.melona.board.community.repository.CommunityImpeachRepository;
 import com.fundguide.melona.board.community.repository.CommunityRepository;
 import com.fundguide.melona.member.entity.MemberEntity;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,6 +43,7 @@ public class CommunityService {
     private final CommunityImpeachRepository communityImpeachRepository;
     private final MemberRepository memberRepository;
     private final MemberRepositoryData memberRepositoryData;
+
 
     public void writePro(CommunityDto communityDto, MultipartFile file) throws Exception {
         System.out.println(" { 커뮤니티 파일 저장중" + " }");
@@ -103,7 +106,9 @@ public class CommunityService {
     }
 
 
-    /**********************************************************************************************************/
+    /*---------------------------------------------------------------------------------------------*/
+
+    /** 신고 서비스 메서드 */
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<String> impeach(Principal principal, ImpeachDTO impeachDTO) {
         MemberEntity memberEntity = memberRepository.findByEmail(principal.getName());
@@ -124,6 +129,27 @@ public class CommunityService {
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INSUFFICIENT_STORAGE).build();
+        }
+    }
+
+    /** 좋아요 추가 서비스 메서드 */
+    @Transactional
+    public ResponseEntity<String> likeAdd(Principal principal, Long boardId) {
+        Optional<CommunityEntity> community = communityRepository.findById(boardId);
+        Optional<MemberEntity> member = memberRepository.findByMemberEamilOptional(principal.getName());
+
+        if (community.isPresent() && member.isPresent()) {
+            Community_like like = Community_like.builder()
+                    .id(Community_like.idG(member.get(), community.get()))
+                    .communityEntity(community.get())
+                    .memberEntity(member.get())
+                    .build();
+            CommunityEntity entity = community.get();
+            entity.getBoardLike().add(like);
+            communityRepository.save(entity);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
         }
     }
 }
