@@ -1,5 +1,7 @@
 package com.fundguide.melona.member.repository;
 
+import com.fundguide.melona.board.normalBoard.entity.QNormalBoardEntity;
+import com.fundguide.melona.board.normalBoard.entity.QNormalBoardImpeachEntity;
 import com.fundguide.melona.management.commonQueryDsl.CommonQueryDsl;
 import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.member.entity.MemberEntity;
@@ -160,5 +162,13 @@ public class MemberRepositoryJpa implements MemberRepository {
                 .from(memberEntity)
                 .where(expression);
         return commonQueryDsl.pageableHandler(jpaQuery, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<MemberLeastDTO> evaluatePendingByRule(String filter, Pageable pageable) {
+        QNormalBoardImpeachEntity qNormalBoardImpeach = QNormalBoardImpeachEntity.normalBoardImpeachEntity;
+        /*expression = memberEntity.id.eq(qNormalBoardImpeach.board.boardWriter);*/
+        return null;
     }
 }
