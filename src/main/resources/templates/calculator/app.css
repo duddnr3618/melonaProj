@@ -1,0 +1,155 @@
+@font-face { font-family: 'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'TmoneyRoundWindExtraBold';
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    color: #333;
+    background-color: white;
+    background-size: cover;
+}
+
+.wrap {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+header {
+    width: 100%;
+    background: rgb(0,255,142);
+    background: linear-gradient(343deg, rgba(0,255,142,1) 0%, rgba(0,74,255,1) 100%);
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    padding: 18px;
+    color: white;
+}
+
+.title {
+    margin-top: 24px;
+    color: white;
+    /* color: #0d3993; */
+    text-align: center;
+    line-height: 4rem;
+}
+
+.title span {
+    font-size: 1.5rem;
+    /* color: rgba(256, 256, 256, 0.5); */
+}
+
+.now, .add, .result {
+    padding: 24px;
+}
+
+.divider {
+    height: 1px;
+    background-color: #ddd;
+    margin: 0 24px;
+}
+
+h3 {
+    padding-bottom: 12px;
+}
+
+.now__input, .add__input, .result__input {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.result__price, .result__quantity, .result__total {
+    color: #0055f8;
+}
+
+input {
+    height: 36px;
+    width: 180px;
+    font-size: 1rem;
+    font-family: 'TmoneyRoundWindExtraBold';
+    border: 1px solid #ccc;
+    text-align: center;
+    border-radius: 4px;
+}
+
+input:focus {
+    outline: none;
+}
+
+input::placeholder {
+    color: #bbb;
+}
+
+.result {
+    background: rgba(0,158,238,0.1);
+    border-radius: 0 0 10px 10px;
+}
+
+/* 모바일 사이즈 */
+@media screen and (max-width: 425px) {
+    body {
+        width: 100%;
+        height: 100%;
+    }
+
+    .wrap {
+        background-color: white;
+        border-radius: 0;
+        width: 100%;
+    }
+
+    header {
+        border-radius: 0;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+        padding: 18px;
+        color: white;
+    }
+
+    .now__input, .add__input, .result__input {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .now__input > div:nth-child(2) {
+        margin: 8px 0;
+    }
+
+    .add__input > div:nth-child(2) {
+        margin: 8px 0;
+    }
+
+    .result__input > div:nth-child(2) {
+        margin: 8px 0;
+    }
+
+    input {
+        height: 44px;
+        width: 90%;
+        font-size: 1rem;
+        font-family: 'TmoneyRoundWindExtraBold';
+        border: 1px solid #ccc;
+        text-align: center;
+        border-radius: 4px;
+    }
+
+    .result {
+        border-radius: 0 0 0 0;
+    }
+
+}
