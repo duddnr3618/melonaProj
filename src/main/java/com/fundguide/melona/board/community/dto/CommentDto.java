@@ -4,7 +4,6 @@ import com.fundguide.melona.board.community.entity.CommentEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 

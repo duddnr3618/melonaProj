@@ -16,4 +16,6 @@ public interface CommunityRepositoryCustom {
      * */
     Page<CommunityEntity> onlyViewNormalBoardFilterByBlock(Pageable pageable);
 
+    /**impeach만 저장하기 위한 메서드*/
+    void impeachSave(CommunityEntity entity);
 }

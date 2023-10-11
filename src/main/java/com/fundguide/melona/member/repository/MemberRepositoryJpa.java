@@ -1,6 +1,5 @@
 package com.fundguide.melona.member.repository;
 
-import com.fundguide.melona.board.normalBoard.entity.QNormalBoardEntity;
 import com.fundguide.melona.board.normalBoard.entity.QNormalBoardImpeachEntity;
 import com.fundguide.melona.management.commonQueryDsl.CommonQueryDsl;
 import com.fundguide.melona.member.dto.MemberLeastDTO;
@@ -14,7 +13,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +20,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static com.fundguide.melona.member.entity.QMemberEntity.memberEntity;
 
@@ -47,20 +46,20 @@ public class MemberRepositoryJpa implements MemberRepository {
     }
 
     @Transactional(readOnly = true)
-    public MemberEntity findMember(String memberEmail , String memberNickname){
+    public MemberEntity findMember(String memberEmail, String memberNickname) {
         List<MemberEntity> result = query
                 .select(memberEntity)
                 .from(memberEntity)
-                .where(memberName(memberEmail),nickname(memberNickname))
+                .where(memberName(memberEmail), nickname(memberNickname))
                 .fetch();
 
         if (result.isEmpty()) {
-            MemberEntity memberEntity1 =null;
+            MemberEntity memberEntity1 = null;
             result.add(memberEntity1);
         }
 
 
-    return result.get(0);
+        return result.get(0);
     }
 
 
@@ -109,8 +108,8 @@ public class MemberRepositoryJpa implements MemberRepository {
     public void withdraw(Long id) {
         MemberEntity memberEntity = em.find(MemberEntity.class, id);
         memberEntity.setMemberAvailable("no");
-        memberEntity.setMemberEmail("탈퇴한사용자"+ memberEntity.getId());
-        memberEntity.setMemberNickname("탈퇴한사용자"+memberEntity.getId()+new Date());
+        memberEntity.setMemberEmail("탈퇴한사용자" + memberEntity.getId());
+        memberEntity.setMemberNickname("탈퇴한사용자" + memberEntity.getId() + new Date());
         memberEntity.setMemberRole(MemberRoleState.DISABLED);
         memberEntity.setMemberAddress("탈퇴한사용자");
         memberEntity.setMemberName("탈퇴한사용자");
@@ -130,9 +129,7 @@ public class MemberRepositoryJpa implements MemberRepository {
         return commonQueryDsl.pageableHandler(jpaQuery, pageable);
     }
 
-    /**필요값을 DTO로 변환 시켜 출력하는 메서드 readOnly
-     * @param pageable 페이저블 처리를 위한 값
-     * @return Page-All*/
+    /**{@inheritDoc}*/
     @Override
     @Transactional(readOnly = true)
     public Page<MemberLeastDTO> findAllOfMemberLeastData(Pageable pageable) {
@@ -142,11 +139,7 @@ public class MemberRepositoryJpa implements MemberRepository {
         return commonQueryDsl.pageableHandler(jpaQuery, pageable);
     }
 
-    /** 필터링된 멤버 Role DTO로 전달해 페이징 처리하는 메서드 readOnly
-     * 더 간략화 시킬 수 있을거 같은데...
-     * @param filter 필터처리를 위한 값 필요시 case를 더 설정할것
-     * @param pageable 페이저블 처리를 위한 값
-     * @return Page*/
+    /**{@inheritDoc}*/
     @Override
     @Transactional(readOnly = true)
     public Page<MemberLeastDTO> memberRoleStateFilterPage(String filter, Pageable pageable) {
@@ -170,5 +163,14 @@ public class MemberRepositoryJpa implements MemberRepository {
         QNormalBoardImpeachEntity qNormalBoardImpeach = QNormalBoardImpeachEntity.normalBoardImpeachEntity;
         /*expression = memberEntity.id.eq(qNormalBoardImpeach.board.boardWriter);*/
         return null;
+    }
+
+    /**{@inheritDoc}*/
+    @Override
+    public Optional<MemberEntity> findByMemberEamilOptional(String email) {
+        MemberEntity member = query.selectFrom(memberEntity)
+                .where(memberEntity.memberEmail.eq(email))
+                .fetchOne();
+        return Optional.ofNullable(member);
     }
 }

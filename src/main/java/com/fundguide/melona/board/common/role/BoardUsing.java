@@ -1,7 +1,5 @@
 package com.fundguide.melona.board.common.role;
 
-import lombok.Getter;
-
 import java.util.NoSuchElementException;
 
 public enum BoardUsing {
