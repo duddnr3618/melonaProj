@@ -28,7 +28,8 @@ public class CommunityDto {
     private int boardHits;
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
-    private String MemberId;
+    private Long memberId;
+    private String memberName;
 
     private String fileName;
     private String filePath;

@@ -1,4 +1,4 @@
-package com.fundguide.melona.controller;
+package com.fundguide.melona.newscontroller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;

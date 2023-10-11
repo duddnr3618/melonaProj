@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>주식 물타기 계산기</title>
+        <link href="/src/main/resources/static/css/app.css" rel="stylesheet">
+        <script src="/src/main/resources/static/js/app.js" defer></script>
+
+</head>
+<body>
+<div class="wrap">
+    <header>
+        <h1>주식/코인 물타기 계산기</h1>
+    </header>
+    <div class="calc-body">
+        <div class="now">
+            <h3>현재 보유</h3>
+            <div class="now__input">
+                <div class="price"><input type="text" class="now__price" placeholder="평균 매입가" onKeyUp="calcNow();"> 원</div>
+                <div class="quantity"><input type="text" class="now__quantity" placeholder="보유 수량" onKeyUp=calcNow();> 주</div>
+                <div class="total"><input type="text" class="now__total" readonly/> 원</div>
+            </div>
+        </div>
+        <div class="divider"></div>
+        <div class="add">
+            <h3>추가 매수</h3>
+            <div class="add__input">
+                <div class="price"><input type="text" class="add__price" placeholder="추가 매입가" onKeyUp=calcNow();> 원</div>
+                <div class="quantity"><input type="text" class="add__quantity" placeholder="추가 수량" onKeyUp=calcNow();> 주</div>
+                <div class="total"><input type="text" class="add__total" readonly/> 원</div>
+            </div>
+        </div>
+        <div class="result">
+            <h3>최종 보유</h3>
+            <div class="result__input">
+                <div class="price"><input type="text" class="result__price" placeholder="최종 평단" onKeyUp=calcNow(); readonly/> 원</div>
+                <div class="quantity"><input type="text" class="result__quantity" placeholder="최종 수량" onKeyUp=calcNow(); readonly/> 주</div>
+                <div class="total"><input type="text" class="result__total" onKeyUp=calcNow(); readonly/> 원</div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</body>
+</html>

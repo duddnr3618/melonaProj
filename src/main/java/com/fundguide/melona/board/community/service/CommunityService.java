@@ -11,6 +11,10 @@ import com.fundguide.melona.board.community.repository.CommunityRepository;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
+import com.fundguide.melona.board.like.entity.LikeEntity;
+import com.fundguide.melona.board.like.repository.LikeRepository;
+import com.fundguide.melona.member.entity.MemberEntity;
+import com.fundguide.melona.member.repository.MemberRepositoryData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.aspectj.weaver.patterns.PerFromSuper;
@@ -19,6 +23,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +52,7 @@ public class CommunityService {
     private final CommunityImpeachRepository communityImpeachRepository;
     private final MemberRepository memberRepository;
     private final MemberRepositoryData memberRepositoryData;
-
+    private final LikeRepository likeRepository;
 
     public void writePro(CommunityDto communityDto, MultipartFile file) throws Exception {
         System.out.println(" { 커뮤니티 파일 저장중" + " }");
@@ -66,8 +75,12 @@ public class CommunityService {
 
         System.out.println("최종 결과값은? 파일 경로? { " + communityDto.getFilePath() + " }");
         System.out.println("최종 결과값은? 파일 이름? { " + communityDto.getFileName() + " }");
-
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(communityDto.getMemberId());
         CommunityEntity communityEntity = CommunityEntity.toSaveEntity(communityDto);
+        memberEntity.setId(communityDto.getMemberId());
+        communityEntity.setMemberEntity(memberEntity);
+
         communityRepository.save(communityEntity);
     }
 
@@ -103,6 +116,37 @@ public class CommunityService {
         CommunityEntity communityEntity = CommunityEntity.toUpdateEntity(communityDto);
         communityRepository.save(communityEntity);
         return boardDetail(communityDto.getId());
+    }
+
+    public Page<CommunityDto> paging(Pageable pageable) {
+        int page = pageable.getPageNumber();
+        int pageLimit = 10; // 페이지당 보여질 게시물 수
+
+        Page<CommunityEntity> communityEntities = communityRepository.findAll(
+                PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "createdTime")));
+
+        // 페이지 정보 출력 (옵션)
+        System.out.println("communityEntities.getContent() = " + communityEntities.getContent()); // 요청 페이지에 해당하는 글
+        System.out.println("communityEntities.getTotalElements() = " + communityEntities.getTotalElements()); // 전체 글 갯수
+        System.out.println("communityEntities.getNumber() = " + communityEntities.getNumber()); // DB로 요청한 페이지 번호
+        System.out.println("communityEntities.getTotalPages() = " + communityEntities.getTotalPages()); // 전체 페이지 갯수
+        System.out.println("communityEntities.getSize() = " + communityEntities.getSize()); // 한 페이지에 보여지는 글 갯수
+        System.out.println("communityEntities.hasPrevious() = " + communityEntities.hasPrevious()); // 이전 페이지 존재 여부
+        System.out.println("communityEntities.isFirst() = " + communityEntities.isFirst()); // 첫 페이지 여부
+        System.out.println("communityEntities.isLast() = " + communityEntities.isLast()); // 마지막 페이지 여부
+
+        // CommunityEntity를 CommunityDto로 변환
+        Page<CommunityDto> communityDtos = communityEntities.map(communityEntity -> {
+            CommunityDto communityDto = new CommunityDto();
+            communityDto.setId(communityEntity.getId());
+            communityDto.setBoardTitle(communityEntity.getBoardTitle());
+            communityDto.setBoardContents(communityEntity.getBoardContents());
+            communityDto.setBoardHits(communityEntity.getBoardHits());
+            communityDto.setCreatedTime(communityEntity.getCreatedTime());
+            return communityDto;
+        });
+
+        return communityDtos;
     }
 
 

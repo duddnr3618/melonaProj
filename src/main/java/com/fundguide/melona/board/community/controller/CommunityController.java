@@ -1,15 +1,19 @@
 package com.fundguide.melona.board.community.controller;
 
 import com.fundguide.melona.board.common.dto.ImpeachDTO;
+import com.fundguide.melona.board.community.dto.CommentDto;
 import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
 import com.fundguide.melona.board.community.repository.CommunityImpeachRepository;
+import com.fundguide.melona.board.community.service.CommentService;
 import com.fundguide.melona.board.community.service.CommunityService;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
+import com.fundguide.melona.board.like.Service.LikeService;
 import com.fundguide.melona.member.service.CustomUserDetails;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,14 +35,16 @@ import java.util.Optional;
 @RequestMapping("/community")
 public class CommunityController {
     private final CommunityService communityService;
+    private final CommentService commentService;
+    private final LikeService likeService;
 
-    
+
     /* 게시글 리스트 페이지 */
     @GetMapping("/list")
     public String list(Model model,
-                       @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
-                       @AuthenticationPrincipal CustomUserDetails customUserDetails,
-                       String searchKeyword) {
+                       @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
+                       String searchKeyword,
+                       @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         Page<CommunityEntity> list = null;
         if (searchKeyword == null) {
             list = communityService.boardList(pageable);
@@ -66,14 +72,18 @@ public class CommunityController {
     /* 게시글 작성폼 */
     @GetMapping("/wrtieForm")
     public String writeForm(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        String userInfo = customUserDetails.getMemberEntity().getMemberEmail();
-        model.addAttribute("userInfo", userInfo);
+        String userName = customUserDetails.getMemberEntity().getMemberName();
+        Long memberId = customUserDetails.getMemberEntity().getId();
+        System.out.println(">>>>>>>> : " + customUserDetails.getMemberEntity().getId());
+        model.addAttribute("userName", userName);
+        model.addAttribute("memberId", memberId);
         return "board/writeForm";
     }
 
     /* 게시글 작성처리 */
     @PostMapping("/writePro")
     public String writePro(@ModelAttribute CommunityDto communityDto, Model model, MultipartFile file) throws Exception {
+        System.out.println(">>>>>>>>>> " + communityDto);
         communityService.writePro(communityDto, file);
         model.addAttribute("message", "글작성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/community/list");
@@ -86,7 +96,11 @@ public class CommunityController {
     public String detail(Model model, @PathVariable Long id) {
         communityService.updateHits(id);
         CommunityDto communityDto = communityService.boardDetail(id);
+        // 댓글 목록 가져오기
+        List<CommentDto> commentDtoList = commentService.findAll(id);
         model.addAttribute("board", communityDto);
+        model.addAttribute("commentList", commentDtoList);
+
         return "board/detail";
     }
 
