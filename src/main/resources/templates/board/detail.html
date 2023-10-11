@@ -115,8 +115,9 @@
                 .catch((error) => {
                     console.log(error);
                     if (error.response.status === 400) {
-                        console.log("이미 좋아요를 누르셨습니다. 취소 하시겠습니까?");
-                        alert("이미 좋아요를 누르셨습니다. 취소 하시겠습니까?");
+                        if (confirm("이미 좋아요를 누르셨습니다. 취소 하시겠습니까?")) {
+                            axios.delete("/community/like/remove" + boardId);
+                        }
                     }
                 });
         })

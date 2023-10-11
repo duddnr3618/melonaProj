@@ -5,8 +5,8 @@ import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
 import com.fundguide.melona.board.community.entity.Community_like;
-import com.fundguide.melona.board.community.repository.CommunityImpeachRepository;
-import com.fundguide.melona.board.community.repository.CommunityLikeRepository;
+import com.fundguide.melona.board.community.repository.impeach.CommunityImpeachRepository;
+import com.fundguide.melona.board.community.repository.like.CommunityLikeRepository;
 import com.fundguide.melona.board.community.repository.CommunityRepository;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
@@ -26,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.security.Principal;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -43,6 +42,7 @@ public class CommunityService {
     private final MemberRepository memberRepository;
     private final MemberRepositoryData memberRepositoryData;
     private final CommunityLikeRepository likeRepository;
+    private final CommunityImpeachRepository impeachRepository;
 
     public void writePro(CommunityDto communityDto, MultipartFile file) throws Exception {
         System.out.println(" { 커뮤니티 파일 저장중" + " }");
@@ -155,11 +155,14 @@ public class CommunityService {
                         .board(oCommunityEntity)
                         .cause(impeachDTO.getCause())
                         .build();
-                oCommunityEntity.getImpeach().add(impeach);
-                communityRepository.save(oCommunityEntity);
 
+                boolean check = impeachRepository.checkAlreadyImpeach(impeach);
+                if (check) {
+                    oCommunityEntity.getImpeach().add(impeach);
+                    communityRepository.save(oCommunityEntity);
+                    ResponseEntity.badRequest().build();
+                }
             }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-            System.out.println(" { 신고 성공" + " }");
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INSUFFICIENT_STORAGE).build();
@@ -192,5 +195,48 @@ public class CommunityService {
         } else {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    /** 좋아요 삭제 서비스 메서드 */
+    @Transactional
+    public ResponseEntity<String> likeRemove(Principal principal, Long boardId) {
+
+        Community_like like = likeOptionalCheckHandler(principal, boardId);
+        LikeTest likeTest = new LikeTest() {
+            @Override
+            public ResponseEntity<String> trueCheck() {
+                likeRepository.delete(like);
+                return ResponseEntity.ok().build();
+            }
+            @Override
+            public ResponseEntity<String> falseCheck() {
+                return ResponseEntity.badRequest().build();
+            }
+        };
+
+        boolean check = like != null;
+        if (check) {
+            return likeTest.trueCheck();
+        } else {
+            return likeTest.falseCheck();
+        }
+    }
+
+    protected Community_like likeOptionalCheckHandler(Principal principal, Long boardId) {
+        Optional<CommunityEntity> community = communityRepository.findById(boardId);
+        Optional<MemberEntity> member = memberRepository.findByMemberEamilOptional(principal.getName());
+        if (community.isPresent() && member.isPresent()) {
+            Community_like like = Community_like.builder()
+                    .communityEntity(community.get())
+                    .memberEntity(member.get())
+                    .build();
+            return likeRepository.like(like);
+        }
+        return null;
+    }
+
+    interface LikeTest {
+        ResponseEntity<String> trueCheck();
+        ResponseEntity<String> falseCheck();
     }
 }

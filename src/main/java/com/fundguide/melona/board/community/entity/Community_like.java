@@ -26,11 +26,4 @@ public class Community_like {
     @ManyToOne
     @JoinColumn(name = "community_board_id")
     private CommunityEntity communityEntity;
-
-    public static CommentLikeIdG idG(MemberEntity memberEntity, CommunityEntity communityEntity) {
-        return CommentLikeIdG.builder()
-                .boardId(communityEntity.getId())
-                .userId(memberEntity.getId())
-                .build();
-    }
 }
