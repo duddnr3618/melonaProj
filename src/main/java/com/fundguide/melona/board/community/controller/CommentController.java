@@ -3,6 +3,7 @@ package com.fundguide.melona.board.community.controller;
 import ch.qos.logback.core.CoreConstants;
 import com.fundguide.melona.board.community.dto.CommentDto;
 import com.fundguide.melona.board.community.service.CommentService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,7 @@ public class CommentController {
             System.out.println(">>>>>>>>>>> : commentDtoList");
             return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
         }
+
 
 
     }

@@ -2,7 +2,6 @@ package com.fundguide.melona.board.community.entity;
 
 import com.fundguide.melona.board.common.entity.BaseTimeEntity;
 import com.fundguide.melona.board.community.dto.CommentDto;
-import com.nimbusds.jose.crypto.impl.PRFParams;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -36,6 +36,7 @@ import java.util.Optional;
 public class CommunityController {
     private final CommunityService communityService;
     private final CommentService commentService;
+    private final LikeService likeService;
 
 
     /* 게시글 리스트 페이지 */
@@ -123,6 +124,8 @@ public class CommunityController {
         communityService.delete(id);
         return "redirect:/community/list";
     }
+
+
 
     /**********************************************************************************************************/
     @PostMapping("/impeach")
