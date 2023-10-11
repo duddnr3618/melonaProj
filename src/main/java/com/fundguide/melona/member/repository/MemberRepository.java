@@ -1,6 +1,7 @@
 package com.fundguide.melona.member.repository;
 
 
+import com.fundguide.melona.member.dto.MemberDto;
 import com.fundguide.melona.member.dto.MemberLeastDTO;
 
 import com.fundguide.melona.member.entity.MemberEntity;
@@ -28,4 +29,6 @@ public interface MemberRepository {
     Page<MemberLeastDTO> findAllOfMemberLeastData(Pageable pageable);
 
     Page<MemberLeastDTO> memberRoleStateFilterPage(String filter , Pageable pageable);
+
+    void adminSave(MemberEntity memberEntity);
 }

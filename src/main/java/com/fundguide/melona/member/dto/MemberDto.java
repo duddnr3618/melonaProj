@@ -1,14 +1,15 @@
 package com.fundguide.melona.member.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
 @Validated
 @Data
 public class MemberDto {
+
+
     private Long id;
     @NotEmpty
     private String memberEmail;
@@ -18,7 +19,6 @@ public class MemberDto {
     private String memberRole;
     private String memberAddress;
     private LocalDate memberJoinDate;
-    private String memberAvailable;
     @NotEmpty
     private String memberNickname;
 }

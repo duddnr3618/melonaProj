@@ -4,6 +4,8 @@ import com.fundguide.melona.member.dto.ExchangeDto;
 import com.fundguide.melona.member.dto.MemberDto;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.mapper.MemberTransMapper;
+import com.fundguide.melona.member.repository.MemberRepository;
+import com.fundguide.melona.member.repository.MemberRepositoryData;
 import com.fundguide.melona.member.service.CustomUserDetails;
 import com.fundguide.melona.member.service.MemberService;
 import com.fundguide.melona.member.utils.ExchangeRate;
@@ -31,7 +33,10 @@ public class MemberController {
     private final StatisticList statisticList;
     private  final ExchangeRate exchangeRate;
     private  final StatisticWord statisticWord;
+    private final MemberRepositoryData memberRepositoryData;
 
+    @Value("${admin.email}")
+    private String adminEmail;
 
     @GetMapping("member/loginForm")   // 로그인 페이지로 가는거
     public String loginForm() {
@@ -200,7 +205,21 @@ public class MemberController {
     @ResponseBody
     public String test4(@RequestParam String search){
         String result = statisticWord.statisticWord(search);
-        System.out.println("result = " + result);
         return result;
+    }
+    @GetMapping("/myList")
+    public String test5(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+        return null;
+    }
+
+
+    @GetMapping("/save/admin")
+    public String adminSave(){
+        MemberEntity byMemberEmail = memberRepositoryData.findByMemberEmail(adminEmail);
+        if(byMemberEmail!=null){
+        }else {
+            memberService.adminSave(adminEmail);
+        }
+        return "redirect:/";
     }
 }
