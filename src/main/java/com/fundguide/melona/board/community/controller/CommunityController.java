@@ -72,14 +72,18 @@ public class CommunityController {
     /* 게시글 작성폼 */
     @GetMapping("/wrtieForm")
     public String writeForm(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        Long userInfo = customUserDetails.getMemberEntity().getId();
-        model.addAttribute("userInfo", userInfo);
+        String userName = customUserDetails.getMemberEntity().getMemberName();
+        Long memberId = customUserDetails.getMemberEntity().getId();
+        System.out.println(">>>>>>>> : " + customUserDetails.getMemberEntity().getId());
+        model.addAttribute("userName", userName);
+        model.addAttribute("memberId", memberId);
         return "board/writeForm";
     }
 
     /* 게시글 작성처리 */
     @PostMapping("/writePro")
     public String writePro(@ModelAttribute CommunityDto communityDto, Model model, MultipartFile file) throws Exception {
+        System.out.println(">>>>>>>>>> " + communityDto);
         communityService.writePro(communityDto, file);
         model.addAttribute("message", "글작성이 완료되었습니다.");
         model.addAttribute("searchUrl", "/community/list");
