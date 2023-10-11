@@ -7,22 +7,18 @@ import com.fundguide.melona.board.leaderboard.repository.LeaderBoardRepository;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.board.normalBoard.repository.NormalBoardRepository;
 import com.fundguide.melona.management.service.filter.CommunityBoardCategoryHandler;
-import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.management.service.filter.LeaderBoardCategoryHandler;
 import com.fundguide.melona.management.service.filter.NormalBoardCategoryHandler;
+import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
-import com.fundguide.melona.member.role.MemberLimitState;
-import jakarta.persistence.Id;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.dialect.lock.PessimisticReadUpdateLockingStrategy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service

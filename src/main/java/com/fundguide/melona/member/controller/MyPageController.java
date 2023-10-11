@@ -1,17 +1,14 @@
 package com.fundguide.melona.member.controller;
 
 import com.fundguide.melona.board.community.dto.CommunityDto;
-import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.community.service.CommunityService;
 import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import com.fundguide.melona.board.leaderboard.service.LeaderBoardService;
 import com.fundguide.melona.board.normalBoard.dto.NormalBoardDto;
-import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardQueryService;
 import com.fundguide.melona.member.service.CustomUserDetails;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,9 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
-import org.springframework.data.domain.Pageable;
 
 @Controller
 

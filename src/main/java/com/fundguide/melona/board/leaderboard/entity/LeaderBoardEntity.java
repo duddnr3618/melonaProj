@@ -2,15 +2,12 @@ package com.fundguide.melona.board.leaderboard.entity;
 
 import com.fundguide.melona.board.common.entity.BaseTimeEntity;
 import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
-import com.fundguide.melona.board.like.entity.LikeEntity;
 import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @Data

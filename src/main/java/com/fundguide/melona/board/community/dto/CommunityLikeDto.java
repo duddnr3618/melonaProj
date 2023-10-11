@@ -1,10 +1,10 @@
-package com.fundguide.melona.board.like.dto;
+package com.fundguide.melona.board.community.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class LikeDto {
+public class CommunityLikeDto {
 
 }
