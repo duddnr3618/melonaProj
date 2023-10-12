@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Real-time Chart</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<h1>Real-time Stock Data Chart</h1>
+
+<!-- Canvas element for the coinchart -->
+<canvas id="stockChart" width="800" height="400"></canvas>
+
+<!-- Hidden element to hold the JSON data for JavaScript to access -->
+<textarea id="jsonData" style="display:none;" th:text="${data}"></textarea>
+
+<!-- JavaScript to generate the coinchart -->
+<script th:inline="javascript">
+  let jsonData = JSON.parse(document.getElementById("jsonData").textContent);
+
+  let labels = jsonData.map(e => e.date);
+  let dataPoints = jsonData.map(e => e.close);  // Plotting based on the 'close' value
+
+  const config = {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Stock Value',
+        data: dataPoints,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+      }]
+    },
+  };
+
+  var myChart = new Chart(
+          document.getElementById('stockChart'),
+          config
+  );
+</script>
+
+</body>
+</html>

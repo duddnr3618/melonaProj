@@ -11,36 +11,6 @@ import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-@Transactional
 class MelonaApplicationTests {
-	private final PasswordEncoder utilsPasswordEncoder;
-	@Autowired
-	MelonaApplicationTests(PasswordEncoder utilsPasswordEncoder) {
-		this.utilsPasswordEncoder = utilsPasswordEncoder;
-	}
 
-	@Test
-	void contextLoads() {
-	}
-
-
-	@Autowired
-	EntityManager em;
-
-	@Transactional
-	@Commit
-	@Test
-	public void before() {
-		String pwd = utilsPasswordEncoder.encode("qwerqwerqwer");
-		MemberEntity memberEntity = MemberEntity.builder()
-				.memberEmail("admin@gmail.com")
-				.memberRole("ROLE_ADMIN")
-				.memberPassword(pwd)
-				.memberAddress("no")
-				.memberName("ADMIN")
-				.memberNickname("ADMIN")
-				.memberAvailable("yes")
-				.build();
-		em.persist(memberEntity);
-	}
 }

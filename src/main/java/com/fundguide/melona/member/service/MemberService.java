@@ -11,10 +11,9 @@ import com.fundguide.melona.member.role.MemberRoleState;
 import com.fundguide.melona.member.utils.MainSend;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -28,7 +27,6 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder utilsPasswordEncoder ;
     private final MainSend mainSend;
-
 
     public void memberSave(MemberDto memberDto) {
         MemberEntity memberEntity = MemberTransMapper.INSTANCE.dtoToEntity(memberDto);

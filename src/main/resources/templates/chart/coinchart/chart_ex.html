@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+    <meta charset='UTF-8'>
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        #chart_parent{
+            width: 400px;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+<!-- 사이즈가 부모사이즈 기준으로 자동으로 결정되므로 canvas를 둘러싼다 -->
+<!-- canvas와 svg(벡터그래픽이라고 해상도가 안깨짐) 가 유명 - 한마디로 그림그리는 화면 -->
+<div id="chart_parent">
+    <canvas id="myChart" width="400" height="400"></canvas>
+</div>
+<input type="button" value="차트 값 바꿔보기" id="id_btn1">
+<input type="button" value="차트 타입 바꿔보기" id="id_btn2">
+<script>
+    var v_anotherData = {
+        type:"bar", // coinchart.js는 mixed 차트를 지원하는데, line과 bar만 섞을 수 있음
+        label: '뭔 모달',
+        data: [11, 22, 44, 55, 66, 33,77,88,99]
+    };
+
+
+    var v_btn = document.querySelector("#id_btn1");
+    var f_change = function(){
+
+        var v_arr = [];
+        for(var i=1; i<=10; i++){   // 10개
+            v_arr.push(Math.ceil(Math.random()*100));// 1~100 사이 정수
+        }
+        var v_arr1 = [];
+        for(var i=1; i<=10; i++){
+            v_arr1.push(Math.ceil(Math.random()*100)); // 1~100 사이 정수
+        }
+        //데이타 가져오는 부분은 나중에 꼭 ajax로
+        myChart.data.datasets[0].data = v_arr;
+        myChart.data.datasets[1].data = v_arr1;
+
+        myChart.update();                    // 중요 차트 다시 그리기
+
+        setTimeout(f_change, 1000); // 1초마다 재귀호출, 눈속임을 하고싶을 때(실시간으로 데이터를 받아오는 것처럼)
+
+        //우리의 관심은 오직 데이타값 변경시키고픔
+        //console.log(myChart.data.datasets[0].data);
+    }
+    v_btn.addEventListener("click", f_change);
+
+    var v_btn2 = document.querySelector("#id_btn2");
+    var v_type = ["bar", "line", "pie", "doughnut", "radar"];
+    var f_chgType = function(){
+        //myChart.type은 되지 않음
+        //datasets에 접근해야 함
+        myChart.data.datasets[0].type = v_type[Math.floor(Math.random()*(v_type.length))]; //버림(배열의 값만큼 랜덤)
+        myChart.update();
+
+    }
+    v_btn2.addEventListener("click", f_chgType);
+
+
+    var v_labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange', 'ㅇㅇㅇ', 'ㄴㄴㄴ'];
+    const ctx = document.getElementById('myChart').getContext('2d'); //canvas의 아이디를 주면 됨
+    // 그래픽 엔진으로 유명한 것 (DirectX, OpenGL)
+    const myChart = new Chart(ctx, {
+        type: 'line', //bar, line, pie, doughnut, radar
+        data: {
+            labels: v_labels,
+            datasets: [{
+                label: '# of Votes',
+                //data 숫자는 labels 숫자를 따라간다
+                data: [12, 19, 3, 5, 2, 31, 20, 22],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }, v_anotherData]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+    //datasets는 배열 {} 하나밖에 없음
+</script>
+
+</body>
+</html>

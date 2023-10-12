@@ -8,8 +8,6 @@ import java.time.LocalDate;
 @Validated
 @Data
 public class MemberDto {
-
-
     private Long id;
     @NotEmpty
     private String memberEmail;

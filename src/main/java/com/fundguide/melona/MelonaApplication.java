@@ -9,5 +9,5 @@ public class MelonaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MelonaApplication.class, args);
 	}
-
+	
 }
