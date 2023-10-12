@@ -137,6 +137,7 @@ public class CommunityController {
     /**좋아요 취소 컨트롤 메서드*/
     @DeleteMapping("/like/remove/{boardId}")
     public ResponseEntity<String> likeRemove(Principal principal, @PathVariable(name = "boardId") Long boardId) {
+        System.out.println(" { 좋아요 삭제 진입" + " }");
         return communityService.likeRemove(principal, boardId);
     }
 }

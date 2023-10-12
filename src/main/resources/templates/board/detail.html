@@ -116,7 +116,7 @@
                     console.log(error);
                     if (error.response.status === 400) {
                         if (confirm("이미 좋아요를 누르셨습니다. 취소 하시겠습니까?")) {
-                            axios.delete("/community/like/remove" + boardId);
+                            axios.delete("/community/like/remove/" + boardId);
                         }
                     }
                 });

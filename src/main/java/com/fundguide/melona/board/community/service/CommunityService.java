@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.naming.NotContextException;
 import java.io.File;
 import java.security.Principal;
 import java.util.Optional;
@@ -175,25 +176,36 @@ public class CommunityService {
         Optional<CommunityEntity> community = communityRepository.findById(boardId);
         Optional<MemberEntity> member = memberRepository.findByMemberEamilOptional(principal.getName());
 
+        Community_like like = null;
+        Community_like searchLike;
         if (community.isPresent() && member.isPresent()) {
-            Community_like like = Community_like.builder()
-                    .communityEntity(community.get())
-                    .memberEntity(member.get())
-                    .build();
+            searchLike = Community_like.likeFastBuilder(community.get(), member.get());
+            like = likeRepository.searchAlreadyLike(searchLike);
+        } else {
+            throw new IllegalArgumentException("CommunityEntity 또는 MemberEntity를 찾지 못해 like 객체를 생성할 수 없습니다.");
+        }
 
-            boolean check = likeRepository.checkAlreadyLike(like);
-            if (check) {
-                System.out.println(" { 이미 존재합니다. 실패를 반환합니다." + " }");
+        LikeBooleanCheck caseCheck = new LikeBooleanCheck() {
+            @Override
+            public ResponseEntity<String> trueCheck() {
                 return ResponseEntity.badRequest().build();
-            } else {
-                System.out.println(" { 존재하지 않습니다. 좋아요를 추가합니다." + " }");
-                community.get().getBoardLike().add(like);
-                communityRepository.save(community.get());
-                return ResponseEntity.ok().build();
             }
 
+            @Override
+            public ResponseEntity<String> falseCheck() {
+                community.ifPresent(communityEntity -> {
+                    communityEntity.getBoardLike().add(searchLike);
+                    communityRepository.save(communityEntity);
+                });
+                return ResponseEntity.ok().build();
+            }
+        };
+
+        boolean check = like != null;
+        if (check) {
+            return caseCheck.trueCheck();
         } else {
-            return ResponseEntity.badRequest().build();
+            return caseCheck.falseCheck();
         }
     }
 
@@ -202,12 +214,14 @@ public class CommunityService {
     public ResponseEntity<String> likeRemove(Principal principal, Long boardId) {
 
         Community_like like = likeOptionalCheckHandler(principal, boardId);
-        LikeTest likeTest = new LikeTest() {
+        LikeBooleanCheck caseCheck = new LikeBooleanCheck() {
             @Override
             public ResponseEntity<String> trueCheck() {
-                likeRepository.delete(like);
+                System.out.println(" { 존재함 삭제 시작." + " }");
+                likeRepository.removeLike(like);
                 return ResponseEntity.ok().build();
             }
+
             @Override
             public ResponseEntity<String> falseCheck() {
                 return ResponseEntity.badRequest().build();
@@ -216,27 +230,30 @@ public class CommunityService {
 
         boolean check = like != null;
         if (check) {
-            return likeTest.trueCheck();
+            return caseCheck.trueCheck();
         } else {
-            return likeTest.falseCheck();
+            return caseCheck.falseCheck();
         }
     }
 
     protected Community_like likeOptionalCheckHandler(Principal principal, Long boardId) {
         Optional<CommunityEntity> community = communityRepository.findById(boardId);
         Optional<MemberEntity> member = memberRepository.findByMemberEamilOptional(principal.getName());
+
         if (community.isPresent() && member.isPresent()) {
             Community_like like = Community_like.builder()
                     .communityEntity(community.get())
                     .memberEntity(member.get())
                     .build();
-            return likeRepository.like(like);
+            return likeRepository.searchAlreadyLike(like);
+        } else {
+            throw new IllegalArgumentException("CommunityEntity 또는 MemberEntity가 없어 like 객체를 생성할 수 없습니다.");
         }
-        return null;
     }
 
-    interface LikeTest {
+    interface LikeBooleanCheck {
         ResponseEntity<String> trueCheck();
+
         ResponseEntity<String> falseCheck();
     }
 }
