@@ -41,7 +41,7 @@ public class NormalBoardRepositoryImpl implements NormalBoardRepositoryCustom {
         String likeKeyword = "%" + searchDTO.searchKeyword().toLowerCase() + "%";
         String searchOption = searchDTO.searchOption().toLowerCase();
 
-        if ("all".equals(searchOption) || searchOption.isEmpty()) {
+        /*if ("all".equals(searchOption) || searchOption.isEmpty()) {
             booleanExpression = normalBoardEntity.boardWriter.like(likeKeyword)
                     .or(normalBoardEntity.boardTitle.like(likeKeyword))
                     .or(normalBoardEntity.boardContents.like(likeKeyword));
@@ -51,23 +51,23 @@ public class NormalBoardRepositoryImpl implements NormalBoardRepositoryCustom {
             booleanExpression = normalBoardEntity.boardWriter.like(likeKeyword);
         } else if ("title".equals(searchDTO.searchOption())) {
             booleanExpression = normalBoardEntity.boardTitle.like(likeKeyword);
-        }
+        }*/
         return dslRepeatCode.searchKeywordAndOption(normalBoardEntity, booleanExpression, searchDTO.searchKeyword(), pageable);
     }
 
     /**{@inheritDoc}*/
     @Override
     public Page<NormalBoardEntity> filterViewBoard(Pageable pageable) {
-        booleanExpression.eq(normalBoardEntity.boardLikes.gt(200));
+        /*booleanExpression.eq(normalBoardEntity.boardLikes.gt(200));*/
         return null;
     }
 
     /**{@inheritDoc}*/
     @Override
     public Page<NormalBoardEntity> onlyViewNormalBoardFilterByWaring(Pageable pageable) {
-        booleanExpression = normalBoardEntity.boardUsing.notIn(BoardUsing.BLOCK)
+/*        booleanExpression = normalBoardEntity.boardUsing.notIn(BoardUsing.BLOCK)
                         .and(normalBoardEntity.impeach.size().goe(100));
-        boardEntityJPAQuery = queryFactory.selectFrom(normalBoardEntity).where(booleanExpression);
+        boardEntityJPAQuery = queryFactory.selectFrom(normalBoardEntity).where(booleanExpression);*/
         return commonQueryDsl.pageableHandler(boardEntityJPAQuery, pageable);
     }
 
@@ -79,13 +79,5 @@ public class NormalBoardRepositoryImpl implements NormalBoardRepositoryCustom {
         return commonQueryDsl.pageableHandler(boardEntityJPAQuery, pageable);
     }
 
-    /**{@inheritDoc}*/
-    @Override
-    public NormalBoardDto detailNormalBoard(Long id) {
-        booleanExpression.eq(normalBoardEntity.id.eq(id));
-        return queryFactory.select(NormalBoardDto.projections())
-                .from(normalBoardEntity)
-                .where(booleanExpression)
-                .fetchOne();
-    }
+
 }

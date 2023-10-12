@@ -25,7 +25,4 @@ public interface NormalBoardRepositoryCustom {
      * <p> 제제된 게시판 조회
      * */
     Page<NormalBoardEntity> onlyViewNormalBoardFilterByBlock(Pageable pageable);
-
-    /**id값으로 노말보드의 단일값을 가져오는 메서드*/
-    NormalBoardDto detailNormalBoard(Long id);
 }
