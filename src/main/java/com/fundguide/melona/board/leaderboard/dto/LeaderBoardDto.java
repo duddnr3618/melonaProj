@@ -1,7 +1,6 @@
 package com.fundguide.melona.board.leaderboard.dto;
 
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;

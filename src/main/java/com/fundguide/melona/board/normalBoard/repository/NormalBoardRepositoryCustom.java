@@ -6,9 +6,6 @@ import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Map;
-import java.util.Objects;
-
 public interface NormalBoardRepositoryCustom {
     
     /**FindAll 사용시 관계형까지 전부 검색해 새로 만듦*/

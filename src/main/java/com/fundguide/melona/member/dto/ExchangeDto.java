@@ -2,7 +2,6 @@ package com.fundguide.melona.member.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
 @Getter
