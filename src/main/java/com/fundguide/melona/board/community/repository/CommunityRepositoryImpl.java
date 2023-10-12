@@ -10,6 +10,8 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.query.criteria.JpaSubQuery;
 import org.springframework.data.domain.Page;
@@ -29,6 +31,9 @@ public class CommunityRepositoryImpl implements CommunityRepositoryCustom {
 
     private final CommonQueryDsl commonQueryDsl = new CommonQueryDsl();
     private BooleanExpression booleanExpression = null;
+    
+    private final EntityManager entityManager;
+    
 
 
     /** {@inheritDoc} */
@@ -72,7 +77,8 @@ public class CommunityRepositoryImpl implements CommunityRepositoryCustom {
     @Override
     public Page<CommunityEntity> findAll(Pageable pageable) {
         boardEntityJPAQuery = queryFactory.selectFrom(communityEntity)
-                .where(communityEntity.boardUsing.notIn(BoardUsing.BLOCK));
+                .where(communityEntity.boardUsing.notIn(BoardUsing.BLOCK))
+                .orderBy(communityEntity.id.desc());
         return commonQueryDsl.pageableHandler(boardEntityJPAQuery, pageable);
     }
 }
