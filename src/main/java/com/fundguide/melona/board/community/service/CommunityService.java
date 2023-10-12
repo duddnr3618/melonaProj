@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.naming.NotContextException;
 import java.io.File;
 import java.security.Principal;
 import java.util.Optional;
@@ -185,7 +184,7 @@ public class CommunityService {
             throw new IllegalArgumentException("CommunityEntity 또는 MemberEntity를 찾지 못해 like 객체를 생성할 수 없습니다.");
         }
 
-        LikeBooleanCheck caseCheck = new LikeBooleanCheck() {
+        BooleanCheck caseCheck = new BooleanCheck() {
             @Override
             public ResponseEntity<String> trueCheck() {
                 return ResponseEntity.badRequest().build();
@@ -214,10 +213,9 @@ public class CommunityService {
     public ResponseEntity<String> likeRemove(Principal principal, Long boardId) {
 
         Community_like like = likeOptionalCheckHandler(principal, boardId);
-        LikeBooleanCheck caseCheck = new LikeBooleanCheck() {
+        BooleanCheck caseCheck = new BooleanCheck() {
             @Override
             public ResponseEntity<String> trueCheck() {
-                System.out.println(" { 존재함 삭제 시작." + " }");
                 likeRepository.removeLike(like);
                 return ResponseEntity.ok().build();
             }
@@ -251,7 +249,7 @@ public class CommunityService {
         }
     }
 
-    interface LikeBooleanCheck {
+    interface BooleanCheck {
         ResponseEntity<String> trueCheck();
 
         ResponseEntity<String> falseCheck();
