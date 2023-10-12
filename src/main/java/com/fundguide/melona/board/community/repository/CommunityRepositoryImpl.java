@@ -2,6 +2,7 @@ package com.fundguide.melona.board.community.repository;
 
 
 import com.fundguide.melona.board.common.querydsl_repeatcode.BoardQueryDsl_RepeatCode;
+import com.fundguide.melona.board.common.role.BoardUsing;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.management.commonQueryDsl.CommonQueryDsl;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -27,17 +28,17 @@ public class CommunityRepositoryImpl implements CommunityRepositoryCustom {
 
     /**{@inheritDoc}*/
     @Override
-    public Page<CommunityEntity> onlyViewNormalBoardFilterByWaring(Pageable pageable) {
-        /*booleanExpression = communityEntity.boardUsing.notIn(BoardUsing.BLOCK)
-                        .and(communityEntity.impeach.size().goe(100));*/
+    public Page<CommunityEntity> onlyViewFilterByWaring(Pageable pageable) {
+        booleanExpression = communityEntity.boardUsing.notIn(BoardUsing.BLOCK)
+                        .and(communityEntity.impeach.size().goe(20));
         boardEntityJPAQuery = queryFactory.selectFrom(communityEntity).where(booleanExpression);
         return commonQueryDsl.pageableHandler(boardEntityJPAQuery, pageable);
     }
 
     /**{@inheritDoc}*/
     @Override
-    public Page<CommunityEntity> onlyViewNormalBoardFilterByBlock(Pageable pageable) {
-        /*booleanExpression = communityEntity.boardUsing.in(BoardUsing.BLOCK);*/
+    public Page<CommunityEntity> onlyViewFilterByBlock(Pageable pageable) {
+        booleanExpression = communityEntity.boardUsing.in(BoardUsing.BLOCK);
         boardEntityJPAQuery = queryFactory.selectFrom(communityEntity).where(booleanExpression);
         return commonQueryDsl.pageableHandler(boardEntityJPAQuery, pageable);
     }
@@ -45,9 +46,9 @@ public class CommunityRepositoryImpl implements CommunityRepositoryCustom {
     /**{@inheritDoc}*/
     @Override
     public void impeachSave(CommunityEntity entity) {
-        queryFactory
-                .update(communityEntity)
+        queryFactory.update(communityEntity)
                 .set(communityEntity.impeach, entity.getImpeach())
-                .where(communityEntity.id.eq(entity.getId()));
+                .where(communityEntity.id.eq(entity.getId()))
+                .execute();
     }
 }
