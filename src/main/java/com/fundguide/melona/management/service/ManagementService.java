@@ -1,6 +1,7 @@
 package com.fundguide.melona.management.service;
 
 import com.fundguide.melona.board.common.role.BoardUsing;
+import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.community.repository.CommunityRepository;
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
 import com.fundguide.melona.board.leaderboard.repository.LeaderBoardRepository;
@@ -65,17 +66,33 @@ public class ManagementService {
                 }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
                 return ResponseEntity.ok().build();
             }
+
             case "leader" -> {
                 Optional<LeaderBoardEntity> optional = leaderBoardRepository.findById(boardId);
                 /*optional.ifPresent(o -> );*/
                 return null;
             }
+
+            case "community" -> {
+                Optional<CommunityEntity> optional = communityRepository.findById(boardId);
+                optional.ifPresentOrElse(o -> {
+                    o.setBoardUsing(BoardUsing.BLOCK);
+                    communityRepository.save(o);
+                }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                return ResponseEntity.ok().build();
+            }
             default -> throw new IllegalAccessException("정의된 카테고리 값이 아닙니다.");
         }
     }
 
-    public Page<MemberLeastDTO> getMemberEvaluatePendingByRule() {
-        return null;
+    public Page<MemberLeastDTO> getMemberEvaluatePendingByRule(String filter, Pageable pageable) {
+
+        if (!filter.equals("all")) {
+            memberRepository.evaluatePendingByRule(filter, pageable);
+            return null;
+        } else {
+            return memberRepository.findAllOfMemberLeastData(pageable);
+        }
     }
 
     public Page<MemberLeastDTO> getMemberRoleStatePaging(String filter, Pageable pageable) {

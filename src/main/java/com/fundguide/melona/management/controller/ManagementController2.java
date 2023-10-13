@@ -1,6 +1,5 @@
 package com.fundguide.melona.management.controller;
 
-import com.fundguide.melona.board.normalBoard.dto.NormalBoardDto;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardCommandService;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardQueryService;
 import com.fundguide.melona.management.service.ManagementService;
@@ -36,7 +35,7 @@ public class ManagementController2 {
         return "management/server_rendering_version/management2";
     }
 
-    /**각 보드의 필터마다 결과를 보여주는 컨트롤 메서드*/
+    /**각 보드의 필터마다 결과를 보여주는 컨트롤 메서드 (신고 관련)*/
     @GetMapping("/board_filter_page")
     public String getBoardCategoryFilterPagingResult( @RequestParam("category") String category
             , @RequestParam("filter") String filter
@@ -49,7 +48,7 @@ public class ManagementController2 {
         switch (category) {
             case "normal" -> detailHtmlLink = "/normalboard/viewDetail/";
             case "leader" -> detailHtmlLink = "/leaderboard/viewDetail/";
-            case "community" -> detailHtmlLink = "/community/viewDetail/";
+            case "community" -> detailHtmlLink = "/community/";
             default -> throw new IllegalAccessException("지정되지 않은 게시판 분류입니다.");
         }
         model.addAttribute("detailBoardLink", detailHtmlLink);
@@ -77,12 +76,6 @@ public class ManagementController2 {
         model.addAttribute("filter", filter);
         model.addAttribute("memberPaging", paging);
         return "management/server_rendering_version/member_rendering";
-    }
-
-    /**멤버의 상세 정보를 보여주는 컨트롤 메서드 !!사용중이지 않음!!*/
-    @GetMapping("member_filter_page/detail")
-    public NormalBoardDto getMemberFilterDetail(@RequestParam("id") Long id) {
-        return normalBoardQueryService.onlyViewDetailNormalBoardDTO(id);
     }
 
     @GetMapping("/member_role_filter_page")

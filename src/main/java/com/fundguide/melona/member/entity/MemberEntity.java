@@ -42,7 +42,6 @@ public class MemberEntity {
 
   private String memberAddress;
   private LocalDate memberJoinDate;
-  private String memberAvailable;
   private String memberNickname;
 
   @PrePersist

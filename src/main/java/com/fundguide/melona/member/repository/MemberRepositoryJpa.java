@@ -107,7 +107,6 @@ public class MemberRepositoryJpa implements MemberRepository {
     @Transactional
     public void withdraw(Long id) {
         MemberEntity memberEntity = em.find(MemberEntity.class, id);
-        memberEntity.setMemberAvailable("no");
         memberEntity.setMemberEmail("탈퇴한사용자" + memberEntity.getId());
         memberEntity.setMemberNickname("탈퇴한사용자" + memberEntity.getId() + new Date());
         memberEntity.setMemberRole(MemberRoleState.DISABLED);
@@ -129,7 +128,7 @@ public class MemberRepositoryJpa implements MemberRepository {
         return commonQueryDsl.pageableHandler(jpaQuery, pageable);
     }
 
-    /**{@inheritDoc}*/
+    /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = true)
     public Page<MemberLeastDTO> findAllOfMemberLeastData(Pageable pageable) {
@@ -139,7 +138,7 @@ public class MemberRepositoryJpa implements MemberRepository {
         return commonQueryDsl.pageableHandler(jpaQuery, pageable);
     }
 
-    /**{@inheritDoc}*/
+    /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = true)
     public Page<MemberLeastDTO> memberRoleStateFilterPage(String filter, Pageable pageable) {
@@ -160,12 +159,19 @@ public class MemberRepositoryJpa implements MemberRepository {
     @Override
     @Transactional(readOnly = true)
     public Page<MemberLeastDTO> evaluatePendingByRule(String filter, Pageable pageable) {
-        QNormalBoardImpeachEntity qNormalBoardImpeach = QNormalBoardImpeachEntity.normalBoardImpeachEntity;
-        /*expression = memberEntity.id.eq(qNormalBoardImpeach.board.boardWriter);*/
+        switch (filter) {
+            case "TRANSITORY" -> {
+            }
+            case "STRONG" -> {
+            }
+            case "PERMANENT" -> {
+            }
+            default -> throw new IllegalArgumentException("정의되지 않은 필터 방식입니다.");
+        }
         return null;
     }
 
-    /**{@inheritDoc}*/
+    /** {@inheritDoc} */
     @Override
     public Optional<MemberEntity> findByMemberEamilOptional(String email) {
         MemberEntity member = query.selectFrom(memberEntity)

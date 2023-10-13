@@ -6,9 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface NormalBoardRepository extends JpaRepository<NormalBoardEntity, Long>, NormalBoardRepositoryCustom {
     @Query("select nbe from NormalBoardEntity nbe")
     Page<NormalBoardEntity> onlyViewNormalBoard(Pageable pageable);
 
     NormalBoardEntity findAllById(Long boardId);
+
 }

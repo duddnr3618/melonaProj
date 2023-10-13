@@ -34,8 +34,6 @@ id_DetailBoardFilter.find('li').click(function () {
 
     axios.get(`management/board_filter_page?${params.toString()}`)
         .then(function (boardData) {
-            console.log("클릭감지");
-            console.log(boardData);
             id_ResultTable.html(boardData.data);
             disableButtonHandler(categoryData);
         })
@@ -47,13 +45,11 @@ id_DetailBoardFilter.find('li').click(function () {
 function disableButtonHandler(category) {
     let cls_disabledButton = $('.disabledButton');
     cls_disabledButton.click(function (button) {
-        console.log($(this).attr('class'));
         let board_id = $(this).data('id');
-        const params = new URLSearchParams();
+        let params = new URLSearchParams();
         params.append('category', category);
         params.append('id', board_id);
-        console.log(board_id);
-        console.log(params.toString());
+
         axios.put(`/management/board_disabled?${params.toString()}`)
             .then(function () {
                 id_DetailBoardFilter.find('li').click();

@@ -42,28 +42,17 @@ public class NormalBoardQueryService {
         return normalBoardRepository.findAllById(boardId);
     }
 
-    public NormalBoardDto onlyViewDetailNormalBoardDTO(Long id) {
-        return normalBoardRepository.detailNormalBoard(id);
-    }
 
     public Page<NormalBoardDto> paging(Pageable pageable) {
         int page = pageable.getPageNumber();
         int pageLimit = 10;
         Page<NormalBoardEntity> normalBoardEntities = normalBoardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
 
-        System.out.println("normalBoardEntities.getContent() = " + normalBoardEntities.getContent()); // 요청 페이지에 해당하는 글
-        System.out.println("normalBoardEntities.getTotalElements() = " + normalBoardEntities.getTotalElements()); // 전체 글 갯수
-        System.out.println("normalBoardEntities.getNumber() = " + normalBoardEntities.getNumber()); // DB로 요청한 페이지 번호
-        System.out.println("normalBoardEntities.getTotalPages() = " + normalBoardEntities.getTotalPages()); // 전체 페이지 갯수
-        System.out.println("normalBoardEntities.getSize() = " + normalBoardEntities.getSize()); // 한 페이지에 보여지는 글 갯수
-        System.out.println("normalBoardEntities.hasPrevious() = " + normalBoardEntities.hasPrevious()); // 이전 페이지 존재 여부
-        System.out.println("normalBoardEntities.isFirst() = " + normalBoardEntities.isFirst()); // 첫 페이지 여부
-        System.out.println("normalBoardEntities.isLast() = " + normalBoardEntities.isLast()); // 마지막 페이지 여부
-
-        Page<NormalBoardDto> normalBoardDtos = normalBoardEntities.map(normalBoardEntity -> new NormalBoardDto(
-                normalBoardEntity.getId(), normalBoardEntity.getBoardWriter(), normalBoardEntity.getBoardTitle(), normalBoardEntity.getBoardHits(), normalBoardEntity.getCreatedTime()
+        return normalBoardEntities.map(o -> new NormalBoardDto(
+                o.getId(), o.getBoardTitle(), o.getBoardContents(), o.getBoardHits(),
+                o.getCreatedTime(), o.getUpdatedTime(), o.getMemberEntity().getId(),
+                o.getMemberEntity().getMemberName(), o.getFileName(), o.getFilePath()
         ));
-        return normalBoardDtos;
     }
 
 }
