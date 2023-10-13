@@ -5,10 +5,8 @@ import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
 import com.fundguide.melona.board.community.entity.Community_like;
-import com.fundguide.melona.board.community.repository.CommunityImpeachRepository;
 import com.fundguide.melona.board.community.repository.impeach.CommunityImpeachRepository;
 import com.fundguide.melona.board.community.repository.like.CommunityLikeRepository;
-import com.fundguide.melona.board.community.repository.CommunityLikeRepository;
 import com.fundguide.melona.board.community.repository.CommunityRepository;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
@@ -40,10 +38,8 @@ public class CommunityService {
     private String resourcePath;
 
     private final CommunityRepository communityRepository;
-    private final CommunityImpeachRepository communityImpeachRepository;
     private final MemberRepository memberRepository;
 
-    private final MemberRepositoryData memberRepositoryData;
     private final CommunityLikeRepository likeRepository;
     private final CommunityImpeachRepository impeachRepository;
     public void writePro(CommunityDto communityDto, MultipartFile file) throws Exception {
@@ -180,6 +176,8 @@ public class CommunityService {
         }
     }
 
+
+
     /** 좋아요 추가 서비스 메서드 */
     @Transactional
     public ResponseEntity<String> likeAdd(Principal principal, Long boardId) {
@@ -191,6 +189,7 @@ public class CommunityService {
         if (community.isPresent() && member.isPresent()) {
             searchLike = Community_like.likeFastBuilder(community.get(), member.get());
             like = likeRepository.searchAlreadyLike(searchLike);
+            communityRepository.updateCounts(boardId);
         } else {
             throw new IllegalArgumentException("CommunityEntity 또는 MemberEntity를 찾지 못해 like 객체를 생성할 수 없습니다.");
         }
@@ -251,7 +250,6 @@ public class CommunityService {
 
         if (community.isPresent() && member.isPresent()) {
             Community_like like = Community_like.builder()
-                    .id(Community_like.idG(member.get(), community.get()))
                     .communityEntity(community.get())
                     .memberEntity(member.get())
                     .build();

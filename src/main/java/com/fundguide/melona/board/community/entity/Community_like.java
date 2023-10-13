@@ -30,10 +30,15 @@ public class Community_like {
     @JoinColumn(name = "community_board_id")
     private CommunityEntity communityEntity;
 
+    private int boardCount;
+
+
+
     public static Community_like likeFastBuilder(CommunityEntity communityEntity, MemberEntity memberEntity) {
         return Community_like.builder()
                 .communityEntity(communityEntity)
                 .memberEntity(memberEntity)
+                .boardCount(communityEntity.getBoardLike().size())
                 .build();
     }
 }

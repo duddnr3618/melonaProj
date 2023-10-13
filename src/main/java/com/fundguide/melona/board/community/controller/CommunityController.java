@@ -4,16 +4,15 @@ import com.fundguide.melona.board.common.dto.ImpeachDTO;
 import com.fundguide.melona.board.community.dto.CommentDto;
 import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
+import com.fundguide.melona.board.community.entity.Community_like;
+import com.fundguide.melona.board.community.repository.like.CommunityLikeRepository;
 import com.fundguide.melona.board.community.service.CommentService;
 import com.fundguide.melona.board.community.service.CommunityService;
-import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
 import com.fundguide.melona.member.service.CustomUserDetails;
 import com.fundguide.melona.member.service.MemberService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -38,8 +37,7 @@ public class CommunityController {
     private final CommentService commentService;
     private final MemberService memberService;
     private final MemberRepository memberRepository;
-    private final MemberRepositoryData memberRepositoryData;
-
+    private final CommunityLikeRepository communityLikeRepository;
     /* 게시글 리스트 페이지 */
     @GetMapping("/list")
     public String list(Model model,
@@ -100,6 +98,7 @@ public class CommunityController {
         communityService.updateHits(id);
         CommunityDto communityDto = communityService.boardDetail(id);
         List<CommentDto> commentDtoList = commentService.findAll(id);
+
             // 댓글 목록 가져오기
             model.addAttribute("board", communityDto);
             model.addAttribute("commentList", commentDtoList);
@@ -119,6 +118,7 @@ public class CommunityController {
         if(customUserDetails== null){
             return "redirect:/member/loginForm";
         }
+
         CommunityDto communityDto = communityService.boardDetail(id);
         model.addAttribute("board", communityDto);
         String userName = customUserDetails.getMemberEntity().getMemberName();

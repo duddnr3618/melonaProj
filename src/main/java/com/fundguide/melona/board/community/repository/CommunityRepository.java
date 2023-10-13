@@ -19,6 +19,11 @@ public interface CommunityRepository extends JpaRepository<CommunityEntity, Long
     void updateHits(@Param("id") Long id);
 
 
+    /* 좋아요 증가 */
+    @Modifying
+    @Query(value = "update Community_like b set b.boardCount=b.boardCount+1 where b.id=:id")
+    void updateCounts(@Param("id") Long id);
+
 
 }
 
