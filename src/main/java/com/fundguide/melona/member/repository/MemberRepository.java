@@ -42,8 +42,10 @@ public interface MemberRepository {
      */
     Page<MemberLeastDTO> memberRoleStateFilterPage(String filter , Pageable pageable);
 
-    Page<MemberLeastDTO> evaluatePendingByRule(String filter, Pageable pageable);
+    Page<MemberEntity> evaluatePendingByRule(String filter, Pageable pageable);
 
     /**이메일로 옵셔널 값을 반환하기 위한 메서드*/
     Optional<MemberEntity> findByMemberEamilOptional(String email);
+
+    Page<MemberEntity> findAll(Pageable pageable);
 }

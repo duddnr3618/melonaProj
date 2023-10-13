@@ -21,4 +21,6 @@ public interface CommunityRepositoryCustom {
 
     Page<CommunityEntity> findAll(Pageable pageable);
 
+    /**좋아요 총수*/
+    long likeCount(long boardId);
 }

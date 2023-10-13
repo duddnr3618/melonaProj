@@ -47,6 +47,7 @@
     
     <button id="likeButton" th:if="${#authorization.expression('isAuthenticated()')}">좋아요</button>
     <button class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}">좋아요 null</button>
+    <div th:if="${#authorization.expression()}"></div>
 
     <!-- 댓글 작성 부분 -->
     <div id="comment-write">

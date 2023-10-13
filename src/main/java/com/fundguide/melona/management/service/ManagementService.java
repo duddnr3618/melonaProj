@@ -11,6 +11,7 @@ import com.fundguide.melona.management.service.filter.CommunityBoardCategoryHand
 import com.fundguide.melona.management.service.filter.LeaderBoardCategoryHandler;
 import com.fundguide.melona.management.service.filter.NormalBoardCategoryHandler;
 import com.fundguide.melona.member.dto.MemberLeastDTO;
+import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
 import lombok.RequiredArgsConstructor;
@@ -54,8 +55,10 @@ public class ManagementService {
         }
     }
 
-    /** 카테고리와 id값으로 해당 게시물을 비활성화 하는 메서드
-     * 비동기식으로 처리를 위해 status값을 반환함.*/
+    /**
+     * 카테고리와 id값으로 해당 게시물을 비활성화 하는 메서드
+     * 비동기식으로 처리를 위해 status값을 반환함.
+     */
     public ResponseEntity<String> modifyDisableBoard(String category, Long boardId) throws IllegalAccessException {
         switch (category) {
             case "normal" -> {
@@ -85,13 +88,11 @@ public class ManagementService {
         }
     }
 
-    public Page<MemberLeastDTO> getMemberEvaluatePendingByRule(String filter, Pageable pageable) {
-
+    public Page<MemberEntity> getMemberEvaluatePendingByRule(String filter, Pageable pageable) {
         if (!filter.equals("all")) {
-            memberRepository.evaluatePendingByRule(filter, pageable);
-            return null;
+            return memberRepository.evaluatePendingByRule(filter, pageable);
         } else {
-            return memberRepository.findAllOfMemberLeastData(pageable);
+            return memberRepository.findAll(pageable);
         }
     }
 
