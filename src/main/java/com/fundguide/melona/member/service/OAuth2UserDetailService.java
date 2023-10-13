@@ -17,10 +17,8 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -43,8 +41,12 @@ public class OAuth2UserDetailService extends DefaultOAuth2UserService {
         }else if(registrationId.equals("naver")){
             oauth2Member = new NaverOauth2Member((Map) oAuth2User.getAttributes().get("response"));
         }
-        MemberEntity memberEntity = memberRepositoryData.findByMemberEmail(oauth2Member.getMemberEmail());
-        if(memberEntity==null){
+        Optional<MemberEntity> byMemberEmail = memberRepositoryData.findByMemberEmail(oauth2Member.getMemberEmail());
+        if (byMemberEmail.isPresent()) {
+            MemberEntity member = byMemberEmail.get();
+            return new CustomUserDetails(member, oAuth2User.getAttributes(), memberRoleStateCollection);
+        } else {
+            MemberEntity memberEntity = new MemberEntity();
             var uuid = UUID.randomUUID();
             String variable = uuid.toString().substring(0, 7);
             String role ="ROLE_USER";
@@ -58,10 +60,7 @@ public class OAuth2UserDetailService extends DefaultOAuth2UserService {
             memberEntity.setMemberAddress("입력한 주소가 없습니다.");
             memberEntity.setMemberNickname(registrationId+"_"+variable);
             memberRepositoryJpa.memberSave(memberEntity);
+            return new CustomUserDetails(memberEntity, oAuth2User.getAttributes(), memberRoleStateCollection);
         }
-
-
-
-        return new CustomUserDetails(memberEntity, oAuth2User.getAttributes(), memberRoleStateCollection);
     }
 }

@@ -194,12 +194,16 @@
         function duplicatedCheck(btn) {
 
             const btnId = btn.id;
-            let memberEmail = document.getElementById("memberEmail").value;
+            let memberEmailInput = document.getElementById("memberEmail");
+            let memberEmail = memberEmailInput.value;
             let memberNickname = document.getElementById("memberNickname").value;
             let url = "duplicatedCheck";
             let data;
             if (btnId === 'email') {
-
+                if(!memberEmailInput.validity.valid){
+                    alert("이메일형식이 아닙니다.");
+                    return;
+                }
                 data = {
                     "memberEmail": memberEmail
                 }
