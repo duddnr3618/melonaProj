@@ -16,10 +16,10 @@
             <th>제목</th>
             <td th:text="${board.boardTitle}"></td>
         </tr>
-        <!--<tr>
+        <tr>
             <th>작성자</th>
-            <td th:text="${board.memberEmail}"></td>
-        </tr>-->
+           <td th:text="${board.memberName}"></td>
+        </tr>
         <tr>
             <th>날짜</th>
             <td th:text="${board.createdTime}"></td>
@@ -38,8 +38,8 @@
     <a th:if="${board.getFilePath() != null}" th:href="@{${board.filePath}}">파일보기</a><br>
     <a th:if="${board.getFilePath() == null}">파일이 존재하지 않습니다.</a><br>
     <a th:href="@{/community/list}">목록</a><br>
-    <a th:href="@{/community/modifyForm/{id}(id=${board.id})}">수정</a><br>
-    <a th:href="@{/community/delete(id=${board.id})}">삭제</a><br>
+    <a th:href="@{/community/modifyForm/{id}(id=${board.id})}" th:if="${board.memberId} == ${userId}" >수정</a><br>
+    <a th:href="@{/community/delete(id=${board.id})}" th:if="${board.memberId} == ${userId}">삭제</a><br>
     <button id="impeachButton" data-bs-toggle="modal" data-bs-target="#exampleModal">이 게시글 신고하기</button>
     <button id="likeButton">좋아요</button>
 

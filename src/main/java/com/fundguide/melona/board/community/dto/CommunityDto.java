@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
 
@@ -30,16 +31,10 @@ public class CommunityDto {
     private String fileName;
     private String filePath;
 
-    public static CommunityDto toBoardDto(CommunityEntity communityEntity) {
-        CommunityDto communityDto = new CommunityDto();
-        communityDto.setId(communityEntity.getId());
-        communityDto.setBoardTitle(communityEntity.getBoardTitle());
-        communityDto.setBoardContents(communityEntity.getBoardContents());
-        communityDto.setBoardHits(communityEntity.getBoardHits());
-        communityDto.setCreatedTime(communityEntity.getCreatedTime());
-        communityDto.setUpdatedTime(communityEntity.getUpdatedTime());
-        communityDto.setFilePath(communityEntity.getFilePath());
-        return communityDto;
+
+    public  static ModelMapper modelMapper = new ModelMapper();
+    public static CommunityDto toBoardDto(CommunityEntity communityEntity){
+        return modelMapper.map(communityEntity, CommunityDto.class);
     }
 
 

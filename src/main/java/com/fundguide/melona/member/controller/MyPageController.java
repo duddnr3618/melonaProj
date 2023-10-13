@@ -49,21 +49,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
         return "mypage/normal_board";   // mypage/normal-Board에 대한 뷰를 리턴
     }
-    /* 내가 작성한 CommunityBoard 게시글 목록 페이지 */
-    @GetMapping("mypage/community-board")
-    public String myCommunity(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails, Pageable pageable) {
-        if (customUserDetails == null) {
-            return "member/loginForm";
-        }
 
-        int pageLimit = 10; // 페이지당 보여질 게시물 수
-        // 게시판 페이징 처리
-        Page<CommunityDto> communityPage = communityService.paging(pageable);
-        // 게시글 목록을 모델에 추가
-        model.addAttribute("communityPage", communityPage);
 
-        return "mypage/community-board"; // mypage/communityBoard에 대한 뷰를 리턴
-    }
     @GetMapping("mypage/myLeaderBoard")
     public String myLeaderBoardPage(@PageableDefault(page = 0, size = 10, sort = "createdTime", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         Page<LeaderBoardDto> leaderBoardPage = leaderBoardService.paging(pageable);
