@@ -2,6 +2,7 @@ package com.fundguide.melona.member.repository;
 
 
 import com.fundguide.melona.member.dto.MemberLeastDTO;
+
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.role.MemberLimitState;
 import org.springframework.data.domain.Page;
@@ -41,6 +42,8 @@ public interface MemberRepository {
      * @return Page
      */
     Page<MemberLeastDTO> memberRoleStateFilterPage(String filter , Pageable pageable);
+
+    void adminSave(MemberEntity memberEntity);
 
     Page<MemberLeastDTO> evaluatePendingByRule(String filter, Pageable pageable);
 

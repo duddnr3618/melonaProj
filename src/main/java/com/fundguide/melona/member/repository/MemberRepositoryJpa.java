@@ -13,6 +13,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static com.fundguide.melona.board.community.entity.QCommunityEntity.communityEntity;
 import static com.fundguide.melona.member.entity.QMemberEntity.memberEntity;
 
 @Repository
@@ -107,13 +109,12 @@ public class MemberRepositoryJpa implements MemberRepository {
     @Transactional
     public void withdraw(Long id) {
         MemberEntity memberEntity = em.find(MemberEntity.class, id);
-        memberEntity.setMemberAvailable("no");
-        memberEntity.setMemberEmail("탈퇴한사용자" + memberEntity.getId());
-        memberEntity.setMemberNickname("탈퇴한사용자" + memberEntity.getId() + new Date());
+        memberEntity.setMemberEmail("탈퇴한사용자"+ memberEntity.getId());
+        memberEntity.setMemberNickname("탈퇴한사용자"+memberEntity.getId()+new Date());
         memberEntity.setMemberRole(MemberRoleState.DISABLED);
         memberEntity.setMemberAddress("탈퇴한사용자");
         memberEntity.setMemberName("탈퇴한사용자");
-
+        memberEntity.setMemberLimitState(MemberLimitState.PERMANENT);
     }
 
     /** memberRepositoryCustom -> this.class 병합 */
@@ -155,6 +156,12 @@ public class MemberRepositoryJpa implements MemberRepository {
                 .from(memberEntity)
                 .where(expression);
         return commonQueryDsl.pageableHandler(jpaQuery, pageable);
+    }
+
+    @Override
+    @Transactional
+    public void adminSave(MemberEntity memberEntity) {
+        em.persist(memberEntity);
     }
 
     @Override

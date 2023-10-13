@@ -108,4 +108,16 @@ public class MemberService {
         return memberRepository.findAllOfMemberLeastData(pageable);
     }
 
+    public void adminSave(String adminEmail) {
+        MemberEntity memberEntity = MemberEntity.builder()
+                .memberAddress("어드민네 집")
+                .memberPassword(utilsPasswordEncoder.encode("qwerqwerqwer"))
+                .memberName("admin")
+                .memberNickname("admin")
+                .memberRole(MemberRoleState.ROLE_ADMIN)
+                .memberLimitState(MemberLimitState.NORMAL)
+                .memberEmail(adminEmail)
+                .build();
+        memberRepository.adminSave(memberEntity);
+    }
 }

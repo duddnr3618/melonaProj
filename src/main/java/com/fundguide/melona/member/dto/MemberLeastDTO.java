@@ -30,7 +30,6 @@ public class MemberLeastDTO {
                 , memberEntity.memberEmail
                 , memberEntity.memberName
                 , memberEntity.memberNickname
-                , memberEntity.memberAvailable
                 , memberEntity.memberRole
                 , memberEntity.memberLimitState
                 , memberEntity.memberJoinDate

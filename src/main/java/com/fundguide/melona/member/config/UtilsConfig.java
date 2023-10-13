@@ -1,7 +1,6 @@
 package com.fundguide.melona.member.config;
 
-import com.fundguide.melona.member.utils.MainSend;
-import com.fundguide.melona.member.utils.UtilsPasswordEncoder;
+import com.fundguide.melona.member.utils.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,5 +24,19 @@ public class UtilsConfig {
     @Bean
     public MainSend mainSend() {
         return new MainSend(mailSender, templateEngine);
+    }
+
+    @Bean
+    public StatisticList koreaBank(){
+        return new StatisticList();
+    }
+    @Bean
+    public ExchangeRate exchangeRate(){
+        return new ExchangeRate();
+    }
+
+    @Bean
+    public StatisticWord statisticWord(){
+        return new StatisticWord();
     }
 }
