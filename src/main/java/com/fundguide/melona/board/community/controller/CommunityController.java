@@ -35,9 +35,6 @@ import java.util.prefs.PreferencesFactory;
 public class CommunityController {
     private final CommunityService communityService;
     private final CommentService commentService;
-    private final MemberService memberService;
-    private final MemberRepository memberRepository;
-    private final CommunityLikeRepository communityLikeRepository;
     /* 게시글 리스트 페이지 */
     @GetMapping("/list")
     public String list(Model model,

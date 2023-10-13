@@ -27,10 +27,10 @@ public class CommentEntity extends BaseTimeEntity {
     private CommunityEntity communityEntity;
 
     public static CommentEntity toSaveEntity(CommentDto commentdDto, CommunityEntity communityEntity) {
-        CommentEntity commentdEntity = new CommentEntity();
-        commentdEntity.setCommentWriter(commentdDto.getCommentWriter());
-        commentdEntity.setCommentContents(commentdDto.getCommentContents());
-        commentdEntity.setCommunityEntity(communityEntity);
-        return commentdEntity;
+        CommentEntity commentEntity = new CommentEntity();
+        commentEntity.setCommentWriter(commentdDto.getCommentWriter());
+        commentEntity.setCommentContents(commentdDto.getCommentContents());
+        commentEntity.setCommunityEntity(communityEntity);
+        return commentEntity;
     }
 }

@@ -50,13 +50,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
         return "mypage/normal_board";   // mypage/normal-Board에 대한 뷰를 리턴
     }
 
-
+/*
     @GetMapping("mypage/myLeaderBoard")
     public String myLeaderBoardPage(@PageableDefault(page = 0, size = 10, sort = "createdTime", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         Page<LeaderBoardDto> leaderBoardPage = leaderBoardService.paging(pageable);
         model.addAttribute("leaderBoardPage", leaderBoardPage);
         return "mypage/myLeaderBoard"; // 마이페이지 내에서 보여질 뷰 이름
     }
+    */
+
     @GetMapping("mypage/mywrittenBoard")
     public String myWrittenArticles() {
         return "mypage/mywrittenBoard";
