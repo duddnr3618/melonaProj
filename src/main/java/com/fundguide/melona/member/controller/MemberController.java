@@ -213,13 +213,4 @@ public class MemberController {
     }
 
 
-    @GetMapping("/save/admin")
-    public String adminSave(){
-        MemberEntity byMemberEmail = memberRepositoryData.findByMemberEmail(adminEmail);
-        if(byMemberEmail!=null){
-        }else {
-            memberService.adminSave(adminEmail);
-        }
-        return "redirect:/";
-    }
 }
