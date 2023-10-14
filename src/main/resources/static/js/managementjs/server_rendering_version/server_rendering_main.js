@@ -4,7 +4,6 @@ $(function () {
 })
 
 const id_ResultTable = $('#ResultTable');
-const id_ResultPageLinkButton = $('#ResultPageLinkButton');
 
 const id_LayoutBoard = $('#LayoutBoard');
 const id_DetailBoardFilter = $('#DetailBoardFilter');
@@ -43,8 +42,10 @@ id_DetailBoardFilter.find('li').click(function () {
 
 /**게시물 비활성화 버튼 맵핑*/
 function disableButtonHandler(category) {
+    console.log("비활성화 버튼 재맵핑");
     let cls_disabledButton = $('.disabledButton');
     cls_disabledButton.click(function (button) {
+        console.log("비활성화 감지");
         let board_id = $(this).data('id');
         let params = new URLSearchParams();
         params.append('category', category);
@@ -52,7 +53,7 @@ function disableButtonHandler(category) {
 
         axios.put(`/management/board_disabled?${params.toString()}`)
             .then(function () {
-                id_DetailBoardFilter.find('li').click();
+                $('#AllLayoutBox li.active').click();
                 cls_disabledButton.off('click');
             })
             .catch((reason) => {
@@ -96,20 +97,30 @@ id_DetailRoleFilter.find('li').click(function () {
 
 
 /**각 리스트 클릭 이벤트 처리*/
-managementCategoryMap.forEach((managementList, clickCategory) => {
-    clickCategory.click(function () {
-
-        const thisHidden = managementList.is(':hidden');
+managementCategoryMap.forEach((childrenUl, parentsUl) => {
+    parentsUl.click(function () {
+        const thisHidden = childrenUl.is(':hidden');
         if (thisHidden) {
-            managementList.show();
-            managementList.find('li').eq(0).click();
+            childrenUl.show();
+            childrenUl.find('li').eq(0).click();
+            childrenUl.find('li').eq(0).addClass('active');
         }
 
         /**요소를 클릭시 다른 요소가 자동적으로 닫히도록 하는 each문*/
-        managementCategoryMap.forEach((otherManagementList, otherViewCategory) => {
-            if (otherViewCategory !== clickCategory) {
-                otherManagementList.hide();
+        managementCategoryMap.forEach((otherChildrenLi, otherParentsLi) => {
+            if (otherParentsLi !== parentsUl) {
+                otherChildrenLi.hide();
             }
         });
     });
+
+    /**각 요소를 클릭시 가시성을 위한 클래스 추가*/
+    parentsUl.click(function () {
+        $(this).addClass('active').siblings().removeClass('active');
+    })
+
+    childrenUl.find('li').click(function () {
+        childrenUl.find('li').not($(this)).removeClass('active');
+        $(this).addClass('active');
+    })
 })

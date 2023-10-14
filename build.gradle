@@ -35,6 +35,7 @@ dependencies {
 	//TestTool
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
 
 	//편의성
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'

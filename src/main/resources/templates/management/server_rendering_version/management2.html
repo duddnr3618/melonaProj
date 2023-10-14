@@ -8,42 +8,42 @@
 <div layout:fragment="content">
     <script type="module" src="/js/managementjs/server_rendering_version/server_rendering_main.js"></script>
     <ul class="list-group list-group-horizontal">
-        <li class="list-group-item" id="LayoutBoard">게시판 관리</li>
-        <li class="list-group-item" id="LayoutUser">유저 관리</li>
-        <li class="list-group-item" id="LayoutRole">권한 관리</li>
+        <li class="list-group-item active" id="LayoutBoard">게시판 관리</li>
+        <li class="list-group-item " id="LayoutUser">유저 관리</li>
+        <li class="list-group-item " id="LayoutRole">권한 관리</li>
     </ul>
     <br>
     <div id="AllLayoutBox">
         <div id="DetailBoardFilter">
             <h2>노말 게시판</h2>
             <ul  class="list-group list-group-horizontal" data-board-category="normal">
-                <li class="list-group-item" data-board-filter="waring">경고적인</li>
-                <li class="list-group-item" data-board-filter="block">제제된</li>
-                <li class="list-group-item" data-board-filter="all">전부</li>
+                <li class="list-group-item active" data-board-filter="waring">경고적인</li>
+                <li class="list-group-item " data-board-filter="block">제제된</li>
+                <li class="list-group-item " data-board-filter="all">전부</li>
             </ul>
             
             <h2>리더 게시판</h2>
             <ul  class="list-group list-group-horizontal" data-board-category="leader">
-                <li class="list-group-item" data-board-filter="waring">경고적인</li>
-                <li class="list-group-item" data-board-filter="block">제제된</li>
-                <li class="list-group-item" data-board-filter="all">전부</li>
+                <li class="list-group-item " data-board-filter="waring">경고적인</li>
+                <li class="list-group-item " data-board-filter="block">제제된</li>
+                <li class="list-group-item " data-board-filter="all">전부</li>
             </ul>
             
             <h2>커뮤니티 게시판</h2>
             <ul  class="list-group list-group-horizontal" data-board-category="community">
-                <li class="list-group-item" data-board-filter="waring">경고적인</li>
-                <li class="list-group-item" data-board-filter="block">제제된</li>
-                <li class="list-group-item" data-board-filter="all">전부</li>
+                <li class="list-group-item " data-board-filter="waring">경고적인</li>
+                <li class="list-group-item " data-board-filter="block">제제된</li>
+                <li class="list-group-item " data-board-filter="all">전부</li>
             </ul>
         </div>
         
         <div id="DetailUserFilter" style="display: none">
             <ul class="list-group" >
                 게시판과 유저 관계도가 설정되지 않았으니 작업 보류중.
-                <li class="list-group-item" data-user-filter="TRANSITORY">가벼운 경고</li>
-                <li class="list-group-item" data-user-filter="STRONG">강력한 경고</li>
-                <li class="list-group-item" data-user-filter="PERMANENT">권한 상실한</li>
-                <li class="list-group-item" data-user-filter="all">전부</li>
+                <li class="list-group-item " data-user-filter="TRANSITORY">가벼운 경고</li>
+                <li class="list-group-item " data-user-filter="STRONG">강력한 경고</li>
+                <li class="list-group-item " data-user-filter="PERMANENT">권한 상실한</li>
+                <li class="list-group-item " data-user-filter="all">전부</li>
             </ul>
         </div>
         
@@ -51,10 +51,10 @@
             <ul class="list-group" >
                 게시판과 유저 관계도가 설정되지 않았으니 작업 보류중.
                 커뮤니티 게시판은 권한에 관계없으니 작업 보류중.
-                <li class="list-group-item" data-role-filter="minSatisfy">최소 요구 충족한</li>
-                <li class="list-group-item" data-role-filter="autoGet">자동적으로 권한 획득된</li>
-                <li class="list-group-item" data-role-filter="setByAdmin">관리자가 직접 설정한</li>
-                <li class="list-group-item" data-role-filter="all">전부</li>
+                <li class="list-group-item " data-role-filter="minSatisfy">최소 요구 충족한</li>
+                <li class="list-group-item " data-role-filter="autoGet">자동적으로 권한 획득된</li>
+                <li class="list-group-item " data-role-filter="setByAdmin">관리자가 직접 설정한</li>
+                <li class="list-group-item " data-role-filter="all">전부</li>
             </ul>
         </div>
     </div>
