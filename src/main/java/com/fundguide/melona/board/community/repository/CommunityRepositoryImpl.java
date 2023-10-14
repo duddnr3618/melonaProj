@@ -4,10 +4,7 @@ package com.fundguide.melona.board.community.repository;
 import com.fundguide.melona.board.common.querydsl_repeatcode.BoardQueryDsl_RepeatCode;
 import com.fundguide.melona.board.common.role.BoardUsing;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
-import com.fundguide.melona.board.normalBoard.repository.ImpeachJoinQuery;
 import com.fundguide.melona.management.commonQueryDsl.CommonQueryDsl;
-import com.querydsl.core.types.EntityPath;
-import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -21,8 +18,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.fundguide.melona.board.community.entity.QCommunityEntity.communityEntity;
-import static com.fundguide.melona.board.community.entity.QCommunity_like.community_like;
 import static com.fundguide.melona.board.community.entity.QCommunityImpeachEntity.communityImpeachEntity;
+import static com.fundguide.melona.board.community.entity.QCommunity_like.community_like;
 
 @Repository
 @RequiredArgsConstructor

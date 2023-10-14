@@ -1,14 +1,9 @@
 package com.fundguide.melona.board.normalBoard.repository;
 
 import com.fundguide.melona.board.common.role.BoardUsing;
-import com.fundguide.melona.board.community.entity.CommunityEntity;
-import com.fundguide.melona.board.community.entity.QCommunityEntity;
-import com.fundguide.melona.board.community.entity.QCommunityImpeachEntity;
 import com.querydsl.core.types.*;
-import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.EntityPathBase;
 import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.core.types.dsl.PathBuilder;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -17,27 +12,25 @@ import java.util.Collections;
 
 
 public class ImpeachJoinQuery {
-    public static <T> JPAQuery<T> joinQuery(
+
+    protected <T> EntityPath<T> findByClassEntityPath(Class<?> entityClass, String variableName) {
+        return new EntityPathBase<T>((Class<? extends T>) entityClass, variableName);
+    }
+
+    public <T> JPAQuery<T> boardAndImpeachJoinQuery(
             JPAQueryFactory queryFactory,
-            EntityPath<T> board,
-            EntityPath<T> impeach
+            Class<T> boardClass,
+            Class<T> impeachClass
     ) {
 
-        /*boardEntityJPAQuery = queryFactory.selectFrom(communityEntity)
-                .where(communityEntity.boardUsing.notIn(BoardUsing.BLOCK))
-                .join(communityImpeachEntity)
-                .on(communityEntity.id.eq(communityImpeachEntity.board.id))
-                .orderBy(communityEntity.id.desc())
-                .distinct();
-                */
+        EntityPath<T> board = findByClassEntityPath(boardClass, "board");
+        EntityPath<T> impeach = findByClassEntityPath(impeachClass, "impeach");
 
-        Class<?> boardMetaModel = board.getClass();
-        Class<?> impeachMetaModel = impeach.getClass();
 
         try {
-            Field boardIdField = boardMetaModel.getDeclaredField("id");
-            Field boardUsingField = boardMetaModel.getDeclaredField("using");
-            Field impeachBoardIdField = impeachMetaModel.getDeclaredField("board.id");
+            Field boardIdField = boardClass.getDeclaredField("id");
+            Field boardUsingField = boardClass.getDeclaredField("using");
+            Field impeachBoardIdField = impeachClass.getDeclaredField("board.id");
 
             Expression<Long> boardId = (Expression<Long>) boardIdField.get(board);
             Expression<BoardUsing> boardUsing = (Expression<BoardUsing>) boardUsingField.get(board);
