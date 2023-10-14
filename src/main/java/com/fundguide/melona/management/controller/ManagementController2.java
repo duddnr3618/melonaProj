@@ -1,7 +1,5 @@
 package com.fundguide.melona.management.controller;
 
-import com.fundguide.melona.board.normalBoard.service.NormalBoardCommandService;
-import com.fundguide.melona.board.normalBoard.service.NormalBoardQueryService;
 import com.fundguide.melona.management.service.ManagementService;
 import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.member.entity.MemberEntity;
@@ -21,8 +19,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/management")
 public class ManagementController2 {
     private final MemberService memberService;
-    private final NormalBoardCommandService normalBoardCommandService;
-    private final NormalBoardQueryService normalBoardQueryService;
     private final ManagementService managementService;
 
     Sort sort_Member = Sort.by("memberJoinData").descending();

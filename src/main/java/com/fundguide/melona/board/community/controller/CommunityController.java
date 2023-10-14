@@ -67,8 +67,10 @@ public class CommunityController {
             String userName = customUserDetails.getMemberEntity().getMemberName();
             Long memberId = customUserDetails.getMemberEntity().getId();
             System.out.println(">>>>>>>> : " + customUserDetails.getMemberEntity().getId());
+            String url = "/community/writePro";
             model.addAttribute("userName", userName);
             model.addAttribute("memberId", memberId);
+            model.addAttribute("url" ,url);
             return "board/writeForm";
         }
     }
@@ -100,11 +102,11 @@ public class CommunityController {
             model.addAttribute("board", communityDto);
             model.addAttribute("commentList", commentDtoList);
         if(customUserDetails == null) {
-            return "board/detail";
+            return "board/community/detail";
         }else {
             Long userId = customUserDetails.getMemberEntity().getId();
             model.addAttribute("userId" , userId);
-            return "board/detail";
+            return "board/community/detail";
         }
 
     }
@@ -120,12 +122,14 @@ public class CommunityController {
         model.addAttribute("board", communityDto);
         String userName = customUserDetails.getMemberEntity().getMemberName();
         Long userId = customUserDetails.getMemberEntity().getId();
+        String url = "/community/modifyPro";
+        model.addAttribute("url", url);
         model.addAttribute("userName" , userName);
         model.addAttribute("userId" , userId);
         System.out.println("1>>>>>>>>>>>>>> : " + communityDto );
 
 
-        return "board/modify";
+        return "board/community/modify";
     }
 
     /* 게시글 수정 처리 */
@@ -137,7 +141,7 @@ public class CommunityController {
         }
         CommunityDto communityboard = communityService.boardDetail(id);
         if(communityboard.getId() == customUserDetails.getMemberEntity().getId() ){
-            return "redirect:/community?/" + id ;
+            return "redirect:/community/" + id ;
         }
         System.out.println(">>>>>>>>>> 3 : "  + communityDto);
         CommunityDto board = communityService.update(communityDto, file);
@@ -147,9 +151,9 @@ public class CommunityController {
 
     /* 게시글 삭제 */
     @GetMapping("/delete")
-    public String delete(Long id , @AuthenticationPrincipal CommunityEntity communityEntity) {
-        if(communityEntity == null) {
-            return "redirect:/community/list";
+    public String delete(Long id , @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        if(customUserDetails == null) {
+            return "redirect:/member/loginForm";
         }
         communityService.delete(id);
 

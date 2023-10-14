@@ -108,12 +108,13 @@ public class LeaderBoardService {
 
     @Transactional
     public LeaderBoardDto update(LeaderBoardDto leaderBoardDto, MultipartFile file) {
+        System.out.println("! >>>>>>>>>>>>>>> : "+ leaderBoardDto);
         MemberEntity memberEntity = new  MemberEntity();
         memberEntity.setId(leaderBoardDto.getMemberId());
         LeaderBoardEntity leaderBoardEntity = LeaderBoardEntity.toUpdateLeaderBoardEntity(leaderBoardDto);
         memberEntity.setId(leaderBoardDto.getMemberId());
         leaderBoardEntity.setMemberEntity(memberEntity);
-        System.out.println("4 >>>>>>>>>>>>>> : " + leaderBoardEntity.getMemberEntity().getId());
+        System.out.println("4 >>>>>>>>>>>>>> : " + leaderBoardEntity);
         leaderBoardRepository.save(leaderBoardEntity);
         return boardDetail(leaderBoardDto.getId());
     }

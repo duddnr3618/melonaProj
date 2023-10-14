@@ -2,6 +2,8 @@ package com.fundguide.melona.board.normalBoard.dto;
 
 import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
+import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
+import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.QBean;
@@ -11,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
 
@@ -32,19 +35,14 @@ public class NormalBoardDto {
     private LocalDateTime updatedTime;
     private Long memberId;
     private String memberName;
+    private int boardCount;
 
     private String fileName;
     private String filePath;
 
-    public static NormalBoardDto toBoardDto(NormalBoardEntity normalBoardEntity) {
-        return NormalBoardDto.builder()
-                .id(normalBoardEntity.getId())
-                .boardTitle(normalBoardEntity.getBoardTitle())
-                .boardContents(normalBoardEntity.getBoardContents())
-                .boardHits(normalBoardEntity.getBoardHits())
-                .createdTime(normalBoardEntity.getCreatedTime())
-                .updatedTime(normalBoardEntity.getUpdatedTime())
-                .filePath(normalBoardEntity.getFilePath())
-                .build();
+
+    public  static ModelMapper modelMapper = new ModelMapper();
+    public static NormalBoardDto toNormalBoardDto(NormalBoardEntity normalBoardEntity){
+        return modelMapper.map(normalBoardEntity, NormalBoardDto.class);
     }
 }
