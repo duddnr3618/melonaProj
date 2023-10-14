@@ -15,8 +15,8 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>커뮤니티 게시판</h1>
-<li><a th:href="@{/mypage/leader-board}">리더 게시판</a></li>
+<h1>리더 가이드</h1>
+<li><a th:href="@{/mypage/community-board}">커뮤니티 게시판</a></li>
 <li><a th:href="@{/mypage/normal-board}">일반 게시판</a></li>
 <table class="table">
     <thead>
@@ -29,9 +29,9 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="board : ${mycommunityBoard.content}">
+    <tr th:each="board : ${myleaderBoard.content}">
         <th th:text="${board.id}"></th>
-        <th><a  th:text="${board.boardTitle}" th:href="@{|/community/${board.id}|}"></a></th>
+        <th><a  th:text="${board.boardTitle}" th:href="@{|/leaderBoard/${board.id}|}"></a></th>
         <th th:text="*{#temporals.format(board.createdTime,'yyyy-MM=dd HH:mm:ss')}"></th>
         <th th:text="${board.boardHits}"></th>
     </tr>
