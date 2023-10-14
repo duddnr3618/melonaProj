@@ -1,17 +1,16 @@
 package com.fundguide.melona.board.leaderboard.entity;
 
 import com.fundguide.melona.board.common.entity.BaseTimeEntity;
-import com.fundguide.melona.board.community.dto.CommentDto;
-import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.leaderboard.dto.CommentLeaderBoardDto;
-import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "comment_leader_board")
 public class CommentLeaderBoardEntity extends BaseTimeEntity {
     @Id
