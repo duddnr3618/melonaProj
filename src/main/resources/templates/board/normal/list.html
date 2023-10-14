@@ -32,13 +32,13 @@
     <div>
         <a href="/leaderBoard/wrtieForm">글작성</a>
     </div>
-    <a th:href="@{/leaderBoard/list(page=0)}">처음</a>
+    <a th:href="@{/normalBoard/list(page=0)}">처음</a>
     <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
-        <a th:if="${page != nowPage}" th:href="@{/leaderBoard/list(page = ${page - 1}, searKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+        <a th:if="${page != nowPage}" th:href="@{/normalBoard/list(page = ${page - 1}, searKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
         <strong th:if="${page == nowPage}" th:text="${page}" style="color: red"></strong>
     </th:block>
-    <a th:href="@{/leaderBoard/list(page=${list.totalPages})}">마지막</a>
-    <form th:action="@{/leaderBoard/list}" method="get">
+    <a th:href="@{/normalBoard/list(page=${list.totalPages})}">마지막</a>
+    <form th:action="@{/normalBoard/list}" method="get">
         <input type="text" name="searchKeyword">
         <button type="submit">검색</button>
     </form>
