@@ -157,7 +157,6 @@ public class CommunityService {
         if (community.isPresent() && member.isPresent()) {
             searchLike = Community_like.likeFastBuilder(community.get(), member.get());
             like = likeRepository.searchAlreadyLike(searchLike);
-            communityRepository.updateCounts(boardId);
         } else {
             throw new IllegalArgumentException("CommunityEntity 또는 MemberEntity를 찾지 못해 like 객체를 생성할 수 없습니다.");
         }

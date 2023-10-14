@@ -1,6 +1,6 @@
 package com.fundguide.melona.board.leaderboard.entity;
 
-import com.fundguide.melona.board.community.entity.CommunityEntity;
+import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,7 +11,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "leader_board_impeach")
+@Table(name = "leaderBoardImpeach")
+/*TODO 신고하는 버튼 및 처리 메서드 만들것*/
 public class LeaderBoardImpeachEntity {
 
     @Id

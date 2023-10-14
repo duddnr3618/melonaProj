@@ -4,6 +4,7 @@ import com.fundguide.melona.board.normalBoard.service.NormalBoardCommandService;
 import com.fundguide.melona.board.normalBoard.service.NormalBoardQueryService;
 import com.fundguide.melona.management.service.ManagementService;
 import com.fundguide.melona.member.dto.MemberLeastDTO;
+import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -67,12 +68,7 @@ public class ManagementController2 {
     public String getFilteredResultsByRule( @RequestParam("filter") String filter
             , Model model) {
 
-        Page<MemberLeastDTO> paging;
-        if (filter.equals("all")) {
-            paging = memberService.getMemberPage(pageable_Member);
-        } else {
-            paging = null;
-        }
+        Page<MemberEntity> paging = managementService.getMemberEvaluatePendingByRule(filter, pageable_Member);
         model.addAttribute("filter", filter);
         model.addAttribute("memberPaging", paging);
         return "management/server_rendering_version/member_rendering";

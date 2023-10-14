@@ -4,22 +4,22 @@ package com.fundguide.melona.board.community.repository;
 import com.fundguide.melona.board.common.querydsl_repeatcode.BoardQueryDsl_RepeatCode;
 import com.fundguide.melona.board.common.role.BoardUsing;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
-import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
 import com.fundguide.melona.management.commonQueryDsl.CommonQueryDsl;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.query.criteria.JpaSubQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 import static com.fundguide.melona.board.community.entity.QCommunityEntity.communityEntity;
 import static com.fundguide.melona.board.community.entity.QCommunityImpeachEntity.communityImpeachEntity;
+import static com.fundguide.melona.board.community.entity.QCommunity_like.community_like;
 
 @Repository
 @RequiredArgsConstructor
@@ -31,9 +31,8 @@ public class CommunityRepositoryImpl implements CommunityRepositoryCustom {
 
     private final CommonQueryDsl commonQueryDsl = new CommonQueryDsl();
     private BooleanExpression booleanExpression = null;
-    
+
     private final EntityManager entityManager;
-    
 
 
     /** {@inheritDoc} */
@@ -48,14 +47,13 @@ public class CommunityRepositoryImpl implements CommunityRepositoryCustom {
                                 .from(communityImpeachEntity)
                                 .where(communityEntity.id.eq(communityImpeachEntity.board.id))
                                 .groupBy(communityEntity.id)
-                                .having(communityEntity.id.count().goe(100))
+                                .having(communityEntity.id.count().goe(1))
                                 .exists()
                         )
                 )
                 .distinct();
         return commonQueryDsl.pageableHandler(boardEntityJPAQuery, pageable);
     }
-
 
     /** {@inheritDoc} */
     @Override
@@ -80,5 +78,14 @@ public class CommunityRepositoryImpl implements CommunityRepositoryCustom {
                 .where(communityEntity.boardUsing.notIn(BoardUsing.BLOCK))
                 .orderBy(communityEntity.id.desc());
         return commonQueryDsl.pageableHandler(boardEntityJPAQuery, pageable);
+    }
+
+    @Override
+    public long likeCount(long boardId) {
+        List<CommunityEntity> entities = queryFactory.selectFrom(communityEntity)
+                .join(community_like)
+                .on(communityEntity.id.eq(community_like.communityEntity.id))
+                .fetch();
+        return entities.size();
     }
 }
