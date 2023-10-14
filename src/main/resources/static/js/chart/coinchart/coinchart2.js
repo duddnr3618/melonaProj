@@ -11,7 +11,7 @@ async function requestData() {
         const data = await result.json();
 
         if (data.status === "0000" && data.data && data.data.ETH) {
-            const ethData = data.data.BTC; // 이더리움 데이터
+            const ethData = data.data.BTC; // 비트코인 데이터
             const date = new Date().getTime(); // 현재 시간
             const value = parseFloat(ethData.closing_price); // 종가
 

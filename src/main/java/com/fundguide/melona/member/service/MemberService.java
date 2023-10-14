@@ -11,6 +11,7 @@ import com.fundguide.melona.member.role.MemberRoleState;
 import com.fundguide.melona.member.utils.MainSend;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +28,9 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder utilsPasswordEncoder ;
     private final MainSend mainSend;
+
+    @Value("${admin.password}")
+    private String adminPassword;
 
     public void memberSave(MemberDto memberDto) {
         MemberEntity memberEntity = MemberTransMapper.INSTANCE.dtoToEntity(memberDto);
@@ -108,4 +112,16 @@ public class MemberService {
         return memberRepository.findAllOfMemberLeastData(pageable);
     }
 
+    public void adminSave(String adminEmail) {
+        MemberEntity memberEntity = MemberEntity.builder()
+                .memberAddress("어드민네 집")
+                .memberPassword(utilsPasswordEncoder.encode(adminPassword))
+                .memberName("admin")
+                .memberNickname("admin")
+                .memberRole(MemberRoleState.ROLE_ADMIN)
+                .memberLimitState(MemberLimitState.NORMAL)
+                .memberEmail(adminEmail)
+                .build();
+        memberRepository.adminSave(memberEntity);
+    }
 }

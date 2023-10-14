@@ -14,6 +14,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static com.fundguide.melona.board.community.entity.QCommunityEntity.communityEntity;
 import static com.fundguide.melona.member.entity.QMemberEntity.memberEntity;
 import static com.fundguide.melona.board.normalBoard.entity.QNormalBoardEntity.normalBoardEntity;
 import static com.fundguide.melona.board.normalBoard.entity.QNormalBoardImpeachEntity.normalBoardImpeachEntity;
@@ -116,10 +118,12 @@ public class MemberRepositoryJpa implements MemberRepository {
         MemberEntity memberEntity = em.find(MemberEntity.class, id);
         memberEntity.setMemberEmail("탈퇴한사용자" + memberEntity.getId());
         memberEntity.setMemberNickname("탈퇴한사용자" + memberEntity.getId() + new Date());
+        memberEntity.setMemberEmail("탈퇴한사용자"+ memberEntity.getId());
+        memberEntity.setMemberNickname("탈퇴한사용자"+memberEntity.getId()+new Date());
         memberEntity.setMemberRole(MemberRoleState.DISABLED);
         memberEntity.setMemberAddress("탈퇴한사용자");
         memberEntity.setMemberName("탈퇴한사용자");
-
+        memberEntity.setMemberLimitState(MemberLimitState.PERMANENT);
     }
 
     /** memberRepositoryCustom -> this.class 병합 */
@@ -135,7 +139,7 @@ public class MemberRepositoryJpa implements MemberRepository {
         return commonQueryDsl.pageableHandler(jpaQuery, pageable);
     }
 
-    /** {@inheritDoc} */
+    /**{@inheritDoc}*/
     @Override
     @Transactional(readOnly = true)
     public Page<MemberLeastDTO> findAllOfMemberLeastData(Pageable pageable) {
@@ -145,7 +149,7 @@ public class MemberRepositoryJpa implements MemberRepository {
         return commonQueryDsl.pageableHandler(jpaQuery, pageable);
     }
 
-    /** {@inheritDoc} */
+    /**{@inheritDoc}*/
     @Override
     @Transactional(readOnly = true)
     public Page<MemberLeastDTO> memberRoleStateFilterPage(String filter, Pageable pageable) {
@@ -161,6 +165,12 @@ public class MemberRepositoryJpa implements MemberRepository {
                 .from(memberEntity)
                 .where(expression);
         return commonQueryDsl.pageableHandler(jpaQuery, pageable);
+    }
+
+    @Override
+    @Transactional
+    public void adminSave(MemberEntity memberEntity) {
+        em.persist(memberEntity);
     }
 
     @Override
@@ -191,7 +201,7 @@ public class MemberRepositoryJpa implements MemberRepository {
         return null;
     }
 
-    /** {@inheritDoc} */
+    /**{@inheritDoc}*/
     @Override
     public Optional<MemberEntity> findByMemberEamilOptional(String email) {
         MemberEntity member = query.selectFrom(memberEntity)
