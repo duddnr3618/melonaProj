@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<div layout:fragment="content">
+    <style>
+        .uplike-image {
+            width: 30px; /* Set the desired width */
+            height: 30px; /* Set the desired height */
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <br>
+    <table>
+        <tr>
+            <th>번호</th>
+            <td th:text="${board.id}"></td>
+        </tr>
+        <tr>
+            <th>제목</th>
+            <td th:text="${board.boardTitle}"></td>
+        </tr>
+        <tr>
+            <th>작성자</th>
+            <td th:text="${board.memberName}"></td>
+        </tr>
+        <tr>
+            <th>날짜</th>
+            <td th:text="${board.createdTime}"></td>
+        </tr>
+        <tr>
+            <th>조회수</th>
+            <td th:text="${board.boardHits}"></td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td th:text="${board.boardContents}"></td>
+        </tr>
+
+    </table>
+
+    <img th:src="${board.getFilePath()}" alt=""> <br>
+
+    <a th:if="${board.getFilePath() != null}" th:href="@{${board.filePath}}">이미지 다운받기</a><br>
+    <a th:if="${board.getFilePath() == null}">파일이 존재하지 않습니다.</a><br>
+    <a th:href="@{/leaderBoard/list}">목록</a><br>
+    <a th:href="@{/leaderBoard/modifyForm/{id}(id=${board.id})}" th:if="${board.memberId} == ${userId}" >수정</a><br>
+    <a th:href="@{/leaderBoard/delete(id=${board.id})}" th:if="${board.memberId} == ${userId}">삭제</a><br>
+
+    <button id="impeachButton" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            th:if="${#authorization.expression('isAuthenticated()')}">이 게시글 신고하기</button>
+    <button class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}">이 게시글 신고하기 </button>
+
+    <a id="likeButton" th:if="${#authorization.expression('isAuthenticated()')}"><div><img class="uplike-image" src="/img/uplike.jpg">좋아요!</div></a>
+    <a class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}"><div><img class="uplike-image" src="/img/uplike.jpg"></div></a>
+
+    <!-- 댓글 작성 부분 -->
+    <div id="comment-write">
+        <input type="text" id="commentWriter" placeholder="작성자">
+        <input type="text" id="commentContents" placeholder="내용">
+        <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
+    </div>
+
+    <!-- 댓글 출력 부분 -->
+    <div id="comment-list">
+        <table>
+            <tr>
+                <th>댓글번호</th>
+                <th>작성자</th>
+                <th>내용</th>
+                <th>시간</th>
+            </tr>
+            <tr th:each="comment : ${commentList}">
+                <td th:text="${comment.id}"></td>
+                <td th:text="${comment.commentWriter}"></td>
+                <td th:text="${comment.commentContents}"></td>
+                <td th:text="${comment.commentCreatedTime}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">신고사유</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="impeachForm">
+                        <input id="id" type="hidden" name="id" th:value="${board.getId()}">
+                        
+                        <input type="hidden" name="id" th:value="${board.getId()}">
+
+                        <label for="cause"></label>
+                        <input id="cause" type="text" name="cause" value="">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="modalCloseButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="sendImpeachButton" type="button" class="btn btn-primary">신고하기</button>
+                </div>
+            </div>
+        </div>
+
+        jstest
+    </div>
+
+    <script>
+        $('.nullPrincipal').click(function () {
+            location.href="/member/loginForm"
+        })
+
+        $('#sendImpeachButton').click(function () {
+            let impeachData = new FormData($('#impeachForm')[0]);
+            axios.post("/leaderBoard/impeach", impeachData, {headers: {'Content-Type': 'application/json'}})
+                .catch((error) => {
+                    if (error.response.status === 400) {
+                        alert("이미 신고 하셨습니다.");
+                    }
+                });
+            $('#modalCloseButton').click();
+        });
+        
+        $('#likeButton').click(function () {
+            const boardId = $('#id').val();
+            const uri = "/leaderBoard/like/" + boardId;
+            console.log(uri);
+            axios.put(uri)
+                .catch((error) => {
+                    console.log(error);
+                    if (error.response.status === 400) {
+                        if (confirm("이미 좋아요를 누르셨습니다. 취소 하시겠습니까?")) {
+                            axios.delete("/leaderBoard/like/remove/" + boardId);
+                        }
+                    }
+                });
+        })
+    </script>
+
+    <script th:inline = "javascript">
+        const commentWrite =() => {
+            const writer = document.getElementById("commentWriter").value;
+            const content = document.getElementById("commentContents").value;
+            console.log("작성자 : " + writer);
+            console.log("내용 : " + content);
+            const id = [[${board.id}]];
+
+            $.ajax({
+
+                type : "post",
+                url : "/commentLeaderBoard/save",
+                data: {
+                    "commentWriter" : writer,
+                    "commentContents" : content,
+                    "boardId" : id
+                },
+
+                success : function(res) {
+                    console.log("요청성공" , res);
+                    let output = "<table>";
+                    output += "<tr><th>댓글번호</th>";
+                    output += "<th>작성자</th>";
+                    output += "<th>내용</th>";
+                    output += "<th>작성시간</th></tr>";
+                    for (let i in res) {
+                        output += "<tr>";
+                        output += "<td>" + res[i].id + "</td>";
+                        output += "<td>" + res[i].commentWriter + "</td>";
+                        output += "<td>" + res[i].commentContents + "</td>";
+                        output += "<td>" + res[i].commentCreatedTime + "</td>";
+                        output += "</tr>";
+                    }
+                    output += "</table>";
+                    document.getElementById('comment-list').innerHTML = output;
+                    document.getElementById('commentWriter').value = '';
+                    document.getElementById('commentContents').value = '';
+                },
+
+                error:function(err){
+                    console.log("요청실패",err);
+                }
+
+            })
+        }
+    </script>
+</div>
+</html>
