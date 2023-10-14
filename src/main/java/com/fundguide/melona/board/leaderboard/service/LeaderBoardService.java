@@ -9,7 +9,10 @@ import com.fundguide.melona.board.community.service.CommunityService;
 import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardImpeachEntity;
+import com.fundguide.melona.board.leaderboard.entity.LeaderBoard_like;
 import com.fundguide.melona.board.leaderboard.repository.LeaderBoardRepository;
+import com.fundguide.melona.board.leaderboard.repository.impeach.LeaderboardImpeachRepository;
+import com.fundguide.melona.board.leaderboard.repository.like.LeaderboardLikeRepository;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +45,8 @@ public class LeaderBoardService {
 
     private final LeaderBoardRepository leaderBoardRepository;
     private final MemberRepository memberRepository;
-    //private final LeaderBoardLikeRepository leaderBoardLikeRepository;
-    //private final LeaderBoardImpeachRepository leaderBoardImpeachRepository;
+    private final LeaderboardLikeRepository leaderBoardLikeRepository;
+    private final LeaderboardImpeachRepository leaderBoardImpeachRepository;
     public void writePro(LeaderBoardDto leaderBoardDto, MultipartFile file) throws Exception {
         System.out.println(" { 커뮤니티 파일 저장중" + " }");
         System.out.println("절대경로는? { " + absolutePath + " }");
@@ -118,7 +121,6 @@ public class LeaderBoardService {
     /*---------------------------------------------------------------------------------------------*/
 
     /** 신고 서비스 메서드 */
-    /*
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<String> impeach(Principal principal, ImpeachDTO impeachDTO) {
         MemberEntity memberEntity = memberRepository.findByEmail(principal.getName());
@@ -146,26 +148,23 @@ public class LeaderBoardService {
         }
     }
 
-*/
 
     /** 좋아요 추가 서비스 메서드 */
-    /*
     @Transactional
     public ResponseEntity<String> likeAdd(Principal principal, Long boardId) {
         Optional<LeaderBoardEntity> leaderBoardEntity = leaderBoardRepository.findById(boardId);
         Optional<MemberEntity> member = memberRepository.findByMemberEamilOptional(principal.getName());
 
-        Community_like like = null;
-        Community_like searchLike;
-        if (community.isPresent() && member.isPresent()) {
-            searchLike = Community_like.likeFastBuilder(community.get(), member.get());
-            like = likeRepository.searchAlreadyLike(searchLike);
-            communityRepository.updateCounts(boardId);
+        LeaderBoard_like like = null;
+        LeaderBoard_like searchLike;
+        if (leaderBoardEntity.isPresent() && member.isPresent()) {
+            searchLike = LeaderBoard_like.likeFastBuilder(leaderBoardEntity.get(), member.get());
+            like = leaderBoardLikeRepository.searchAlreadyLike(searchLike);
         } else {
             throw new IllegalArgumentException("CommunityEntity 또는 MemberEntity를 찾지 못해 like 객체를 생성할 수 없습니다.");
         }
 
-        CommunityService.BooleanCheck caseCheck = new CommunityService.BooleanCheck() {
+        BooleanCheck caseCheck = new BooleanCheck() {
             @Override
             public ResponseEntity<String> trueCheck() {
                 return ResponseEntity.badRequest().build();
@@ -173,9 +172,9 @@ public class LeaderBoardService {
 
             @Override
             public ResponseEntity<String> falseCheck() {
-                community.ifPresent(communityEntity -> {
-                    communityEntity.getBoardLike().add(searchLike);
-                    communityRepository.save(communityEntity);
+                leaderBoardEntity.ifPresent(leaderBoard -> {
+                    leaderBoard.getBoardLike().add(searchLike);
+                    leaderBoardRepository.save(leaderBoard);
                 });
                 return ResponseEntity.ok().build();
             }
@@ -189,18 +188,16 @@ public class LeaderBoardService {
         }
     }
 
-     */
 
     /** 좋아요 삭제 서비스 메서드 */
-   /*
     @Transactional
     public ResponseEntity<String> likeRemove(Principal principal, Long boardId) {
 
-        Community_like like = likeOptionalCheckHandler(principal, boardId);
-        CommunityService.BooleanCheck caseCheck = new CommunityService.BooleanCheck() {
+        LeaderBoard_like like = likeOptionalCheckHandler(principal, boardId);
+        BooleanCheck caseCheck = new BooleanCheck() {
             @Override
             public ResponseEntity<String> trueCheck() {
-                likeRepository.removeLike(like);
+                leaderBoardLikeRepository.removeLike(like);
                 return ResponseEntity.ok().build();
             }
 
@@ -218,16 +215,16 @@ public class LeaderBoardService {
         }
     }
 
-    protected Community_like likeOptionalCheckHandler(Principal principal, Long boardId) {
-        Optional<CommunityEntity> community = communityRepository.findById(boardId);
+    protected LeaderBoard_like likeOptionalCheckHandler(Principal principal, Long boardId) {
+        Optional<LeaderBoardEntity> leaderBoard = leaderBoardRepository.findById(boardId);
         Optional<MemberEntity> member = memberRepository.findByMemberEamilOptional(principal.getName());
 
-        if (community.isPresent() && member.isPresent()) {
-            Community_like like = Community_like.builder()
-                    .communityEntity(community.get())
+        if (leaderBoard.isPresent() && member.isPresent()) {
+            LeaderBoard_like like = LeaderBoard_like.builder()
+                    .leaderBoardEntity(leaderBoard.get())
                     .memberEntity(member.get())
                     .build();
-            return likeRepository.searchAlreadyLike(like);
+            return leaderBoardLikeRepository.searchAlreadyLike(like);
         } else {
             throw new IllegalArgumentException("CommunityEntity 또는 MemberEntity가 없어 like 객체를 생성할 수 없습니다.");
         }
@@ -238,6 +235,5 @@ public class LeaderBoardService {
 
         ResponseEntity<String> falseCheck();
     }
-    */
 
 }
