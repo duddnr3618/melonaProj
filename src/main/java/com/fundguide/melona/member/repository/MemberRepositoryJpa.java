@@ -6,6 +6,7 @@ import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.role.MemberRoleState;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -25,6 +26,10 @@ import java.util.Optional;
 
 import static com.fundguide.melona.board.community.entity.QCommunityEntity.communityEntity;
 import static com.fundguide.melona.member.entity.QMemberEntity.memberEntity;
+import static com.fundguide.melona.board.normalBoard.entity.QNormalBoardEntity.normalBoardEntity;
+import static com.fundguide.melona.board.normalBoard.entity.QNormalBoardImpeachEntity.normalBoardImpeachEntity;
+import static com.fundguide.melona.board.community.entity.QCommunityImpeachEntity.communityImpeachEntity;
+import static com.fundguide.melona.board.community.entity.QCommunityEntity.communityEntity;
 
 @Repository
 @Slf4j
@@ -34,6 +39,8 @@ public class MemberRepositoryJpa implements MemberRepository {
     private final JPAQueryFactory query;
     private final CommonQueryDsl commonQueryDsl = new CommonQueryDsl();
     private BooleanExpression expression = null;
+    private JPAQuery<MemberEntity> jpaQuery = new JPAQuery<>();
+    private final JPAQuery<MemberLeastDTO> leastJPAQuery = new JPAQuery<>();
 
 
     public MemberRepositoryJpa(EntityManager em) {
@@ -109,6 +116,8 @@ public class MemberRepositoryJpa implements MemberRepository {
     @Transactional
     public void withdraw(Long id) {
         MemberEntity memberEntity = em.find(MemberEntity.class, id);
+        memberEntity.setMemberEmail("탈퇴한사용자" + memberEntity.getId());
+        memberEntity.setMemberNickname("탈퇴한사용자" + memberEntity.getId() + new Date());
         memberEntity.setMemberEmail("탈퇴한사용자"+ memberEntity.getId());
         memberEntity.setMemberNickname("탈퇴한사용자"+memberEntity.getId()+new Date());
         memberEntity.setMemberRole(MemberRoleState.DISABLED);
@@ -166,9 +175,29 @@ public class MemberRepositoryJpa implements MemberRepository {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<MemberLeastDTO> evaluatePendingByRule(String filter, Pageable pageable) {
-        QNormalBoardImpeachEntity qNormalBoardImpeach = QNormalBoardImpeachEntity.normalBoardImpeachEntity;
-        /*expression = memberEntity.id.eq(qNormalBoardImpeach.board.boardWriter);*/
+    public Page<MemberEntity> evaluatePendingByRule(String filter, Pageable pageable) {
+        jpaQuery = query.select(memberEntity)
+                .from(memberEntity)
+                .join(communityImpeachEntity)
+                .on(memberEntity.id.eq(communityImpeachEntity.member.id))
+                /*.join(normalBoardImpeachEntity)
+                .on(memberEntity.id.eq(normalBoardImpeachEntity.member.id))*/
+                .where(memberEntity.id.count().goe(10))
+                .distinct()
+                ;
+
+
+        switch (filter) {
+            case "TRANSITORY" -> {
+                System.out.println(" { 가벼운 경고 진입" + " }");
+                return commonQueryDsl.pageableHandler(jpaQuery ,pageable);
+            }
+            case "STRONG" -> {
+            }
+            case "PERMANENT" -> {
+            }
+            default -> throw new IllegalArgumentException("정의되지 않은 필터 방식입니다.");
+        }
         return null;
     }
 
@@ -179,5 +208,14 @@ public class MemberRepositoryJpa implements MemberRepository {
                 .where(memberEntity.memberEmail.eq(email))
                 .fetchOne();
         return Optional.ofNullable(member);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<MemberEntity> findAll(Pageable pageable) {
+        JPAQuery<MemberEntity> memberEntityJPAQuery = query.selectFrom(memberEntity)
+                .where(memberEntity.memberLimitState.notIn(MemberLimitState.TRANSITORY)
+                        .and(memberEntity.memberRole.notIn(MemberRoleState.DISABLED)));
+        return commonQueryDsl.pageableHandler(memberEntityJPAQuery, pageable);
     }
 }

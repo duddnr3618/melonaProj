@@ -17,12 +17,12 @@ public class CommunityBoardCategoryHandler implements FilterCategoryHandler {
 
     @Override
     public Page<?> waringPage(Pageable pageable) {
-        return null;
+        return communityRepository.onlyViewFilterByWaring(pageable);
     }
 
     @Override
     public Page<?> blockPage(Pageable pageable) {
-        return null;
+        return communityRepository.onlyViewFilterByBlock(pageable);
     }
 
     @Override

@@ -5,7 +5,8 @@ import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
 import com.fundguide.melona.board.community.entity.Community_like;
-import com.fundguide.melona.board.community.repository.CommunityImpeachRepository;
+import com.fundguide.melona.board.community.repository.impeach.CommunityImpeachRepository;
+import com.fundguide.melona.board.community.repository.like.CommunityLikeRepository;
 import com.fundguide.melona.board.community.repository.CommunityRepository;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
@@ -37,10 +38,10 @@ public class CommunityService {
     private String resourcePath;
 
     private final CommunityRepository communityRepository;
-    private final CommunityImpeachRepository communityImpeachRepository;
     private final MemberRepository memberRepository;
-    private final MemberRepositoryData memberRepositoryData;
 
+    private final CommunityLikeRepository likeRepository;
+    private final CommunityImpeachRepository impeachRepository;
     public void writePro(CommunityDto communityDto, MultipartFile file) throws Exception {
         System.out.println(" { 커뮤니티 파일 저장중" + " }");
         System.out.println("절대경로는? { " + absolutePath + " }");
@@ -87,6 +88,7 @@ public class CommunityService {
 
     public CommunityDto boardDetail(Long id) {
         Optional<CommunityEntity> optionalCommunityEntity = communityRepository.findById(id);
+
         if (optionalCommunityEntity.isPresent()) {
             CommunityEntity communityEntity = optionalCommunityEntity.get();
             return CommunityDto.toBoardDto(communityEntity);
@@ -99,43 +101,18 @@ public class CommunityService {
         communityRepository.deleteById(id);
     }
 
+    @Transactional
     public CommunityDto update(CommunityDto communityDto, MultipartFile file) {
+        MemberEntity memberEntity = new  MemberEntity();
+        memberEntity.setId(communityDto.getMemberId());
         CommunityEntity communityEntity = CommunityEntity.toUpdateEntity(communityDto);
+        memberEntity.setId(communityDto.getMemberId());
+        communityEntity.setMemberEntity(memberEntity);
+
+        System.out.println("4 >>>>>>>>>>>>>> : " + communityEntity.getMemberEntity().getId());
         communityRepository.save(communityEntity);
         return boardDetail(communityDto.getId());
     }
-
-    public Page<CommunityDto> paging(Pageable pageable) {
-        int page = pageable.getPageNumber();
-        int pageLimit = 10; // 페이지당 보여질 게시물 수
-
-        Page<CommunityEntity> communityEntities = communityRepository.findAll(
-                PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "createdTime")));
-
-        // 페이지 정보 출력 (옵션)
-        System.out.println("communityEntities.getContent() = " + communityEntities.getContent()); // 요청 페이지에 해당하는 글
-        System.out.println("communityEntities.getTotalElements() = " + communityEntities.getTotalElements()); // 전체 글 갯수
-        System.out.println("communityEntities.getNumber() = " + communityEntities.getNumber()); // DB로 요청한 페이지 번호
-        System.out.println("communityEntities.getTotalPages() = " + communityEntities.getTotalPages()); // 전체 페이지 갯수
-        System.out.println("communityEntities.getSize() = " + communityEntities.getSize()); // 한 페이지에 보여지는 글 갯수
-        System.out.println("communityEntities.hasPrevious() = " + communityEntities.hasPrevious()); // 이전 페이지 존재 여부
-        System.out.println("communityEntities.isFirst() = " + communityEntities.isFirst()); // 첫 페이지 여부
-        System.out.println("communityEntities.isLast() = " + communityEntities.isLast()); // 마지막 페이지 여부
-
-        // CommunityEntity를 CommunityDto로 변환
-        Page<CommunityDto> communityDtos = communityEntities.map(communityEntity -> {
-            CommunityDto communityDto = new CommunityDto();
-            communityDto.setId(communityEntity.getId());
-            communityDto.setBoardTitle(communityEntity.getBoardTitle());
-            communityDto.setBoardContents(communityEntity.getBoardContents());
-            communityDto.setBoardHits(communityEntity.getBoardHits());
-            communityDto.setCreatedTime(communityEntity.getCreatedTime());
-            return communityDto;
-        });
-
-        return communityDtos;
-    }
-
 
     /*---------------------------------------------------------------------------------------------*/
 
@@ -152,9 +129,13 @@ public class CommunityService {
                         .board(oCommunityEntity)
                         .cause(impeachDTO.getCause())
                         .build();
-                oCommunityEntity.getImpeach().add(impeach);
-                communityRepository.save(oCommunityEntity);
 
+                boolean check = impeachRepository.checkAlreadyImpeach(impeach);
+                if (check) {
+                    oCommunityEntity.getImpeach().add(impeach);
+                    communityRepository.save(oCommunityEntity);
+                    ResponseEntity.badRequest().build();
+                }
             }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
             System.out.println(" { 신고 성공" + " }");
             return ResponseEntity.ok().build();
@@ -163,24 +144,92 @@ public class CommunityService {
         }
     }
 
+
+
     /** 좋아요 추가 서비스 메서드 */
     @Transactional
     public ResponseEntity<String> likeAdd(Principal principal, Long boardId) {
         Optional<CommunityEntity> community = communityRepository.findById(boardId);
         Optional<MemberEntity> member = memberRepository.findByMemberEamilOptional(principal.getName());
 
+        Community_like like = null;
+        Community_like searchLike;
+        if (community.isPresent() && member.isPresent()) {
+            searchLike = Community_like.likeFastBuilder(community.get(), member.get());
+            like = likeRepository.searchAlreadyLike(searchLike);
+            communityRepository.updateCounts(boardId);
+        } else {
+            throw new IllegalArgumentException("CommunityEntity 또는 MemberEntity를 찾지 못해 like 객체를 생성할 수 없습니다.");
+        }
+
+        BooleanCheck caseCheck = new BooleanCheck() {
+            @Override
+            public ResponseEntity<String> trueCheck() {
+                return ResponseEntity.badRequest().build();
+            }
+
+            @Override
+            public ResponseEntity<String> falseCheck() {
+                community.ifPresent(communityEntity -> {
+                    communityEntity.getBoardLike().add(searchLike);
+                    communityRepository.save(communityEntity);
+                });
+                return ResponseEntity.ok().build();
+            }
+        };
+
+        boolean check = like != null;
+        if (check) {
+            return caseCheck.trueCheck();
+        } else {
+            return caseCheck.falseCheck();
+        }
+    }
+
+    /** 좋아요 삭제 서비스 메서드 */
+    @Transactional
+    public ResponseEntity<String> likeRemove(Principal principal, Long boardId) {
+
+        Community_like like = likeOptionalCheckHandler(principal, boardId);
+        BooleanCheck caseCheck = new BooleanCheck() {
+            @Override
+            public ResponseEntity<String> trueCheck() {
+                likeRepository.removeLike(like);
+                return ResponseEntity.ok().build();
+            }
+
+            @Override
+            public ResponseEntity<String> falseCheck() {
+                return ResponseEntity.badRequest().build();
+            }
+        };
+
+        boolean check = like != null;
+        if (check) {
+            return caseCheck.trueCheck();
+        } else {
+            return caseCheck.falseCheck();
+        }
+    }
+
+    protected Community_like likeOptionalCheckHandler(Principal principal, Long boardId) {
+        Optional<CommunityEntity> community = communityRepository.findById(boardId);
+        Optional<MemberEntity> member = memberRepository.findByMemberEamilOptional(principal.getName());
+
         if (community.isPresent() && member.isPresent()) {
             Community_like like = Community_like.builder()
-                    .id(Community_like.idG(member.get(), community.get()))
                     .communityEntity(community.get())
                     .memberEntity(member.get())
                     .build();
-            CommunityEntity entity = community.get();
-            entity.getBoardLike().add(like);
-            communityRepository.save(entity);
-            return ResponseEntity.ok().build();
+            return likeRepository.searchAlreadyLike(like);
         } else {
-            return ResponseEntity.badRequest().build();
+            throw new IllegalArgumentException("CommunityEntity 또는 MemberEntity가 없어 like 객체를 생성할 수 없습니다.");
         }
+    }
+
+    interface BooleanCheck {
+        ResponseEntity<String> trueCheck();
+
+        ResponseEntity<String> falseCheck();
     }
 }

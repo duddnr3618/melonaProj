@@ -1,6 +1,7 @@
 package com.fundguide.melona.management.service;
 
 import com.fundguide.melona.board.common.role.BoardUsing;
+import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.community.repository.CommunityRepository;
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
 import com.fundguide.melona.board.leaderboard.repository.LeaderBoardRepository;
@@ -10,6 +11,7 @@ import com.fundguide.melona.management.service.filter.CommunityBoardCategoryHand
 import com.fundguide.melona.management.service.filter.LeaderBoardCategoryHandler;
 import com.fundguide.melona.management.service.filter.NormalBoardCategoryHandler;
 import com.fundguide.melona.member.dto.MemberLeastDTO;
+import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
 import lombok.RequiredArgsConstructor;
@@ -53,8 +55,10 @@ public class ManagementService {
         }
     }
 
-    /** 카테고리와 id값으로 해당 게시물을 비활성화 하는 메서드
-     * 비동기식으로 처리를 위해 status값을 반환함.*/
+    /**
+     * 카테고리와 id값으로 해당 게시물을 비활성화 하는 메서드
+     * 비동기식으로 처리를 위해 status값을 반환함.
+     */
     public ResponseEntity<String> modifyDisableBoard(String category, Long boardId) throws IllegalAccessException {
         switch (category) {
             case "normal" -> {
@@ -65,17 +69,31 @@ public class ManagementService {
                 }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
                 return ResponseEntity.ok().build();
             }
+
             case "leader" -> {
                 Optional<LeaderBoardEntity> optional = leaderBoardRepository.findById(boardId);
                 /*optional.ifPresent(o -> );*/
                 return null;
             }
+
+            case "community" -> {
+                Optional<CommunityEntity> optional = communityRepository.findById(boardId);
+                optional.ifPresentOrElse(o -> {
+                    o.setBoardUsing(BoardUsing.BLOCK);
+                    communityRepository.save(o);
+                }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                return ResponseEntity.ok().build();
+            }
             default -> throw new IllegalAccessException("정의된 카테고리 값이 아닙니다.");
         }
     }
 
-    public Page<MemberLeastDTO> getMemberEvaluatePendingByRule() {
-        return null;
+    public Page<MemberEntity> getMemberEvaluatePendingByRule(String filter, Pageable pageable) {
+        if (!filter.equals("all")) {
+            return memberRepository.evaluatePendingByRule(filter, pageable);
+        } else {
+            return memberRepository.findAll(pageable);
+        }
     }
 
     public Page<MemberLeastDTO> getMemberRoleStatePaging(String filter, Pageable pageable) {

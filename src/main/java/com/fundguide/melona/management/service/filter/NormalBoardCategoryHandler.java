@@ -17,16 +17,16 @@ public class NormalBoardCategoryHandler implements FilterCategoryHandler {
 
     @Override
     public Page<NormalBoardEntity> waringPage(Pageable pageable) {
-        return normalBoardRepository.onlyViewNormalBoardFilterByWaring(pageable);
+        return normalBoardRepository.onlyViewFilterByWaring(pageable);
     }
 
     @Override
     public Page<NormalBoardEntity> blockPage(Pageable pageable) {
-        return normalBoardRepository.onlyViewNormalBoardFilterByBlock(pageable);
+        return normalBoardRepository.onlyViewFilterByBlock(pageable);
     }
 
     @Override
     public Page<NormalBoardEntity> allPage(Pageable pageable) {
-        return normalBoardRepository.findAllViewBoard(pageable);
+        return normalBoardRepository.findAll(pageable);
     }
 }

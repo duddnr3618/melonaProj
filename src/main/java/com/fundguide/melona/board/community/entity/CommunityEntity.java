@@ -7,6 +7,7 @@ import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,6 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 @Table(name = "community_board")
 public class CommunityEntity extends BaseTimeEntity {
 
@@ -69,36 +71,9 @@ public class CommunityEntity extends BaseTimeEntity {
         return communityEntity;
     }
 
-    public static CommunityEntity toUpdateEntity(CommunityDto communityDto) {
-        CommunityEntity communityEntity = new CommunityEntity();
-        communityEntity.setId(communityDto.getId());
-        communityEntity.setBoardTitle(communityDto.getBoardTitle());
-        communityEntity.setBoardContents(communityDto.getBoardContents());
-        communityEntity.setBoardHits(communityDto.getBoardHits());
-        communityEntity.setFileName(communityDto.getFileName());
-        communityEntity.setFilePath(communityDto.getFilePath());
-        return communityEntity;
+    public  static ModelMapper modelMapper = new ModelMapper();
+    public static CommunityEntity toUpdateEntity(CommunityDto communityDto){
+        return modelMapper.map(communityDto, CommunityEntity.class);
     }
 
-    /*************************************************************************************************/
-    public static CommunityEntity toSaveEntityBuild(CommunityDto communityDto) {
-        return CommunityEntity.builder()
-                .boardTitle(communityDto.getBoardTitle())
-                .boardContents(communityDto.getBoardContents())
-                .filePath(communityDto.getFilePath())
-                .boardHits(communityDto.getBoardHits())
-                .build();
-    }
-
-    public static CommunityEntity toUpdateEntityBuild(CommunityDto communityDto) {
-        return CommunityEntity.builder()
-                .id(communityDto.getId())
-                .boardTitle(communityDto.getBoardTitle())
-                .boardContents(communityDto.getBoardContents())
-                .boardHits(communityDto.getBoardHits())
-                .fileName(communityDto.getFileName())
-                .filePath(communityDto.getFilePath())
-                .build();
-    }
-    /*---------------------------------------------------------------------------*/
 }

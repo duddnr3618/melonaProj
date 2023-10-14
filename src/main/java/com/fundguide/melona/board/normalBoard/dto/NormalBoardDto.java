@@ -1,9 +1,12 @@
 package com.fundguide.melona.board.normalBoard.dto;
 
+import com.fundguide.melona.board.community.dto.CommunityDto;
+import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.QBean;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,47 +23,28 @@ import static com.fundguide.melona.board.normalBoard.entity.QNormalBoardEntity.n
 public class NormalBoardDto {
 
     private Long id;
-    @NotBlank(message = "작성자를 입력해주세요.")
-    private String boardWriter;
-    @NotBlank(message = "제목을 입력해주세요.")
+    @NotBlank(message = "제목을 입력해주세요")
     private String boardTitle;
-    @NotBlank(message = "내용을 입력해주세요.")
+    @NotNull(message = "내용을 입력해주세요.")
     private String boardContents;
-    private long boardHits; //조회수
+    private int boardHits;
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
+    private Long memberId;
+    private String memberName;
 
-    public NormalBoardDto(Long id, String boardWriter, String boardTitle, long boardHits, LocalDateTime createdTime) {
-        this.id = id;
-        this.boardWriter = boardWriter;
-        this.boardTitle = boardTitle;
-        this.boardHits = boardHits;
-        this.createdTime = createdTime;
-    }
+    private String fileName;
+    private String filePath;
 
-
-    public static NormalBoardDto toLeaderBoardDto(NormalBoardEntity normalBoardEntity) {
+    public static NormalBoardDto toBoardDto(NormalBoardEntity normalBoardEntity) {
         return NormalBoardDto.builder()
                 .id(normalBoardEntity.getId())
                 .boardTitle(normalBoardEntity.getBoardTitle())
-                .boardWriter(normalBoardEntity.getBoardWriter())
                 .boardContents(normalBoardEntity.getBoardContents())
                 .boardHits(normalBoardEntity.getBoardHits())
                 .createdTime(normalBoardEntity.getCreatedTime())
                 .updatedTime(normalBoardEntity.getUpdatedTime())
+                .filePath(normalBoardEntity.getFilePath())
                 .build();
-    }
-
-    public static QBean<NormalBoardDto> projections () {
-        return Projections.bean(
-                NormalBoardDto.class
-                , normalBoardEntity.id
-                , normalBoardEntity.boardTitle
-                , normalBoardEntity.boardWriter
-                , normalBoardEntity.boardContents
-                , normalBoardEntity.boardHits
-                , normalBoardEntity.createdTime
-                , normalBoardEntity.updatedTime
-        );
     }
 }
