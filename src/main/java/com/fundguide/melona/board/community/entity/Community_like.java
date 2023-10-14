@@ -4,6 +4,9 @@ import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.security.Principal;
+import java.util.Optional;
+
 
 @Entity
 @Getter
@@ -15,8 +18,9 @@ import lombok.*;
 @Table(name = "community_like")
 public class Community_like {
 
-    @EmbeddedId
-    private CommentLikeIdG id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -26,10 +30,15 @@ public class Community_like {
     @JoinColumn(name = "community_board_id")
     private CommunityEntity communityEntity;
 
-    public static CommentLikeIdG idG(MemberEntity memberEntity, CommunityEntity communityEntity) {
-        return CommentLikeIdG.builder()
-                .boardId(communityEntity.getId())
-                .userId(memberEntity.getId())
+    private int boardCount;
+
+
+
+    public static Community_like likeFastBuilder(CommunityEntity communityEntity, MemberEntity memberEntity) {
+        return Community_like.builder()
+                .communityEntity(communityEntity)
+                .memberEntity(memberEntity)
+                .boardCount(communityEntity.getBoardLike().size())
                 .build();
     }
 }

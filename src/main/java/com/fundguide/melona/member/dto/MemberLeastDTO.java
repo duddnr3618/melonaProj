@@ -18,7 +18,6 @@ public class MemberLeastDTO {
     private String memberEmail;
     private String memberName;
     private String memberNickname;
-    private String memberAvailable;
     private MemberRoleState memberRole;
     private MemberLimitState memberLimitState;
     private LocalDate memberJoinDate;
