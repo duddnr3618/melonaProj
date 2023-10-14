@@ -38,12 +38,10 @@ public class CommunityService {
     private String resourcePath;
 
     private final CommunityRepository communityRepository;
-    private final CommunityImpeachRepository communityImpeachRepository;
     private final MemberRepository memberRepository;
-    private final MemberRepositoryData memberRepositoryData;
+
     private final CommunityLikeRepository likeRepository;
     private final CommunityImpeachRepository impeachRepository;
-
     public void writePro(CommunityDto communityDto, MultipartFile file) throws Exception {
         System.out.println(" { 커뮤니티 파일 저장중" + " }");
         System.out.println("절대경로는? { " + absolutePath + " }");
@@ -90,6 +88,7 @@ public class CommunityService {
 
     public CommunityDto boardDetail(Long id) {
         Optional<CommunityEntity> optionalCommunityEntity = communityRepository.findById(id);
+
         if (optionalCommunityEntity.isPresent()) {
             CommunityEntity communityEntity = optionalCommunityEntity.get();
             return CommunityDto.toBoardDto(communityEntity);
@@ -102,43 +101,18 @@ public class CommunityService {
         communityRepository.deleteById(id);
     }
 
+    @Transactional
     public CommunityDto update(CommunityDto communityDto, MultipartFile file) {
+        MemberEntity memberEntity = new  MemberEntity();
+        memberEntity.setId(communityDto.getMemberId());
         CommunityEntity communityEntity = CommunityEntity.toUpdateEntity(communityDto);
+        memberEntity.setId(communityDto.getMemberId());
+        communityEntity.setMemberEntity(memberEntity);
+
+        System.out.println("4 >>>>>>>>>>>>>> : " + communityEntity.getMemberEntity().getId());
         communityRepository.save(communityEntity);
         return boardDetail(communityDto.getId());
     }
-
-    public Page<CommunityDto> paging(Pageable pageable) {
-        int page = pageable.getPageNumber();
-        int pageLimit = 10; // 페이지당 보여질 게시물 수
-
-        Page<CommunityEntity> communityEntities = communityRepository.findAll(
-                PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "createdTime")));
-
-        // 페이지 정보 출력 (옵션)
-        System.out.println("communityEntities.getContent() = " + communityEntities.getContent()); // 요청 페이지에 해당하는 글
-        System.out.println("communityEntities.getTotalElements() = " + communityEntities.getTotalElements()); // 전체 글 갯수
-        System.out.println("communityEntities.getNumber() = " + communityEntities.getNumber()); // DB로 요청한 페이지 번호
-        System.out.println("communityEntities.getTotalPages() = " + communityEntities.getTotalPages()); // 전체 페이지 갯수
-        System.out.println("communityEntities.getSize() = " + communityEntities.getSize()); // 한 페이지에 보여지는 글 갯수
-        System.out.println("communityEntities.hasPrevious() = " + communityEntities.hasPrevious()); // 이전 페이지 존재 여부
-        System.out.println("communityEntities.isFirst() = " + communityEntities.isFirst()); // 첫 페이지 여부
-        System.out.println("communityEntities.isLast() = " + communityEntities.isLast()); // 마지막 페이지 여부
-
-        // CommunityEntity를 CommunityDto로 변환
-        Page<CommunityDto> communityDtos = communityEntities.map(communityEntity -> {
-            CommunityDto communityDto = new CommunityDto();
-            communityDto.setId(communityEntity.getId());
-            communityDto.setBoardTitle(communityEntity.getBoardTitle());
-            communityDto.setBoardContents(communityEntity.getBoardContents());
-            communityDto.setBoardHits(communityEntity.getBoardHits());
-            communityDto.setCreatedTime(communityEntity.getCreatedTime());
-            return communityDto;
-        });
-
-        return communityDtos;
-    }
-
 
     /*---------------------------------------------------------------------------------------------*/
 
@@ -163,11 +137,14 @@ public class CommunityService {
                     ResponseEntity.badRequest().build();
                 }
             }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+            System.out.println(" { 신고 성공" + " }");
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INSUFFICIENT_STORAGE).build();
         }
     }
+
+
 
     /** 좋아요 추가 서비스 메서드 */
     @Transactional
@@ -180,6 +157,7 @@ public class CommunityService {
         if (community.isPresent() && member.isPresent()) {
             searchLike = Community_like.likeFastBuilder(community.get(), member.get());
             like = likeRepository.searchAlreadyLike(searchLike);
+            communityRepository.updateCounts(boardId);
         } else {
             throw new IllegalArgumentException("CommunityEntity 또는 MemberEntity를 찾지 못해 like 객체를 생성할 수 없습니다.");
         }

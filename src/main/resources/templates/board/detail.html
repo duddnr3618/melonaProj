@@ -5,6 +5,13 @@
       layout:decorate="~{layouts/layout1}">
 
 <div layout:fragment="content">
+    <style>
+        .uplike-image {
+            width: 30px; /* Set the desired width */
+            height: 30px; /* Set the desired height */
+        }
+    </style>
+
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <br>
     <table>
@@ -35,19 +42,20 @@
 
     </table>
 
-    <a th:if="${board.getFilePath() != null}" th:href="@{${board.filePath}}">파일보기</a><br>
+    <img th:src="${board.getFilePath()}" alt=""> <br>
+
+    <a th:if="${board.getFilePath() != null}" th:href="@{${board.filePath}}">이미지 다운받기</a><br>
     <a th:if="${board.getFilePath() == null}">파일이 존재하지 않습니다.</a><br>
     <a th:href="@{/community/list}">목록</a><br>
-    <a th:href="@{/community/modifyForm/{id}(id=${board.id})}">수정</a><br>
-    <a th:href="@{/community/delete(id=${board.id})}">삭제</a><br>
-    
+    <a th:href="@{/community/modifyForm/{id}(id=${board.id})}" th:if="${board.memberId} == ${userId}" >수정</a><br>
+    <a th:href="@{/community/delete(id=${board.id})}" th:if="${board.memberId} == ${userId}">삭제</a><br>
+
     <button id="impeachButton" data-bs-toggle="modal" data-bs-target="#exampleModal"
             th:if="${#authorization.expression('isAuthenticated()')}">이 게시글 신고하기</button>
-    <button class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}">이 게시글 신고하기 null</button>
-    
-    <button id="likeButton" th:if="${#authorization.expression('isAuthenticated()')}">좋아요</button>
-    <button class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}">좋아요 null</button>
-    <div th:if="${#authorization.expression()}"></div>
+    <button class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}">이 게시글 신고하기 </button>
+
+    <a id="likeButton" th:if="${#authorization.expression('isAuthenticated()')}"><div><img class="uplike-image" src="/img/uplike.jpg">좋아요!</div></a>
+    <a class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}"><div><img class="uplike-image" src="/img/uplike.jpg"></div></a>
 
     <!-- 댓글 작성 부분 -->
     <div id="comment-write">
@@ -79,7 +87,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">신고하시는 이유를 알려주세요</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">신고사유</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -98,7 +106,7 @@
                 </div>
             </div>
         </div>
-        
+
         jstest
     </div>
 
@@ -106,7 +114,7 @@
         $('.nullPrincipal').click(function () {
             location.href="/member/loginForm"
         })
-        
+
         $('#sendImpeachButton').click(function () {
             let impeachData = new FormData($('#impeachForm')[0]);
             axios.post("/community/impeach", impeachData, {headers: {'Content-Type': 'application/json'}})
@@ -180,6 +188,5 @@
             })
         }
     </script>
-
 </div>
 </html>
