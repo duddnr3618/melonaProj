@@ -1,13 +1,16 @@
+.content{
+    margin-top: 10vh;
+}
 #logDiv1 {
     justify-content: center;
-    height: 80px;
+    height: 65px;
     overflow: hidden;
     margin: 5px;
 }
 
 #logDiv2{
     justify-content: center;
-    height: 85px;
+    height: 70px;
     overflow: hidden;
     margin: 5px;
 }
