@@ -6,32 +6,140 @@
 
 <meta charset="UTF-8">
 
-<link rel="stylesheet" th:href="@{../static/css/index.css}" type="text/css">
+<link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
 
 
 <div layout:fragment="content">
 
-  <br>
-  <div>
-    <ul>
-      <li>뉴스</li>
 
-      <li>가이드
-        <ul>
-        <li><a href="/leaderBoard/list">리더가이드</a></li>
-        <li><a href="/normalBoard/list">일반가이드</a></li>
-      </ul>
-      </li>
+<!--  HEADER에 추가를 해서 주석 처리-->
+<!--  <br>-->
+<!--  <div>-->
+<!--    <ul>-->
+<!--      <li>뉴스</li>-->
 
-      <li><a href="/community/list">커뮤니티</a></li>
+<!--      <li>가이드-->
+<!--        <ul>-->
+<!--        <li><a href="/leaderBoard/list">리더가이드</a></li>-->
+<!--        <li><a href="/normalBoard/list">일반가이드</a></li>-->
+<!--      </ul>-->
+<!--      </li>-->
+
+<!--      <li><a href="/community/list">커뮤니티</a></li>-->
 
 
 
-      <li></li>
-      <li></li>
-    </ul>
-  </div>
+<!--      <li></li>-->
+<!--      <li></li>-->
+<!--    </ul>-->
+<!--  </div>-->
   <iframe src="http://localhost:7777/news/list?text=주식" width="1290" height="300"></iframe>
-  <iframe src="http://localhost:7777/news/list2?text=주식" width="1290" height="300"></iframe>
+
+
+  <div class="tradingview-widget-container" style="display:inline-block">
+    <div class="tradingview-widget-container__widget"></div>
+    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+      {
+        "colorTheme": "light",
+              "dateRange": "1D",
+              "showChart": true,
+              "locale": "kr",
+              "largeChartUrl": "",
+              "isTransparent": false,
+              "showSymbolLogo": true,
+              "showFloatingTooltip": false,
+              "width": "600",
+              "height": "600",
+              "plotLineColorGrowing": "rgba(0, 255, 0, 0.65)",
+              "plotLineColorFalling": "rgba(255, 0, 0, 0.4)",
+              "gridLineColor": "rgba(240, 243, 250, 0)",
+              "scaleFontColor": "rgba(106, 109, 120, 1)",
+              "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+              "belowLineFillColorFalling": "rgba(151, 0, 0, 0.12)",
+              "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+              "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
+              "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
+              "tabs": [
+        {
+          "title": "지수",
+          "symbols": [
+            {
+              "s": "NASDAQ:TSLA",
+              "d": "TSLA"
+            },
+            {
+              "s": "NASDAQ:AAPL",
+              "d": "AAPL"
+            },
+            {
+              "s": "CAPITALCOM:SMSN",
+              "d": "SAMSUNG"
+            },
+            {
+              "s": "KRX:035720",
+              "d": "KAKAO"
+            }
+          ],
+          "originalTitle": "Indices"
+        }
+      ]
+      }
+    </script>
+  </div>
+  <div class="tradingview-widget-container" style="display:inline-block">
+    <div class="tradingview-widget-container__widget"></div>
+    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+      {
+        "colorTheme": "light",
+              "dateRange": "1D",
+              "showChart": true,
+              "locale": "kr",
+              "largeChartUrl": "",
+              "isTransparent": false,
+              "showSymbolLogo": true,
+              "showFloatingTooltip": false,
+              "width": "600",
+              "height": "600",
+              "plotLineColorGrowing": "rgba(0, 255, 0, 0.65)",
+              "plotLineColorFalling": "rgba(255, 0, 0, 0.4)",
+              "gridLineColor": "rgba(240, 243, 250, 0)",
+              "scaleFontColor": "rgba(106, 109, 120, 1)",
+              "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+              "belowLineFillColorFalling": "rgba(151, 0, 0, 0.12)",
+              "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+              "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
+              "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
+              "tabs": [
+        {
+          "title": "지수",
+          "symbols": [
+            {
+              "s": "BITSTAMP:BTCUSD",
+              "d": "비트코인"
+            },
+            {
+              "s": "BITSTAMP:ETHUSD",
+              "d": "이더리움"
+            },
+            {
+              "s": "NASDAQ:XRPLX",
+              "d": "리플"
+            },
+            {
+              "s": "CRYPTOCAP:ADA",
+              "d": "에이다"
+            }
+          ],
+          "originalTitle": "Indices"
+        }
+      ]
+      }
+    </script>
+  </div>
+  <!-- TradingView Widget END -->
+
+
 </div>
 </html>

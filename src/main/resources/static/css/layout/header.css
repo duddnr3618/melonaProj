@@ -1,9 +1,28 @@
 
-.navbar-nav .nav-item {
-    display: inline-block;
-    margin-right: 10px;
-}
+/*.navbar-nav .nav-item {*/
+/*    display: inline-block;*/
+/*    margin-right: 10px;*/
+/*}*/
 
-.navbar-nav {
+#nav3 {
     justify-content: center;
 }
+
+header{
+
+	}
+
+	.navbar{
+
+	}
+
+	#header1{
+
+	}
+	.nav-link{
+		color: rgb(128, 128, 128);
+	}
+
+	.container-fluid{
+		border: 1px solid red;
+	}
