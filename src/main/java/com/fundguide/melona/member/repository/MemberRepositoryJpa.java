@@ -1,5 +1,6 @@
 package com.fundguide.melona.member.repository;
 
+import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.normalBoard.entity.QNormalBoardImpeachEntity;
 import com.fundguide.melona.management.commonQueryDsl.CommonQueryDsl;
 import com.fundguide.melona.member.dto.MemberLeastDTO;
@@ -8,11 +9,19 @@ import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.role.MemberRoleState;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.NumberExpression;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.querydsl.jpa.sql.JPASQLQuery;
+import com.querydsl.sql.MySQLTemplates;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.dialect.MySQLStorageEngine;
+import org.hibernate.query.criteria.JpaSubQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -24,12 +33,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static com.fundguide.melona.board.community.entity.QCommunityEntity.communityEntity;
 import static com.fundguide.melona.member.entity.QMemberEntity.memberEntity;
 import static com.fundguide.melona.board.normalBoard.entity.QNormalBoardEntity.normalBoardEntity;
-import static com.fundguide.melona.board.normalBoard.entity.QNormalBoardImpeachEntity.normalBoardImpeachEntity;
-import static com.fundguide.melona.board.community.entity.QCommunityImpeachEntity.communityImpeachEntity;
+import static com.fundguide.melona.board.leaderboard.entity.QLeaderBoardEntity.leaderBoardEntity;
 import static com.fundguide.melona.board.community.entity.QCommunityEntity.communityEntity;
+import static com.fundguide.melona.board.normalBoard.entity.QNormalBoardImpeachEntity.normalBoardImpeachEntity;
+import static com.fundguide.melona.board.leaderboard.entity.QLeaderBoardImpeachEntity.leaderBoardImpeachEntity;
+import static com.fundguide.melona.board.community.entity.QCommunityImpeachEntity.communityImpeachEntity;
 
 @Repository
 @Slf4j
@@ -41,11 +51,13 @@ public class MemberRepositoryJpa implements MemberRepository {
     private BooleanExpression expression = null;
     private JPAQuery<MemberEntity> jpaQuery = new JPAQuery<>();
     private final JPAQuery<MemberLeastDTO> leastJPAQuery = new JPAQuery<>();
+    private final JPASQLQuery<MemberEntity> jpasqlQuery;
 
 
     public MemberRepositoryJpa(EntityManager em) {
         this.em = em;
         this.query = new JPAQueryFactory(em);
+        this.jpasqlQuery = new JPASQLQuery<>(em, new MySQLTemplates());
     }
 
     @Transactional
@@ -176,16 +188,26 @@ public class MemberRepositoryJpa implements MemberRepository {
     @Override
     @Transactional(readOnly = true)
     public Page<MemberEntity> evaluatePendingByRule(String filter, Pageable pageable) {
-        jpaQuery = query.select(memberEntity)
-                .from(memberEntity)
-                .join(communityImpeachEntity)
-                .on(memberEntity.id.eq(communityImpeachEntity.member.id))
-                /*.join(normalBoardImpeachEntity)
-                .on(memberEntity.id.eq(normalBoardImpeachEntity.member.id))*/
-                .where(memberEntity.id.count().goe(10))
-                .distinct()
-                ;
 
+        JPQLQuery<Long> communitySubQuery = JPAExpressions.select(communityImpeachEntity.member.id)
+                .from(communityImpeachEntity)
+                .groupBy(communityImpeachEntity.member.id);
+
+        JPQLQuery<Long> normalSubQuery = JPAExpressions.select(normalBoardImpeachEntity.member.id)
+                .from(normalBoardImpeachEntity)
+                .groupBy(normalBoardImpeachEntity.member.id);
+
+        JPQLQuery<Long> leaderSubQuery = JPAExpressions.select(leaderBoardImpeachEntity.member.id)
+                .from(leaderBoardImpeachEntity)
+                .groupBy(leaderBoardImpeachEntity.member.id);
+
+        jpaQuery = query.selectFrom(memberEntity)
+                .where(memberEntity.id.in(
+                        jpasqlQuery.unionAll(communitySubQuery, normalSubQuery, leaderSubQuery)
+                ))
+                .groupBy(memberEntity.id)
+                .having(memberEntity.id.count().goe(10))
+                .distinct();
 
         switch (filter) {
             case "TRANSITORY" -> {
@@ -193,12 +215,15 @@ public class MemberRepositoryJpa implements MemberRepository {
                 return commonQueryDsl.pageableHandler(jpaQuery ,pageable);
             }
             case "STRONG" -> {
+                System.out.println(" { 강력한 경고 진입" + " }");
+                return null;
             }
             case "PERMANENT" -> {
+                System.out.println(" { 권한 상실한 진입" + " }");
+                return null;
             }
             default -> throw new IllegalArgumentException("정의되지 않은 필터 방식입니다.");
         }
-        return null;
     }
 
     /**{@inheritDoc}*/

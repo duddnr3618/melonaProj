@@ -1,9 +1,16 @@
 // noinspection JSUnresolvedReference
 $(function () {
-    id_DetailBoardFilter.find('li').eq(0).click();
+    id_ResultTable.find('img').hide();
+    loadingImg.hide();
 })
 
 const id_ResultTable = $('#ResultTable');
+const loadingImg = id_ResultTable.find('img');
+
+function LoadingImgShow() {
+    id_ResultTable.empty();
+    loadingImg.show();
+}
 
 const id_LayoutBoard = $('#LayoutBoard');
 const id_DetailBoardFilter = $('#DetailBoardFilter');
@@ -29,11 +36,10 @@ id_DetailBoardFilter.find('li').click(function () {
     params.append('category', categoryData);
     params.append('filter', filterData);
 
-    let titleArray = ["ID", "Title", "Writer"];
-
     axios.get(`management/board_filter_page?${params.toString()}`)
         .then(function (boardData) {
             id_ResultTable.html(boardData.data);
+            loadingImg.hide();
             disableButtonHandler(categoryData);
         })
         .catch(function () {
@@ -42,10 +48,9 @@ id_DetailBoardFilter.find('li').click(function () {
 
 /**게시물 비활성화 버튼 맵핑*/
 function disableButtonHandler(category) {
-    console.log("비활성화 버튼 재맵핑");
     let cls_disabledButton = $('.disabledButton');
     cls_disabledButton.click(function (button) {
-        console.log("비활성화 감지");
+        LoadingImgShow();
         let board_id = $(this).data('id');
         let params = new URLSearchParams();
         params.append('category', category);
@@ -69,9 +74,11 @@ id_DetailUserFilter.find('li').click(function () {
     const params = new URLSearchParams();
     params.append('filter', filterData);
 
+    LoadingImgShow();
     axios.get(`management/member_filter_page?${params.toString()}`)
         .then(function (memberData) {
             id_ResultTable.html(memberData.data);
+            loadingImg.hide();
         })
         .catch(function () {
 
@@ -84,12 +91,10 @@ id_DetailRoleFilter.find('li').click(function () {
     const params = new URLSearchParams();
     params.append('filter', filterData);
 
-    let titleArray = ["Name", "Nickname", "Role", "LimitState"];
+    LoadingImgShow();
     axios.get(`management/member_role_filter_page?${params.toString()}`)
         .then(function (roleData) {
-            const memberPaging = roleData.data.content;
-            const memberKey = ["memberName", "memberNickname", "memberRole", "memberLimitState"];
-
+            loadingImg.hide();
         })
         .catch(function () {
         });
@@ -120,6 +125,7 @@ managementCategoryMap.forEach((childrenUl, parentsUl) => {
     })
 
     childrenUl.find('li').click(function () {
+        LoadingImgShow();
         childrenUl.find('li').not($(this)).removeClass('active');
         $(this).addClass('active');
     })

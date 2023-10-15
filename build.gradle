@@ -67,6 +67,7 @@ dependencies {
 	implementation "com.querydsl:querydsl-core:${queryDslVersion}"
 	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta"
 	implementation "com.querydsl:querydsl-codegen:${queryDslVersion}"
+	implementation 'com.querydsl:querydsl-sql:5.0.0'
 
 	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
