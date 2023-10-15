@@ -33,7 +33,7 @@
 /* }*/
 .news-table {
  border-collapse: collapse;
- width: 1000px;  /* or any width you prefer */
+ width: 100%; /* or any width you prefer */
  margin-bottom: 20px; /* space between each news item */
 border: 1px solid black;
 }

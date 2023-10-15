@@ -3,9 +3,14 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
+
 <meta charset="UTF-8">
 
+<link rel="stylesheet" th:href="@{../static/css/index.css}" type="text/css">
+
+
 <div layout:fragment="content">
+
   <br>
   <div>
     <ul>
@@ -26,6 +31,7 @@
       <li></li>
     </ul>
   </div>
-
+  <iframe src="http://localhost:7777/news/list?text=주식" width="1290" height="300"></iframe>
+  <iframe src="http://localhost:7777/news/list2?text=주식" width="1290" height="300"></iframe>
 </div>
 </html>
