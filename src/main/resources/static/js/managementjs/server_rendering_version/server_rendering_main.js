@@ -5,7 +5,7 @@ $(function () {
 })
 
 const id_ResultTable = $('#ResultTable');
-const loadingImg = id_ResultTable.find('img');
+const loadingImg = $('#LoadingImg');
 
 function LoadingImgShow() {
     id_ResultTable.empty();
@@ -95,6 +95,7 @@ id_DetailRoleFilter.find('li').click(function () {
     axios.get(`management/member_role_filter_page?${params.toString()}`)
         .then(function (roleData) {
             loadingImg.hide();
+            id_ResultTable.html(roleData.data);
         })
         .catch(function () {
         });

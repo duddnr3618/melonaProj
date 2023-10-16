@@ -40,10 +40,11 @@ public interface MemberRepository {
      * @param pageable 페이저블 처리를 위한 값
      * @return Page
      */
-    Page<MemberLeastDTO> memberRoleStateFilterPage(String filter , Pageable pageable);
+    Page<MemberEntity> getMemberAuthorityByRule(String filter , Pageable pageable);
 
     void adminSave(MemberEntity memberEntity);
 
+    /**규칙으로 지정된 각 보드의 신고 값들이 n값 이상인 경우(가벼운 = 10, 강력한 = 20) 이며 그 수가 */
     Page<MemberEntity> evaluatePendingByRule(String filter, Pageable pageable);
 
     /**이메일로 옵셔널 값을 반환하기 위한 메서드*/

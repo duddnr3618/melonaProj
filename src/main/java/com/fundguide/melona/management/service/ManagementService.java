@@ -10,10 +10,10 @@ import com.fundguide.melona.board.normalBoard.repository.NormalBoardRepository;
 import com.fundguide.melona.management.service.filter.CommunityBoardCategoryHandler;
 import com.fundguide.melona.management.service.filter.LeaderBoardCategoryHandler;
 import com.fundguide.melona.management.service.filter.NormalBoardCategoryHandler;
-import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
+import com.fundguide.melona.member.role.MemberRoleState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -88,13 +88,23 @@ public class ManagementService {
         }
     }
 
-    public Page<MemberLeastDTO> getMemberRoleStatePaging(String filter, Pageable pageable) {
+    public Page<MemberEntity> getMemberAuthorityByRule(String filter, Pageable pageable) {
         if (!"all".equals(filter)) {
-            return memberRepository.memberRoleStateFilterPage(filter, pageable);
+            return memberRepository.getMemberAuthorityByRule(filter, pageable);
         } else {
-            return memberRepository.findAllOfMemberLeastData(pageable);
+            return memberRepository.findAll(pageable);
         }
     }
+
+    public ResponseEntity<String> setMemberAsLeader(Long memberId) {
+        Optional<MemberEntity> optionalMember = memberRepositoryData.findById(memberId);
+        return optionalMember.map(o -> {
+            o.setMemberRole(MemberRoleState.ROLE_SET_LEADER);
+            memberRepositoryData.save(o);
+            return ResponseEntity.ok().body("리더로 권한 변경 완료");
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 
     /**보드의 공통적인 컬럼 BoardUsing의 클래스를 찾고, 그것을 이용해서 JPA 레파지토리의 공통적인 메서드 Save를 활용한 업데이트 메서드*/
     protected <T> ResponseEntity<String> updateBoardUsing(Optional<T> optional, JpaRepository<T, Long> repository) {
