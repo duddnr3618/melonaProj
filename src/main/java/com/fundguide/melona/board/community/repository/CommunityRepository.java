@@ -1,6 +1,7 @@
 package com.fundguide.melona.board.community.repository;
 
 import com.fundguide.melona.board.community.entity.CommunityEntity;
+import com.fundguide.melona.member.entity.MemberEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,6 +25,6 @@ public interface CommunityRepository extends JpaRepository<CommunityEntity, Long
     @Query(value = "update Community_like b set b.boardCount=b.boardCount+1 where b.id=:id")
     void updateCounts(@Param("id") Long id);
 
-
+    Page<CommunityEntity> findByMemberEntity(MemberEntity memberEntity, Pageable pageable);
 }
 

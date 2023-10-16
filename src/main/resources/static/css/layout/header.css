@@ -1,9 +1,34 @@
 
-.navbar-nav .nav-item {
-    display: inline-block;
-    margin-right: 10px;
-}
+/*.navbar-nav .nav-item {*/
+/*    display: inline-block;*/
+/*    margin-right: 10px;*/
+/*}*/
 
-.navbar-nav {
+#nav3 {
     justify-content: center;
 }
+
+.navbar-brand{font-size: large; color: #279d00;}
+
+#logo {width:100px; height: 100px}
+
+header{
+
+	}
+
+	.navbar{
+
+	}
+
+	#header1{
+
+	}
+	.nav-link{
+		color: rgb(128, 128, 128);
+	}
+
+	.container-fluid{
+		border: 1px solid red;
+	}
+
+	a.hover {color: #279d00}

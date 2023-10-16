@@ -11,7 +11,7 @@
     <tr>
         <td class="header-cell">
             <span class="date-text" th:text="${#dates.format(news.pubDate, 'yy년 MM월 dd일 EEEE HH:mm')}"></span>
-            <a class="news-link" th:href="${news.link}" th:utext="${news.title}"></a>
+            <a class="news-link" th:href="${news.link}" th:utext="${news.title}" target="_blank"></a>
         </td>
     </tr>
     <tr>
