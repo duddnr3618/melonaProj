@@ -38,6 +38,7 @@ public class LeaderBoardController {
     public String list(Model model,
                        @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
                        String searchKeyword) {
+
         Page<LeaderBoardEntity> list = null;
         if (searchKeyword == null) {
             list = leaderBoardService.boardList(pageable);

@@ -2,6 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout1}">
 
 
@@ -12,6 +13,11 @@
     <span th:if="${userInfo == null}">게시글 작성은 로그인시 가능합니다.</span>
     <hr>
     <div>
+        <form th:action="@{/leaderBoard/list}" method="get">
+            <input type="text" name="searchKeyword">
+            <button type="submit">검색</button>
+        </form>
+
         <table>
             <tr>
                 <th>글번호</th>
@@ -29,7 +35,7 @@
         </table>
     </div>
     <div>
-        <a href="/leaderBoard/wrtieForm">글작성</a>
+        <a href="/leaderBoard/wrtieForm" sec:authorize="hasAnyRole('ROLE_SET_LEADER','ROLE_AUTO_LEADER','ROLE_ADMIN')">글작성</a>
     </div>
     <a th:href="@{/leaderBoard/list(page=0)}">처음</a>
     <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
@@ -37,9 +43,6 @@
         <strong th:if="${page == nowPage}" th:text="${page}" style="color: red"></strong>
     </th:block>
     <a th:href="@{/leaderBoard/list(page=${list.totalPages})}">마지막</a>
-    <form th:action="@{/leaderBoard/list}" method="get">
-        <input type="text" name="searchKeyword">
-        <button type="submit">검색</button>
-    </form>
+
 </div>
 </html>

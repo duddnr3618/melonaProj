@@ -81,19 +81,18 @@
 <!--	차트 끝!-->
 
 	<!--  sec:authorize="hasAnyAuthority('ROLE_ADMIN')" -->
-	<nav class="navbar navbar-green" style="background-color: #D0EDB3;"><!--메로나 색으로 변경 완료		-->
+	<nav class="navbar navbar-green"><!--메로나 색으로 변경 완료		-->
 		<div class="container-fluid">
-			<a class="navbar-brand" href="/">MELONA</a>
+			<a class="navbar-brand" href="/">Melona</a>
 
 <!--			nav 바에 들어간 애들!-->
 <!--		-->
 			<div id="nav3" class="d-flex justify-content-center flex-grow-1">
 				<a class="nav-link mx-5" th:href="@{/news/newspage}">뉴스</a>
-				<a class="nav-link mx-5" th:href="@{/news}">가이드</a>
-
-				<!--        <li><a href="/leaderBoard/list">리더가이드</a></li>-->
-				<!--        <li><a href="/normalBoard/list">일반가이드</a></li>-->
-
+				<ul class="nav-link mx-5" href="#">가이드
+					<li><a th:href="@{/leaderBoard/list}">리더가이드</a></li>
+					<li><a th:href="@{/normalBoard/list}">일반가이드</a></li>
+				</ul>
 				<a class="nav-link mx-5" th:href="@{/community/list}">커뮤니티</a>
 				<a class="nav-link mx-5" th:href="@{/event}">이벤트</a>
 				<a class="nav-link mx-5" th:href="@{/stockinformation/stockinfo1}">차트</a>
@@ -116,7 +115,7 @@
 							<a class="nav-link active" aria-current="page" href="/member/loginForm">Login</a>
 						</li>
 						<li class="nav-item" sec:authorize="isAnonymous()" >
-							<a class="nav-link active" aria-current="page" href="/member/findInfoForm">id/pwd찾기</a>
+							<a class="nav-link active" aria-current="page" href="/member/findInfoForm">아이디/비밀번호찾기</a>
 						</li>
 
 				<li class="nav-item"  >
@@ -128,9 +127,9 @@
 				<li class="nav-item"  >
 					<a class="nav-link active" aria-current="page" href="/koreaBankSearch">정보검색</a>
 				</li>
-				<li class="nav-item"  >
+			<!--	<li class="nav-item"  >
 					<a class="nav-link active" aria-current="page" href="/statisticList">통계</a>
-				</li>
+				</li>-->
 	           <li class="nav-item" sec:authorize="isAuthenticated()">
 	            <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
 	          </li>
@@ -148,17 +147,6 @@
 							<a class="nav-link active" aria-current="page" href="/member/joinForm">회원가입</a>
 						</li>
 
-						<li class="nav-item" sec:authorize="isAuthenticated()">
-							<a class="nav-link active" aria-current="page" href="#">내정보</a>
-						</li>
-
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#">C-book 소개</a>
-						</li>
-
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="#">고객센터</a>
-						</li>
 						<li class="nav-item">
 							<a class="nav-link active" aria-current="page" th:href="@{/event}">Event</a>
 						</li>

@@ -8,6 +8,10 @@
     justify-content: center;
 }
 
+.navbar-brand{font-size: large; color: #279d00;}
+
+#logo {width:100px; height: 100px}
+
 header{
 
 	}
@@ -26,3 +30,5 @@ header{
 	.container-fluid{
 		border: 1px solid red;
 	}
+
+	a.hover {color: #279d00}
