@@ -22,7 +22,7 @@
      /를 제외한 경로로 지정할것. -->
    <!-- <link th:href="@{css/layout1.css}" rel="stylesheet">-->
 
-    <link th:href="@{/css/member/common10.css}" rel="stylesheet">
+    <link th:href="@{/css/member/joinForm.css}" rel="stylesheet">
     <th:block layout:fragment="script"></th:block>
     <th:block layout:fragment="css"></th:block>
 
@@ -64,7 +64,7 @@
                 <strong id="memberEmailError">아이디로 사용할 이메일을 입력해 주세요. 입력한 값이 변경되면 중복체크와 이메일 인증을 다시 받아야합니다.</strong>
             </div>
             <div class="col-4"><br/>
-                <button class="btn btn-primary" type="button" id="email" onclick="duplicatedCheck(this);">중복확인</button>
+                <button class="btn btn-primary" type="button" id="email" onclick="duplicatedCheck(this);" >중복확인</button>
             </div>
         </div>
         <br/>
@@ -78,7 +78,7 @@
                 <strong id="memberConfirmError">발송된 인증번호를 입력해 주세요.</strong>
             </div>
             <div class="col-4"><br/>
-                <button class="btn btn-primary" type="button" onclick="sendMail();">인증메일발송</button>
+                <button class="btn btn-primary" type="button" onclick="sendMail();" id="btn1">인증메일발송</button>
             </div>
         </div>
         <br/>
@@ -121,7 +121,7 @@
                 <strong id="memberNicknameError">2자 이상 35자이하, 닉네임 중복확인은 필수입니다</strong>
             </div>
             <div class="col-4"><br/>
-                <button class="btn btn-primary" type="button" id="nickname" onclick="duplicatedCheck(this);">중복확인
+                <button class="btn btn-primary" type="button" id="nickname" onclick="duplicatedCheck(this);" >중복확인
                 </button>
             </div>
         </div>
@@ -143,7 +143,7 @@
         <div class="row">
             <div class="col-4"></div>
             <div class="col-2">
-                <button class="w-100 btn btn-primary btn-lg" type="submit">회원 가입</button>
+                <button class="w-100 btn btn-primary btn-lg" type="submit" id="btn2">회원 가입</button>
             </div>
             <div class="col-2">
                 <button class="w-100 btn btn-secondary btn-lg"
