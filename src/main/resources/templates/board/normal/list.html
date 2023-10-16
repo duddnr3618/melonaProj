@@ -12,6 +12,11 @@
     <span th:if="${userInfo == null}">게시글 작성은 로그인시 가능합니다.</span>
     <hr>
     <div>
+
+        <form th:action="@{/normalBoard/list}" method="get">
+            <input type="text" name="searchKeyword">
+            <button type="submit">검색</button>
+        </form>
         <table>
             <tr>
                 <th>글번호</th>
@@ -37,9 +42,6 @@
         <strong th:if="${page == nowPage}" th:text="${page}" style="color: red"></strong>
     </th:block>
     <a th:href="@{/normalBoard/list(page=${list.totalPages})}">마지막</a>
-    <form th:action="@{/normalBoard/list}" method="get">
-        <input type="text" name="searchKeyword">
-        <button type="submit">검색</button>
-    </form>
+
 </div>
 </html>
