@@ -6,6 +6,7 @@ import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.mapper.MemberTransMapper;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
+import com.fundguide.melona.member.role.MemberRoleState;
 import com.fundguide.melona.member.service.CustomUserDetails;
 import com.fundguide.melona.member.service.MemberService;
 import com.fundguide.melona.member.utils.ExchangeRate;
@@ -190,12 +191,12 @@ public class MemberController {
         model.addAttribute("test", exchangeDtos);
         return "member/exchangeRate";
     }
-    @GetMapping("/statisticList")
+  /*  @GetMapping("/statisticList")
     public String test2(Model model){
         String statistics = statisticList.statistics();
         model.addAttribute("test", statistics);
         return "member/koreaBank";
-    }
+    }*/
     @GetMapping("/koreaBankSearch")
     public String test3(){
         return "member/koreaBankSearch";
@@ -207,10 +208,21 @@ public class MemberController {
         String result = statisticWord.statisticWord(search);
         return result;
     }
-    @GetMapping("/myList")
-    public String test5(@AuthenticationPrincipal CustomUserDetails customUserDetails){
-        return null;
+    @GetMapping("/oauth")
+    public String oAuthLoginAfter(@AuthenticationPrincipal CustomUserDetails customUserDetails,Model model){
+        if(!customUserDetails.getMemberEntity().getMemberRole().toString().equals("ROLE_OAUTH2")){
+            return "redirect:/";
+        }
+        MemberDto memberDto = MemberTransMapper.INSTANCE.entityToDto(customUserDetails.getMemberEntity());
+        model.addAttribute("memberDto", memberDto);
+        return "member/oauthJoinFrom";
     }
 
-
+    @PostMapping("/oauth/joinPro")
+    public String oauthSave(@ModelAttribute MemberDto memberDto,BindingResult bindingResult,@AuthenticationPrincipal CustomUserDetails customUserDetails){
+        customUserDetails.getMemberEntity().setMemberRole(MemberRoleState.ROLE_USER);
+        memberService.oauthSave(memberDto);
+        return "redirect:/";
+    }
 }
+

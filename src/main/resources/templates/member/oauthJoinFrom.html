@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+
+    <!--부트스트랩 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+
+    <!-- css 링크 -->
+    <!--fix : /css/layout1.css -> css/layout1.css
+    because : 로컬 환경에서는 스프링부트 시스템으로 인해 추론이 가능해를 자동 삭제되지만
+     jar 배포 환경에서는 추론 시스템이 작동하지 않아 이중 슬래쉬(/)처리 되어
+     리소스 핸들러 환경을 인식할 수 없음. 특수한 상황을 제외한 모든 html 및 컨트롤 경로는
+     /를 제외한 경로로 지정할것. -->
+   <!-- <link th:href="@{css/layout1.css}" rel="stylesheet">-->
+    <link th:href="@{/css/member/joinForm.css}" rel="stylesheet">
+    <link th:href="@{/css/member/common10.css}" rel="stylesheet">
+    <th:block layout:fragment="script"></th:block>
+    <th:block layout:fragment="css"></th:block>
+
+</head>
+<body>
+
+
+<div layout:fragment="content" class="content">
+    <form action="/oauth/joinPro" th:action="@{/oauth/joinPro}" th:object="${memberDto}" method="post"
+          onsubmit="return validateCheck();">
+        <input type="hidden" th:value="${id}" th:field="*{id}">
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
+        </div>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <label for="memberName">이름</label>
+                <input type="text" th:field="*{memberName}" class="form-control" th:value="${memberName}"
+                       th:errorclass="field-error" required>
+                <div class="field-error" th:errors="*{memberName}"/>
+
+            </div>
+            <div class="col-4">
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <label for="memberEmail">이메일</label>
+                <input type="email" required th:field="*{memberEmail}" id="memberEmail" class="form-control" th:value="${memberEmail}" readonly
+                       th:errorclass="field-error" placeholder="이메일형식을 지켜주세요" >
+                <div class="field-error" th:errors="*{memberEmail}"/>
+                <br/>
+            </div>
+            <div class="col-4">
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <label for="memberPassword">비밀번호</label>
+                <input type="password" required id="memberPassword" th:field="*{memberPassword}" class="form-control"
+                       th:errorclass="field-error" placeholder="비밀번호는 최소10 최대35자까지 가능합니다." minlength="10"
+                       maxlength="35">
+                <div class="field-error" th:errors="*{memberPassword}"/>
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <label for="memberPassword2">비밀번호 확인</label>
+                <input type="password" id="memberPassword2" class="form-control" minlength="10" maxlength="35"
+                       placeholder="비밀번호와 같은값을 입력하세요" required>
+                <br/>
+                <strong id="memberPassword2Error">10자 이상 35자 이하, 비밀번호와 같은 값을 입력해주세요. </strong>
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <label for="memberNickname">닉네임</label>
+                <input type="text" th:field="*{memberNickname}" class="form-control"
+                       th:errorclass="field-error" required maxlength="30" minlength="2" id="memberNickname" th:value="${memberNickname}"
+                       placeholder="2자이상 30자 이하로 만들어주세요" onchange="dupleChange(this);">
+                <div class="field-error" th:errors="*{memberNickname}"/>
+                <br/>
+                <strong id="memberNicknameError">2자 이상 35자이하, 닉네임 중복확인은 필수입니다</strong>
+            </div>
+            <div class="col-4"><br/>
+                <button class="btn btn-primary" type="button" id="nickname" onclick="duplicatedCheck();">중복확인
+                </button>
+            </div>
+        </div>
+
+        <br/>
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+                <label for="memberAddress">주소</label>
+                <input type="text"  id="memberAddress" th:field="*{memberAddress}" class="form-control"
+                       th:errorclass="field-error" placeholder="주소는 입력 하셔도 되고 안하셔도 됩니다."
+                       maxlength="100">
+                <div class="field-error" th:errors="*{memberAddress}"/>
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <button class="w-100 btn btn-primary btn-lg" type="submit" id="btn1">회원 가입</button>
+            </div>
+            <div class="col-4"></div>
+        </div>
+
+    </form>
+    <input type="hidden" id="confirmCode">
+
+
+
+    <script th:inline="javascript">
+        let nicknameDupleCheck = false;
+
+        function dupleChange(which) {
+            let inputId = which.id
+            if (inputId === "memberNickname") {
+                nicknameDupleCheck = false;
+            }
+
+        }
+
+
+        function duplicatedCheck() {
+
+            let memberEmailInput = document.getElementById("memberEmail");
+            let memberEmail = memberEmailInput.value;
+            let memberNickname = document.getElementById("memberNickname").value;
+            let url = "/member/duplicatedCheck";
+            let data;
+                data = {
+                    "memberNickname": memberNickname
+                }
+            axios.post(url, data)
+                .then(function (response) {
+                    alert(response.data);
+                        if(response.data==='ok'){
+                            nicknameDupleCheck = true;
+                        }
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    alert(error);
+                    console.error(error);
+                });
+
+        }
+
+        function validateCheck() {    // 폼체크
+            let memberPassword = document.getElementById("memberPassword").value;       // 비밀번호
+            let memberPassword2 = document.getElementById("memberPassword2").value;      // 비밀번호 확인
+            if (memberPassword !== memberPassword2) {
+                document.getElementById("memberPassword").focus();
+                let memberPassword2Error = document.getElementById("memberPassword2Error");
+                memberPassword2Error.style.color = "red";
+                memberPassword2Error.innerHTML = "비밀번호와 비밀번호확인은 같은 값이여야합니다.";
+                return false;
+            }  else if (!nicknameDupleCheck) {
+                document.getElementById("memberNickname").focus();
+                let memberNicknameError = document.getElementById("memberNicknameError");
+                memberNicknameError.style.color = "red";
+                memberNicknameError.innerHTML = "닉네임 중복체크는 필수입니다";
+                return false;
+            }
+        }
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</div>
+
+<br>
+<!--<div th:replace="fragments/footer::footer"></div>-->
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

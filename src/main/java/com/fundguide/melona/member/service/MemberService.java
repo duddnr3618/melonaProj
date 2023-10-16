@@ -35,7 +35,7 @@ public class MemberService {
     public void memberSave(MemberDto memberDto) {
         MemberEntity memberEntity = MemberTransMapper.INSTANCE.dtoToEntity(memberDto);
         memberEntity.setMemberLimitState(MemberLimitState.NORMAL);
-        memberEntity.setMemberRole(MemberRoleState.ROLE_ADMIN);
+        memberEntity.setMemberRole(MemberRoleState.ROLE_USER);
         memberEntity.setMemberPassword(utilsPasswordEncoder.encode(memberDto.getMemberPassword()));
         memberRepository.memberSave(memberEntity);
     }
@@ -123,5 +123,14 @@ public class MemberService {
                 .memberEmail(adminEmail)
                 .build();
         memberRepository.adminSave(memberEntity);
+    }
+
+    public void oauthSave(MemberDto memberDto) {
+        MemberEntity memberEntity = MemberTransMapper.INSTANCE.dtoToEntity(memberDto);
+        System.out.println("memberEntity.getId() = " + memberEntity.getId());
+        memberEntity.setMemberLimitState(MemberLimitState.NORMAL);
+        memberEntity.setMemberRole(MemberRoleState.ROLE_USER);
+        memberEntity.setMemberPassword(utilsPasswordEncoder.encode(memberDto.getMemberPassword()));
+        memberRepository.oauthSave(memberEntity);
     }
 }
