@@ -1,31 +1,43 @@
-/*iframe, #newsList {*/
-/*    border: 1px solid black;*/
-/*}*/
-table {
-    border-collapse: collapse; /* This will ensure borders don't double up */
+/* CSS 파일: index.css */
+
+ul {
+    list-style-type: none; /* 리스트의 기본 스타일 제거 */
+    padding: 0; /* 패딩 제거 */
+    margin: 0; /* 마진 제거 */
+    display: flex; /* 리스트 항목들을 가로로 배열 */
 }
 
-/*table, th, td {*/
-/*    border: 1px solid black;*/
-/*}*/
-/*figure{
-    margin-top: 100px;
-}*/
-/*#container {*/
-/*    flex: 1;*/
-/*}*/
-
-.flex-container {
-    display: flex;
+li {
+    margin-right: 20px; /* 항목들 사이에 일정 간격 주기 */
+    position: relative; /* 하위 메뉴 위치 설정을 위한 상대 위치 지정 */
 }
-/*iframe, #newsList {*/
-/*    border: 1px solid black;*/
+
+li a {
+    text-decoration: none; /* 링크에 밑줄 제거 */
+    color: black; /* 링크 텍스트 색상 설정 */
+}
+
+/* 하위 메뉴 스타일 */
+li > ul {
+    display: none; /* 기본적으로 하위 메뉴 숨기기 */
+    position: absolute; /* 절대 위치 지정 */
+    top: 100%; /* 상위 항목 바로 아래에 위치 */
+    left: 0; /* 왼쪽 정렬 */
+    list-style-type: none; /* 리스트 스타일 제거 */
+    margin: 0; /* 마진 제거 */
+    padding: 0; /* 패딩 제거 */
+}
+
+/* 부모 항목에 호버되었을 때 하위 메뉴 표시 */
+li:hover > ul {
+    display: block;
+}
+/*.tradingview-widget-container {*/
+/*    margin-bottom: 20px;*/
 /*}*/
 
-.content-center {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+.tradingview-widget-container{
+
+    margin: 60px;
+
 }
