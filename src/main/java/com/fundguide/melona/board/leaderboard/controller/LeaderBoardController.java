@@ -103,8 +103,10 @@ public class LeaderBoardController {
         if(customUserDetails == null) {
             return "board/leader/detail";
         }else {
+            String userName = customUserDetails.getMemberEntity().getMemberName();
             Long userId = customUserDetails.getMemberEntity().getId();
             model.addAttribute("userId" , userId);
+            model.addAttribute("userName" , userName);
             return "board/leader/detail";
         }
 

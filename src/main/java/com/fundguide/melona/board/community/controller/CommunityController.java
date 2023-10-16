@@ -105,7 +105,10 @@ public class CommunityController {
             return "board/community/detail";
         }else {
             Long userId = customUserDetails.getMemberEntity().getId();
+            String userName = customUserDetails.getMemberEntity().getMemberName();
             model.addAttribute("userId" , userId);
+            model.addAttribute("userName", userName);
+            System.out.println(" >>>>>>>>>> !! : " + userName);
             return "board/community/detail";
         }
 
