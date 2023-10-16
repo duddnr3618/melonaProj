@@ -6,6 +6,7 @@ import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.mapper.MemberTransMapper;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
+import com.fundguide.melona.member.role.MemberRoleState;
 import com.fundguide.melona.member.service.CustomUserDetails;
 import com.fundguide.melona.member.service.MemberService;
 import com.fundguide.melona.member.utils.ExchangeRate;
@@ -219,6 +220,7 @@ public class MemberController {
 
     @PostMapping("/oauth/joinPro")
     public String oauthSave(@ModelAttribute MemberDto memberDto,BindingResult bindingResult,@AuthenticationPrincipal CustomUserDetails customUserDetails){
+        customUserDetails.getMemberEntity().setMemberRole(MemberRoleState.ROLE_USER);
         memberService.oauthSave(memberDto);
         return "redirect:/";
     }
