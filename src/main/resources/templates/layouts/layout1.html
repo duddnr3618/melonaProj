@@ -2,6 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -16,20 +17,28 @@
 	<script src="/webjars/jquery/3.7.0/dist/jquery.min.js"></script>
 </th:block>
 
-<th:block layout:fragment="css"></th:block>
+<th:block layout:fragment="css">
+
+
+
+
+</th:block>
 
 </head>
+
+
 <body>
 
-	<div th:replace="fragments/header::header"></div>
-	
+
+<div th:replace="fragments/header::header"></div>
+
 	<div layout:fragment="content" id="LayoutContent" class ="content">
-	
-	
+
+
 	</div>
-	
+
 	<br>
-	<div th:replace="fragments/footer::footer"></div>
+	<div th:replace="fragments/footer::footer" ></div>
 
 
 </body>
