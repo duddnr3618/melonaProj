@@ -190,12 +190,12 @@ public class MemberController {
         model.addAttribute("test", exchangeDtos);
         return "member/exchangeRate";
     }
-    @GetMapping("/statisticList")
+  /*  @GetMapping("/statisticList")
     public String test2(Model model){
         String statistics = statisticList.statistics();
         model.addAttribute("test", statistics);
         return "member/koreaBank";
-    }
+    }*/
     @GetMapping("/koreaBankSearch")
     public String test3(){
         return "member/koreaBankSearch";
