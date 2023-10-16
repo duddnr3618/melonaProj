@@ -16,23 +16,24 @@
 </head>
 <body>
 <h1>커뮤니티 게시판</h1>
+<li><a th:href="@{/mypage/leader-board}">리더 게시판</a></li>
+<li><a th:href="@{/mypage/normal-board}">일반 게시판</a></li>
 <table class="table">
     <thead>
     <tr>
-        <th>ID</th>
-        <th>작성자</th>
+        <th>글번호</th>
         <th>제목</th>
+        <th>등록일</th>
         <th>조회수</th>
-        <th>작성 시간</th>
+
     </tr>
     </thead>
     <tbody>
-    <tr th:each="board : ${communityPage.content}">
-        <td th:text="${board.id}"></td>
-        <td th:text="${board.boardWriter}"></td>
-        <td th:text="${board.boardTitle}"></td>
-        <td th:text="${board.boardHits}"></td>
-        <td th:text="${board.createdTime}"></td>
+    <tr th:each="board : ${mycommunityBoard.content}">
+        <th th:text="${board.id}"></th>
+        <th><a  th:text="${board.boardTitle}" th:href="@{|/community/${board.id}|}"></a></th>
+        <th th:text="*{#temporals.format(board.createdTime,'yyyy-MM=dd HH:mm:ss')}"></th>
+        <th th:text="${board.boardHits}"></th>
     </tr>
     </tbody>
 </table>
