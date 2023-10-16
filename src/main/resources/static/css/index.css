@@ -14,8 +14,9 @@ li {
 
 li a {
     text-decoration: none; /* 링크에 밑줄 제거 */
-    color: black; /* 링크 텍스트 색상 설정 */
+    color: white; /* 링크 텍스트 색상 설정 */
 }
+
 
 /* 하위 메뉴 스타일 */
 li > ul {
