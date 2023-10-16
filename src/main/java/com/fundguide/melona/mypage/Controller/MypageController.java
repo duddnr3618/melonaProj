@@ -47,12 +47,23 @@ public class MypageController {
     }
 
     @GetMapping("/mypage2")
-    public String viewMyPage(Model model, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public String viewMyPage(Model model, @AuthenticationPrincipal CustomUserDetails userDetails, @RequestParam(defaultValue = "0") int page) {
         if (userDetails == null) {
             return "redirect:/member/loginForm";
         }
+
+        int pageSize = 10;  // 한 페이지에 보여줄 게시물 수
+        String view = "";
+
+        MemberEntity member = userDetails.getMemberEntity();
+
+        Page<CommunityEntity> mycommunityBoard = mypageService.getCommunityPosts(member, page, pageSize);
+        model.addAttribute("mycommunityBoard", mycommunityBoard);
+        view = "mypage/community-board";
+
         return "mypage/mypage";
     }
+
 
     @GetMapping("/{type}-board")
     public String viewBoard(Model model, @PathVariable String type, @RequestParam(defaultValue = "0") int page, @AuthenticationPrincipal CustomUserDetails userDetails) {
