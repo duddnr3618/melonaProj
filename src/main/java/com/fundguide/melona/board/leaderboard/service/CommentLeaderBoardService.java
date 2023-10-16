@@ -26,16 +26,20 @@ public class CommentLeaderBoardService {
     private final LeaderBoardRepository leaderBoardRepository;
 
     public Long save(CommentLeaderBoardDto commentLeaderBoardDto) {
+        
+        System.out.println("서비스 진입");
         /* 부모 엔티티 조회 */
         Optional<LeaderBoardEntity> optionalLeaderBoardEntity = leaderBoardRepository.findById(commentLeaderBoardDto.getBoardId());
         System.out.println(">>>>>>>>> optionalCommunityEntity: " + optionalLeaderBoardEntity);
         if (optionalLeaderBoardEntity.isPresent()) {
+            System.out.println("값 존재함");
             LeaderBoardEntity leaderBoardEntity = optionalLeaderBoardEntity.get();
             CommentLeaderBoardEntity commentLeaderBoardEntity = CommentLeaderBoardEntity.toSaveLeaderBoardEntity(commentLeaderBoardDto, leaderBoardEntity);
             System.out.println(">>>>>>>> commentLeaderBoardEntity :  " + commentLeaderBoardEntity);
             return commentLeaderBoardRepository.save(commentLeaderBoardEntity).getId();
         } else {
-            return null;
+            System.out.println("값 없음");
+            throw new IllegalAccessError("해당 게시판 찾지 못함");
         }
 
     }

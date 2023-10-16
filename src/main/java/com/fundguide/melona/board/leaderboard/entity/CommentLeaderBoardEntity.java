@@ -12,7 +12,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Table(name = "comment_leader_board")
-public class CommentLeaderBoardEntity extends BaseTimeEntity {
+public class CommentLeaderBoardEntity extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
