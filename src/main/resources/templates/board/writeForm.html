@@ -11,7 +11,6 @@
 
     <form th:action="${url}" method="post" enctype="multipart/form-data">
         <input type="hidden" th:value="${memberId}" name="memberId"><br>
-        <input  name="memberName" type="hidden" th:value="${userName}">
         <input  name="memberEmail" type="hidden" th:value="${memberId}">
         작성자 : <span readonly th:text="${userName}"></span><br>
         제목 : <input type="text" name="boardTitle"><br>
