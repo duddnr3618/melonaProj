@@ -218,4 +218,16 @@ public class MemberRepositoryJpa implements MemberRepository {
                         .and(memberEntity.memberRole.notIn(MemberRoleState.DISABLED)));
         return commonQueryDsl.pageableHandler(memberEntityJPAQuery, pageable);
     }
+
+    @Override
+    @Transactional
+    public void oauthSave(MemberEntity memberEntity) {
+        MemberEntity memberEntity1 = em.find(MemberEntity.class, memberEntity.getId());
+        memberEntity1.setMemberLimitState(memberEntity.getMemberLimitState());
+        memberEntity1.setMemberNickname(memberEntity.getMemberNickname());
+        memberEntity1.setMemberAddress(memberEntity.getMemberAddress());
+        memberEntity1.setMemberName(memberEntity.getMemberName());
+        memberEntity1.setMemberPassword(memberEntity.getMemberPassword());
+        memberEntity1.setMemberRole(memberEntity.getMemberRole());
+    }
 }

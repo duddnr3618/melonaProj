@@ -190,12 +190,12 @@ public class MemberController {
         model.addAttribute("test", exchangeDtos);
         return "member/exchangeRate";
     }
-    @GetMapping("/statisticList")
+  /*  @GetMapping("/statisticList")
     public String test2(Model model){
         String statistics = statisticList.statistics();
         model.addAttribute("test", statistics);
         return "member/koreaBank";
-    }
+    }*/
     @GetMapping("/koreaBankSearch")
     public String test3(){
         return "member/koreaBankSearch";
@@ -207,10 +207,20 @@ public class MemberController {
         String result = statisticWord.statisticWord(search);
         return result;
     }
-    @GetMapping("/myList")
-    public String test5(@AuthenticationPrincipal CustomUserDetails customUserDetails){
-        return null;
+    @GetMapping("/oauth")
+    public String oAuthLoginAfter(@AuthenticationPrincipal CustomUserDetails customUserDetails,Model model){
+        if(!customUserDetails.getMemberEntity().getMemberRole().toString().equals("ROLE_OAUTH2")){
+            return "redirect:/";
+        }
+        MemberDto memberDto = MemberTransMapper.INSTANCE.entityToDto(customUserDetails.getMemberEntity());
+        model.addAttribute("memberDto", memberDto);
+        return "member/oauthJoinFrom";
     }
 
-
+    @PostMapping("/oauth/joinPro")
+    public String oauthSave(@ModelAttribute MemberDto memberDto,BindingResult bindingResult,@AuthenticationPrincipal CustomUserDetails customUserDetails){
+        memberService.oauthSave(memberDto);
+        return "redirect:/";
+    }
 }
+
