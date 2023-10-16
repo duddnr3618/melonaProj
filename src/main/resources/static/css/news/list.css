@@ -44,19 +44,19 @@ border: 1px solid black;
 }
 
 .date-text {
- font-size: 10px;
+ font-size: 15px;
  display: inline-block;
  margin-right: 10px;  /* space between date and title */
 }
 
 .news-link {
- font-size: 15px;
+ font-size: 20px;
  text-decoration: none;  /* if you want to remove the underline from links */
  color: black;  /* or any color you prefer */
 }
 
 .description-cell {
- font-size: 10px;
+ font-size: 15px;
  padding: 5px;
  border-bottom: 1px solid #e0e0e0;  /* light border, can change if needed */
 }

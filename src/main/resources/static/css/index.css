@@ -32,3 +32,12 @@ li > ul {
 li:hover > ul {
     display: block;
 }
+/*.tradingview-widget-container {*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+.tradingview-widget-container{
+
+    margin: 60px;
+
+}
