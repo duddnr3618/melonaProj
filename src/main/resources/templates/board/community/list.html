@@ -43,7 +43,7 @@
     <a th:href="@{/community/list(page=0)}">처음</a>
     <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
         <a th:if="${page != nowPage}" th:href="@{/community/list(page = ${page - 1}, searKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
-        <strong th:if="${page == nowPage}" th:text="${page}" style="color: #279d00"></strong>
+        <strong th:if="${page == nowPage}" th:text="${page}" style="color: #1c6500"></strong>
     </th:block>
     <a th:href="@{/community/list(page=${list.totalPages})}">마지막</a>
 
