@@ -17,7 +17,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	 jar 배포 환경에서는 추론 시스템이 작동하지 않아 이중 슬래쉬(/)처리 되어
 	 리소스 핸들러 환경을 인식할 수 없음. 특수한 상황을 제외한 모든 html 및 컨트롤 경로는
 	 /를 제외한 경로로 지정할것. -->
-	<link th:href="@{/css/member/common30.css}" rel="stylesheet">
+	<link th:href="@{/css/member/common10.css}" rel="stylesheet">
+	<link th:href="@{/css/member/joinForm.css}" rel="stylesheet">
 
 
 <th:block layout:fragment="script"></th:block>
@@ -62,7 +63,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 				let data={
 					"memberNickname":memberNickname
 				}
-				let url = 'findEmailByNickname';
+				let url = '/findEmailByNickname';
 				axios.post(url,data)
 						.then(response => {
 							let memberEmail=document.getElementById('memberEmail');
