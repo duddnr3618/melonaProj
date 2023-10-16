@@ -17,9 +17,8 @@
      jar 배포 환경에서는 추론 시스템이 작동하지 않아 이중 슬래쉬(/)처리 되어
      리소스 핸들러 환경을 인식할 수 없음. 특수한 상황을 제외한 모든 html 및 컨트롤 경로는
      /를 제외한 경로로 지정할것. -->
-    <link th:href="@{css/layout1.css}"  rel="stylesheet">
-
-
+    <link th:href="@{/css/member/common30.css}" rel="stylesheet">
+    <link th:href="@{/css/member/exchangeRate.css}" rel="stylesheet">
     <th:block layout:fragment="script"></th:block>
     <th:block layout:fragment="css"></th:block>
 
@@ -35,7 +34,7 @@
         let data =[[${test}]];
         let dataObj = data[value];
         let par=document.getElementById("par");
-        par.innerHTML = '';
+        par.innerHTML = '<br/>';
         let reset ={
             '통화코드':dataObj.cur_unit,
             '송금 받을때':dataObj.ttb,
@@ -53,20 +52,14 @@
             par.appendChild(div);
         });
 
-
-
-
-
-        /* Object.keys(dataObj).map(function (key){
-             let div = document.createElement("div");
-             div.innerHTML="<strong>"+ key + ":</strong>"+dataObj[key];
-             par.appendChild(div);
-         });
- */
+        let div2 = document.createElement("div");
+        div2.innerHTML = "<br/>";
+        par.appendChild(div2);
         let par2=document.getElementById("par2");
         let inputElement = document.createElement("input");
         inputElement.type = "number";
         inputElement.id = "createInput";
+        inputElement.className="form-control"
         par.appendChild(inputElement);
         par2.innerHTML = '';
 
@@ -89,28 +82,36 @@
     }
 
 
-
-
-
-
-
-
 </script>
 <div layout:fragment="content" class ="content">
 
+    <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-2 text-center"><select onchange="exchangeRate(this);" class="form-control" id="exchangeSel">
 
-</div>
-
-<br>
-<select onchange="exchangeRate(this);">
-    <div th:each="test2,data:${test}">
-        <option th:value="${data.index}" th:text="${test2.getCurrencyName()}"></option>
+            <div th:each="test2,data:${test}">
+                <option th:value="${data.index}" th:text="${test2.getCurrencyName()}"></option>
+            </div>
+        </select>
+        </div>
+        <div class="col-md-5"></div>
     </div>
-</select>
-<div id="par">
+    <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-2 text-center"><div id="par">
+        </div></div>
+        <div class="col-md-5"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-2 text-center"><div id="par2">
+        </div>
+        </div>
+        <div class="col-md-5"></div>
+    </div>
 </div>
-<div id="par2">
-</div>
+
+
 
 </body>
 </html>
