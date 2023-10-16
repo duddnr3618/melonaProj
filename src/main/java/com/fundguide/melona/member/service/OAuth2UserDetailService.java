@@ -55,8 +55,8 @@ public class OAuth2UserDetailService extends DefaultOAuth2UserService {
             memberEntity.setMemberEmail(oauth2Member.getMemberEmail());
             memberEntity.setMemberName(oauth2Member.getMemberName());
             memberEntity.setMemberPassword(utilsPasswordEncoder.encode(variable+new Date()));
-            memberEntity.setMemberRole(MemberRoleState.ROLE_USER);
-            memberEntity.setMemberLimitState(MemberLimitState.OAUTH2);
+            memberEntity.setMemberRole(MemberRoleState.ROLE_OAUTH2);
+            memberEntity.setMemberLimitState(MemberLimitState.NORMAL);
             memberEntity.setMemberAddress("입력한 주소가 없습니다.");
             memberEntity.setMemberNickname(registrationId+"_"+variable);
             memberRepositoryJpa.memberSave(memberEntity);

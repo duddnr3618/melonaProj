@@ -22,7 +22,7 @@
      /를 제외한 경로로 지정할것. -->
    <!-- <link th:href="@{css/layout1.css}" rel="stylesheet">-->
 
-    <link th:href="@{/css/member/joinForm.css}" rel="stylesheet">
+    <link th:href="@{/css/member/common10.css}" rel="stylesheet">
     <th:block layout:fragment="script"></th:block>
     <th:block layout:fragment="css"></th:block>
 
@@ -166,14 +166,11 @@
         function dupleChange(which) {
             let inputId = which.id
             let confirmCode = document.getElementById("confirmCode");
-            console.log(inputId);
             if (inputId === "memberNickname") {
                 nicknameDupleCheck = false;
-                console.log(nicknameDupleCheck);
                 confirmCode.value = "";
             } else if (inputId === "memberEmail") {
                 emailDupleCheck = false;
-                console.log(emailDupleCheck);
             }
 
         }
@@ -183,11 +180,12 @@
             if (memberEmail.validity.valid && emailDupleCheck) {
                 let memberEmailVal = memberEmail.value;
                 let url = "sendConfirmEmail?memberEmail=" + encodeURIComponent(memberEmailVal);
-                alert(memberEmailVal);
+
                 axios.get(url)
                     .then(function (response) {
                         let confirmConde = response.data;
                         document.getElementById("confirmCode").value = confirmConde;
+                        alert('입력하신 '+memberEmailVal+' 이메일주소로 인증코드를 발송하였습니다 확인후 입력해 주세요.');
                     })
                     .catch(function (error) {
                         console.error(error);
@@ -256,7 +254,7 @@
             }
 
 
-            if (!emailDupleCheck) {
+              else if (!emailDupleCheck) {
                 document.getElementById("memberEmail").focus();
                 let memberEmailError = document.getElementById("memberEmailError"); // 수정된 부분
                 memberEmailError.style.color = "red";
@@ -266,7 +264,7 @@
             }
 
 
-            if (!nicknameDupleCheck) {
+           else if (!nicknameDupleCheck) {
                 document.getElementById("memberNickname").focus();
                 let memberNicknameError = document.getElementById("memberNicknameError");
                 memberNicknameError.style.color = "red";
@@ -274,7 +272,7 @@
                 event.preventDefault();
                 return false;
             }
-            if (confirmCode !== inputConde) {
+            else if (confirmCode !== inputConde) {
                 document.getElementById("memberEmailCheck").focus();
                 let memberConfirmError = document.getElementById("memberConfirmError");
                 memberConfirmError.style.color = "red";

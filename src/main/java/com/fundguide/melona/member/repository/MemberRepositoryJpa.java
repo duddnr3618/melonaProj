@@ -228,5 +228,6 @@ public class MemberRepositoryJpa implements MemberRepository {
         memberEntity1.setMemberAddress(memberEntity.getMemberAddress());
         memberEntity1.setMemberName(memberEntity.getMemberName());
         memberEntity1.setMemberPassword(memberEntity.getMemberPassword());
+        memberEntity1.setMemberRole(memberEntity.getMemberRole());
     }
 }

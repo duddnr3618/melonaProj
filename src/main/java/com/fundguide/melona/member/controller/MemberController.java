@@ -209,7 +209,7 @@ public class MemberController {
     }
     @GetMapping("/oauth")
     public String oAuthLoginAfter(@AuthenticationPrincipal CustomUserDetails customUserDetails,Model model){
-        if(!customUserDetails.getMemberEntity().getMemberLimitState().toString().equals("OAUTH2")){
+        if(!customUserDetails.getMemberEntity().getMemberRole().toString().equals("ROLE_OAUTH2")){
             return "redirect:/";
         }
         MemberDto memberDto = MemberTransMapper.INSTANCE.entityToDto(customUserDetails.getMemberEntity());

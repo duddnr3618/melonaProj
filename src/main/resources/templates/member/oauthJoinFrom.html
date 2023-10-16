@@ -22,14 +22,13 @@
      /를 제외한 경로로 지정할것. -->
    <!-- <link th:href="@{css/layout1.css}" rel="stylesheet">-->
 
-    <link th:href="@{/css/member/joinForm.css}" rel="stylesheet">
+    <link th:href="@{/css/member/common10.css}" rel="stylesheet">
     <th:block layout:fragment="script"></th:block>
     <th:block layout:fragment="css"></th:block>
 
 </head>
 <body>
 
-<div th:replace="fragments/header::header"></div>
 
 <div layout:fragment="content" class="content">
     <form action="/oauth/joinPro" th:action="@{/oauth/joinPro}" th:object="${memberDto}" method="post"
@@ -61,7 +60,6 @@
                        th:errorclass="field-error" placeholder="이메일형식을 지켜주세요" >
                 <div class="field-error" th:errors="*{memberEmail}"/>
                 <br/>
-                <strong id="memberEmailError">아이디로 사용할 이메일을 입력해 주세요.</strong>
             </div>
             <div class="col-4">
             </div>
@@ -127,14 +125,8 @@
         <br/>
         <div class="row">
             <div class="col-4"></div>
-            <div class="col-2">
+            <div class="col-4">
                 <button class="w-100 btn btn-primary btn-lg" type="submit">회원 가입</button>
-            </div>
-            <div class="col-2">
-                <button class="w-100 btn btn-secondary btn-lg"
-                        th:onclick="|location.href='@{/}'|"
-                        type="button">취소
-                </button>
             </div>
             <div class="col-4"></div>
         </div>
