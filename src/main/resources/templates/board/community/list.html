@@ -3,25 +3,24 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <div layout:fragment="content">
     <link rel="stylesheet" href="/css/board/boardList.css">
 
-
-    <br>
     <h2>메로나 커뮤니티</h2>
     <span th:if="${userInfo != null}" class="top1">※게시글 작성이 가능합니다.</span>
     <span th:if="${userInfo == null}" class="top1">※게시글 작성은 로그인시 가능합니다.</span>
     <hr>
     <div>
         <div class="top2">
-        <form th:action="@{/community/list}" method="get">
-            <input type="text" name="searchKeyword">
-            <button type="submit">검색</button>
-            <span  class="top2"><a href="/community/wrtieForm">글 작성</a></span>
-        </form>
+            <form th:action="@{/community/list}" method="get" class="search-form">
+                <input type="text" name="searchKeyword" class="search-input">
+                <button type="submit" class="search-button">검색</button>
+            </form>
+            <span><a href="/community/wrtieForm" class="write-button">글 작성</a></span>
         </div>
+
 
         <table class="boardTable">
             <tr>
