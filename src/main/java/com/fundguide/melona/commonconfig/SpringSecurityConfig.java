@@ -31,7 +31,6 @@ public class SpringSecurityConfig {
                 .requestMatchers(("/js/**")).permitAll()
                 .requestMatchers("/user/**").authenticated()
                 .requestMatchers("/user/**").access("hasAnyRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_LEADER')")
-                .requestMatchers("/leader/**").access("hasAnyRole('ROLE_LEADER')or hasRole('ROLE_ADMIN')")
                 .requestMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN')")
                 .requestMatchers("/","/logout").permitAll()
                 .and()
@@ -47,7 +46,7 @@ public class SpringSecurityConfig {
                         .failureUrl("/fail")
                         .defaultSuccessUrl("/"))
                         .oauth2Login(oauth -> oauth.loginPage("/loginForm")
-                        .defaultSuccessUrl("/")
+                        .defaultSuccessUrl("/oauth")
                         .failureUrl("/fail")
                         .userInfoEndpoint(userInfoEndpointConfig-> userInfoEndpointConfig.userService(oAuth2UserDetailService)))
                 .logout((logout) -> logout

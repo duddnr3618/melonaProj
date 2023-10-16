@@ -6,10 +6,21 @@
 
 <meta charset="UTF-8">
 
+
+
+
 <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
 
 
 <div layout:fragment="content">
+
+  <style>
+    .customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
+    .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
+    .customoverlay a {display:block;text-decoration:none;color:#000;text-align:center;border-radius:6px;font-size:14px;font-weight:bold;overflow:hidden;background: #d95050;background: #d95050 url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
+    .customoverlay .title {display:block;text-align:center;background:#fff;margin-right:35px;padding:10px 15px;font-size:14px;font-weight:bold;}
+    .customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+  </style>
 
 
   <!--  HEADER에 추가를 해서 주석 처리-->
@@ -34,12 +45,7 @@
   <!--    </ul>-->
   <!--  </div>-->
 
-  <div>
   <iframe src="http://localhost:7777/news/list?text=주식" width="1290" height="300"></iframe>
-  </div>
-
-
-  <div style="height: 50px;"></div>  <!--뉴스 페이지가 불러오는 거여서 박스 아래로 보내려고 해도 이게 같이 끌려가서 간격을 만들어내기 위해 사용  -->
 
 
   <div class="tradingview-widget-container" style="display:inline-block">
@@ -144,6 +150,149 @@
       }
     </script>
   </div>
+
+
+  <ul class="section_name">
+    <li class="title">Map</li>
+    <li>지도로 보는 주식 시세</li>
+  </ul>
+  <div id="map" style="width: 90%; height: 600px;"></div>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1df94762a892a81117b69b20792304e8"></script>
+
+  <script type="text/javascript">
+
+    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+    var options = { //지도를 생성할 때 필요한 기본 옵션
+
+        center: new kakao.maps.LatLng(37.571472339550354, 126.9873501678817), //지도의 중심좌표.
+        level: 3 //지도의 레벨(확대, 축소 정도)
+    };
+
+    var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+    //다중 마커 위치 데이터 배열입니다.
+    var markerData = [
+    {
+        position: new kakao.maps.LatLng( 37.5673905764459, 126.98517192324017), //미래에셋증권
+        imageSrc : '/img/skrbar.png'
+    },
+    {
+        position: new kakao.maps.LatLng(37.5675529120016, 126.98647359527389), //한화
+        imageSrc : '/img/melon.png'
+    },
+    {
+        position: new kakao.maps.LatLng(37.57798199415589, 126.98705472731822), //현대건설
+        imageSrc : '/img/skrbar.png'
+    },
+    {
+        position: new kakao.maps.LatLng( 37.56752836687395, 126.98868083657118), //금호석유화학
+        imageSrc : '/img/skrbar.png'
+    },
+    {
+        position: new kakao.maps.LatLng(37.521373200095006, 126.92743515202133), //키움증권
+        imageSrc : '/img/skrbar.png'
+    },
+    // 추가적인 데이터 객체들을 필요한 만큼 추가합니다.
+    ];
+
+    // 다중 마커 객체들을 담을 배열입니다.
+    var markers = [];
+
+    // 다중 마커 생성 및 지도에 추가
+    for (var i = 0; i < markerData.length; i++) {
+        var imageSize = new kakao.maps.Size(40, 60), // 마커이미지의 크기입니다
+            imageOption = {offset: new kakao.maps.Point(20, 60)}; // 마커이미지의 옵션입니다.
+
+        var markerImage = new kakao.maps.MarkerImage(markerData[i].imageSrc, imageSize, imageOption),
+            markerPosition = markerData[i].position;
+
+        //마커생성 및 지도에 추가
+        var marker = new kakao.maps.Marker({
+          position: markerPosition,
+            image: markerImage // 마커이미지 설정
+        });
+        marker.setMap(map);
+
+        markers.push(marker); // 생성한 마커 객체를 배열에 저장
+
+    }
+
+    //다중 커스텀 오버레이 데이터 배열입니다.
+    var overlayData = [
+        {
+            position: new kakao.maps.LatLng( 37.5673905764459, 126.98517192324017), //미래에셋증권
+            content:
+           '<div class="customoverlay">' +
+        '  <a href="https://finance.naver.com/item/main.naver?code=006800">' +
+        '    <span class="title">미래에셋증권 <br> 시세 : 6,490</span>' +
+        '  </a>' +
+        '</div>'
+        },
+        {
+            position: new kakao.maps.LatLng(37.5675529120016, 126.98647359527389), //한화
+            content:
+            '<div class="customoverlay">' +
+        '  <a href="https://finance.naver.com/item/main.nhn?code=000880">' +
+        '    <span class="title">한화 <br> 시세 : 23,950</span>' +
+        '  </a>' +
+        '</div>'
+        },
+        {
+            position: new kakao.maps.LatLng(37.57798199415589, 126.98705472731822), //현대건설
+            content:
+            '<div class="customoverlay">' +
+        '  <a href="https://finance.naver.com/item/main.nhn?code=000720">' +
+        '    <span class="title">현대건설 <br> 시세 : 35,750</span>' +
+        '  </a>' +
+        '</div>'
+        },
+        {
+            position: new kakao.maps.LatLng( 37.56752836687395, 126.98868083657118), //금호석유화학
+            content:
+            '<div class="customoverlay">' +
+        '  <a href="https://finance.naver.com/item/main.nhn?code=011780">' +
+        '    <span class="title">금호석유 <br> 시세 : 129,000</span>' +
+        '  </a>' +
+        '</div>'
+        },
+        {
+            position: new kakao.maps.LatLng(37.521373200095006, 126.92743515202133), //키움증
+            content:
+            '<div class="customoverlay">' +
+        '  <a href="https://finance.naver.com/item/main.nhn?code=039490">' +
+        '    <span class="title">키움증권 <br> 시세 : 102,200</span>' +
+        '  </a>' +
+        '</div>'
+        },
+        // 추가적인 데이터 객체들을 필요한 만큼 추가합니다.
+    ];
+
+    //다중 커스텀 오버레이 객체들을 담을 배열입니다.
+    var overlays = [];
+
+    // 다중 커스텀 오버레이 생성 및 지도에 추가
+    for (var i = 0; i < overlayData.length; i++) {
+        var position = overlayData[i].position;
+        var content = overlayData[i].content;
+
+        // 커텀 오버레이 생성
+        var customOverlay = new kakao.maps.CustomOverlay({
+            position: position,
+            content: content
+        });
+
+        overlays.push(customOverlay); // 생성한 커스텀 오버레이 객체를 배열에 저장
+
+        customOverlay.setMap(map); // 지도에 커스텀 오버레이 추가
+    }
+
+
+
+  </script>
+
+
+
+
   <!-- TradingView Widget END -->
 
 

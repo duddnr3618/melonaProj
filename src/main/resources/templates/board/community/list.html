@@ -3,16 +3,26 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <div layout:fragment="content">
-    <br>
+    <link rel="stylesheet" href="/css/board/boardList.css">
+
     <h2>메로나 커뮤니티</h2>
-    <span th:if="${userInfo != null}">게시글 작성이 가능합니다.</span>
-    <span th:if="${userInfo == null}">게시글 작성은 로그인시 가능합니다.</span>
+    <span th:if="${userInfo != null}" class="top1">※게시글 작성이 가능합니다.</span>
+    <span th:if="${userInfo == null}" class="top1">※게시글 작성은 로그인시 가능합니다.</span>
     <hr>
     <div>
-        <table>
+        <div class="top2">
+            <form th:action="@{/community/list}" method="get" class="search-form">
+                <input type="text" name="searchKeyword" class="search-input">
+                <button type="submit" class="search-button">검색</button>
+            </form>
+            <span><a href="/community/wrtieForm" class="write-button">글 작성</a></span>
+        </div>
+
+
+        <table class="boardTable">
             <tr>
                 <th>글번호</th>
                 <th>제목</th>
@@ -23,23 +33,19 @@
             <tr th:each="board : ${list}">
                 <th th:text="${board.id}"></th>
                 <th><a  th:text="${board.boardTitle}" th:href="@{|${board.id}|}"></a></th>
-                <th th:text="*{#temporals.format(board.createdTime,'yyyy-MM=dd HH:mm:ss')}"></th>
+                <th th:text="*{#temporals.format(board.createdTime,'yyyy-MM-dd')}"></th>
                 <th th:text="${board.boardHits}"></th>
             </tr>
         </table>
     </div>
-    <div>
-        <a href="/community/wrtieForm">글작성</a>
-    </div>
+
+    <div class="pagination">
     <a th:href="@{/community/list(page=0)}">처음</a>
     <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
         <a th:if="${page != nowPage}" th:href="@{/community/list(page = ${page - 1}, searKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
-        <strong th:if="${page == nowPage}" th:text="${page}" style="color: red"></strong>
+        <strong th:if="${page == nowPage}" th:text="${page}" style="color: #279d00"></strong>
     </th:block>
     <a th:href="@{/community/list(page=${list.totalPages})}">마지막</a>
-    <form th:action="@{/community/list}" method="get">
-        <input type="text" name="searchKeyword">
-        <button type="submit">검색</button>
-    </form>
+
 </div>
 </html>
