@@ -89,7 +89,9 @@
 <!--			nav 바에 들어간 애들!-->
 <!--		-->
 			<div id="nav3" class="d-flex justify-content-center flex-grow-1">
-				<a class="nav-link mx-5" th:href="@{/news/newspage}">뉴스</a>
+												<!--뉴스 경로가 안보내져서 주소 그대로 보내는 것으로				-->
+				<a class="nav-link mx-5" th:href="@{/news/list2?text=query}">뉴스</a>
+
 				<div class="dropdown">
 					<a class="nav-link mx-5 dropdown-toggle" href="#" role="button" id="guideDropdown" data-bs-toggle="dropdown" aria-expanded="false">
 						가이드
@@ -103,7 +105,7 @@
 
 				<a class="nav-link mx-5" th:href="@{/community/list}">커뮤니티</a>
 				<a class="nav-link mx-5" th:href="@{/event}">이벤트</a>
-				<a class="nav-link mx-5" th:href="@{/stockinformation/stockinfo1}">차트</a>
+				<a class="nav-link mx-5" th:href="@{/chart/stockinformation/stockinfo1.html}">차트</a>
 			</div>
 
 
@@ -125,49 +127,24 @@
 						<li class="nav-item" sec:authorize="isAnonymous()" >
 							<a class="nav-link active" aria-current="page" href="/member/findInfoForm">아이디/비밀번호 찾기</a>
 						</li>
-
-				<li class="nav-item"  >
-					<a class="nav-link active" aria-current="page" href="/exchangeRateCalc">환율정보</a>
-				</li>
-				<li class="nav-item" sec:authorize="isAuthenticated()">
-					<a class="nav-link active" aria-current="page" href="/mypage/mypage2">마이페이지</a>
-				</li>
-				<li class="nav-item"  >
-					<a class="nav-link active" aria-current="page" href="/koreaBankSearch">정보검색</a>
-				</li>
-				<li class="nav-item"  >
-					<a class="nav-link active" aria-current="page" href="/exchangeRateCalc">환율정보</a>
-				</li>
-			<!--	<li class="nav-item"  >
-
-					<a class="nav-link active" aria-current="page" href="/statisticList">통계</a>
-				</li>-->
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page"  href="/calculator/calculmain">물타기 계산기</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page"  href="/calculator/calender">경제 캘린더</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page"  href="">채팅</a>
-				</li>
-	           <li class="nav-item" sec:authorize="isAuthenticated()">
-	            <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
-	          </li>
+						<li class="nav-item" sec:authorize="isAuthenticated()">
+							<a class="nav-link active" aria-current="page" href="/logout">Logout</a>
+						</li>
 						<li class="nav-item"  >
 							<a class="nav-link active" aria-current="page" href="/exchangeRateCalc">환율정보</a>
 						</li>
 						<li class="nav-item"  >
 							<a class="nav-link active" aria-current="page" href="/koreaBankSearch">정보검색</a>
 						</li>
-						<li class="nav-item" sec:authorize="isAuthenticated()">
-							<a class="nav-link active" aria-current="page" href="/logout">Logout</a>
+						<li class="nav-item"  >
+							<a class="nav-link active" aria-current="page" href="/statisticList">통계</a>
 						</li>
+
 
 						<li class="nav-item" sec:authorize="isAuthenticated()">
 							<a class="nav-link active" aria-current="page" th:href="@{/user/member/beforeChangePasswordForm}">비밀번호변경</a>
 						</li>
-						<li class="nav-item">
+						<li class="nav-item" sec:authorize="isAnonymous()" >
 							<a class="nav-link active" aria-current="page" href="/member/joinForm">회원가입</a>
 						</li>
 					</ul>
