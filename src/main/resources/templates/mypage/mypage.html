@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <title>제목 입력</title>
@@ -35,97 +32,120 @@
         <div class="item">
             <div class="number"></div>
             <div class="smallLight"><ul>
-                <li><a th:href="@{/mypage/mywrittenboard}">내가 쓴 글</a></li>
+                <div class="my-written-posts-container">
+
+                    <a class="nav-link active" aria-current="page" th:href="@{/mypage/mywrittenboard}">내가 쓴 글</a>
+                </div>
             </ul></div>
         </div>
+
         <div class="item">
             <div class="number"></div>
             <div class="smallLight"></div>
-            <a class="nav-link active" aria-current="page" th:href="@{/user/member/beforeWithdrawForm}">탈퇴</a>
+            <div class="withdrawal-container">
+
+                <a class="nav-link active" aria-current="page" th:href="@{/user/member/beforeWithdrawForm}">탈퇴</a>
+            </div>
         </div>
         <div class="item">
             <div class="number"></div>
             <div class="smallLight"><ul>
-                <a class="nav-link active" aria-current="page" th:href="@{/user/member/beforeChangePasswordForm}">비밀번호변경</a>
+                <div class="password-change-container">
+
+                    <a class="nav-link active" aria-current="page" th:href="@{/user/member/beforeChangePasswordForm}">비밀번호 변경</a>
+                </div>
             </ul></div>
         </div>
-
+        <!-- Add the 정보수정 link with similar styling -->
+        <div class="item">
+            <div class="number"></div>
+            <div class="smallLight">
+                <div class="my-written-posts-container">
+                <a class="nav-link active" aria-current="page" th:href="@{/user/member/updateForm}">정보수정</a>
+                    </div>
+            </div>
+        </div>
     </div>
     <div class="shippingStatusContainer">
         <div class="title"></div>
         <div class="status">
-
             <div class="item">
                 <table class="table">
-                    <thead>
-                    <tr>
-                        <th>글번호</th>
-                        <th>제목</th>
-                        <th>등록일</th>
-                        <th>조회수</th></tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="board : ${mycommunityBoard.content}">
-                        <th th:text="${board.id}"></th>
-                        <th><a  th:text="${board.boardTitle}" th:href="@{|/community/${board.id}|}"></a></th>
-                        <th th:text="*{#temporals.format(board.createdTime,'yyyy-MM=dd HH:mm:ss')}"></th>
-                        <th th:text="${board.boardHits}"></th>
-                    </tr>
-                    </tbody>
-            </div>
-            <div class="icon">
-
-            <div class="text"></div>
-            <div class="right"></div>
-            </a>
-
-        </div>
-
-        <div class="item">
-
+                    <div class="title">
+                        <h3>내가 쓴 게시판</h3>
+                    </div>
+                    <div class="status">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>글번호</th>
+                                <th>제목</th>
+                                <th>등록일</th>
+                                <th>조회수</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="board : ${mycommunityBoard.content}">
+                                <th th:text="${board.id}"></th>
+                                <th><a th:text="${board.boardTitle}" th:href="@{|/community/${board.id}|}"></a></th>
+                                <th th:text="*{#temporals.format(board.createdTime, 'yyyy-MM=dd HH:mm:ss')}"></th>
+                                <th th:text="${board.boardHits}"></th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
             </div>
         </div>
     </div>
-
-    <div class="listContainer">
-        <a class="item" href="#">
-            <div class="icon"></div>
-            <div class="text">23</div>
-            <div class="right"></div>
+    <div class="icon">
+        <div class="text"></div>
+        <div class="right"></div>
         </a>
-        <a class="item" href="#">
-            <div class="icon">
-                <table class="table">
-                    <!--<thead>
-                    <tr>
-                        <th>글번호</th>
-                        <th>제목</th>
-                        <th>등록일</th>
-                        <th>조회수</th></tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="board : ${mycommunityBoard.content}">
-                        <th th:text="${board.id}"></th>
-                        <th><a  th:text="${board.boardTitle}" th:href="@{|/community/${board.id}|}"></a></th>
-                        <th th:text="*{#temporals.format(board.createdTime,'yyyy-MM=dd HH:mm:ss')}"></th>
-                        <th th:text="${board.boardHits}"></th>
-                    </tr>
-                    </tbody>-->
-            </div>
-            <div class="text"></div>
-            <div class="right"></div>
-        </a>
-        <li><a th:href="@{/mypage/leader-board}">리더 게시판</a></li>
-        <li><a th:href="@{/mypage/normal-board}">일반 게시판</a></li>
     </div>
+    <div class="item">
+    </div>
+</div>
+</div>
 
-    <!--<div class="infoContainer">
-        <a class="item" href="#">
-            <div>공지사항</div>
-            <div>이용안내</div>
-            <div>고객센터</div>
-        </a>
-    </div>-->
+<div class="listContainer">
+    <a class="item" href="#">
+        <div class="icon"></div>
+        <div class="text">
+            <div class="right"></div>
+    </a>
+</div>
+<a class="item" href="#">
+    <div class="icon">
+        <table class="table">
+            <!--<thead>
+            <tr>
+                <th>글번호</th>
+                <th>제목</th>
+                <th>등록일</th>
+                <th>조회수</th></tr>
+            </thead>
+            <tbody>
+            <tr th:each="board : ${mycommunityBoard.content}">
+                <th th:text="${board.id}"></th>
+                <th><a th:text="${board.boardTitle}" th:href="@{|/community/${board.id}|}"></a></th>
+                <th th:text="*{#temporals.format(board.createdTime,'yyyy-MM=dd HH:mm:ss')}"></th>
+                <th th:text="${board.boardHits}"></th>
+            </tr>
+            </tbody>-->
+        </table>
+    </div>
+    <div class="text"></div>
+    <div class="right"></div>
+</a>
+</div>
+
+<!--<div class="infoContainer">
+    <a class="item" href="#">
+        <div>공지사항</div>
+        <div>이용안내</div>
+        <div>고객센터</div>
+    </a>
+</div>-->
 </div>
 </body>
 </html>

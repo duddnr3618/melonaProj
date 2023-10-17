@@ -1,0 +1,37 @@
+body {
+    margin: 0 auto;
+
+}
+div {
+    width: 40%;
+    margin: auto;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+h2 {
+    color: #ff0000;
+}
+p {
+    font-size: 18px;
+}
+a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color:#A4A4A4 ;
+    border:none ;
+    color:white ;
+    text-decoration:none ;
+    display:inline-block ;
+    font-size :16px ;
+    margin :4px 2px ;
+    cursor:pointer ;
+    border-radius :10px ;
+}
+a:hover{
+    background-color:#9FF781 ;
+    color:white ;
+    border-radius :10px ;
+
+}

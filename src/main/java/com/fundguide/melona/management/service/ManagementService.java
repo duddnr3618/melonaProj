@@ -10,13 +10,14 @@ import com.fundguide.melona.board.normalBoard.repository.NormalBoardRepository;
 import com.fundguide.melona.management.service.filter.CommunityBoardCategoryHandler;
 import com.fundguide.melona.management.service.filter.LeaderBoardCategoryHandler;
 import com.fundguide.melona.management.service.filter.NormalBoardCategoryHandler;
-import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
+import com.fundguide.melona.member.role.MemberRoleState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -63,26 +64,17 @@ public class ManagementService {
         switch (category) {
             case "normal" -> {
                 Optional<NormalBoardEntity> optional = normalBoardRepository.findById(boardId);
-                optional.ifPresentOrElse(o -> {
-                    o.setBoardUsing(BoardUsing.BLOCK);
-                    normalBoardRepository.save(o);
-                }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-                return ResponseEntity.ok().build();
+                return updateBoardUsing(optional, normalBoardRepository);
             }
 
             case "leader" -> {
                 Optional<LeaderBoardEntity> optional = leaderBoardRepository.findById(boardId);
-                /*optional.ifPresent(o -> );*/
-                return null;
+                return updateBoardUsing(optional, leaderBoardRepository);
             }
 
             case "community" -> {
                 Optional<CommunityEntity> optional = communityRepository.findById(boardId);
-                optional.ifPresentOrElse(o -> {
-                    o.setBoardUsing(BoardUsing.BLOCK);
-                    communityRepository.save(o);
-                }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-                return ResponseEntity.ok().build();
+                return updateBoardUsing(optional, communityRepository);
             }
             default -> throw new IllegalAccessException("정의된 카테고리 값이 아닙니다.");
         }
@@ -96,11 +88,35 @@ public class ManagementService {
         }
     }
 
-    public Page<MemberLeastDTO> getMemberRoleStatePaging(String filter, Pageable pageable) {
+    public Page<MemberEntity> getMemberAuthorityByRule(String filter, Pageable pageable) {
         if (!"all".equals(filter)) {
-            return memberRepository.memberRoleStateFilterPage(filter, pageable);
+            return memberRepository.getMemberAuthorityByRule(filter, pageable);
         } else {
-            return memberRepository.findAllOfMemberLeastData(pageable);
+            return memberRepository.findAll(pageable);
         }
+    }
+
+    public ResponseEntity<String> setMemberAsLeader(Long memberId) {
+        Optional<MemberEntity> optionalMember = memberRepositoryData.findById(memberId);
+        return optionalMember.map(o -> {
+            o.setMemberRole(MemberRoleState.ROLE_SET_LEADER);
+            memberRepositoryData.save(o);
+            return ResponseEntity.ok().body("리더로 권한 변경 완료");
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
+    /**보드의 공통적인 컬럼 BoardUsing의 클래스를 찾고, 그것을 이용해서 JPA 레파지토리의 공통적인 메서드 Save를 활용한 업데이트 메서드*/
+    protected <T> ResponseEntity<String> updateBoardUsing(Optional<T> optional, JpaRepository<T, Long> repository) {
+        return optional.map(o -> {
+            try {
+                Class<T> aClass = (Class<T>) o.getClass();
+                aClass.getMethod("setBoardUsing", BoardUsing.class).invoke(o, BoardUsing.BLOCK);
+                repository.save(o);
+                return ResponseEntity.ok().body("보드 비활성화 성공");
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("해당 클래스 내에 BoardUsing을 찾지 못했습니다.");
+            }
+        }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 }

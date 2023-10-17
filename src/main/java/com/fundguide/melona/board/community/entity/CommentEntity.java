@@ -3,12 +3,14 @@ package com.fundguide.melona.board.community.entity;
 import com.fundguide.melona.board.common.entity.BaseTimeEntity;
 import com.fundguide.melona.board.community.dto.CommentDto;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "comment")
 public class CommentEntity extends BaseTimeEntity {
     @Id
