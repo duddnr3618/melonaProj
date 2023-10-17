@@ -12,87 +12,7 @@
         crossorigin="anonymous"></script>
 
 <div th:fragment="header">
-    <!--	트레이딩 차트! 시작-->
-    <!-- TradingView Widget BEGIN -->
-    <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow"
-                                                     target="_blank"><span class="blue-text"></span></a></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js"
-                async>
-            {
-                "symbols"
-            :
-                [
-                    {
-                        "proName": "BITSTAMP:BTCUSD",
-                        "title": "비트코인"
-                    },
-                    {
-                        "proName": "BITSTAMP:ETHUSD",
-                        "title": "이더리움"
-                    },
-                    {
-                        "description": "카카오",
-                        "proName": "KRX:035720"
-                    },
-                    {
-                        "description": "삼성",
-                        "proName": "KRX:005930"
-                    },
-                    {
-                        "description": "AAPL",
-                        "proName": "NASDAQ:AAPL"
-                    },
-                    {
-                        "description": "RIPPLE",
-                        "proName": "UPBIT:XRPKRW"
-                    },
-                    {
-                        "description": "AMD",
-                        "proName": "NASDAQ:AMD"
-                    },
-                    {
-                        "description": "KOSPI",
-                        "proName": "KRX:KOSPI"
-                    },
-                    {
-                        "description": "월드 디즈니",
-                        "proName": "NYSE:DIS"
-                    },
-                    {
-                        "description": "마이크로 소프트",
-                        "proName": "NASDAQ:MSFT"
-                    },
-                    {
-                        "description": "USD:KRW",
-                        "proName": "FX_IDC:USDKRW"
-                    },
-                    {
-                        "description": "JPY:KRW",
-                        "proName": "FX_IDC:JPYKRW"
-                    }
-                ],
-                    "showSymbolLogo"
-            :
-                true,
-                    "colorTheme"
-            :
-                "light",
-                    "isTransparent"
-            :
-                false,
-                    "displayMode"
-            :
-                "adaptive",
-                    "locale"
-            :
-                "kr"
-            }
-        </script>
-    </div>
-    <!-- TradingView Widget END -->
-    <!--	차트 끝!-->
+
 <!--	트레이딩 차트! 시작-->
 	<!-- TradingView Widget BEGIN -->
 	<div class="tradingview-widget-container">
@@ -163,9 +83,6 @@
     <nav class="navbar"><!--메로나 색으로 변경 완료		-->
         <div class="container-fluid">
             <a class="navbar-brand" href="/"><img th:src="@{/img/melona.png}" width="100px" height="100px" alt="logo"/>Melona</a>
-	<nav class="navbar"><!--메로나 색으로 변경 완료		-->
-		<div class="container-fluid">
-			<a class="navbar-brand" href="/"><img th:src="@{/img/melona.png}" width="100px" height="100px" alt="logo"/>𝓜𝓮𝓵𝓸𝓷𝓪</a>
 
             <!--			nav 바에 들어간 애들!-->
             <!--		-->
@@ -210,10 +127,6 @@
                         <li class="nav-item" sec:authorize="isAnonymous()">
                             <a class="nav-link active" aria-current="page" href="/member/joinForm">회원가입</a>
                         </li>
-                        <li class="nav-item" sec:authorize="isAuthenticated()">
-                            <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
-                        </li>
-
                         <li class="nav-item" sec:authorize="isAnonymous()">
                             <a class="nav-link active" aria-current="page" href="/member/findInfoForm">아이디/비밀번호 찾기</a>
                         </li>
@@ -250,41 +163,7 @@
     </nav>
     <br>
     <br>
-						<li class="nav-item" sec:authorize="isAuthenticated()">
-							<a class="nav-link active" aria-current="page" href="/logout">Logout</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="/member/joinForm">회원가입</a>
-						</li>
-						<li class="nav-item" sec:authorize="isAnonymous()" >
-							<a class="nav-link active" aria-current="page" href="/member/findInfoForm">아이디 | 비밀번호 찾기</a>
-						</li>
-						<li class="nav-item" sec:authorize="isAuthenticated()">
-							<a class="nav-link active" aria-current="page" href="/mypage/mypage2">마이페이지</a>
-						</li>
 
-						<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="/exchangeRateCalc">환율정보</a>
-						</li>
-
-						<li class="nav-item" >
-						<a class="nav-link active" aria-current="page" href="/koreaBankSearch">정보검색</a>
-						</li>
-
-					<li class="nav-item">
-					<a class="nav-link active" aria-current="page"  href="/calculator/calculmain">물타기 계산기</a>
-					</li>
-					<li class="nav-item">
-					<a class="nav-link active" aria-current="page"  href="/calculator/calender">경제 캘린더</a>
-					</li>
-					<li class="nav-item">
-					<a class="nav-link active" aria-current="page"  href="">채팅</a>
-					</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</nav>
 	<hr id="hr1">
 </div>
 </html>
