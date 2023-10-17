@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-    <meta charset="UTF-8">
-    <title>제목 입력</title>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
 
-    <!-- 사용자 정의 CSS 파일 연결 -->
+
+<div layout:fragment="content">
+
     <link rel="stylesheet" href="/css/mypage/styles.css">
 
     <!-- 부트스트랩 -->
@@ -12,140 +14,112 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-            crossorigin="anonymous"></script>
-</head>
-<body>
-<h1></h1>
+            crossorigin="anonymous">
+        <!-- jQuery (필요한 경우 jQuery 추가) -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-oB6f5HY0f4FyF3JjTzkV+flx6kN2YIhcr7F5f5C/hf6l5ql5f5q5r5x5Bt5Q8A8Bt5Q8Bt5Q==5T5X5Q==" crossorigin="anonymous"></script>
 
-<!--<ul>
-    <li><a th:href="@{/mypage/mywrittenboard}">내가 쓴 글</a></li>
-</ul>-->
-
-<!-- 여기서부터 CSS 스타일을 적용 -->
-<div class="wrap">
-    <div class="greenContainer">
-        <div class="name">마이페이지</div>
-        <div class="modify"></div>
-    </div>
-
-    <div class="summaryContainer">
-        <div class="item">
-            <div class="number"></div>
-            <div class="smallLight"><ul>
-                <div class="my-written-posts-container">
-
-                    <a class="nav-link active" aria-current="page" th:href="@{/mypage/mywrittenboard}">내가 쓴 글</a>
-                </div>
-            </ul></div>
+    <div class="wrap">
+        <div class="greenContainer">
+            <div class="name"><h3>마이페이지</h3></div>
+            <div class="modify"></div>
         </div>
 
-        <div class="item">
-            <div class="number"></div>
-            <div class="smallLight"></div>
-            <div class="withdrawal-container">
-
-                <a class="nav-link active" aria-current="page" th:href="@{/user/member/beforeWithdrawForm}">탈퇴</a>
-            </div>
-        </div>
-        <div class="item">
-            <div class="number"></div>
-            <div class="smallLight"><ul>
-                <div class="password-change-container">
-
-                    <a class="nav-link active" aria-current="page" th:href="@{/user/member/beforeChangePasswordForm}">비밀번호 변경</a>
-                </div>
-            </ul></div>
-        </div>
-        <!-- Add the 정보수정 link with similar styling -->
-        <div class="item">
-            <div class="number"></div>
-            <div class="smallLight">
-                <div class="my-written-posts-container">
-                <a class="nav-link active" aria-current="page" th:href="@{/user/member/updateForm}">정보수정</a>
-                    </div>
-            </div>
-        </div>
-    </div>
-    <div class="shippingStatusContainer">
-        <div class="title"></div>
-        <div class="status">
+        <div class="summaryContainer">
             <div class="item">
-                <table class="table">
-                    <div class="title">
-                        <h3>내가 쓴 게시판</h3>
+                <div class="number"></div>
+                <div class="smallLight"><ul>
+                    <div class="my-written-posts-container">
+
+                        <a class="nav-link active" aria-current="page" th:href="@{/mypage/community-board}">내가 쓴 글</a>
                     </div>
-                    <div class="status">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>글번호</th>
-                                <th>제목</th>
-                                <th>등록일</th>
-                                <th>조회수</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="board : ${mycommunityBoard.content}">
-                                <th th:text="${board.id}"></th>
-                                <th><a th:text="${board.boardTitle}" th:href="@{|/community/${board.id}|}"></a></th>
-                                <th th:text="*{#temporals.format(board.createdTime, 'yyyy-MM=dd HH:mm:ss')}"></th>
-                                <th th:text="${board.boardHits}"></th>
-                            </tr>
-                            </tbody>
-                        </table>
+                </ul></div>
+            </div>
+
+            <div class="item">
+                <div class="number"></div>
+                <div class="smallLight"></div>
+                <div class="withdrawal-container">
+
+                    <a class="nav-link active" aria-current="page" th:href="@{/user/member/beforeWithdrawForm}">탈퇴</a>
+                </div>
+            </div>
+            <div class="item">
+                <div class="number"></div>
+                <div class="smallLight"><ul>
+                    <div class="password-change-container">
+
+                        <a class="nav-link active" aria-current="page" th:href="@{/user/member/beforeChangePasswordForm}">비밀번호 변경</a>
                     </div>
+                </ul>
+                </div>
+            </div>
+            <!-- Add the 정보수정 link with similar styling -->
+            <div class="item">
+                <div class="number"></div>
+                <div class="smallLight">
+                    <div class="my-written-posts-container">
+                        <a class="nav-link active" aria-current="page" th:href="@{/user/member/updateForm}">정보수정</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="icon">
-        <div class="text"></div>
-        <div class="right"></div>
-        </a>
-    </div>
-    <div class="item">
-    </div>
-</div>
-</div>
+        <div class="shippingStatusContainer">
+            <div class="title"></div>
+            <div class="status">
+                <table class="item">
+                    <class="table">
+                        <div class="title">
+                            <h4>내가 쓴 게시판 - 커뮤니티 </h4>
+                        </div>
+                        <div class="dropdown">
+                            <button class="dropdown-button">게시판 선택</button>
+                            <div class="dropdown-content">
+                                <a href="/mypage/community-board">커뮤니티 게시판</a>
+                                <a href="/mypage/leader-board">리더 가이드</a>
+                                <a href="/mypage/normal-board">일반 게시판</a>
+                            </div>
+                        </div>
 
-<div class="listContainer">
-    <a class="item" href="#">
-        <div class="icon"></div>
-        <div class="text">
-            <div class="right"></div>
-    </a>
-</div>
-<a class="item" href="#">
-    <div class="icon">
-        <table class="table">
-            <!--<thead>
-            <tr>
-                <th>글번호</th>
-                <th>제목</th>
-                <th>등록일</th>
-                <th>조회수</th></tr>
-            </thead>
-            <tbody>
-            <tr th:each="board : ${mycommunityBoard.content}">
-                <th th:text="${board.id}"></th>
-                <th><a th:text="${board.boardTitle}" th:href="@{|/community/${board.id}|}"></a></th>
-                <th th:text="*{#temporals.format(board.createdTime,'yyyy-MM=dd HH:mm:ss')}"></th>
-                <th th:text="${board.boardHits}"></th>
-            </tr>
-            </tbody>-->
-        </table>
-    </div>
-    <div class="text"></div>
-    <div class="right"></div>
-</a>
-</div>
 
-<!--<div class="infoContainer">
-    <a class="item" href="#">
-        <div>공지사항</div>
-        <div>이용안내</div>
-        <div>고객센터</div>
-    </a>
-</div>-->
+                        <div class="status">
+                            <table class="table" style="margin: 0 auto;"> <!-- 이 부분을 수정 -->
+                                <thead>
+                                <tr>
+                                    <th>글번호</th>
+                                    <th>제목</th>
+                                    <th>등록일</th>
+                                    <th>조회수</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="board : ${mycommunityBoard.content}">
+                                    <td th:text="${board.id}"></td>
+                                    <td>
+                                        <a th:text="${board.boardTitle}" th:href="@{|/community/${board.id}|}"></a>
+                                    </td>
+                                    <td th:text="*{#temporals.format(board.createdTime, 'yyyy-MM=dd HH:mm:ss')}"></td>
+                                    <td th:text="${board.boardHits}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                </table>
+
+                </div>
+            </div>
+    </div>
+
+
 </div>
-</body>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </html>
+
+
+
+
+
+
+
