@@ -15,11 +15,8 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
+<div th:replace="fragments/header::header"></div>
 <h1></h1>
-
-<!--<ul>
-    <li><a th:href="@{/mypage/mywrittenboard}">내가 쓴 글</a></li>
-</ul>-->
 
 <!-- 여기서부터 CSS 스타일을 적용 -->
 <div class="wrap">
@@ -31,41 +28,37 @@
     <div class="summaryContainer">
         <div class="item">
             <div class="number"></div>
-            <div class="smallLight"><ul>
-                <div class="my-written-posts-container">
-
-                    <a class="nav-link active" aria-current="page" th:href="@{/mypage/mywrittenboard}">내가 쓴 글</a>
-                </div>
-            </ul></div>
-        </div>
-
-        <div class="item">
-            <div class="number"></div>
-            <div class="smallLight"></div>
-            <div class="withdrawal-container">
-
-                <a class="nav-link active" aria-current="page" th:href="@{/user/member/beforeWithdrawForm}">탈퇴</a>
+            <div class="smallLight">
+                <ul>
+                    <div class="my-written-posts-container">
+                        <a class="nav-link active" aria-current="page" th:href="@{/mypage/mywrittenboard}">내가 쓴 글</a>
+                    </div>
+                </ul>
             </div>
         </div>
+
         <div class="item">
             <div class="number"></div>
-            <div class="smallLight"><ul>
-                <div class="password-change-container">
-
-                    <a class="nav-link active" aria-current="page" th:href="@{/user/member/beforeChangePasswordForm}">비밀번호 변경</a>
-                </div>
-            </ul></div>
+            <div class="smallLight">
+                <ul>
+                    <div class="password-change-container">
+                        <a class="nav-link active" aria-current="page" th:href="@{/user/member/beforeChangePasswordForm}">비밀번호 변경</a>
+                    </div>
+                </ul>
+            </div>
         </div>
+
         <!-- Add the 정보수정 link with similar styling -->
         <div class="item">
             <div class="number"></div>
             <div class="smallLight">
                 <div class="my-written-posts-container">
-                <a class="nav-link active" aria-current="page" th:href="@{/user/member/updateForm}">정보수정</a>
-                    </div>
+                    <a class="nav-link active" aria-current="page" th:href="@{/user/member/updateForm}">정보수정</a>
+                </div>
             </div>
         </div>
     </div>
+
     <div class="shippingStatusContainer">
         <div class="title"></div>
         <div class="status">
@@ -94,17 +87,10 @@
                             </tbody>
                         </table>
                     </div>
+                </table>
             </div>
         </div>
     </div>
-    <div class="icon">
-        <div class="text"></div>
-        <div class="right"></div>
-        </a>
-    </div>
-    <div class="item">
-    </div>
-</div>
 </div>
 
 <div class="listContainer">
@@ -112,8 +98,10 @@
         <div class="icon"></div>
         <div class="text">
             <div class="right"></div>
+        </div>
     </a>
 </div>
+
 <a class="item" href="#">
     <div class="icon">
         <table class="table">
@@ -138,7 +126,7 @@
     <div class="right"></div>
 </a>
 </div>
-
+<!-- Add the 정보수정 link with similar styling -->
 <!--<div class="infoContainer">
     <a class="item" href="#">
         <div>공지사항</div>

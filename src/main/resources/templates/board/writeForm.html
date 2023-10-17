@@ -3,23 +3,27 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
 <div layout:fragment="content">
-
-    <br>
-
+    <link rel="stylesheet" href="/css/board/writeForm.css">
+    <h3>글 작성</h3>
     <form th:action="${url}" method="post" enctype="multipart/form-data">
         <input type="hidden" th:value="${memberId}" name="memberId"><br>
         <input  name="memberEmail" type="hidden" th:value="${memberId}">
         작성자 : <span readonly th:text="${userName}"></span><br>
         제목 : <input type="text" name="boardTitle"><br>
         내용 : <br>
-        <textarea name="boardContents" cols="60" rows="10"></textarea><br>
+        <textarea name="boardContents" cols="80" rows="20"></textarea><br>
         <input type="file" name="file"><br>
-        <input type="submit" value="글작성">
+        <div id="sub1">
+        <input type="submit" value="글작성" >
         <button href="/board/community/list">취소</button>
+        </div>
     </form>
 
 </div>
+
+
 </html>

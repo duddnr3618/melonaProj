@@ -13,7 +13,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "leaderBoard_like")
+@Table(name = "leader_board_like")
 public class LeaderBoard_like {
 
     @Id
