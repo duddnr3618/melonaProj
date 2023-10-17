@@ -104,7 +104,9 @@ public class NormalBoardController {
             return "board/normal/detail";
         }else {
             Long userId = customUserDetails.getMemberEntity().getId();
+            String userName = customUserDetails.getMemberEntity().getMemberName();
             model.addAttribute("userId" , userId);
+            model.addAttribute("userName" , userName);
             return "board/normal/detail";
         }
 

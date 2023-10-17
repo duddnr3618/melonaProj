@@ -41,17 +41,11 @@
 
 
     <a th:if="${board.getFilePath() != null}" th:href="@{${board.filePath}}">이미지 다운받기</a><br>
+    <a th:if="${board.getFilePath() == null}">파일이 존재하지 않습니다.</a>
     <div class="button-container">
     <button id="impeachButton" data-bs-toggle="modal" data-bs-target="#exampleModal"
             th:if="${#authorization.expression('isAuthenticated()')}">신고하기</button>
     <button class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}">신고하기 </button>
-    </div>
-
-    <div id="midmenu">
-    <a th:if="${board.getFilePath() == null}">파일이 존재하지 않습니다.</a>
-    <a th:href="@{/community/list}" class="menu-link">목록 </a>
-    <a th:href="@{/community/modifyForm/{id}(id=${board.id})}" th:if="${board.memberId} == ${userId}" class="menu-link" > | 수정 | </a>
-    <a th:href="@{/community/delete(id=${board.id})}" th:if="${board.memberId} == ${userId}" class="menu-link">삭제 </a>
     </div>
 
     <a id="likeButton" th:if="${#authorization.expression('isAuthenticated()')}">
@@ -61,9 +55,16 @@
     </a>
     <a class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}">
         <div>
-            <img class="uplike-image" src="/img/uplike.jpg">좋아요!
+            <img class="uplike-image" src="/img/uplike%20(1).jpg">좋아요!
         </div>
     </a>
+
+
+    <div id="midmenu">
+    <a th:href="@{/community/list}" class="menu-link">목록 </a>
+    <a th:href="@{/community/modifyForm/{id}(id=${board.id})}" th:if="${board.memberId} == ${userId}" class="menu-link" > | 수정 | </a>
+    <a th:href="@{/community/delete(id=${board.id})}" th:if="${board.memberId} == ${userId}" class="menu-link">삭제 </a>
+    </div>
 
 
     <!-- 댓글 출력 부분 -->
@@ -83,6 +84,7 @@
             </tr>
         </table>
     </div>
+
     <!-- 댓글 작성 부분 -->
     <div id="comment-write">
         <input type="text" id="commentWriter" th:value="${userName}" placeholder="로그인시 댓글 이용이 가능합니다." readonly>
@@ -185,7 +187,7 @@
                     }
                     output += "</table>";
                     document.getElementById('comment-list').innerHTML = output;
-                    document.getElementById('commentWriter').value = '';
+                    /*document.getElementById('commentWriter').value = '';*/
                     document.getElementById('commentContents').value = '';
                 },
 

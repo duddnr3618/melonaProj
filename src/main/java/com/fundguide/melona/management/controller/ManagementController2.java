@@ -63,7 +63,6 @@ public class ManagementController2 {
     @GetMapping("/member_filter_page")
     public String getFilteredResultsByRule( @RequestParam("filter") String filter
             , Model model) {
-
         Page<MemberEntity> paging = managementService.getMemberEvaluatePendingByRule(filter, pageable_Member);
         model.addAttribute("filter", filter);
         model.addAttribute("memberPaging", paging);
@@ -71,9 +70,16 @@ public class ManagementController2 {
     }
 
     @GetMapping("/member_role_filter_page")
-    @ResponseBody
-    public Page<MemberLeastDTO> getMemberRolePagingResult(
-            @RequestParam("filter") String filter) {
-        return managementService.getMemberRoleStatePaging(filter, pageable_Member);
+    public String getMemberRolePagingResult(
+            @RequestParam("filter") String filter, Model model) {
+        Page<MemberEntity> paging = managementService.getMemberAuthorityByRule(filter, pageable_Member);
+        model.addAttribute("filter", filter);
+        model.addAttribute("memberPaging", paging);
+        return "management/server_rendering_version/member_role_rendering";
+    }
+
+    @GetMapping("/member_role_setLeader/{memberId}")
+    public ResponseEntity<String> setMemberAsLeader(@PathVariable Long memberId) {
+        return managementService.setMemberAsLeader(memberId);
     }
 }
