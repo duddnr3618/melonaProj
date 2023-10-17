@@ -16,7 +16,6 @@
                 }
 
                 nav {
-                        text-align: center;
                         margin-bottom: 20px;
                 }
 
@@ -63,8 +62,13 @@
 <div layout:fragment="content">
         <h2 id="newsroom-title">뉴스룸</h2> <!-- 뉴스룸 텍스트 추가 -->
         <nav>
-                <button onclick="switchContent('주식')">주식</button>
-                <button onclick="switchContent('코인')">코인</button>
+
+                <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4"><button onclick="switchContent('주식')">주식</button>
+                        <button onclick="switchContent('코인')">코인</button></div>
+                <div class="col-md-4"></div>
+                </div>
         </nav>
         <iframe id="content-frame" src="http://localhost:7777/news/list3?text=주식"></iframe>
 </div>

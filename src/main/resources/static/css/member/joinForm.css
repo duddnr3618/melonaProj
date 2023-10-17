@@ -22,3 +22,21 @@ input[type="password"]:focus {
     background-color: #A4A4A4; /* 배경색 설정 */
     border: none; /* 테두리 없앰 */
 }
+#nav3 a {
+    color:#A4A4A4 ;
+    text-decoration: none;
+    letter-spacing: 5px;
+}
+
+#nav3 a:hover {
+    color: #9FF781;
+}
+#nav4 a {
+    color:#ffffff ;
+    text-decoration: none;
+}
+
+#nav4 a:hover {
+    color: #9FF781;
+}
+
