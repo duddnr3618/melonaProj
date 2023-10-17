@@ -18,9 +18,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Controller
-public class NewsController {
+public class NewsController4 {
 
-    @GetMapping("/news/list")
+    @GetMapping("/news/list4")
     public String list(String text, Model model) {
 
         // 네이버 검색 API 요청
@@ -41,11 +41,11 @@ public class NewsController {
                 // 검색어를 쿼리 파라미터로 추가
                 .queryParam("query", text)
                 // 검색 결과의 표시 개수를 설정
-                .queryParam("display", 10)
+                .queryParam("display", 20)
                 // 검색 결과의 시작 인덱스를 첫번째 결과 부터 시작하는 걸로 설정
                 .queryParam("start", 1)
-                // 검색 결과를
-                .queryParam("sort", "sim")
+                // 검색 결과를 날짜순으로 정렬(date)
+                .queryParam("sort", "date")
                 // URI에 포함된 특수 문자나 공백 등을 올바른 형식으로 인코딩.
                 .encode(StandardCharsets.UTF_8)
                 // 지금까지의 설정을 바탕으로 UriComponents 객체를 생성.
@@ -86,7 +86,7 @@ public class NewsController {
             System.out.println("Error: resultVO is null");
         }
 
-        return "/news/list";
+        return "/news/list4";
 
 //        // ObjectMapper 객체를 사용하여 JSON 문자열을 Java 객체로 변환한다.
 //        try {
