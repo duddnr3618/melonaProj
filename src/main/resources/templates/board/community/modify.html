@@ -6,8 +6,7 @@
 
 
 <div layout:fragment="content">
-
-    <br>
+    <link rel="stylesheet" href="/css/board/modify.css">
 
     <form th:action="@{/community/modifyPro}" name="board" method="post">
         <input type="hidden" name="id" th:value="${board.id}">
@@ -16,10 +15,13 @@
         작성자 : <span type="text" name="memberName" th:text="${userName}"></span><br>
         제목 : <input type="text" name="boardTitle" th:value="${board.boardTitle}"><br>
         내용 :<br>
-        <textarea name="boardContents" cols="60" rows="10" th:text="${board.boardContents}"></textarea><br>
+        <textarea name="boardContents" cols="70" rows="20" th:text="${board.boardContents}"></textarea><br>
         <input type="hidden" name="boardHits" th:value="${board.boardHits}"><br>
+        <input type="file" name="file">
+        <div id="sub1">
         <input type="submit" value="수정">
         <button href="/board/community/list">취소</button>
+        </div>
     </form>
 
 </div>

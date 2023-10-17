@@ -1,16 +1,17 @@
 package com.fundguide.melona.member.repository;
 
-import com.fundguide.melona.board.normalBoard.entity.QNormalBoardImpeachEntity;
 import com.fundguide.melona.management.commonQueryDsl.CommonQueryDsl;
 import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.role.MemberRoleState;
-import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.querydsl.jpa.sql.JPASQLQuery;
+import com.querydsl.sql.MySQLTemplates;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -20,16 +21,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import static com.fundguide.melona.board.community.entity.QCommunityEntity.communityEntity;
-import static com.fundguide.melona.member.entity.QMemberEntity.memberEntity;
 import static com.fundguide.melona.board.normalBoard.entity.QNormalBoardEntity.normalBoardEntity;
-import static com.fundguide.melona.board.normalBoard.entity.QNormalBoardImpeachEntity.normalBoardImpeachEntity;
-import static com.fundguide.melona.board.community.entity.QCommunityImpeachEntity.communityImpeachEntity;
-import static com.fundguide.melona.board.community.entity.QCommunityEntity.communityEntity;
+import static com.fundguide.melona.board.normalBoard.entity.QNormalBoard_like.normalBoard_like;
+import static com.fundguide.melona.member.entity.QMemberEntity.memberEntity;
 
 @Repository
 @Slf4j
@@ -41,11 +41,13 @@ public class MemberRepositoryJpa implements MemberRepository {
     private BooleanExpression expression = null;
     private JPAQuery<MemberEntity> jpaQuery = new JPAQuery<>();
     private final JPAQuery<MemberLeastDTO> leastJPAQuery = new JPAQuery<>();
+    private final JPASQLQuery<MemberEntity> jpasqlQuery;
 
 
     public MemberRepositoryJpa(EntityManager em) {
         this.em = em;
         this.query = new JPAQueryFactory(em);
+        this.jpasqlQuery = new JPASQLQuery<>(em, new MySQLTemplates());
     }
 
     @Transactional
@@ -118,8 +120,8 @@ public class MemberRepositoryJpa implements MemberRepository {
         MemberEntity memberEntity = em.find(MemberEntity.class, id);
         memberEntity.setMemberEmail("탈퇴한사용자" + memberEntity.getId());
         memberEntity.setMemberNickname("탈퇴한사용자" + memberEntity.getId() + new Date());
-        memberEntity.setMemberEmail("탈퇴한사용자"+ memberEntity.getId());
-        memberEntity.setMemberNickname("탈퇴한사용자"+memberEntity.getId()+new Date());
+        memberEntity.setMemberEmail("탈퇴한사용자" + memberEntity.getId());
+        memberEntity.setMemberNickname("탈퇴한사용자" + memberEntity.getId() + new Date());
         memberEntity.setMemberRole(MemberRoleState.DISABLED);
         memberEntity.setMemberAddress("탈퇴한사용자");
         memberEntity.setMemberName("탈퇴한사용자");
@@ -139,7 +141,7 @@ public class MemberRepositoryJpa implements MemberRepository {
         return commonQueryDsl.pageableHandler(jpaQuery, pageable);
     }
 
-    /**{@inheritDoc}*/
+    /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = true)
     public Page<MemberLeastDTO> findAllOfMemberLeastData(Pageable pageable) {
@@ -149,21 +151,30 @@ public class MemberRepositoryJpa implements MemberRepository {
         return commonQueryDsl.pageableHandler(jpaQuery, pageable);
     }
 
-    /**{@inheritDoc}*/
+    /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = true)
-    public Page<MemberLeastDTO> memberRoleStateFilterPage(String filter, Pageable pageable) {
+    public Page<MemberEntity> getMemberAuthorityByRule(String filter, Pageable pageable) {
+
         switch (filter) {
-            case "minSatisfy" -> expression = memberEntity.memberRole.eq(MemberRoleState.ROLE_USER);
-            case "autoGet" -> expression = memberEntity.memberRole.eq(MemberRoleState.ROLE_AUTO_LEADER);
-            case "setByAdmin" -> expression = memberEntity.memberRole.eq(MemberRoleState.ROLE_SET_LEADER);
+            case "minSatisfy" -> jpaQuery = query.selectFrom(memberEntity)
+                    .where(memberEntity.memberLimitState.notIn(MemberLimitState.PERMANENT))
+                    .rightJoin(memberEntity)
+                    .leftJoin(normalBoardEntity)
+                    .on(memberEntity.id.eq(normalBoardEntity.memberEntity.id))
+                    .leftJoin(normalBoard_like)
+                    .on(normalBoardEntity.id.eq(normalBoard_like.normalBoardEntity.id))
+                    .groupBy(memberEntity.id)
+                    .having(normalBoard_like.count().goe(0))
+                    .distinct();
+
+            case "autoGet" ->
+                    jpaQuery = query.selectFrom(memberEntity).where(memberEntity.memberRole.eq(MemberRoleState.ROLE_AUTO_LEADER));
+            case "setByAdmin" ->
+                    jpaQuery = query.selectFrom(memberEntity).where(memberEntity.memberRole.eq(MemberRoleState.ROLE_SET_LEADER));
             default -> throw new IllegalArgumentException("정의되지 않은 필터 값입니다.");
         }
 
-        JPAQuery<MemberLeastDTO> jpaQuery = this.query
-                .select(MemberLeastDTO.projections())
-                .from(memberEntity)
-                .where(expression);
         return commonQueryDsl.pageableHandler(jpaQuery, pageable);
     }
 
@@ -173,35 +184,75 @@ public class MemberRepositoryJpa implements MemberRepository {
         em.persist(memberEntity);
     }
 
+    /** {@inheritDoc} */
     @Override
     @Transactional(readOnly = true)
     public Page<MemberEntity> evaluatePendingByRule(String filter, Pageable pageable) {
-        jpaQuery = query.select(memberEntity)
-                .from(memberEntity)
-                .join(communityImpeachEntity)
-                .on(memberEntity.id.eq(communityImpeachEntity.member.id))
-                /*.join(normalBoardImpeachEntity)
-                .on(memberEntity.id.eq(normalBoardImpeachEntity.member.id))*/
-                .where(memberEntity.id.count().goe(10))
-                .distinct()
-                ;
 
-
+        int countSize = 0;
         switch (filter) {
             case "TRANSITORY" -> {
-                System.out.println(" { 가벼운 경고 진입" + " }");
-                return commonQueryDsl.pageableHandler(jpaQuery ,pageable);
+                countSize = 15;
             }
             case "STRONG" -> {
+                countSize = 25;
             }
             case "PERMANENT" -> {
+                jpaQuery = query.selectFrom(memberEntity)
+                        .where(memberEntity.memberLimitState.eq(MemberLimitState.PERMANENT));
+                return commonQueryDsl.pageableHandler(jpaQuery, pageable);
             }
             default -> throw new IllegalArgumentException("정의되지 않은 필터 방식입니다.");
         }
-        return null;
+
+        String intersectionSql = "SELECT member_id FROM (" +
+                "SELECT ci.member_id FROM community_impeach ci " +
+                "JOIN community_board cb ON ci.board_id = cb.community_board_id " +
+                "GROUP BY ci.member_id HAVING COUNT(*) >= 30 " +
+                "UNION ALL " +
+
+                "SELECT li.member_id FROM leader_board_impeach li " +
+                "JOIN leader_board lb ON li.board_id = lb.leader_board_id " +
+                "GROUP BY li.member_id HAVING COUNT(*) >= 30 " +
+                "UNION ALL " +
+
+                "SELECT ni.member_id FROM normal_board_impeach ni " +
+                "JOIN normal_board nb ON ni.board_id = nb.normal_board_id " +
+
+                ") AS subquery " +
+                "WHERE subquery.member_id NOT IN (" +
+                "SELECT member_id FROM member WHERE member.member_limit_state = 'PERMANENT'" +
+                ") " +
+
+                "GROUP BY member_id HAVING COUNT(member_id) >= ?1 " +
+                "ORDER BY member_id DESC";
+
+
+        Query nativeIntersectionQuery = em.createNativeQuery(intersectionSql);
+        nativeIntersectionQuery.setParameter(1, countSize);
+        List<Long> subMemberId = nativeIntersectionQuery.getResultList();
+
+        Query nativeMembersQuery;
+        List<MemberEntity> entities;
+        if (!subMemberId.isEmpty()) {
+            String membersSql =
+                    String.format("SELECT m.* FROM member m WHERE m.member_id IN(%s) " +
+                                    "ORDER BY m.member_id DESC " +
+                                    "LIMIT :limit OFFSET :offset ",
+                            subMemberId.stream().map(String::valueOf).collect(Collectors.joining(",")));
+            nativeMembersQuery = em.createNativeQuery(membersSql, MemberEntity.class);
+            nativeMembersQuery.setParameter("limit", pageable.getPageSize());
+            nativeMembersQuery.setParameter("offset", pageable.getOffset());
+            entities = nativeMembersQuery.getResultList();
+        } else {
+            entities = new ArrayList<>();
+        }
+
+        long total = (long) nativeIntersectionQuery.getResultList().size();
+        return new PageImpl<>(entities, pageable, total);
     }
 
-    /**{@inheritDoc}*/
+    /** {@inheritDoc} */
     @Override
     public Optional<MemberEntity> findByMemberEamilOptional(String email) {
         MemberEntity member = query.selectFrom(memberEntity)
@@ -214,8 +265,8 @@ public class MemberRepositoryJpa implements MemberRepository {
     @Transactional(readOnly = true)
     public Page<MemberEntity> findAll(Pageable pageable) {
         JPAQuery<MemberEntity> memberEntityJPAQuery = query.selectFrom(memberEntity)
-                .where(memberEntity.memberLimitState.notIn(MemberLimitState.TRANSITORY)
-                        .and(memberEntity.memberRole.notIn(MemberRoleState.DISABLED)));
+                .where(memberEntity.memberLimitState.notIn(MemberLimitState.PERMANENT)
+                        .and(memberEntity.memberRole.notIn(MemberRoleState.DISABLED, MemberRoleState.ROLE_ADMIN)));
         return commonQueryDsl.pageableHandler(memberEntityJPAQuery, pageable);
     }
 

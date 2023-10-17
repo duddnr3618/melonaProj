@@ -35,24 +35,20 @@
         <tr id="contentsbox">
             <th>내용</th>
             <td th:text="${board.boardContents}"></td>
-            <td id="contentsbox1"><img th:src="${board.getFilePath()}" alt=""></td>
+            <td id="contentsbox1"><img th:src="${board.getFilePath()}" alt="" th:placeholder="사진"></td>
         </tr>
     </table>
 
 
 
     <a th:if="${board.getFilePath() != null}" th:href="@{${board.filePath}}">이미지 다운받기</a><br>
+    <a th:if="${board.getFilePath() == null}">파일이 존재하지 않습니다.</a>
     <div class="button-container">
         <button id="impeachButton" data-bs-toggle="modal" data-bs-target="#exampleModal"
                 th:if="${#authorization.expression('isAuthenticated()')}">신고하기</button>
         <button class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}">신고하기 </button>
     </div>
-    <div id="midmenu">
-    <a th:if="${board.getFilePath() == null}">파일이 존재하지 않습니다.</a><br>
-    <a th:href="@{/leaderBoard/list}" class="menu-link">목록</a>
-    <a th:href="@{/leaderBoard/modifyForm/{id}(id=${board.id})}" th:if="${board.memberId} == ${userId}" class="menu-link" > | 수정  |</a>
-    <a th:href="@{/leaderBoard/delete(id=${board.id})}" th:if="${board.memberId} == ${userId}" class="menu-link">삭제</a>
-    </div>
+
     <a id="likeButton" th:if="${#authorization.expression('isAuthenticated()')}">
         <div>
             <img class="uplike-image" src="/img/uplike%20(1).jpg" th:if="${#authorization.expression('isAuthenticated()')}">좋아요!
@@ -60,9 +56,15 @@
     </a>
     <a class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}">
         <div>
-            <img class="uplike-image" src="/img/uplike.jpg">좋아요!
+            <img class="uplike-image" src="/img/uplike%20(1).jpg">좋아요!
         </div>
     </a>
+
+    <div id="midmenu">
+    <a th:href="@{/leaderBoard/list}" class="menu-link">목록</a>
+    <a th:href="@{/leaderBoard/modifyForm/{id}(id=${board.id})}" th:if="${board.memberId} == ${userId}" class="menu-link" > | 수정  |</a>
+    <a th:href="@{/leaderBoard/delete(id=${board.id})}" th:if="${board.memberId} == ${userId}" class="menu-link">삭제</a>
+    </div>
 
     <hr class="line1">
 
@@ -185,7 +187,6 @@
                     }
                     output += "</table>";
                     document.getElementById('comment-list').innerHTML = output;
-                    document.getElementById('commentWriter').value = '';
                     document.getElementById('commentContents').value = '';
                 },
 

@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface LeaderBoardRepository extends JpaRepository<LeaderBoardEntity , Long> {
+public interface LeaderBoardRepository extends JpaRepository<LeaderBoardEntity, Long>, LeaderBoardRepositoryCustom {
     Page<LeaderBoardEntity> findByBoardTitleContaining(String searchKeyword, Pageable pageable);
     @Modifying
     @Query(value = "update LeaderBoardEntity b set b.boardHits=b.boardHits+1 where b.id=:id")
