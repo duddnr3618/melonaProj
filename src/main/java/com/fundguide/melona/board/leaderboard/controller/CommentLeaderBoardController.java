@@ -22,7 +22,7 @@ public class CommentLeaderBoardController {
 
     @PostMapping("/save")
     public ResponseEntity save (@ModelAttribute CommentLeaderBoardDto commentLeaderBoardDto) {
-        System.out.println("1commentLeaderBoardDto : " + commentLeaderBoardDto);
+        System.out.println("1 >> commentLeaderBoardDto : " + commentLeaderBoardDto);
          Long saveResult =  commentLeaderBoardService.save(commentLeaderBoardDto);
         System.out.println(">>>>>>>2saveResult : " + saveResult);
         if(saveResult != null){

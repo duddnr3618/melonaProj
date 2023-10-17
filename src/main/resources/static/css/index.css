@@ -33,16 +33,26 @@ li > ul {
 li:hover > ul {
     display: block;
 }
-/*.tradingview-widget-container {*/
-/*    margin-bottom: 20px;*/
-/*}*/
-
 .tradingview-widget-container{
-
     margin: 60px;
-
 }
 
 #board {
+    margin: 0 auto; /* 가운데 정렬 */
+    width: 80%; /* 너비 설정 */
+    padding: 20px; /* 내부 패딩 */
+}
 
+#board h3 {
+    font-size: 24px;
+}
+
+
+#board div a {
+    color:black;
+    text-decoration:none;
+}
+
+#board div a:hover {
+    color: #9FF781;
 }
