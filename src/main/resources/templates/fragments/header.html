@@ -7,11 +7,12 @@
 <script th:src="@{/js/header.js}" type="text/javascript"></script>
 
 <meta charset="UTF-8"><!--한글깨짐으로 임시로 넣어둠-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js" integrity="sha384-eMNCOe7tC1do4A+gf8k5l7l4lMz4i3WDQn1Z7y/JonasIUNsobU2K/M0xzV6WO9j" crossorigin="anonymous"></script>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"
+        integrity="sha384-eMNCOe7tC1do4A+gf8k5l7l4lMz4i3WDQn1Z7y/JonasIUNsobU2K/M0xzV6WO9j"
+        crossorigin="anonymous"></script>
 
 <div th:fragment="header">
+
 <!--	트레이딩 차트! 시작-->
 	<!-- TradingView Widget BEGIN -->
 	<div class="tradingview-widget-container">
@@ -78,83 +79,91 @@
 		</script>
 	</div>
 
-	<nav class="navbar"><!--메로나 색으로 변경 완료		-->
-		<div class="container-fluid">
-			<a class="navbar-brand" href="/"><img th:src="@{/img/melona.png}" width="100px" height="100px" alt="logo"/>𝓜𝓮𝓵𝓸𝓷𝓪</a>
+    <!--  sec:authorize="hasAnyAuthority('ROLE_ADMIN')" -->
+    <nav class="navbar"><!--메로나 색으로 변경 완료		-->
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img th:src="@{/img/melona.png}" width="100px" height="100px" alt="logo"/>Melona</a>
 
-<!--			nav 바에 들어간 애들!-->
-<!--		-->
-			<div id="nav3" class="d-flex justify-content-center flex-grow-1">
-												<!--뉴스 경로가 안보내져서 주소 그대로 보내는 것으로				-->
-				<a class="nav-link mx-5" th:href="@{/news/list2?text=query}">뉴스</a>
-
-				<div class="dropdown">
-					<a class="nav-link mx-5 dropdown-toggle" href="#" role="button" id="guideDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-						가이드
-					</a>
-					<ul class="dropdown-menu" aria-labelledby="guideDropdown">
-						<li><a class="dropdown-item" th:href="@{/leaderBoard/list}">리더가이드</a></li>
-						<li><a class="dropdown-item" th:href="@{/normalBoard/list}">일반가이드</a></li>
-					</ul>
-				</div>
-
-
-				<a class="nav-link mx-5" th:href="@{/community/list}">커뮤니티</a>
-				<a class="nav-link mx-5" th:href="@{/event}">이벤트</a>
-				<a class="nav-link mx-5" th:href="@{/chart/stockinformation/stockinfo1.html}">차트</a>
-			</div>
+            <!--			nav 바에 들어간 애들!-->
+            <!--		-->
+            <div id="nav3" class="d-flex justify-content-center flex-grow-1">
+                <a class="nav-link mx-5" th:href="@{/news/list2?text=query}">뉴스</a>
+                <div class="dropdown">
+                    <a class="nav-link mx-5 dropdown-toggle" href="#" role="button" id="guideDropdown"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        가이드
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="guideDropdown">
+                        <li><a class="dropdown-item" th:href="@{/leaderBoard/list}">리더가이드</a></li>
+                        <li><a class="dropdown-item" th:href="@{/normalBoard/list}">일반가이드</a></li>
+                    </ul>
+                </div>
 
 
-			<button id="button" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+                <a class="nav-link mx-5" th:href="@{/community/list}">커뮤니티</a>
+                <a class="nav-link mx-5" th:href="@{/event}">이벤트</a>
+				<a class="nav-link mx-5" th:href="@{/chart/stockinformation/stockinfo1}">차트</a>
+            </div>
 
-			<div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-				<div class="offcanvas-header">
-					<h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5>
-					<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-				</div>
-				<div id="nav4" class="offcanvas-body">
-					<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 
-						<li class="nav-item" sec:authorize="isAnonymous()" >
+            <button id="button" class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                 aria-labelledby="offcanvasDarkNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Menu</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                </div>
+                <div id="nav4" class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+						<li class="nav-item" sec:authorize="isAnonymous()">
 							<a class="nav-link active" aria-current="page" href="/member/loginForm">Login</a>
 						</li>
-						<li class="nav-item" sec:authorize="isAuthenticated()">
-							<a class="nav-link active" aria-current="page" href="/logout">Logout</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="/member/joinForm">회원가입</a>
-						</li>
-						<li class="nav-item" sec:authorize="isAnonymous()" >
-							<a class="nav-link active" aria-current="page" href="/member/findInfoForm">아이디 | 비밀번호 찾기</a>
-						</li>
-						<li class="nav-item" sec:authorize="isAuthenticated()">
-							<a class="nav-link active" aria-current="page" href="/mypage/mypage2">마이페이지</a>
-						</li>
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link active" aria-current="page" href="/member/joinForm">회원가입</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link active" aria-current="page" href="/member/findInfoForm">아이디/비밀번호 찾기</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link active" aria-current="page" href="/mypage/mypage2">마이페이지</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/exchangeRateCalc">환율정보</a>
+                        </li>
 
-						<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="/exchangeRateCalc">환율정보</a>
-						</li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/koreaBankSearch">정보검색</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/calculator/calculmain">물타기 계산기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/calculator/calender">경제 캘린더</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="">채팅</a>
+                        </li>
 
-						<li class="nav-item" >
-						<a class="nav-link active" aria-current="page" href="/koreaBankSearch">정보검색</a>
-						</li>
+                    </ul>
 
-					<li class="nav-item">
-					<a class="nav-link active" aria-current="page"  href="/calculator/calculmain">물타기 계산기</a>
-					</li>
-					<li class="nav-item">
-					<a class="nav-link active" aria-current="page"  href="/calculator/calender">경제 캘린더</a>
-					</li>
-					<li class="nav-item">
-					<a class="nav-link active" aria-current="page"  href="">채팅</a>
-					</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</nav>
+                    <form class="d-flex mt-3" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-success" type="submit">Search</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <br>
+
 	<hr id="hr1">
 </div>
 </html>

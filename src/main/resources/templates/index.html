@@ -6,7 +6,12 @@
 
 <meta charset="UTF-8">
 
+
+
 <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
+/
+
+
 <div layout:fragment="content">
 
   <style>
@@ -30,15 +35,19 @@
   <hr>
   <br>
   <h3>실시간 뉴스</h3>
-  <div id="main1">
-  <iframe id="stock1" src="http://localhost:7777/news/list?text=주식" width="1280" height="300"></iframe>
-  <div style="height: 40px;"></div><!--주식 차트 불러오는게 간격을 벌리면 벌릴수록 같이 따라와서 중간에 간격을 둠  -->
+
+<!--  style="width: 90%; height: 600px; margin-left:50px-->
+
+
+    <div id="chart2" style="text-align: center">
+  <iframe id="stock1" src="http://localhost:7777/news/list?text=주식" width="1290" height="300"></iframe>
+    </div>
+      <div style="height: 40px;"></div><!--주식 차트 불러오는게 간격을 벌리면 벌릴수록 같이 따라와서 중간에 간격을 둠  -->
 
   <hr><br><br>
 
   <h3>실시간 차트</h3>
-<div class="container1">
-<div class="container1">
+<div class="container1" style="text-align: center">
   <div class="tradingview-widget-container" style="display:inline-block">
     <div class="tradingview-widget-container__widget"></div>
     <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
@@ -144,11 +153,11 @@
 </div>
 
 
-  <ul class="section_name">
+  <ul class="section_name" style="margin-left: 50px;">
     <li class="title">Map</li>
     <li>지도로 보는 주식 시세</li>
   </ul>
-  <div id="map" style="width: 90%; height: 600px;"></div>
+  <div id="map" style="width: 90%; height: 600px; margin-left:50px; "></div>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1df94762a892a81117b69b20792304e8"></script>
 
   <script type="text/javascript">
@@ -279,6 +288,12 @@
     }
 
   </script>
+
+  </div>
+
+
+  <!-- TradingView Widget END -->
+
 
 
 </html>
