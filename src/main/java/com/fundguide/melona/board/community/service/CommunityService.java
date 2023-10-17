@@ -105,7 +105,7 @@ public class CommunityService {
     public CommunityDto update(CommunityDto communityDto, MultipartFile file) {
         MemberEntity memberEntity = new  MemberEntity();
         memberEntity.setId(communityDto.getMemberId());
-        CommunityEntity communityEntity = CommunityEntity.toUpdateEntity(communityDto);
+        CommunityEntity communityEntity = CommunityEntity.toUpdateEntity(communityDto,file);
         memberEntity.setId(communityDto.getMemberId());
         communityEntity.setMemberEntity(memberEntity);
 

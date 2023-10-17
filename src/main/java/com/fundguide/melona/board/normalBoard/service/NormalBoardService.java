@@ -28,10 +28,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class NormalBoardService {
 
-    @Value("normalAbsolutePath.dir")
+    @Value("${normalAbsolutePath.dir}")
     private String absolutePath;
 
-    @Value("normalResourcePath.dir")
+    @Value("${normalResourcePath.dir}")
     private String resourcePath;
 
     private final NormalBoardRepository normalBoardRepository;

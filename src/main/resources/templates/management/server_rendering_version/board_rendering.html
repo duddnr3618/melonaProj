@@ -21,7 +21,6 @@
     <tr th:class="boardList" th:each="board, i : ${boardPaging}" th:data-link="${detailBoardLink}" th:data-id="${board.getId}">
         <td th:text="${board.getId}"></td>
         <td class="clickDetailLink" th:text="${board.getBoardTitle}"></td>
-        <!--TODO 커뮤니티 보드 변경후 데이터에 맞게 변경할것-->
         <!--<td th:text="${board.getBoardWriter}"></td>-->
         <td>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" th:data-bs-target="'#fastDetail'+${board.getId}">

@@ -1,0 +1,24 @@
+.col-md-4 {
+    height: auto; /* 높이를 자동으로 조정하여 가로세로 비율 유지 */
+    max-width: 100%; /* 이미지 너비가 화면 너비를 넘지 않도록 설정 */
+    overflow: hidden; /* 내용이 div를 넘어갈 때 숨기기 */
+}
+
+.container img {
+    max-width: 95%; /* 이미지 최대 너비를 부모 div의 너비로 제한 */
+    height: auto; /* 높이를 자동으로 조정하여 가로세로 비율 유지 */
+}
+.row:first-child {
+    margin-bottom: 5vh; /* 원하는 마진 값으로 설정 */
+}
+h1{
+    color: #A4A4A4;
+}
+
+.row:nth-child(5) {
+    margin-top: 10vh;
+    margin-bottom: 5vh;
+}
+.col-md-4{
+    margin-top: 25px;
+}
