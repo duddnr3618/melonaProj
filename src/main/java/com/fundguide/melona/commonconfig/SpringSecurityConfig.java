@@ -31,6 +31,7 @@ public class SpringSecurityConfig {
                 .requestMatchers(("/js/**")).permitAll()
                 .requestMatchers("/user/**").authenticated()
                 .requestMatchers("/user/**").access("hasAnyRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_LEADER')")
+                .requestMatchers("/leaderBoard/wrtieForm").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_LEADER')")
                 .requestMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN')")
                 .requestMatchers("/","/logout").permitAll()
                 .and()
