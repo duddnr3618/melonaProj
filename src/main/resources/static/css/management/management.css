@@ -3,7 +3,6 @@ hr {
 }
 
 body {
-    display: grid;
     justify-content: center;
 }
 
@@ -12,9 +11,9 @@ body {
     justify-content: center;
 }
 
-topbox1 {
-        display: flex;
-        justify-content: center;
+#topbox1 ul{
+    display: flex;
+    justify-content: center;
 }
 
 
