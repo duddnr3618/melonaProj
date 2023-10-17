@@ -10,7 +10,6 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString
 @Table(name = "comment_leader_board")
 public class CommentLeaderBoardEntity extends BaseTimeEntity{
     @Id

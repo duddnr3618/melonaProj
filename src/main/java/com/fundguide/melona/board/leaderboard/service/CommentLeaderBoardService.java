@@ -26,7 +26,6 @@ public class CommentLeaderBoardService {
     private final LeaderBoardRepository leaderBoardRepository;
 
     public Long save(CommentLeaderBoardDto commentLeaderBoardDto) {
-        
         System.out.println("서비스 진입");
         /* 부모 엔티티 조회 */
         Optional<LeaderBoardEntity> optionalLeaderBoardEntity = leaderBoardRepository.findById(commentLeaderBoardDto.getBoardId());
