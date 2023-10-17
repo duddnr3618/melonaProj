@@ -20,6 +20,7 @@
      /를 제외한 경로로 지정할것. -->
     <link th:href="@{/css/member/common10.css}" rel="stylesheet">
     <link th:href="@{/css/member/joinForm.css}" rel="stylesheet">
+    <link th:href="@{/css/member/commonFooter.css}" rel="stylesheet">
 
     <link th:href="@{/css/member/exchangeRate.css}" rel="stylesheet">
     <th:block layout:fragment="script"></th:block>
@@ -97,7 +98,8 @@
             </div>
         </select>
         </div>
-        <div class="col-md-5"></div>
+        <div class="col-md-2">정보제공:한국수출입은행</div>
+        <div class="col-md-3"></div>
     </div>
     <div class="row">
         <div class="col-md-5"></div>
@@ -114,7 +116,7 @@
     </div>
 </div>
 
-
+<div th:replace="fragments/footer::footer" ></div>
 
 </body>
 </html>
