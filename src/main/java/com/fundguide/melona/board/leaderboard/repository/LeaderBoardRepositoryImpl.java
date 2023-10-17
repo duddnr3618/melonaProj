@@ -75,7 +75,7 @@ public class LeaderBoardRepositoryImpl implements LeaderBoardRepositoryCustom {
                                 .from(leaderBoardImpeachEntity)
                                 .where(leaderBoardEntity.id.eq(leaderBoardImpeachEntity.board.id))
                                 .groupBy(leaderBoardEntity.id)
-                                .having(leaderBoardEntity.id.count().goe(100))
+                                .having(leaderBoardEntity.id.count().goe(30))
                                 .exists()
                         )
                 )

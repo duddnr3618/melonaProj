@@ -6,46 +6,47 @@
         <th>Email</th>
         <th>Role</th>
         <th>Limit</th>
+        <th th:if="${filter} == 'TRANSITORY'">3일 제한 주기</th>
+        <th th:if="${filter} == 'TRANSITORY'">7일 제한 주기</th>
+        <th th:if="${filter} == 'STRONG'">계정 비활성화</th>
     </tr>
     <tr th:each="member, i : ${memberPaging}">
         <td th:text="${member.getMemberEmail()}"></td>
         <td th:text="${member.getMemberRole()}"></td>
         <td th:text="${member.getMemberLimitState()}"></td>
-        <td th:if="${filter} == 'waring'">
-            <button class="disabledButton" th:data-id="${member.getId}">비활성화</button>
+        <td th:if="${filter} == 'TRANSITORY'">
+            <button class="daysLimit" th:data-id="${member.getId}" th:data-day="3" th:data-memberid="${member.getId()}">3일</button>
+        </td>
+        <td th:if="${filter} == 'TRANSITORY'">
+            <button class="daysLimit" th:data-id="${member.getId}" th:data-day="7" th:data-memberid="${member.getId()}">7일</button>
+        </td>
+        <td th:if="${filter} == 'STRONG'">
+            <button class="permanentLimit" th:data-id="${member.getId()}">계정 비활성화</button>
         </td>
     </tr>
 </table>
 
-<!-- 페이징처리 시작 -->
-<!--
-<div th:each="member, i : ${memberPaging}">
-    <div th:if="${!member.isEmpty()}">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${!member.hasPrevious} ? 'disabled'">
-                <a class="page-link" href="javascript:void(0)" th:data-page="${member.number-1}">
-                    <span>이전</span>
-                </a>
-            </li>
-            
-            <li th:each="page: ${#numbers.sequence(0, member.totalPages-1)}"
-                th:if="${page >= member.number-5 and page <= member.number+5}"
-                th:classappend="${page == member.number} ? 'active'" class="page-item">
-                <a th:text="${page}" class="page-link" href="javascript:void(0)" th:data-page="${page}"></a>
-            </li>
-            
-            <li class="page-item" th:classappend="${!member.hasNext} ? 'disabled'">
-                <a class="page-link" href="javascript:void(0)" th:data-page="${member.number+1}">
-                    <span>다음</span>
-                </a>
-            </li>
-        
-        </ul>
-    </div>
-</div>
--->
-<!-- 페이징처리 끝 -->
-
+<script>
+   $('.daysLimit').click(function () {
+       let memberId = $(this).data('id');
+       let day = $(this).data('day');
+       axios.put(`/management/member_filter_setLimit/${memberId}/${day}`)
+           .then(function () {
+               $('#AllLayoutBox li.active').click();
+               $('.daysLimit').off('click');
+           })
+       ;
+   });
+   $('.permanentLimit').click(function () {
+       let memberId = $(this).data('id');
+       axios.put(`/management/member_filter_setDisable/${memberId}`)
+           .then(function () {
+               $('#AllLayoutBox li.active').click();
+               $('.permanentLimit').off('click');
+           })
+       ;
+   })
+</script>
 
 </body>
 </html>

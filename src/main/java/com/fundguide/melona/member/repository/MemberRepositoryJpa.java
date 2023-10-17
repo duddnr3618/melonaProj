@@ -158,20 +158,24 @@ public class MemberRepositoryJpa implements MemberRepository {
 
         switch (filter) {
             case "minSatisfy" -> jpaQuery = query.selectFrom(memberEntity)
-                    .where(memberEntity.memberLimitState.notIn(MemberLimitState.PERMANENT))
+                    .where(memberEntity.memberLimitState.notIn(MemberLimitState.PERMANENT)
+                            .and(memberEntity.memberRole.in(MemberRoleState.ROLE_USER)))
                     .rightJoin(memberEntity)
                     .leftJoin(normalBoardEntity)
                     .on(memberEntity.id.eq(normalBoardEntity.memberEntity.id))
                     .leftJoin(normalBoard_like)
                     .on(normalBoardEntity.id.eq(normalBoard_like.normalBoardEntity.id))
                     .groupBy(memberEntity.id)
-                    .having(normalBoard_like.count().goe(0))
+                    .orderBy(memberEntity.id.desc())
+                    .having(normalBoard_like.count().goe(30))
                     .distinct();
 
             case "autoGet" ->
-                    jpaQuery = query.selectFrom(memberEntity).where(memberEntity.memberRole.eq(MemberRoleState.ROLE_AUTO_LEADER));
+                    jpaQuery = query.selectFrom(memberEntity).where(memberEntity.memberRole.eq(MemberRoleState.ROLE_AUTO_LEADER))
+                            .orderBy(memberEntity.id.desc());
             case "setByAdmin" ->
-                    jpaQuery = query.selectFrom(memberEntity).where(memberEntity.memberRole.eq(MemberRoleState.ROLE_SET_LEADER));
+                    jpaQuery = query.selectFrom(memberEntity).where(memberEntity.memberRole.eq(MemberRoleState.ROLE_SET_LEADER))
+                            .orderBy(memberEntity.id.desc());
             default -> throw new IllegalArgumentException("정의되지 않은 필터 값입니다.");
         }
 
@@ -190,11 +194,30 @@ public class MemberRepositoryJpa implements MemberRepository {
     public Page<MemberEntity> evaluatePendingByRule(String filter, Pageable pageable) {
 
         int countSize = 0;
+        String subQueryAfterQuery;
         switch (filter) {
             case "TRANSITORY" -> {
+                //가벼운 경고
+                subQueryAfterQuery = "WHERE subquery.member_id NOT IN (" +
+                        "SELECT member_id FROM member m " +
+                        "WHERE m.member_limit_state IN ('PERMANENT', 'STRONG', 'TRANSITORY') " +
+                        "OR m.member_role IN ('ROLE_OAUTH2', 'ROLE_ADMIN', 'DISABLED') " +
+                        ") " +
+
+                        "GROUP BY member_id HAVING COUNT(member_id) >= ?1 " +
+                        "ORDER BY member_id DESC";
                 countSize = 15;
             }
             case "STRONG" -> {
+                //강력한 경고
+                subQueryAfterQuery = "WHERE subquery.member_id NOT IN (" +
+                        "SELECT member_id FROM member m " +
+                        "WHERE m.member_limit_state IN ('STRONG', 'TRANSITORY') " +
+                        "OR m.member_role IN ('ROLE_OAUTH2', 'ROLE_ADMIN', 'DISABLED') " +
+                        ") " +
+
+                        "GROUP BY member_id HAVING COUNT(member_id) >= ?1 " +
+                        "ORDER BY member_id DESC";
                 countSize = 25;
             }
             case "PERMANENT" -> {
@@ -220,13 +243,7 @@ public class MemberRepositoryJpa implements MemberRepository {
                 "JOIN normal_board nb ON ni.board_id = nb.normal_board_id " +
 
                 ") AS subquery " +
-                "WHERE subquery.member_id NOT IN (" +
-                "SELECT member_id FROM member WHERE member.member_limit_state = 'PERMANENT'" +
-                ") " +
-
-                "GROUP BY member_id HAVING COUNT(member_id) >= ?1 " +
-                "ORDER BY member_id DESC";
-
+                subQueryAfterQuery;
 
         Query nativeIntersectionQuery = em.createNativeQuery(intersectionSql);
         nativeIntersectionQuery.setParameter(1, countSize);
@@ -248,7 +265,7 @@ public class MemberRepositoryJpa implements MemberRepository {
             entities = new ArrayList<>();
         }
 
-        long total = (long) nativeIntersectionQuery.getResultList().size();
+        long total = nativeIntersectionQuery.getResultList().size();
         return new PageImpl<>(entities, pageable, total);
     }
 

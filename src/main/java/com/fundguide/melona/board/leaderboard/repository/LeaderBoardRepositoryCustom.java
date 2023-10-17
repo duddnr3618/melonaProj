@@ -16,7 +16,7 @@ public interface LeaderBoardRepositoryCustom {
     /**TODO 구현해야함*/
     Page<LeaderBoardEntity> filterViewBoard(Pageable pageable);
 
-    /**비활성화 게시판이 아니면서 신고수 100 이상의 게시판을 조회하는 메서드
+    /**비활성화 게시판이 아니면서 신고수 30 이상의 게시판을 조회하는 메서드
      * <p> 경고적인 게시판 조회
      * */
     Page<LeaderBoardEntity> onlyViewFilterByWaring(Pageable pageable);
