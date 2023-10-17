@@ -47,7 +47,7 @@ public class CommunityRepositoryImpl implements CommunityRepositoryCustom {
                                 .from(communityImpeachEntity)
                                 .where(communityEntity.id.eq(communityImpeachEntity.board.id))
                                 .groupBy(communityEntity.id)
-                                .having(communityEntity.id.count().goe(1))
+                                .having(communityEntity.id.count().goe(30))
                                 .exists()
                         )
                 )

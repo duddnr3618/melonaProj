@@ -33,17 +33,18 @@ div {
 /* 녹색배경 */
 .greenContainer {
     height: 132px;
-    background-color: #9FF781;
-    display: flex;
+    background-color: white;
+    display: grid;
     align-items: flex-end;
     padding: 16px;
     border-radius: 10px; /* 모서리 둥글게 */
+    margin: 0 auto;
 }
 
 .greenContainer .name {
     font-size: 20px;
     font-weight: bold;
-    color: #ffffff;
+    color: #A4A4A4;
 }
 
 .greenContainer .modify {
@@ -55,8 +56,8 @@ div {
     background-color: white;
     display: flex;
     padding: 10px 16px;
-    height: 90px;
     margin-bottom: 10px;
+
 }
 
 /* 단골상점 , 상품후기 , 적립금 */
@@ -66,6 +67,9 @@ div {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 180px; /* Set a fixed height for all items */
+    width: 30px;
+    margin: 30px;
 }
 
 /* 텍스트 크기 일치 */
@@ -83,13 +87,15 @@ div {
 
 .withdrawal-container {
     background-color: #ffffff;
-    padding: 20px;
+    padding: 40px;
     margin-bottom: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     text-align: center;
     border: 1px solid #A4A4A4;
     transition: background-color 0.3s, border-color 0.3s;
     border-radius: 10px; /* 모서리 둥글게 */
+    width: 163px;
+    height: 111px;
 }
 
 .withdrawal-container h2 {
@@ -113,13 +119,53 @@ div {
 /* 비밀번호 변경 컨테이너 스타일 */
 .password-change-container {
     background-color: #ffffff;
-    padding: 20px;
+    padding: 40px;
     margin-bottom: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     text-align: center;
     border: 1px solid #A4A4A4;
     transition: background-color 0.3s, border-color 0.3s;
     border-radius: 10px; /* 모서리 둥글게 */
+    width: 163px;
+    height: 111px;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-button {
+    background-color: #fff;
+    color: black;
+    padding: 10px 20px;
+    cursor: pointer;
+    border: 1px solid #A4A4A4;
+}
+
+.dropdown-content {
+    display: none;
+
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border: 1px solid #A4A4A4;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #A4A4A4;
+}
+
+.dropdown-content a:hover {
+    background-color: #ffffff; /* 호버할 때 배경 색상 변경 */
+    border-color: #9FF781; /* 호버할 때 테두리 색상 변경 */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
 .password-change-container h2 {
@@ -151,13 +197,33 @@ div {
 /* 내가 쓴 글 컨테이너 스타일 */
 .my-written-posts-container {
     background-color: #ffffff;
-    padding: 20px;
+    padding: 40px;
     margin-bottom: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     text-align: center;
     border: 1px solid #A4A4A4;
     transition: background-color 0.3s, border-color 0.3s;
     border-radius: 10px; /* 모서리 둥글게 */
+    width: 163px;
+    height: 111px;
+}
+.status {
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+/* 테이블 스타일 */
+.status table {
+    width: 100%;
+    margin: 0 auto; /* 수평 가운데 정렬 추가 */
+}
+
+.status th {
+    background-color: #f8f8f8;
+}
+
+.status th, .status td {
+    text-align: center;
+    font-size: 16px;
 }
 
 .my-written-posts-container h2 {
@@ -189,14 +255,14 @@ div {
 }
 
 .shippingStatusContainer .status {
-    display: flex;
+   /* display: grid;*/
     justify-content: space-between;
     margin-bottom: 21px;
 }
 
 /* 장바구니 결제완료 배송중 구매확정 [로우] */
 .shippingStatusContainer .item {
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -292,3 +358,4 @@ div {
 .infoContainer .item > div:first-child {
     margin-bottom: 2px;
 }
+

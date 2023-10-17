@@ -61,10 +61,3 @@ border: 1px solid black;
  border-bottom: 1px solid #e0e0e0;  /* light border, can change if needed */
 }
 
-/* Add any other CSS styling you prefer */
-
-/* Add any other CSS styling you prefer */
-input.btn-check:checked + label {
- background-color: #007BFF; /* Bootstrap primary color */
- color: white;
-}
