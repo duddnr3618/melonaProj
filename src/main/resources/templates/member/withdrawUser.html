@@ -22,7 +22,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 
 <th:block layout:fragment="script"></th:block>
 <th:block layout:fragment="css"></th:block>
-
+	<link th:href="@{/css/member/common10.css}" rel="stylesheet">
 </head>
 <body>
 
@@ -31,7 +31,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	<div layout:fragment="content" class ="content">
 		<div class="row">
 			<div class="col-4"></div>
-			<div class="col-4"><button type="button" class="btn btn-danger" id="withdraw" onclick="withdraw();">회원탈퇴</button><br/>
+			<div class="col-4 text-center"><button type="button" class="btn btn-danger btn-lg" id="withdraw" onclick="withdraw();">회원탈퇴</button><br/><br/><br/>
 				<strong style="color: red">회원탈퇴시 작성한 컨텐츠는 삭제되지않습니다.</strong>
 			</div>
 			<div class="col-4"></div>

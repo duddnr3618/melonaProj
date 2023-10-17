@@ -22,7 +22,8 @@
 
     <th:block layout:fragment="script"></th:block>
     <th:block layout:fragment="css"></th:block>
-
+    <link th:href="@{/css/member/joinForm.css}" rel="stylesheet">
+    <link th:href="@{/css/member/common10.css}" rel="stylesheet">
 </head>
 <body>
 
@@ -115,7 +116,7 @@
         <div class="row">
             <div class="col-4"></div>
             <div class="col-2">
-                <button class="w-100 btn btn-primary btn-lg" type="submit">정보 수정</button>
+                <button class="w-100 btn btn-primary btn-lg" type="submit" id="btn1">정보 수정</button>
             </div>
             <div class="col-2">
                 <button class="w-100 btn btn-secondary btn-lg"

@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.modelmapper.ModelMapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -72,8 +73,8 @@ public class CommunityEntity extends BaseTimeEntity {
     }
 
     public  static ModelMapper modelMapper = new ModelMapper();
-    public static CommunityEntity toUpdateEntity(CommunityDto communityDto){
-        return modelMapper.map(communityDto, CommunityEntity.class);
+    public static CommunityEntity toUpdateEntity(CommunityDto communityDto, MultipartFile file){
+        return modelMapper.map(communityDto, CommunityEntity.class, String.valueOf(file));
     }
 
 }

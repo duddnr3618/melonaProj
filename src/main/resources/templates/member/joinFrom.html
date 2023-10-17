@@ -22,7 +22,7 @@
      /를 제외한 경로로 지정할것. -->
    <!-- <link th:href="@{css/layout1.css}" rel="stylesheet">-->
 
-
+    <link th:href="@{/css/member/joinForm.css}" rel="stylesheet">
     <th:block layout:fragment="script"></th:block>
     <th:block layout:fragment="css"></th:block>
 
@@ -33,7 +33,7 @@
 
 <div layout:fragment="content" class="content">
     <form action="JoinPro" th:action="@{JoinPro}" th:object="${memberDto}" method="post"
-          onsubmit="return validateCheck();">
+          onsubmit="return validateCheck(event);">
 
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류 메시지</p>
@@ -61,10 +61,10 @@
                        th:errorclass="field-error" placeholder="이메일형식을 지켜주세요" onchange="dupleChange(this);">
                 <div class="field-error" th:errors="*{memberEmail}"/>
                 <br/>
-                <strong id="memberEmailError">아이디로 사용할 이메일을 입력해 주세요.</strong>
+                <strong id="memberEmailError">아이디로 사용할 이메일을 입력해 주세요. 입력한 값이 변경되면 중복체크와 이메일 인증을 다시 받아야합니다.</strong>
             </div>
             <div class="col-4"><br/>
-                <button class="btn btn-primary" type="button" id="email" onclick="duplicatedCheck(this);">중복확인</button>
+                <button class="btn btn-primary" type="button" id="email" onclick="duplicatedCheck(this);" >중복확인</button>
             </div>
         </div>
         <br/>
@@ -75,10 +75,10 @@
                 <label for="memberEmailCheck">이메일인증번호</label>
                 <input type="text" required id="memberEmailCheck" class="form-control"
                        placeholder="인증번호를 입력하세요"> <br/>
-                <strong id="memberConfirmError">발송된 인증번호를 입력해 주세요</strong>
+                <strong id="memberConfirmError">발송된 인증번호를 입력해 주세요.</strong>
             </div>
             <div class="col-4"><br/>
-                <button class="btn btn-primary" type="button" onclick="sendMail();">인증메일발송</button>
+                <button class="btn btn-primary" type="button" onclick="sendMail();" id="btn1">인증메일발송</button>
             </div>
         </div>
         <br/>
@@ -121,7 +121,7 @@
                 <strong id="memberNicknameError">2자 이상 35자이하, 닉네임 중복확인은 필수입니다</strong>
             </div>
             <div class="col-4"><br/>
-                <button class="btn btn-primary" type="button" id="nickname" onclick="duplicatedCheck(this);">중복확인
+                <button class="btn btn-primary" type="button" id="nickname" onclick="duplicatedCheck(this);" >중복확인
                 </button>
             </div>
         </div>
@@ -139,10 +139,11 @@
             </div>
             <div class="col-4"></div>
         </div>
+        <br/>
         <div class="row">
             <div class="col-4"></div>
             <div class="col-2">
-                <button class="w-100 btn btn-primary btn-lg" type="submit">회원 가입</button>
+                <button class="w-100 btn btn-primary btn-lg" type="submit" id="btn2">회원 가입</button>
             </div>
             <div class="col-2">
                 <button class="w-100 btn btn-secondary btn-lg"
@@ -164,8 +165,10 @@
 
         function dupleChange(which) {
             let inputId = which.id
+            let confirmCode = document.getElementById("confirmCode");
             if (inputId === "memberNickname") {
                 nicknameDupleCheck = false;
+                confirmCode.value = "";
             } else if (inputId === "memberEmail") {
                 emailDupleCheck = false;
             }
@@ -177,11 +180,12 @@
             if (memberEmail.validity.valid && emailDupleCheck) {
                 let memberEmailVal = memberEmail.value;
                 let url = "sendConfirmEmail?memberEmail=" + encodeURIComponent(memberEmailVal);
-                alert(memberEmailVal);
+
                 axios.get(url)
                     .then(function (response) {
                         let confirmConde = response.data;
                         document.getElementById("confirmCode").value = confirmConde;
+                        alert('입력하신 '+memberEmailVal+' 이메일주소로 인증코드를 발송하였습니다 확인후 입력해 주세요.');
                     })
                     .catch(function (error) {
                         console.error(error);
@@ -234,7 +238,7 @@
 
         }
 
-        function validateCheck() {    // 폼체크
+        function validateCheck(event) {    // 폼체크
             let inputConde = document.getElementById("memberEmailCheck").value;       // 사용자가 입력한 인증번호
             let confirmCode = document.getElementById("confirmCode").value;         // 서버가 준 인증번호
             let memberPassword = document.getElementById("memberPassword").value;       // 비밀번호
@@ -245,28 +249,38 @@
                 let memberPassword2Error = document.getElementById("memberPassword2Error");
                 memberPassword2Error.style.color = "red";
                 memberPassword2Error.innerHTML = "비밀번호와 비밀번호확인은 같은 값이여야합니다.";
+                event.preventDefault();
                 return false;
-            }  else if (emailDupleCheck) {
+            }
+
+
+              else if (!emailDupleCheck) {
                 document.getElementById("memberEmail").focus();
-                let memberNameError = document.getElementById("memberNameError");
-                memberNameError.style.color = "red";
-                memberNameError.innerHTML = "이메일 중복체크는 필수입니다";
+                let memberEmailError = document.getElementById("memberEmailError"); // 수정된 부분
+                memberEmailError.style.color = "red";
+                memberEmailError.innerHTML = "이메일 중복체크는 필수입니다";
+                event.preventDefault();
                 return false;
-            } else if (nicknameDupleCheck) {
+            }
+
+
+           else if (!nicknameDupleCheck) {
                 document.getElementById("memberNickname").focus();
                 let memberNicknameError = document.getElementById("memberNicknameError");
                 memberNicknameError.style.color = "red";
                 memberNicknameError.innerHTML = "닉네임 중복체크는 필수입니다";
+                event.preventDefault();
                 return false;
-            }else if (confirmCode !== inputConde) {
+            }
+            else if (confirmCode !== inputConde) {
                 document.getElementById("memberEmailCheck").focus();
                 let memberConfirmError = document.getElementById("memberConfirmError");
                 memberConfirmError.style.color = "red";
                 memberConfirmError.innerHTML = "인증번호를 다시 확인해 주세요.";
+                event.preventDefault();
                 return false;
             }
         }
-
     </script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 

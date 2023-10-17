@@ -4,95 +4,100 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
 
-<!--부트스트랩 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <!--부트스트랩 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-	<script src="webjars/jquery/3.7.0/dist/jquery.min.js"></script>
-	
-	
-	<!-- css 링크 -->
-	<!--fix : /css/layout1.css -> css/layout1.css
-	because : 로컬 환경에서는 스프링부트 시스템으로 인해 추론이 가능해를 자동 삭제되지만
-	 jar 배포 환경에서는 추론 시스템이 작동하지 않아 이중 슬래쉬(/)처리 되어
-	 리소스 핸들러 환경을 인식할 수 없음. 특수한 상황을 제외한 모든 html 및 컨트롤 경로는
-	 /를 제외한 경로로 지정할것. -->
-<link th:href="@{css/layout1.css}"  rel="stylesheet">
+    <script src="webjars/jquery/3.7.0/dist/jquery.min.js"></script>
 
 
-<th:block layout:fragment="script"></th:block>
-<th:block layout:fragment="css"></th:block>
+    <!-- css 링크 -->
+    <!--fix : /css/layout1.css -> css/layout1.css
+    because : 로컬 환경에서는 스프링부트 시스템으로 인해 추론이 가능해를 자동 삭제되지만
+     jar 배포 환경에서는 추론 시스템이 작동하지 않아 이중 슬래쉬(/)처리 되어
+     리소스 핸들러 환경을 인식할 수 없음. 특수한 상황을 제외한 모든 html 및 컨트롤 경로는
+     /를 제외한 경로로 지정할것. -->
+    <link th:href="@{/css/member/common10.css}" rel="stylesheet">
+    <link th:href="@{/css/member/joinForm.css}" rel="stylesheet">
+
+    <th:block layout:fragment="script"></th:block>
+    <th:block layout:fragment="css"></th:block>
 
 </head>
 <body>
 
-	<div th:replace="fragments/header::header"></div>
-	
-	<div layout:fragment="content" id="LayoutContent" class ="content">
-		<input type="text" id="search"> <button onclick="search();">버튼</button>
+<div th:replace="fragments/header::header"></div>
+
+<div layout:fragment="content" id="LayoutContent" class="content">
+
+    <div class="row">
+        <div class="col-md-5"></div>
+        <div class="col-md-2"><input type="text" id="search" class="form-control"></div>
+        <div class="col-md-5">
+            <button onclick="search();" class="btn btn-primary" id="btn1">버튼</button>
+        </div>
+    </div>
+
+<br/>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div id="par">
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
 
 
-		<div id="par">
+</div>
 
-
-
-		</div>
-
-
-
-	</div>
-	
-	<br>
-	<div th:replace="fragments/footer::footer"></div>
+<br>
+<div th:replace="fragments/footer::footer"></div>
 <script th:inline="javascript">
-	function search() {
-		let search = document.getElementById('search').value;
-		const encoded = encodeURIComponent(search);
-		let url = `/searchPro?search=${encoded}`; // 쿼리 파라미터를 URL에 추가
-		axios.get(url)
-				.then(function (response) {
-					let object = response.data;
-					let par=document.getElementById("par");
-					par.innerHTML = '';
-					if (object.StatisticWord) {
-						let data = object.StatisticWord.row;
-						data.forEach(function (item) {
-							let div = document.createElement("div");
-							div.innerHTML = "<strong>" + item.WORD + ":</strong> " + item.CONTENT;
-							par.appendChild(div);
-						});
-					} else if (object.RESULT) {
-						const result = object.RESULT;
-						let div = document.createElement("div");
-						div.innerHTML = "<strong>" + result.MESSAGE + "</strong>";
-						par.appendChild(div);
-					}else {
-						let div = document.createElement("div");
-						div.innerHTML = "<strong>데이터가없습니다.</strong>";
-						par.appendChild(div);
+    function search() {
+        let search = document.getElementById('search').value;
+        const encoded = encodeURIComponent(search);
+        let url = `/searchPro?search=${encoded}`; // 쿼리 파라미터를 URL에 추가
+        axios.get(url)
+            .then(function (response) {
+                let object = response.data;
+                let par = document.getElementById("par");
+                par.innerHTML = '';
+                if (object.StatisticWord) {
+                    let data = object.StatisticWord.row;
+                    data.forEach(function (item) {
+                        let div = document.createElement("div");
+                        div.innerHTML = "<strong>" + item.WORD + ":</strong> " + item.CONTENT;
+                        par.appendChild(div);
+                    });
+                } else if (object.RESULT) {
+                    const result = object.RESULT;
+                    let div = document.createElement("div");
+                    div.innerHTML = "<strong>" + result.MESSAGE + "</strong>";
+                    par.appendChild(div);
+                } else {
+                    let div = document.createElement("div");
+                    div.innerHTML = "<strong>데이터가없습니다.</strong>";
+                    par.appendChild(div);
 
 
-					}
+                }
 
 
-
-
-
-
-
-
-				})
-				.catch(function (error) {
-					console.error('오류:', error);
-				});
-	}
-
+            })
+            .catch(function (error) {
+                console.error('오류:', error);
+            });
+    }
 
 
 </script>
-	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 </html>

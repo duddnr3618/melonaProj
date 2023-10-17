@@ -1,0 +1,130 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333; /* 제목 텍스트 색상 */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    background-color: #fff; /* 표 배경색 */
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+th, td {
+    border-bottom: 1px solid #ddd; /* 테이블 행 경계선 스타일 */
+    padding: 15px;
+    text-align: left;
+    color: #333;
+}
+
+th {
+    background-color: #f2f2f2; /* 표머리글 배경색 */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    text-decoration: none;
+    color: black; /* 링크 색상 */
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #9FF781;
+}
+
+/* 댓글 스타일 */
+#comment-write {
+    margin-top: 20px;
+}
+
+#commentWriter, #commentContents {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#comment-write-btn {
+    background-color: #A4A4A4;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#comment-write-btn:hover {
+    background-color: #9FF781;
+    border: #9FF781;
+}
+
+#comment-list {
+    margin-top: 20px;
+}
+
+/* Modal 스타일 */
+.modal {
+    text-align: center;
+}
+
+.modal-dialog {
+    margin: 5% auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.uplike-image {
+        width: 50px;
+        height: 50px;
+}
+
+#contentsbox {width: 800px; height: 500px;}
+#contentsbox1 {width: 32.8%; border: 1px solid #e7e6e6;
+}
+
+.menu-link {
+    color: #146703; /* Link color */
+    margin-right: 10px; /* Right margin between links */
+    text-decoration: none; /* Remove default underline */
+}
+.button-container {
+        text-align: right; /* Align the button to the right within the container */}
+
+    #impeachButton {
+        border: none; /* Remove border */
+        background-color: #A4A4A4 ; /* Set background color to gray */
+        margin: 10px; /* Add some margin for spacing */
+        color: white;
+    }
+    #impeachButton:hover{background-color: #9FF781; color: white;}
+
+.nullPrincipal {
+
+}
+
+

@@ -1,5 +1,5 @@
-/*
-@charset "UTF-8";
+
+
 @charset "UTF-8";
 html {
     position: relative;
@@ -10,8 +10,9 @@ body {
     min-height: 100%;
 }
 
-.footer {
+footer {
     position: absolute;
+    background-color: #f1eded;
     left: 0;
     right: 0;
     bottom: 0;
@@ -19,10 +20,32 @@ body {
     padding: 15px 0;
     text-align: center;
     margin: 3px 0;
+    transform: translateY(200%); /*콘텐츠 길이 상관없이 하단 고정  뭔가 하단이 이상하다 싶으면 이걸 제거하시면 됩니다.  */
+/*        디폴트는 100*/
+
+
 }
 .content{
     margin-bottom:100px;
     margin-top: 50px;
     margin-left: 200px;
     margin-right: 200px;
-}*/
+}
+
+#nav3 a {
+    color:#A4A4A4 ;
+    text-decoration: none;
+    letter-spacing: 5px;
+}
+
+#nav3 a:hover {
+   color: #9FF781;
+}
+#nav4 a {
+    color:#ffffff ;
+    text-decoration: none;
+}
+
+#nav4 a:hover {
+    color: #9FF781;
+}

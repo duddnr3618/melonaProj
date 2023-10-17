@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <link rel="stylesheet" th:href="@{/css/news/list.css}" type="text/css">
+    <meta charset="UTF-8">
+    <title>news::list</title>
+</head>
+<body>
+<table class="news-table">
+    <tbody th:each="news:${news}">
+    <tr>
+        <td class="header-cell">
+            <span class="date-text" th:text="${#dates.format(news.pubDate, 'yy년 MM월 dd일 EEEE HH:mm')}"></span>
+            <a class="news-link" th:href="${news.link}" th:utext="${news.title}" target="_blank"></a>
+        </td>
+    </tr>
+    <tr>
+        <td class="description-cell">
+            <span class="description-text" th:utext="${news.description}"></span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -17,7 +17,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	 jar 배포 환경에서는 추론 시스템이 작동하지 않아 이중 슬래쉬(/)처리 되어
 	 리소스 핸들러 환경을 인식할 수 없음. 특수한 상황을 제외한 모든 html 및 컨트롤 경로는
 	 /를 제외한 경로로 지정할것. -->
-<link th:href="@{css/layout1.css}"  rel="stylesheet">
+	<link th:href="@{/css/member/common10.css}" rel="stylesheet">
+	<link th:href="@{/css/member/joinForm.css}" rel="stylesheet">
 
 
 <th:block layout:fragment="script"></th:block>
@@ -31,24 +32,24 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	<div layout:fragment="content" class ="content">
 
 		<div class="row">
-			<div class="col-4">
+			<div class="col-5">
 			</div>
-			<div class="col-4">
+			<div class="col-2">
 				<label for="memberNickname">닉네임을 입력하세요</label>
 				<input type="text" id="memberNickname" name="memberNickname" class="form-control"
 				>
 			</div>
-			<div class="col-4"><br/><button type="button" class="btn btn-primary" id="findEmailButton">이메일찾기</button> </div>
+			<div class="col-5"><br/><button type="button" class="btn btn-primary" id="findEmailButton">이메일찾기</button> </div>
 		</div>
 		<br/>
 		<div class="row">
-			<div class="col-4">
+			<div class="col-5">
 			</div>
-			<div class="col-4">
+			<div class="col-2">
 				<label for="memberEmail">이메일을 입력하시면 새로운 비밀번호가 입력하신 이메일로 발송됩니다.</label>
 				<input type="text" id="memberEmail" name="memberEmail" class="form-control">
 			</div>
-			<div class="col-4"><br/><button type="button" class="btn btn-primary" id="findPasswordButton">비밀번호찾기</button> </div>
+			<div class="col-5"><br/><br/><button type="button" class="btn btn-primary" id="findPasswordButton">비밀번호찾기</button> </div>
 		</div>
 
 		<script th:inline="javascript">
@@ -62,7 +63,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 				let data={
 					"memberNickname":memberNickname
 				}
-				let url = 'findEmailByNickname';
+				let url = '/findEmailByNickname';
 				axios.post(url,data)
 						.then(response => {
 							let memberEmail=document.getElementById('memberEmail');

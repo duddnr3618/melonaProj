@@ -9,6 +9,7 @@ import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
 import com.fundguide.melona.board.leaderboard.service.CommentLeaderBoardService;
 import com.fundguide.melona.board.leaderboard.service.LeaderBoardService;
+import com.fundguide.melona.member.role.MemberRoleState;
 import com.fundguide.melona.member.service.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,10 @@ public class LeaderBoardController {
     @GetMapping("/list")
     public String list(Model model,
                        @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
-                       String searchKeyword) {
+                       String searchKeyword, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        if(customUserDetails == null) {
+            return "redirect:/member/loginForm";
+        }
         Page<LeaderBoardEntity> list = null;
         if (searchKeyword == null) {
             list = leaderBoardService.boardList(pageable);
@@ -45,6 +49,8 @@ public class LeaderBoardController {
             list = leaderBoardService.searchList(searchKeyword, pageable);
 
         }
+        String userName = customUserDetails.getMemberEntity().getMemberName();
+        MemberRoleState userRole= customUserDetails.getMemberEntity().getMemberRole();
         int nowPage = list.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
@@ -52,6 +58,8 @@ public class LeaderBoardController {
         model.addAttribute("nowPage", nowPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        model.addAttribute("userName", userName);
+        model.addAttribute("userRole", userRole);
         return "board/leader/list";
 
     }
@@ -102,8 +110,10 @@ public class LeaderBoardController {
         if(customUserDetails == null) {
             return "board/leader/detail";
         }else {
+            String userName = customUserDetails.getMemberEntity().getMemberName();
             Long userId = customUserDetails.getMemberEntity().getId();
             model.addAttribute("userId" , userId);
+            model.addAttribute("userName" , userName);
             return "board/leader/detail";
         }
 

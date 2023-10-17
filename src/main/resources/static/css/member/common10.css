@@ -1,0 +1,22 @@
+.content{
+    margin-top: 10vh;
+    overflow: hidden;
+}
+
+#btn1:hover,#btn2:hover,#findPasswordButton:hover,#findEmailButton:hover {
+    background-color: #9FF781; /* 호버 시 배경색 변경 */
+    border: none; /* 테두리 없앰 */
+}
+#btn1,#btn2,#findPasswordButton,#findEmailButton{
+    background-color: #A4A4A4; /* 배경색 설정 */
+    border: none; /* 테두리 없앰 */
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border: 2px solid #9FF781; /* 포커스된 경우 테두리 스타일과 색상 설정 */
+    box-shadow: 0 0 5px #9FF781; /* 포커스된 경우 그림자 설정 */
+    outline: none; /* 기본 포커스 테두리를 숨기려면 이 줄을 추가 */
+}
+

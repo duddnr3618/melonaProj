@@ -12,6 +12,7 @@ import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
 import com.fundguide.melona.member.service.CustomUserDetails;
 import com.fundguide.melona.member.service.MemberService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +41,8 @@ public class CommunityController {
     public String list(Model model,
                        @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
                        String searchKeyword) {
+
+
         Page<CommunityEntity> list = null;
         if (searchKeyword == null) {
             list = communityService.boardList(pageable);
@@ -54,6 +57,7 @@ public class CommunityController {
             model.addAttribute("nowPage", nowPage);
             model.addAttribute("startPage", startPage);
             model.addAttribute("endPage", endPage);
+
             return "board/community/list";
 
     }
@@ -105,7 +109,10 @@ public class CommunityController {
             return "board/community/detail";
         }else {
             Long userId = customUserDetails.getMemberEntity().getId();
+            String userName = customUserDetails.getMemberEntity().getMemberName();
             model.addAttribute("userId" , userId);
+            model.addAttribute("userName", userName);
+            System.out.println(" >>>>>>>>>> !! : " + userName);
             return "board/community/detail";
         }
 
@@ -117,7 +124,6 @@ public class CommunityController {
         if(customUserDetails== null){
             return "redirect:/member/loginForm";
         }
-
         CommunityDto communityDto = communityService.boardDetail(id);
         model.addAttribute("board", communityDto);
         String userName = customUserDetails.getMemberEntity().getMemberName();

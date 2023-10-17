@@ -51,4 +51,6 @@ public interface MemberRepository {
     Optional<MemberEntity> findByMemberEamilOptional(String email);
 
     Page<MemberEntity> findAll(Pageable pageable);
+
+    void oauthSave(MemberEntity memberEntity);
 }

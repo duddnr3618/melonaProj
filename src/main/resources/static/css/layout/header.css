@@ -1,9 +1,30 @@
 
-.navbar-nav .nav-item {
-    display: inline-block;
-    margin-right: 10px;
+/*.navbar-nav .nav-item {*/
+/*    display: inline-block;*/
+/*    margin-right: 10px;*/
+/*}*/
+
+#nav3 {
+    justify-content: center;
+	/*text-align: center;*/
 }
 
-.navbar-nav {
-    justify-content: center;
-}
+header{
+
+	}
+
+	.navbar{
+
+	}
+
+	#header1{
+
+	}
+
+	.container-fluid{
+		border: 1px solid red;
+	}
+
+#navbar-toggler {
+	  color: white;
+  }
