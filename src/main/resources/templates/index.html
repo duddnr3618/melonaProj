@@ -29,14 +29,18 @@
 
   <hr><br>
   <div id="main1">
+  <div id="main1">
 
   <iframe src="http://localhost:7777/news/list?text=주식" width="1280" height="300"></iframe>
+  <iframe id="stock1" src="http://localhost:7777/news/list?text=주식" width="1290" height="300"></iframe>
+  <div style="height: 40px;"></div><!--주식 차트 불러오는게 간격을 벌리면 벌릴수록 같이 따라와서 중간에 간격을 둠  -->
   <iframe id="stock1" src="http://localhost:7777/news/list?text=주식" width="1290" height="300"></iframe>
   <div style="height: 40px;"></div><!--주식 차트 불러오는게 간격을 벌리면 벌릴수록 같이 따라와서 중간에 간격을 둠  -->
 
   <hr><br><br>
 
   <h3>실시간 차트</h3>
+<div class="container1">
 <div class="container1">
   <div class="tradingview-widget-container" style="display:inline-block">
     <div class="tradingview-widget-container__widget"></div>
