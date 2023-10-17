@@ -22,15 +22,15 @@ public class CommentLeaderBoardController {
 
     @PostMapping("/save")
     public ResponseEntity save (@ModelAttribute CommentLeaderBoardDto commentLeaderBoardDto) {
-        System.out.println("commentLeaderBoardDto : " + commentLeaderBoardDto);
+        System.out.println("1commentLeaderBoardDto : " + commentLeaderBoardDto);
          Long saveResult =  commentLeaderBoardService.save(commentLeaderBoardDto);
-        System.out.println(">>>>>>>saveResult : " + saveResult);
+        System.out.println(">>>>>>>2saveResult : " + saveResult);
         if(saveResult != null){
             List<CommentLeaderBoardDto> commentLeaderBoardDtoList = commentLeaderBoardService.findAll(commentLeaderBoardDto.getBoardId());
-            System.out.println(">>>>>>>>>>> : commentLeaderBoardDtoList" + commentLeaderBoardDtoList);
+            System.out.println(">>>>>>>>>>> 3: commentLeaderBoardDtoList" + commentLeaderBoardDtoList);
             return new ResponseEntity<>(commentLeaderBoardDtoList, HttpStatus.OK);
         }else  {
-            System.out.println(">>>>>>>>>>> : commentLeaderBoardDtoList");
+            System.out.println(">>>>>>>>>>> 4: commentLeaderBoardDtoList");
             return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
         }
 
