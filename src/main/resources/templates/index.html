@@ -23,31 +23,12 @@
   </style>
 
 
-  <!--  HEADER에 추가를 해서 주석 처리-->
-  <!--  <br>-->
-  <!--  <div>-->
-  <!--    <ul>-->
-  <!--      <li>뉴스</li>-->
+  <div id="main1">
 
-  <!--      <li>가이드-->
-  <!--        <ul>-->
-  <!--        <li><a href="/leaderBoard/list">리더가이드</a></li>-->
-  <!--        <li><a href="/normalBoard/list">일반가이드</a></li>-->
-  <!--      </ul>-->
-  <!--      </li>-->
+  <iframe id="stock1" src="http://localhost:7777/news/list?text=주식" width="1290" height="300"></iframe>
+  <div style="height: 40px;"></div><!--주식 차트 불러오는게 간격을 벌리면 벌릴수록 같이 따라와서 중간에 간격을 둠  -->
 
-  <!--      <li><a href="/community/list">커뮤니티</a></li>-->
-
-
-
-  <!--      <li></li>-->
-  <!--      <li></li>-->
-  <!--    </ul>-->
-  <!--  </div>-->
-
-  <iframe src="http://localhost:7777/news/list?text=주식" width="1290" height="300"></iframe>
-
-
+<div class="container1">
   <div class="tradingview-widget-container" style="display:inline-block">
     <div class="tradingview-widget-container__widget"></div>
     <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
@@ -150,6 +131,7 @@
       }
     </script>
   </div>
+</div>
 
 
   <ul class="section_name">
@@ -286,11 +268,9 @@
         customOverlay.setMap(map); // 지도에 커스텀 오버레이 추가
     }
 
-
-
   </script>
 
-
+  </div>
 
 
   <!-- TradingView Widget END -->
