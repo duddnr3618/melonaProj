@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 
-<head>
+<head style="text-align: center">
         <meta charset="UTF-8">
         <title>Main Page</title>
         <link rel="stylesheet" th:href="@{/css/news/list2.css}" type="text/css">
@@ -12,12 +12,12 @@
                 #content-frame {
                         width: 1290px;
                         height: 2000px;
-                        margin-top: 30px;
+                        /*margin-top: 30px;*/
                 }
 
                 nav {
-                        text-align: center;
-                        margin-bottom: 20px;
+                        /*text-align: center;*/
+                        /*margin-bottom: 20px;*/
                 }
 
                 nav button {
@@ -47,6 +47,7 @@
                         margin-bottom: 20px;
                 }
         </style>
+
         <script th:inline="javascript">
                 function switchContent(type) {
                         const frame = document.getElementById('content-frame');
@@ -60,7 +61,7 @@
 </head>
 
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content" style="text-align: center">
         <h2 id="newsroom-title">뉴스룸</h2> <!-- 뉴스룸 텍스트 추가 -->
         <nav>
                 <button onclick="switchContent('주식')">주식</button>

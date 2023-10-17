@@ -26,10 +26,10 @@ footer {
 
 }
 .content{
-    margin-bottom:200px;
+    margin-bottom:100px;
     margin-top: 50px;
-    margin-left: 300px;
-    /*margin-right: 00px;*/
+    margin-left: 200px;
+    margin-right: 200px;
 }
 
 #nav3 a {
