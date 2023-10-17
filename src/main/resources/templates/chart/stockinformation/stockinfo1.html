@@ -4,44 +4,160 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 
-
 <div layout:fragment="content">
+
+<!-- 주식 시작   -->
 
     <div class="row row-cols-1 row-cols-md-2 g-4">
         <div class="col">
-            <div class="card">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <div class="card" style="width: 490px; height: 540px;">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js" async>
+                        {
+                            "width": 480,
+                            "height": 530,
+                            "colorTheme": "light",
+                            "isTransparent": false,
+                            "symbol": "NASDAQ:AAPL",
+                            "locale": "kr"
+                        }
+                    </script>
                 </div>
+                <!-- TradingView Widget END -->
             </div>
         </div>
         <div class="col">
-            <div class="card">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <div class="card" style="height: 540px;">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container" style="height:100%; width:100%">
+                    <div id="tradingview_f2637" style="height:calc(100% - 32px);width:100%"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">트레이딩뷰에서 모든 시장 추적</span></a></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                    <script type="text/javascript">
+                        new TradingView.widget(
+                            {
+                                "autosize": true,
+                                "symbol": "NASDAQ:AAPL",
+                                "interval": "D",
+                                "timezone": "Etc/UTC",
+                                "theme": "light",
+                                "style": "1",
+                                "locale": "kr",
+                                "enable_publishing": false,
+                                "hide_side_toolbar": false,
+                                "allow_symbol_change": true,
+                                "details": true,
+                                "calendar": true,
+                                "container_id": "tradingview_f2637"
+                            }
+                        );
+                    </script>
                 </div>
+                <!-- TradingView Widget END -->
             </div>
         </div>
         <div class="col">
-            <div class="card">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+            <div class="card" style="width: 490px; height: 670px;">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js" async>
+                        {
+                            "width": 480,
+                            "height": 650,
+                            "colorTheme": "light",
+                            "isTransparent": false,
+                            "symbol": "NASDAQ:TSLA",
+                            "locale": "kr"
+                        }
+                    </script>
                 </div>
+                <!-- TradingView Widget END -->
             </div>
         </div>
         <div class="col">
-            <div class="card">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <div class="card" style="height: 600px;">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container" style="height:100%; width:100%">
+                    <div id="tradingview_bfdf7"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">트레이딩뷰에서 모든 시장 추적</span></a></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                    <script type="text/javascript">
+                        new TradingView.widget(
+                            {
+                                "symbol": "NASDAQ:TSLA",
+                                "interval": "D",
+                                "timezone": "Etc/UTC",
+                                "theme": "light",
+                                "style": "1",
+                                "locale": "kr",
+                                "enable_publishing": false,
+                                "hide_side_toolbar": false,
+                                "allow_symbol_change": true,
+                                "details": true,
+                                "calendar": true,
+                                "container_id": "tradingview_bfdf7"
+                            }
+                        );
+                    </script>
                 </div>
+                <!-- TradingView Widget END -->
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="width: 490px; height: 850px;">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js" async>
+                        {
+                            "colorTheme": "light",
+                            "isTransparent": false,
+                            "largeChartUrl": "",
+                            "displayMode": "regular",
+                            "width": 480,
+                            "height": 830,
+                            "symbol": "KRX:005930",
+                            "locale": "kr"
+                        }
+                    </script>
+                </div>
+                <!-- TradingView Widget END -->
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" style="width:990px; height: 610px;">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container" style="height:100%; width:100%">
+                    <div id="tradingview_59051"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">트레이딩뷰에서 모든 시장 추적</span></a></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                    <script type="text/javascript">
+                        new TradingView.widget(
+                            {
+
+                                "symbol": "KRX:005930",
+                                "interval": "D",
+                                "timezone": "Etc/UTC",
+                                "theme": "light",
+                                "style": "1",
+                                "locale": "kr",
+                                "enable_publishing": false,
+                                "hide_side_toolbar": false,
+                                "allow_symbol_change": true,
+                                "details": true,
+                                "calendar": true,
+                                "container_id": "tradingview_59051"
+                            }
+                        );
+                    </script>
+                </div>
+                <!-- TradingView Widget END -->
             </div>
         </div>
     </div>
