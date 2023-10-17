@@ -13,6 +13,7 @@ import com.fundguide.melona.management.service.filter.NormalBoardCategoryHandler
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
+import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.role.MemberRoleState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -80,32 +81,6 @@ public class ManagementService {
         }
     }
 
-    public Page<MemberEntity> getMemberEvaluatePendingByRule(String filter, Pageable pageable) {
-        if (!filter.equals("all")) {
-            return memberRepository.evaluatePendingByRule(filter, pageable);
-        } else {
-            return memberRepository.findAll(pageable);
-        }
-    }
-
-    public Page<MemberEntity> getMemberAuthorityByRule(String filter, Pageable pageable) {
-        if (!"all".equals(filter)) {
-            return memberRepository.getMemberAuthorityByRule(filter, pageable);
-        } else {
-            return memberRepository.findAll(pageable);
-        }
-    }
-
-    public ResponseEntity<String> setMemberAsLeader(Long memberId) {
-        Optional<MemberEntity> optionalMember = memberRepositoryData.findById(memberId);
-        return optionalMember.map(o -> {
-            o.setMemberRole(MemberRoleState.ROLE_SET_LEADER);
-            memberRepositoryData.save(o);
-            return ResponseEntity.ok().body("리더로 권한 변경 완료");
-        }).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-
     /**보드의 공통적인 컬럼 BoardUsing의 클래스를 찾고, 그것을 이용해서 JPA 레파지토리의 공통적인 메서드 Save를 활용한 업데이트 메서드*/
     protected <T> ResponseEntity<String> updateBoardUsing(Optional<T> optional, JpaRepository<T, Long> repository) {
         return optional.map(o -> {
@@ -119,4 +94,54 @@ public class ManagementService {
             }
         }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
+    /**미리 설정된 룰에 따라 특정 수 이상의 신고를 받은 게시물을 소유하고 있는 멤버를 출력하는 서비스 메서드*/
+    public Page<MemberEntity> getMemberEvaluatePendingByRule(String filter, Pageable pageable) {
+        if (!filter.equals("all")) {
+            return memberRepository.evaluatePendingByRule(filter, pageable);
+        } else {
+            return memberRepository.findAll(pageable);
+        }
+    }
+
+    /**미리 설정된 룰에 따라 특정 수 이상의 좋아요를 받은 게시물을 소유하고 있는 멤버를 출력하는 서비스 메서드*/
+    public Page<MemberEntity> getMemberAuthorityByRule(String filter, Pageable pageable) {
+        if (!"all".equals(filter)) {
+            return memberRepository.getMemberAuthorityByRule(filter, pageable);
+        } else {
+            return memberRepository.findAll(pageable);
+        }
+    }
+
+    /**멤버에게 제재를 가하는 서비스 메서드*/
+    @SuppressWarnings("unused")
+    public ResponseEntity<String> setMemberAsLimit(Long memberId, int day) {
+        Optional<MemberEntity> optionalMember = memberRepositoryData.findById(memberId);
+        return optionalMember.map(o -> {
+            o.setMemberLimitState(MemberLimitState.TRANSITORY);
+            memberRepositoryData.save(o);
+            return ResponseEntity.ok().body("멤버 제재 완료");
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    /**멤버를 비활성화 하는 서비스 메서드*/
+    public ResponseEntity<String> setMemberDisable(Long memberId) {
+        Optional<MemberEntity> optionalMember = memberRepositoryData.findById(memberId);
+        return optionalMember.map(o-> {
+            o.setMemberRole(MemberRoleState.DISABLED);
+            memberRepositoryData.save(o);
+            return ResponseEntity.ok().body("멤버 비활성화 완료");
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    /**멤버에게 리더 권한을 주는 서비스 메서드*/
+    public ResponseEntity<String> setMemberAsLeader(Long memberId) {
+        Optional<MemberEntity> optionalMember = memberRepositoryData.findById(memberId);
+        return optionalMember.map(o -> {
+            o.setMemberRole(MemberRoleState.ROLE_SET_LEADER);
+            memberRepositoryData.save(o);
+            return ResponseEntity.ok().body("리더로 권한 변경 완료");
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 }

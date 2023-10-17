@@ -1,7 +1,7 @@
 // noinspection JSUnresolvedReference
 $(function () {
-    id_ResultTable.find('img').hide();
     loadingImg.hide();
+    $('#AllLayoutBox li.active').click();
 })
 
 const id_ResultTable = $('#ResultTable');
@@ -80,9 +80,6 @@ id_DetailUserFilter.find('li').click(function () {
             id_ResultTable.html(memberData.data);
             loadingImg.hide();
         })
-        .catch(function () {
-
-        });
 })
 
 /**유저 권한 관리*/
@@ -94,11 +91,9 @@ id_DetailRoleFilter.find('li').click(function () {
     LoadingImgShow();
     axios.get(`management/member_role_filter_page?${params.toString()}`)
         .then(function (roleData) {
-            loadingImg.hide();
             id_ResultTable.html(roleData.data);
+            loadingImg.hide();
         })
-        .catch(function () {
-        });
 })
 
 

@@ -44,7 +44,7 @@ public interface MemberRepository {
 
     void adminSave(MemberEntity memberEntity);
 
-    /**규칙으로 지정된 각 보드의 신고 값들이 n값 이상인 경우(가벼운 = 10, 강력한 = 20) 이며 그 수가 */
+    /**규칙으로 지정된 각 보드의 신고 값들이 n값 이상인 경우(가벼운 = 15, 강력한 = 25) 이며 그 수가 */
     Page<MemberEntity> evaluatePendingByRule(String filter, Pageable pageable);
 
     /**이메일로 옵셔널 값을 반환하기 위한 메서드*/

@@ -76,7 +76,7 @@ public class NormalBoardRepositoryImpl implements NormalBoardRepositoryCustom {
                                 .from(normalBoardImpeachEntity)
                                 .where(normalBoardEntity.id.eq(normalBoardImpeachEntity.board.id))
                                 .groupBy(normalBoardEntity.id)
-                                .having(normalBoardEntity.id.count().goe(100))
+                                .having(normalBoardEntity.id.count().goe(30))
                                 .exists()
                         )
                 )
