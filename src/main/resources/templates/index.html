@@ -6,8 +6,8 @@
 
 <meta charset="UTF-8">
 
-<link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
 <div layout:fragment="content">
+  <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
 
   <style>
     .customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
@@ -17,19 +17,17 @@
     .customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
   </style>
 
-
+  <h3> 추천 가이드 </h3>
   <div id="board">
-    <h3> 메로나 가이드 이용사항</h3>
-    <ul>
-      <li></li>
-      <li></li>
-      <li></li>
-    </ul>
+    <div><a href="/contents/board1">▶ 차트의 분석 (기본적분석과 기술적분석의 이해)</a></div>
+    <div><a href="/contents/board2">▶ 피보나치의 이해 (자연의 법칙) </a></div>
+    <div><a href="/contents/board3">▶ 범준 가이드  </a></div>
   </div>
   <br>
   <hr>
   <br>
-  <h3>실시간 뉴스</h3>
+  <h3>최신인기 뉴스</h3>
+  <br>
   <div id="main1">
   <iframe id="stock1" src="http://localhost:7777/news/list?text=주식" width="1280" height="300"></iframe>
   <div style="height: 40px;"></div><!--주식 차트 불러오는게 간격을 벌리면 벌릴수록 같이 따라와서 중간에 간격을 둠  -->
