@@ -42,6 +42,7 @@ public class CommunityService {
 
     private final CommunityLikeRepository likeRepository;
     private final CommunityImpeachRepository impeachRepository;
+
     public void writePro(CommunityDto communityDto, MultipartFile file) throws Exception {
         System.out.println(" { 커뮤니티 파일 저장중" + " }");
         System.out.println("절대경로는? { " + absolutePath + " }");
@@ -103,9 +104,9 @@ public class CommunityService {
 
     @Transactional
     public CommunityDto update(CommunityDto communityDto, MultipartFile file) {
-        MemberEntity memberEntity = new  MemberEntity();
+        MemberEntity memberEntity = new MemberEntity();
         memberEntity.setId(communityDto.getMemberId());
-        CommunityEntity communityEntity = CommunityEntity.toUpdateEntity(communityDto,file);
+        CommunityEntity communityEntity = CommunityEntity.toUpdateEntity(communityDto, file);
         memberEntity.setId(communityDto.getMemberId());
         communityEntity.setMemberEntity(memberEntity);
 
@@ -123,7 +124,7 @@ public class CommunityService {
         Optional<CommunityEntity> communityEntity = communityRepository.findById(impeachDTO.getId());
 
         try {
-            communityEntity.ifPresentOrElse(oCommunityEntity -> {
+            return communityEntity.map(oCommunityEntity -> {
                 CommunityImpeachEntity impeach = CommunityImpeachEntity.builder()
                         .member(memberEntity)
                         .board(oCommunityEntity)
@@ -131,19 +132,19 @@ public class CommunityService {
                         .build();
 
                 boolean check = impeachRepository.checkAlreadyImpeach(impeach);
-                if (check) {
+                if (!check) {
                     oCommunityEntity.getImpeach().add(impeach);
                     communityRepository.save(oCommunityEntity);
-                    ResponseEntity.badRequest().build();
+                    return ResponseEntity.ok().body("신고 성공");
+                } else {
+                    return ResponseEntity.badRequest().body("이미 신고 하셨습니다.");
                 }
-            }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-            System.out.println(" { 신고 성공" + " }");
-            return ResponseEntity.ok().build();
+
+            }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INSUFFICIENT_STORAGE).build();
         }
     }
-
 
 
     /** 좋아요 추가 서비스 메서드 */
