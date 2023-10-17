@@ -98,7 +98,7 @@
             <div class="col-4">
                 <label for="memberNickname">닉네임</label>
                 <input type="text" th:field="*{memberNickname}" class="form-control"
-                       th:errorclass="field-error" required maxlength="30" minlength="2" id="memberNickname" th:value="${memberNickname}"
+                       th:errorclass="field-error" required maxlength="30" minlength="2" id="memberNickname"
                        placeholder="2자이상 30자 이하로 만들어주세요" onchange="dupleChange(this);">
                 <div class="field-error" th:errors="*{memberNickname}"/>
                 <br/>
@@ -138,6 +138,9 @@
 
 
     <script th:inline="javascript">
+
+
+
         let nicknameDupleCheck = false;
 
         function dupleChange(which) {
