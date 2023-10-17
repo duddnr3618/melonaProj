@@ -224,5 +224,10 @@ public class MemberController {
         memberService.oauthSave(memberDto);
         return "redirect:/";
     }
+    @GetMapping("/event")
+    public String eventPage(){
+        return "member/event";
+    }
 }
 
+//머지

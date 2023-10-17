@@ -44,8 +44,8 @@ public class NewsController {
                 .queryParam("display", 10)
                 // 검색 결과의 시작 인덱스를 첫번째 결과 부터 시작하는 걸로 설정
                 .queryParam("start", 1)
-                // 검색 결과를 날짜순으로 정렬(date)
-                .queryParam("sort", "date")
+                // 검색 결과를
+                .queryParam("sort", "sim")
                 // URI에 포함된 특수 문자나 공백 등을 올바른 형식으로 인코딩.
                 .encode(StandardCharsets.UTF_8)
                 // 지금까지의 설정을 바탕으로 UriComponents 객체를 생성.
