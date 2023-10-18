@@ -4,13 +4,57 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 
+<head>
+<!--차트 css-->
+<link rel="stylesheet" href="/css/chart/chart.css" type="text/css">
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<meta charset="UTF-8"><!--한글깨짐으로 임시로 넣어둠-->
+</head>
+<!--차트 css 끝-->
+
 <div layout:fragment="content">
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- First Coin Chart -->
+            <div class="col-md-4 mb-3"> <!-- col-md-4 means it takes up 4 columns (out of 12) on medium-sized screens and up. -->
+                <figure>
+                    <div style="width: 500px; height: 500px;">
+                        <div class="container-fluid" id="container" ></div>
+                    </div>
+                </figure>
+            </div>
+
+            <!-- Second Coin Chart -->
+            <div class="col-md-4 mb-3">
+                <figure>
+                    <div style="width: 500px; height: 500px; text-align: center">
+                        <div class="container-fluid" id="container2"></div>
+                    </div>
+                </figure>
+            </div>
+
+            <!-- Third Coin Chart -->
+            <div class="col-md-4 mb-3">
+                <figure>
+                    <div style="width: 500px; height: 500px">
+                        <div class="container-fluid" id="container3"></div>
+                    </div>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+
 
 <!-- 주식 시작   -->
 
     <div class="row row-cols-1 row-cols-md-2 g-4">
         <div class="col">
-            <div class="card" style="width: 490px; height: 540px;">
+            <div class="card" style="width: 490px; height: 600px;">
                 <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
@@ -18,7 +62,7 @@
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js" async>
                         {
                             "width": 480,
-                            "height": 530,
+                            "height": 600,
                             "colorTheme": "light",
                             "isTransparent": false,
                             "symbol": "NASDAQ:AAPL",
@@ -34,7 +78,7 @@
                 <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container" style="height:100%; width:100%">
                     <div id="tradingview_f2637" style="height:calc(100% - 32px);width:100%"></div>
-                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">트레이딩뷰에서 모든 시장 추적</span></a></div>
+                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
                     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
                     <script type="text/javascript">
                         new TradingView.widget(
@@ -60,7 +104,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="card" style="width: 490px; height: 670px;">
+            <div class="card" style="width: 490px; height: 600px;">
                 <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
@@ -68,7 +112,7 @@
                     <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js" async>
                         {
                             "width": 480,
-                            "height": 650,
+                            "height": 600,
                             "colorTheme": "light",
                             "isTransparent": false,
                             "symbol": "NASDAQ:TSLA",
@@ -82,13 +126,14 @@
         <div class="col">
             <div class="card" style="height: 600px;">
                 <!-- TradingView Widget BEGIN -->
-                <div class="tradingview-widget-container" style="height:100%; width:100%">
-                    <div id="tradingview_bfdf7"></div>
-                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">트레이딩뷰에서 모든 시장 추적</span></a></div>
+                <div class="tradingview-widget-container" style="height:100%;width:100%">
+                    <div id="tradingview_4976e" style="height:calc(100% - 32px);width:100%"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
                     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
                     <script type="text/javascript">
                         new TradingView.widget(
                             {
+                                "autosize": true,
                                 "symbol": "NASDAQ:TSLA",
                                 "interval": "D",
                                 "timezone": "Etc/UTC",
@@ -99,8 +144,11 @@
                                 "hide_side_toolbar": false,
                                 "allow_symbol_change": true,
                                 "details": true,
-                                "calendar": true,
-                                "container_id": "tradingview_bfdf7"
+                                "hotlist": true,
+                                "show_popup_button": true,
+                                "popup_width": "1000",
+                                "popup_height": "650",
+                                "container_id": "tradingview_4976e"
                             }
                         );
                     </script>
@@ -109,7 +157,7 @@
             </div>
         </div>
         <div class="col">
-            <div class="card" style="width: 490px; height: 850px;">
+            <div class="card" style="width: 480px; height: 800px;">
                 <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
@@ -121,7 +169,7 @@
                             "largeChartUrl": "",
                             "displayMode": "regular",
                             "width": 480,
-                            "height": 830,
+                            "height": 800,
                             "symbol": "KRX:005930",
                             "locale": "kr"
                         }
@@ -131,16 +179,16 @@
             </div>
         </div>
         <div class="col">
-            <div class="card" style="width:990px; height: 610px;">
+            <div class="card" style="height: 610px;">
                 <!-- TradingView Widget BEGIN -->
-                <div class="tradingview-widget-container" style="height:100%; width:100%">
-                    <div id="tradingview_59051"></div>
-                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text">트레이딩뷰에서 모든 시장 추적</span></a></div>
+                <div class="tradingview-widget-container" style="height:100%;width:100%">
+                    <div id="tradingview_6da72" style="height:calc(100% - 32px);width:100%"></div>
+                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
                     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
                     <script type="text/javascript">
                         new TradingView.widget(
                             {
-
+                                "autosize": true,
                                 "symbol": "KRX:005930",
                                 "interval": "D",
                                 "timezone": "Etc/UTC",
@@ -151,8 +199,11 @@
                                 "hide_side_toolbar": false,
                                 "allow_symbol_change": true,
                                 "details": true,
-                                "calendar": true,
-                                "container_id": "tradingview_59051"
+                                "hotlist": true,
+                                "show_popup_button": true,
+                                "popup_width": "1000",
+                                "popup_height": "650",
+                                "container_id": "tradingview_6da72"
                             }
                         );
                     </script>
@@ -162,6 +213,25 @@
         </div>
     </div>
 
+    <!-- 주식 js 시작 -->
+    <script th:src="@{/js/chart/coinchart/coinchart.js}"></script>
+    <script th:src="@{/js/chart/coinchart/coinchart2.js}"></script>
+    <script th:src="@{/js/chart/coinchart/coinchart3.js}"></script>
+    <!-- 주식 js 끝 -->
+
+
+<!--    차트 라이브러리 시작-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src=../../../static/js/chart/coinchart/coinchart.js></script>
+    <script src=../../../static/js/chart/coinchart/coinchart2.js></script>
+    <script src=../../../static/js/chart/coinchart/coinchart3.js></script>
+<!--차트 라이브러리 끝-->
 
 </div>
 </html>
