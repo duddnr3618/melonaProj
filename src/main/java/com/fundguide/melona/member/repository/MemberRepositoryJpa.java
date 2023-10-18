@@ -256,10 +256,13 @@ public class MemberRepositoryJpa implements MemberRepository {
                     String.format("SELECT m.* FROM member m WHERE m.member_id IN(%s) " +
                                     "ORDER BY m.member_id DESC " +
                                     "LIMIT :limit OFFSET :offset ",
-                            subMemberId.stream().map(String::valueOf).collect(Collectors.joining(",")));
+                            subMemberId.stream().map(String::valueOf)
+                                    .collect(Collectors.joining(",")));
             nativeMembersQuery = em.createNativeQuery(membersSql, MemberEntity.class);
-            nativeMembersQuery.setParameter("limit", pageable.getPageSize());
-            nativeMembersQuery.setParameter("offset", pageable.getOffset());
+            nativeMembersQuery
+                    .setParameter("limit", pageable.getPageSize());
+            nativeMembersQuery
+                    .setParameter("offset", pageable.getOffset());
             entities = nativeMembersQuery.getResultList();
         } else {
             entities = new ArrayList<>();
