@@ -172,6 +172,7 @@ public class LeaderBoardController {
 
     @PostMapping("/impeach")
     public ResponseEntity<String> impeach(Principal principal, @RequestBody ImpeachDTO impeachDTO) {
+        System.out.println(" { 리더 보드 신고 컨트롤 진입" + " }");
         return leaderBoardService.impeach(principal, impeachDTO);
     }
 
@@ -190,9 +191,4 @@ public class LeaderBoardController {
         System.out.println(" { 좋아요 삭제 진입" + " }");
         return leaderBoardService.likeRemove(principal, boardId);
     }
-
-
-
-
-
 }

@@ -128,19 +128,21 @@ public class LeaderBoardService {
         Optional<LeaderBoardEntity> leaderBoardEntity = leaderBoardRepository.findById(impeachDTO.getId());
 
         try {
-            return leaderBoardEntity.map(oLeaderBoardEntity -> {
+            return leaderBoardEntity.map(o -> {
                 LeaderBoardImpeachEntity impeach = LeaderBoardImpeachEntity.builder()
                         .member(memberEntity)
-                        .board(oLeaderBoardEntity)
+                        .board(o)
                         .cause(impeachDTO.getCause())
                         .build();
 
                 boolean check = leaderBoardImpeachRepository.checkAlreadyImpeach(impeach);
                 if (!check) {
-                    oLeaderBoardEntity.getImpeach().add(impeach);
-                    leaderBoardRepository.save(oLeaderBoardEntity);
+                    o.getImpeach().add(impeach);
+                    leaderBoardRepository.save(o);
+                    System.out.println(" { 값 존재하지 않음 신고 함" + " }");
                     return ResponseEntity.ok().body("신고 성공");
                 } else {
+                    System.out.println(" { 값 이미 존재함" + " }");
                     return ResponseEntity.badRequest().body("이미 신고 하셨습니다.");
                 }
 
