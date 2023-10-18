@@ -1,10 +1,16 @@
 // noinspection JSUnresolvedReference
 $(function () {
-    id_DetailBoardFilter.find('li').click();
+    loadingImg.hide();
+    $('#AllLayoutBox li.active').click();
 })
 
 const id_ResultTable = $('#ResultTable');
-const id_ResultPageLinkButton = $('#ResultPageLinkButton');
+const loadingImg = $('#LoadingImg');
+
+function LoadingImgShow() {
+    id_ResultTable.empty();
+    loadingImg.show();
+}
 
 const id_LayoutBoard = $('#LayoutBoard');
 const id_DetailBoardFilter = $('#DetailBoardFilter');
@@ -30,13 +36,10 @@ id_DetailBoardFilter.find('li').click(function () {
     params.append('category', categoryData);
     params.append('filter', filterData);
 
-    let titleArray = ["ID", "Title", "Writer"];
-
     axios.get(`management/board_filter_page?${params.toString()}`)
         .then(function (boardData) {
-            console.log("클릭감지");
-            console.log(boardData);
             id_ResultTable.html(boardData.data);
+            loadingImg.hide();
             disableButtonHandler(categoryData);
         })
         .catch(function () {
@@ -47,16 +50,15 @@ id_DetailBoardFilter.find('li').click(function () {
 function disableButtonHandler(category) {
     let cls_disabledButton = $('.disabledButton');
     cls_disabledButton.click(function (button) {
-        console.log($(this).attr('class'));
+        LoadingImgShow();
         let board_id = $(this).data('id');
-        const params = new URLSearchParams();
+        let params = new URLSearchParams();
         params.append('category', category);
         params.append('id', board_id);
-        console.log(board_id);
-        console.log(params.toString());
+
         axios.put(`/management/board_disabled?${params.toString()}`)
             .then(function () {
-                id_DetailBoardFilter.find('li').click();
+                $('#AllLayoutBox li.active').click();
                 cls_disabledButton.off('click');
             })
             .catch((reason) => {
@@ -72,20 +74,12 @@ id_DetailUserFilter.find('li').click(function () {
     const params = new URLSearchParams();
     params.append('filter', filterData);
 
-    let titleArray = ["Name", "Nickname", "Role", "LimitState"];
+    LoadingImgShow();
     axios.get(`management/member_filter_page?${params.toString()}`)
         .then(function (memberData) {
-
-            const memberPaging = memberData.data.content;
-            const memberKey = ["memberName", "memberNickname", "memberRole", "memberLimitState"];
-
-            TableHtmlHandler(titleArray, memberPaging, memberKey, "id");
-
-            /**TODO 하단 페이지 이동 버튼 생성*/
+            id_ResultTable.html(memberData.data);
+            loadingImg.hide();
         })
-        .catch(function () {
-            TableErrorHandler(titleArray);
-        });
 })
 
 /**유저 권한 관리*/
@@ -94,34 +88,41 @@ id_DetailRoleFilter.find('li').click(function () {
     const params = new URLSearchParams();
     params.append('filter', filterData);
 
-    let titleArray = ["Name", "Nickname", "Role", "LimitState"];
+    LoadingImgShow();
     axios.get(`management/member_role_filter_page?${params.toString()}`)
         .then(function (roleData) {
-            const memberPaging = roleData.data.content;
-            const memberKey = ["memberName", "memberNickname", "memberRole", "memberLimitState"];
-
-            TableHtmlHandler(titleArray, memberPaging, memberKey, null);
+            id_ResultTable.html(roleData.data);
+            loadingImg.hide();
         })
-        .catch(function () {
-            TableErrorHandler(titleArray);
-        });
 })
 
 
 /**각 리스트 클릭 이벤트 처리*/
-managementCategoryMap.forEach((managementList, clickCategory) => {
-    clickCategory.click(function () {
-
-        const thisHidden = managementList.is(':hidden');
+managementCategoryMap.forEach((childrenUl, parentsUl) => {
+    parentsUl.click(function () {
+        const thisHidden = childrenUl.is(':hidden');
         if (thisHidden) {
-            managementList.show();
+            childrenUl.show();
+            childrenUl.find('li').eq(0).click();
+            childrenUl.find('li').eq(0).addClass('active');
         }
 
         /**요소를 클릭시 다른 요소가 자동적으로 닫히도록 하는 each문*/
-        managementCategoryMap.forEach((otherManagementList, otherViewCategory) => {
-            if (otherViewCategory !== clickCategory) {
-                otherManagementList.hide();
+        managementCategoryMap.forEach((otherChildrenLi, otherParentsLi) => {
+            if (otherParentsLi !== parentsUl) {
+                otherChildrenLi.hide();
             }
         });
     });
+
+    /**각 요소를 클릭시 가시성을 위한 클래스 추가*/
+    parentsUl.click(function () {
+        $(this).addClass('active').siblings().removeClass('active');
+    })
+
+    childrenUl.find('li').click(function () {
+        LoadingImgShow();
+        childrenUl.find('li').not($(this)).removeClass('active');
+        $(this).addClass('active');
+    })
 })

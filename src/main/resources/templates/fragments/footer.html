@@ -1,15 +1,30 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+<link type="text/css" th:href="@{/css/layout/footer.css}"  rel="stylesheet">
 
 <div class="footer" th:fragment="footer">
         <footer class="page-footer font-small cyan darken-3">
             <div class="footer-copyright text-center py-3">
-             	<p>2023.09.08 Springboot C-book project</p>
-				<p>GitHub address : www.github/duddnr3618  ,  email : duddnr3618@gmail.com</p>
-	 			<p>projected by Choi youngwook </p>
+             	<p>2023.10.20  Springboot Melona project</p>
+				<p>GitHub address : github.com/duddnr3618/melonaProj</p>
+	 			<p>projected by Team. YoungCha </p>
+                <p>대표 : 최영욱, 김범준, 김동철, 배윤현, 양우성, 허남규 </p>
+            </div>
+
+            <div id="sns" class="row">
+                <div class="col-12">
+                    <div class="d-flex justify-content-center">
+                        <a href="https://business.kakao.com/" class="mx-2"><img th:src="@{/img/kakao.png}" width="30px" height="30px" alt="Kakao"/></a>
+                        <a href="https://www.instagram.com/" class="mx-2"><img th:src="@{/img/instar.png}" width="30px" height="30px" alt="Insta"/></a>
+                        <a href="https://twitter.com/" class="mx-2"><img th:src="@{/img/twitter.png}" width="30px" height="30px" alt="Twitter"/></a>
+                        <a href="https://www.youtube.com/" class="mx-2"><img th:src="@{/img/youtube2.png}" width="30px" height="30px" alt="YouTube"/></a>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>
-    
-    
+
+
 </html>

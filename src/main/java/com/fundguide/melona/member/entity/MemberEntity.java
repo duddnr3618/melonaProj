@@ -1,23 +1,17 @@
 package com.fundguide.melona.member.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fundguide.melona.board.normalBoard.entity.NormalBoardImpeachEntity;
 import com.fundguide.melona.member.role.MemberLimitConvert;
 import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.role.MemberRoleConvert;
 import com.fundguide.melona.member.role.MemberRoleState;
 import jakarta.persistence.*;
-
-import java.time.LocalDate;
-import java.util.HashSet;
-
-import java.util.Set;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.time.LocalDate;
 
 
 @Entity
@@ -44,7 +38,6 @@ public class MemberEntity {
 
   private String memberAddress;
   private LocalDate memberJoinDate;
-  private String memberAvailable;
   private String memberNickname;
 
   @PrePersist
@@ -58,12 +51,4 @@ public class MemberEntity {
   @Column(nullable = false)
   @ColumnDefault("'NORMAL'")
   private MemberLimitState memberLimitState;
-
-  /**JSON으로 변환시 서로 순환 참조가 되어 반복적으로 출력되어 JSON에서 이를 무한 루프라고 판단하여
-   * 에러가 발생함 그렇기에 @JsonBackReference 추가.
-   * 각 impeach를 테이블을 나누어 작성하다보니 발생 경우라고 판단함.
-   * JsonBackReference = 관계에서 역방향(부모->자식) 참조로 어노테이션을 추가하면 직렬화에서 제외된다*/
-  @JsonBackReference
-  @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-  private Set<NormalBoardImpeachEntity> boardImpeachEntity = new HashSet<>();
 }

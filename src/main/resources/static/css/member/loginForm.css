@@ -1,0 +1,84 @@
+.content{
+    margin-top: 10vh;
+    overflow: hidden;
+}
+#logDiv1 {
+    justify-content: center;
+    height: 65px;
+    overflow: hidden;
+    margin: 5px;
+}
+
+#logDiv2{
+    justify-content: center;
+    height: 70px;
+    overflow: hidden;
+    margin: 5px;
+}
+#logDiv1 img {
+    max-width: 100%;
+    max-height: 100%;
+}
+#logDiv2 img {
+    max-width: 100%;
+    max-height: 100%;
+}
+.row{
+    display: flex;
+}
+#loginButton {
+    background-color: #A4A4A4; /* 배경색 설정 */
+    border: none; /* 테두리 없앰 */
+}
+
+#loginButton:hover {
+    background-color: #9FF781; /* 호버 시 배경색 변경 */
+    border: none; /* 테두리 없앰 */
+}
+a{
+    text-decoration: none;
+    color: #A4A4A4;
+}
+a:hover{
+    color: #9FF781;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border: 2px solid #9FF781; /* 포커스된 경우 테두리 스타일과 색상 설정 */
+    box-shadow: 0 0 5px #9FF781; /* 포커스된 경우 그림자 설정 */
+    outline: none; /* 기본 포커스 테두리를 숨기려면 이 줄을 추가 */
+}
+
+#nav3 a {
+    color:#A4A4A4 ;
+    text-decoration: none;
+    letter-spacing: 5px;
+}
+
+#nav3 a:hover {
+    color: #9FF781;
+}
+#nav4 a {
+    color:#ffffff ;
+    text-decoration: none;
+}
+
+#nav4 a:hover {
+    color: #9FF781;
+}
+footer {
+    position: absolute;
+    background-color: #f1eded;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    margin: 3px 0;
+    transform: translateY(200%); /*콘텐츠 길이 상관없이 하단 고정  뭔가 하단이 이상하다 싶으면 이걸 제거하시면 됩니다.  */
+    /*        디폴트는 100*/
+
+
+}

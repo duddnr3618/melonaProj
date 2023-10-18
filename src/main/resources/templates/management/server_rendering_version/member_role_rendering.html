@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<table class="table table-striped">
+    <tr>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Limit</th>
+        <th th:if="${filter} == 'minSatisfy'">결정</th>
+    </tr>
+    <tr th:each="member, i : ${memberPaging}">
+        <td th:text="${member.getMemberEmail()}"></td>
+        <td th:text="${member.getMemberRole()}"></td>
+        <td th:text="${member.getMemberLimitState()}"></td>
+        <td th:if="${filter} == 'minSatisfy'">
+            <button class="agreedAdmin" th:data-id="${member.getId}" th:data-memberid="${member.getId()}">
+                권한 부여
+            </button>
+        </td>
+    </tr>
+</table>
+
+<script>
+    $('.agreedAdmin').click(function () {
+        let memberId = $(this).data('memberid');
+        if (confirm("정말로 리더 권한을 주시겠습니까?")) {
+            axios.put(`/management/member_role_setLeader/${memberId}`)
+                .then(function () {
+                    console.log("성공");
+                    $('.agreedAdmin').off('click');
+                    $('#AllLayoutBox li.active').click();
+                })
+        }
+    })
+</script>
+
+</body>
+</html>

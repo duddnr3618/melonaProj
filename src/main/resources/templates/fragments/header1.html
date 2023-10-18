@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Header</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
+<style>
+
+    header{
+
+    }
+
+    .navbar{
+
+    }
+
+    #header1{
+
+    }
+    .nav-link{
+        color: rgb(128, 128, 128);
+    }
+
+    .container-fluid{
+        border: 1px solid red;
+    }
+
+</style>
+
+<body>
+
+
+<div class="b-example-divider"></div>
+
+<!--<nav class="py-2 bg-body-tertiary">-->
+<!--    <div class="container d-flex flex-wrap justify-content-between">-->
+<!--        &lt;!&ndash; 왼쪽 메뉴 &ndash;&gt;-->
+<!--        <div id="nav1">-->
+<!--            <ul class="nav">-->
+<!--                <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2 active" aria-current="page">Home</a></li>-->
+<!--                <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">Features</a></li>-->
+<!--                <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">Pricing</a></li>-->
+<!--                <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">FAQs</a></li>-->
+<!--                <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">About</a></li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        &lt;!&ndash; 오른쪽 메뉴 &ndash;&gt;-->
+<!--        <div id="nav2">-->
+<!--            <ul class="nav">-->
+<!--                <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">Login</a></li>-->
+<!--                <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">Sign up</a></li>-->
+<!--                <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">My page</a></li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+
+
+<header id="header1" class="py-3 mb-4">
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container d-flex flex-wrap justify-content-between">
+            <a class="navbar-brand mr-4" href="#" width="200px" height="100px"  th:href="@{/}">C-Book</a>
+
+            <!-- 가운데 정렬된 항목들 시작 -->
+            <div id="nav3" class="d-flex justify-content-center flex-grow-1">
+                <a class="nav-link mx-3" th:href="@{/board}">게시판</a>
+                <a class="nav-link mx-3" th:href="@{/news}">뉴스 정보</a>
+                <a class="nav-link mx-3" th:href="@{/chart}">차트</a>
+                <a class="nav-link mx-3" th:href="@{/event}">이벤트</a>
+                <a class="nav-link mx-3" th:href="@{/event}">토론방</a>
+            </div>
+            <!-- 가운데 정렬된 항목들 종료 -->
+
+            <button id="button" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="navbarContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item" sec:authorize="isAnonymous()">
+                        <a class="nav-link" href="/member/memberLogin" th:href="@{/member/memberLogin}">Login</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" href="/member/logout" th:href="@{/member/logout}">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/member/memberForm" th:href="@{/member/memberForm}">회원가입</a>
+                    </li>
+
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link active" href="#" th:href="@{/myinfo}">내정보</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" th:href="@{/about-cbook}">C-book 소개</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" th:href="@{/customer-service}">고객센터</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-md-0">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+
+
+<div class="b-example-divider"></div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<hr>
+</body>
+</html>

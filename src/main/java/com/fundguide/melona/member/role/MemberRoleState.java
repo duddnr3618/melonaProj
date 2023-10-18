@@ -3,13 +3,12 @@ package com.fundguide.melona.member.role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
 public enum MemberRoleState {
-    ROLE_USER, ROLE_AUTO_LEADER, ROLE_SET_LEADER, ROLE_ADMIN, DISABLED;
+    ROLE_USER, ROLE_AUTO_LEADER, ROLE_SET_LEADER, ROLE_ADMIN, DISABLED, ROLE_OAUTH2;
 
     public static MemberRoleState getRoleState(String role) {
         return memberRoleState(role);
@@ -39,7 +38,7 @@ public enum MemberRoleState {
     public static Map<MemberRoleState, String> tipData() {
         Map<MemberRoleState, String> tipMap = new HashMap<>();
         MemberRoleState[] states = MemberRoleState.values();
-        String[] tipValue = {"유저", "리더", "관리자"};
+        String[] tipValue = {"유저", "리더", "관리자","수동 회원가입안한 oauth2유저"};
 
         for (int i = 0; i < states.length; i++) {
             tipMap.put(states[i], tipValue[i]);

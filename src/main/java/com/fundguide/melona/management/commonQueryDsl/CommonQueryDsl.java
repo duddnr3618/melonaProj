@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CommonQueryDsl {
@@ -14,6 +15,9 @@ public class CommonQueryDsl {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
+        if (entities.isEmpty()) {
+            entities = new ArrayList<>();
+        }
         return new PageImpl<>(entities, pageable, total);
     }
 }

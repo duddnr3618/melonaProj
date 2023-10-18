@@ -1,0 +1,20 @@
+
+#nav3 {
+    justify-content: center;
+}
+
+#nav4{
+	color: white;
+}
+
+.container-fluid{
+		border: 1px solid red;
+}
+
+#navbar-toggler {
+	  color: white;
+  }
+
+#hr1 {
+	width: 80%;
+}

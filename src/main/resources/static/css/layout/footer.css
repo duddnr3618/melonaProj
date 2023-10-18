@@ -1,0 +1,8 @@
+footer #sns {
+    float: right;
+    margin-top: -70px;
+}
+
+#sns a img {
+    margin: 0 5px; /* Added margin for spacing between SNS icons */
+}

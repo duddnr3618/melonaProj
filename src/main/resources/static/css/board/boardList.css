@@ -1,0 +1,152 @@
+/* 기본 스타일 */
+body {
+    margin: 0; /* 바디 마진 제거 */
+    padding: 0; /* 바디 패딩 제거 */
+    font-family: 'TmoneyRoundWindExtraBold'
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 그리드 설정 */
+.container {
+    display: grid;
+    grid-template-columns: 1fr; /* 1열 그리드 */
+    gap: 20px; /* 그리드 아이템 간격 설정 */
+}
+
+.top1 {
+    font-size: small;
+    grid-column: 1; /* 1열에 배치 */
+    justify-self: flex-end; /* 우측 정렬 */
+}
+
+.top2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 검색 창 스타일 */
+.search-input {
+    width: 400px;
+    padding: 10px;
+    border: 1px solid #A4A4A4;
+    border-radius: 15px;
+}
+
+form input[type="text"]:hover {
+    border: 1px solid #9FF781;
+    color: #fff;
+}
+
+.search-button {
+    background-color: #A4A4A4;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+    margin-left: -1px; /* 검색 창과 버튼 사이 간격 제거 */
+}
+
+form button[type="submit"]:hover {
+    background-color: #9FF781;
+    border: 1px solid #9FF781;
+    color: white;
+}
+
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+/* 그리드 설정 */
+table th,
+table td {
+    border-bottom: #e0d6d6 solid 1px;
+    padding: 10px;
+}
+
+/* 링크 스타일 */
+a {
+    text-decoration: none;
+    color: black;
+    font-size: small;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #9FF781;
+}
+
+/* 페이지네이션 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #A4A4A4;
+    padding: 5px 10px;
+    border: 1px solid #A4A4A4;
+    margin: 0 5px;
+    border-radius: 10px;
+}
+
+.pagination a:hover {
+    background-color: #9FF781;
+    color: white;
+    border: 1px solid #9FF781;
+    border-radius: 10px;
+}
+
+/* 버튼 스타일 */
+span.top2 a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #A4A4A4;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #A4A4A4;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+span.top2 a:hover {
+    background-color: #9FF781;
+    color: white;
+    border: 1px solid #9FF781;
+}
+
+.write-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #A4A4A4;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid #A4A4A4;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    margin-left: 10px; /* 버튼 간격 설정 */
+}
+
+/* 호버 시 스타일 변경 */
+.write-button:hover {
+    background-color: #9FF781;
+    color: white;
+    border: 1px solid #9FF781;
+}

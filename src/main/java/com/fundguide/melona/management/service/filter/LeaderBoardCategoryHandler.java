@@ -10,13 +10,18 @@ public class LeaderBoardCategoryHandler implements FilterCategoryHandler {
     private final LeaderBoardRepository leaderBoardRepository;
 
     @Override
+    public Page<?> handleFilterCategory(String filter, Pageable pageable) {
+        return FilterCategoryHandler.super.handleFilterCategory(filter, pageable);
+    }
+
+    @Override
     public Page<?> waringPage(Pageable pageable) {
-        return null;
+        return leaderBoardRepository.onlyViewFilterByWaring(pageable);
     }
 
     @Override
     public Page<?> blockPage(Pageable pageable) {
-        return null;
+        return leaderBoardRepository.onlyViewFilterByBlock(pageable);
     }
 
     @Override

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Daily Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<div th:each="i, t : ${chart}">
+    <div th:text="${t.index}"></div>
+    <div th:text="${t.current}"></div>
+</div>
+
+<canvas id="stockChart" width="800" height="400"></canvas>
+
+<script>
+    let stockChart;
+
+    function fetchAndDrawChart() {
+        $.ajax({
+            url: "/stock/daily-chart2",
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                const labels = data.map(data => new Date(data.date));
+                const openData = data.map(data => data.open);
+                const closeData = data.map(data => data.close);
+                const highData = data.map(data => data.high);
+                const lowData = data.map(data => data.low);
+
+                if(stockChart) {
+                    stockChart.destroy();
+                }
+
+                const ctx = document.getElementById('stockChart').getContext('2d');
+                stockChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Open',
+                            data: openData,
+                            borderColor: 'blue',
+                            fill: false
+                        }, {
+                            label: 'Close',
+                            data: closeData,
+                            borderColor: 'red',
+                            fill: false
+                        }, {
+                            label: 'High',
+                            data: highData,
+                            borderColor: 'green',
+                            fill: false
+                        }, {
+                            label: 'Low',
+                            data: lowData,
+                            borderColor: 'orange',
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'minute'
+                                }
+                            }
+                        }
+                    }
+                });
+            },
+            error: function(error) {
+                console.error("Error fetching data: ", error);
+            }
+        });
+    }
+
+    // 페이지 로드 시 차트를 그립니다.
+    fetchAndDrawChart();
+
+    // 1분마다 차트를 갱신합니다.
+    setInterval(fetchAndDrawChart, 60 * 1000);  // 60초 * 1000 = 1분
+
+</script>
+</body>
+
+
+에라이
+</html>

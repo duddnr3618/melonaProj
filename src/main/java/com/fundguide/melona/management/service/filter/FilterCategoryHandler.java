@@ -3,9 +3,11 @@ package com.fundguide.melona.management.service.filter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-/**각 보드에 대한 매니지먼트를 위한 인터페이스*/
+/**각 보드 관리를 위한 인터페이스. <br>
+ * 신고수가 n이상인 보드를 waring에 출력 <br>
+ * 비활성화된 보드를 block에 출력 <br>
+ * 모든 게시판 목록을 all에 출력 <br>*/
 public interface FilterCategoryHandler {
-
     default Page<?> handleFilterCategory(String filter, Pageable pageable) {
         switch (filter) {
             case "waring" -> {

@@ -1,13 +1,11 @@
 package com.fundguide.melona.member.role;
 
-import lombok.ToString;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
 public enum MemberLimitState {
-    NORMAL, TRANSITORY, STRONG, PERMANENT;
+    NORMAL, TRANSITORY, STRONG, PERMANENT ;
 
     /**해당 열거형에 값을 얻기 위한 메서드
      * @return {{@link MemberLimitState}}*/

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<table class="table table-striped">
+    <tr>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Limit</th>
+        <th th:if="${filter} == 'TRANSITORY'">3일 제한 주기</th>
+        <th th:if="${filter} == 'TRANSITORY'">7일 제한 주기</th>
+        <th th:if="${filter} == 'STRONG'">계정 비활성화</th>
+    </tr>
+    <tr th:each="member, i : ${memberPaging}">
+        <td th:text="${member.getMemberEmail()}"></td>
+        <td th:text="${member.getMemberRole()}"></td>
+        <td th:text="${member.getMemberLimitState()}"></td>
+        <td th:if="${filter} == 'TRANSITORY'">
+            <button class="daysLimit" th:data-id="${member.getId}" th:data-day="3" th:data-memberid="${member.getId()}">3일</button>
+        </td>
+        <td th:if="${filter} == 'TRANSITORY'">
+            <button class="daysLimit" th:data-id="${member.getId}" th:data-day="7" th:data-memberid="${member.getId()}">7일</button>
+        </td>
+        <td th:if="${filter} == 'STRONG'">
+            <button class="permanentLimit" th:data-id="${member.getId()}">계정 비활성화</button>
+        </td>
+    </tr>
+</table>
+
+<script>
+   $('.daysLimit').click(function () {
+       let memberId = $(this).data('id');
+       let day = $(this).data('day');
+       axios.put(`/management/member_filter_setLimit/${memberId}/${day}`)
+           .then(function () {
+               $('#AllLayoutBox li.active').click();
+               $('.daysLimit').off('click');
+           })
+       ;
+   });
+   $('.permanentLimit').click(function () {
+       let memberId = $(this).data('id');
+       axios.put(`/management/member_filter_setDisable/${memberId}`)
+           .then(function () {
+               $('#AllLayoutBox li.active').click();
+               $('.permanentLimit').off('click');
+           })
+       ;
+   })
+</script>
+
+</body>
+</html>

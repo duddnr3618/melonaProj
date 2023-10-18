@@ -1,43 +1,25 @@
-<!--http://localhost:7777/Ch09/news/list?text=주식-->
-<!--http://localhost:7777/news/list?text=주식-->
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-<link rel="stylesheet" href="../../static/css/list.css" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/news/list.css}" type="text/css">
     <meta charset="UTF-8">
     <title>news::list</title>
 </head>
 <body>
-<!--<h3>네이버 오픈 API를 활용한 뉴스 목록</h3>-->
-
-
-<table class="bordered-table" border="1" >
-    <thead>
+<table class="news-table">
+    <tbody th:each="news:${news}">
     <tr>
-        <th>제목</th>
-        <th>내용 요약</th>
-        <th>게시 날짜</th>
-        <th>기사 링크</th>
+        <td class="header-cell">
+            <span class="date-text" th:text="${#dates.format(news.pubDate, 'yy년 MM월 dd일 EEEE HH:mm')}"></span>
+            <a class="news-link" th:href="${news.link}" th:utext="${news.title}" target="_blank"></a>
+        </td>
     </tr>
-    </thead>
-    <tbody>
-    <tr th:each="news:${news}">
-        <td style="font-size: 8px"><a th:href="${news.link}" th:utext="${news.title}" width="1000" height="500"></a></td>
-        <td style="font-size: 10px" th:utext="${news.description}"></td>
-        <td style="font-size: 8px">[[${news.pubDate}]]</td>
-        <td style="font-size: 5px"><a th:href="${news.originallink}">원문 보기</a></td>
-
-
+    <tr>
+        <td class="description-cell">
+            <span class="description-text" th:utext="${news.description}"></span>
+        </td>
     </tr>
     </tbody>
 </table>
-
-
-
 </body>
 </html>
-
-
-
-

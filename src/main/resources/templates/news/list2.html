@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<head style="text-align: center">
+        <meta charset="UTF-8">
+        <title>Main Page</title>
+        <link rel="stylesheet" th:href="@{/css/news/list2.css}" type="text/css">
+        <style>
+                #content-frame {
+                        width: 1290px;
+                        height: 2000px;
+                        /*margin-top: 30px;*/
+                }
+
+                nav {
+                        /*text-align: center;*/
+                        /*margin-bottom: 20px;*/
+                }
+
+                nav button {
+                        padding: 15px 30px;
+                        margin: 0 15px;
+                        font-size: 18px;
+                        background-color: #A4A4A4;
+                        color: #fff;
+                        text-decoration: none;
+                        border: 1px solid #A4A4A4;
+                        cursor: pointer;
+                        border-radius: 5px;
+                        transition: background-color 0.3s;
+                }
+
+                nav button:hover {
+                        background-color: #9FF781;
+                        color: white;
+                        border: 1px solid #9FF781;
+                }
+
+                /* 뉴스룸 스타일 추가 */
+                #newsroom-title {
+                        font-size: 24px;
+                        font-weight: bold;
+                        margin-left: 10px;
+                        margin-bottom: 20px;
+                }
+                #con{
+                        text-align: center;
+                }
+
+        </style>
+
+        <script th:inline="javascript">
+                function switchContent(type) {
+                        const frame = document.getElementById('content-frame');
+                        if (type === '주식') {
+                                frame.src = "http://localhost:7777/news/list3?text=주식";
+                        } else if (type === '코인') {
+                                frame.src = "http://localhost:7777/news/list4?text=코인";
+                        }
+                }
+        </script>
+</head>
+
+<body>
+<div layout:fragment="content" style="text-align: center">
+        <h2 id="newsroom-title">뉴스룸</h2> <!-- 뉴스룸 텍스트 추가 -->
+        <nav>
+                <button onclick="switchContent('주식')">주식</button>
+                <button onclick="switchContent('코인')">코인</button>
+        </nav>
+        <iframe id="content-frame" src="http://localhost:7777/news/list3?text=주식"></iframe>
+</div>
+</body>
+</html>

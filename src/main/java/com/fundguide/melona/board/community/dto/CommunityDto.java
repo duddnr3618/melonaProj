@@ -10,8 +10,6 @@ import lombok.ToString;
 import org.modelmapper.ModelMapper;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Getter
@@ -27,15 +25,17 @@ public class CommunityDto {
     private int boardHits;
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
+    private Long memberId;
+    private String memberName;
+    private int boardCount;
 
-    private List<CommunityFileDto> communityFileDtos = new ArrayList<>();
+    private String fileName;
+    private String filePath;
 
-    private List<Long> communityFileList = new ArrayList<>();       // 파일의 번호 관리를 리스트해서 관리
 
-    /* entity -> dto 변환 */
-    private static ModelMapper modelMapper = new ModelMapper();
-    public static CommunityDto of(CommunityEntity communityEntity){
-      return modelMapper.map(communityEntity, CommunityDto.class);
+    public  static ModelMapper modelMapper = new ModelMapper();
+    public static CommunityDto toBoardDto(CommunityEntity communityEntity){
+        return modelMapper.map(communityEntity, CommunityDto.class);
     }
 
 

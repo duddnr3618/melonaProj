@@ -2,31 +2,52 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout1}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
 <div layout:fragment="content">
-    <br>
-    <table>
-        <tr>
-            <th>글번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>조회수</th>
-            <th>업로드 시간</th>
-        </tr>
-        <tr th:each="leaderBoard : ${leaderboardList}">
-            <td th:text="${leaderBoard.id}"></td>
-            <td><a th:href="@{|/leaderBoard/${leaderBoard.id}|}" th:text="${leaderBoard.boardTitle}"></a></td>
-            <td th:text="${leaderBoard.boardWriter}"></td>
-            <td th:text="${leaderBoard.boardHits}"></td>
-            <td> <span th:text="${#temporals.format(leaderBoard.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></span></td>
-        </tr>
-    </table>
+    <link rel="stylesheet" href="/css/board/boardList.css">
+    <h2>메로나 리더가이드</h2>
+    <span class="top1" th:if="${userName != null}">※리더가이드는 로그인시 사용이 가능하며 리더만 글 작성이 가능합니다.</span>
+    (<input type="hidden" th:text="${userName}"> /  <input type="hidden" th:text="${userRole}"> )님 환영합니다.
+    <hr>
+    <div>
+        <div class="top2">
+            <form th:action="@{/leaderBoard/list}" method="get" class="search-form">
+                <input type="text" name="searchKeyword" class="search-input">
+                <button type="submit" class="search-button">검색</button>
+            </form>
+            <span><a href="/leaderBoard/wrtieForm" class="write-button">글 작성</a></span>
+        </div>
 
-    <a th:href="@{/leaderBoard/writeForm}">글 작성</a>
+        <table class="boardTable">
+                <th>글번호</th>
+                <th>제목</th>
+                <th>등록일</th>
+                <th>조회수</th>
 
-
+            </tr>
+            <tr th:each="board : ${list}">
+                <th th:text="${board.id}"></th>
+                <th><a  th:text="${board.boardTitle}" th:href="@{|${board.id}|}"></a></th>
+                <th th:text="*{#temporals.format(board.createdTime,'yyyy-MM-dd')}"></th>
+                <th th:text="${board.boardHits}"></th>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <a href="/leaderBoard/wrtieForm" sec:authorize="hasAnyRole('ROLE_SET_LEADER','ROLE_AUTO_LEADER','ROLE_ADMIN')">글작성</a>
+    </div>
+    <div class="pagination">
+    <a th:href="@{/leaderBoard/list(page=0)}">처음</a>
+    <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+        <a th:if="${page != nowPage}" th:href="@{/leaderBoard/list(page = ${page - 1}, searKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+        <strong th:if="${page == nowPage}" th:text="${page}" style="color: #1c6500"></strong>
+    </th:block>
+    <a th:href="@{/leaderBoard/list(page=${list.totalPages})}">마지막</a>
+    </div>
 
 </div>
 </html>

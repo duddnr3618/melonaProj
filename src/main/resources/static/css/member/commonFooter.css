@@ -1,0 +1,15 @@
+footer {
+    position: absolute;
+    background-color: #f1eded;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    margin: 3px 0;
+    transform: translateY(200%); /*콘텐츠 길이 상관없이 하단 고정  뭔가 하단이 이상하다 싶으면 이걸 제거하시면 됩니다.  */
+    /*        디폴트는 100*/
+
+
+}

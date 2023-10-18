@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -25,10 +26,13 @@ public class CustomUSerDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        MemberEntity entity = memberRepositoryData.findByMemberEmail(username);
-        if(entity!=null){
-            return new CustomUserDetails(entity, memberRoleStateCollection);
+        Optional<MemberEntity> byMemberEmail = memberRepositoryData.findByMemberEmail(username);
+        if (byMemberEmail.isPresent()) {
+            MemberEntity member = byMemberEmail.get();
+            return new CustomUserDetails(member, memberRoleStateCollection);
+        } else {
+            return null;
         }
-        return null;
+
     }
 }

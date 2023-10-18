@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+<head>
+<meta charset="UTF-8">
+	<link rel="icon" href="/img/melon.png" type="image/png">
+	<title>Melona-event</title>
+
+<!--부트스트랩 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<link type="text/css" th:href="@{/css/layout/layout1.css}"  rel="stylesheet">
+	<link type="text/css" th:href="@{/css/layout/footer.css}"  rel="stylesheet">
+	
+<th:block layout:fragment="script">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<script src="/webjars/jquery/3.7.0/dist/jquery.min.js"></script>
+</th:block>
+
+<th:block layout:fragment="css">
+	<link th:href="@{/css/member/event.css}" rel="stylesheet">
+
+</th:block>
+
+</head>
+
+
+<body>
+
+
+<div th:replace="fragments/header::header"></div>
+
+	<div layout:fragment="content" id="LayoutContent" class ="content">
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<h1>증권사</h1>
+			</div><br/>
+		</div>
+
+
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-4"><a href="https://www.kiwoom.com/h/common/event/VEventMainView?eventCode=20230085" target="_blank"><img src="/img/event/banner_20230085.png"></a></div>
+			<div class="col-md-4"><a href="https://www.samsungpop.com/" target="_blank"><img src="/img/event/ml_pstd.png"></a></div>
+			<div class="col-md-2"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-4"><a href="https://m.kbsec.com/go.able" target="_blank"><img src="/img/event/b1.jpg"></a></div>
+			<div class="col-md-4"><a href="https://www.hanaw.com/main/main/index.cmd" target="_blank"><img src="/img/event/mildaltong_top.jpg"></a></div>
+			<div class="col-md-2"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-4"><a href="https://www.shinhansec.com/" target="_blank"><img src="/img/event/sin.jpg"></a></div>
+			<div class="col-md-4"><a href="https://www.nhqv.com/" target="_blank"><img src="/img/event/nh.png"></a></div>
+			<div class="col-md-2"></div>
+		</div>
+
+
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<h1>Coin</h1>
+			</div><br/>
+		</div>
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-md-4"><a href="https://www.binance.com/en" target="_blank"><img src="/img/event/바이낸스.png"></a></div>
+				<div class="col-md-4"><a href="https://www.bitget.com/en-GB/" target="_blank"><img src="/img/event/비트겟.png"></a></div>
+				<div class="col-md-2"></div>
+			</div>
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-4"><a href="https://www.kucoin.com/ko" target="_blank"><img src="/img/event/kucoin.jpg"></a></div>
+			<div class="col-md-4"><a href="https://www.kraken.com/" target="_blank"><img src="/img/event/kraken.png"></a></div>
+			<div class="col-md-2"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-4"><a href="https://www.bybit.com/en-US" target="_blank"><img src="/img/event/바이비트.png"></a></div>
+			<div class="col-md-4"><a href="https://www.mexc.com/ko-KR" target="_blank"><img src="/img/event/MEXC-배너.png"></a></div>
+			<div class="col-md-2"></div>
+		</div>
+
+
+	</div>
+
+	<br>
+	<div th:replace="fragments/footer::footer" ></div>
+
+
+</body>
+</html>

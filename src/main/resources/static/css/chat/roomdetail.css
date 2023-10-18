@@ -1,0 +1,99 @@
+/* 돌아가기 버튼 스타일 */
+button {
+    background-color: transparent; /* 배경 투명 */
+    border: none; /* 테두리 제거 */
+    font-size: 16px; /* 글자 크기 설정 */
+    color: #7ec7c0; /* 카카오톡 테마 색상 (원하는 색으로 변경 가능) */
+    font-weight: bold; /* 글자 굵기 */
+    padding: 5px 10px; /* 패딩 설정 */
+    cursor: pointer; /* 마우스 오버 시 손가락 아이콘으로 변경 */
+    transition: color 0.3s; /* 글자색 변경 애니메이션 효과 */
+    display: inline-flex; /* 아이콘과 텍스트를 수평으로 배열 */
+    align-items: center; /* 아이콘과 텍스트를 수직 중앙에 배치 */
+}
+
+/* 돌아가기 버튼에 마우스 호버 시 스타일 */
+button:hover {
+    color: #68b1aa; /* 약간 어두운 색으로 변경 */
+}
+
+/* 돌아가기 아이콘 스타일 (선택사항) */
+button:before {
+    content: '←'; /* 왼쪽 화살표 아이콘 (Unicode 문자) */
+    margin-right: 5px; /* 아이콘과 텍스트 사이의 간격 */
+}
+
+/* 전체 리스트 스타일 */
+
+.input-group {
+    max-width: 700px; /* 채팅박스의 최대 너비 */
+    margin: 20px auto; /* 페이지 중앙 정렬 */
+    display: flex; /* 가로로 정렬 */
+    align-items: center; /* 중앙 수직 정렬 */
+    border-radius: 25px; /* 모서리 둥글게 */
+    overflow: hidden; /* 내부 요소가 넘쳐도 숨김 */
+    border: 1px solid #dcdcdc; /* 테두리 스타일 */
+}
+
+/* 입력 필드 스타일 */
+.form-control {
+    flex: 1; /* 가능한 모든 공간을 차지하게 함 */
+    border: none; /* 테두리 제거 */
+    padding: 10px 15px; /* 패딩 설정 */
+    font-size: 16px; /* 글자 크기 설정 */
+}
+
+/* 보내기 버튼 스타일 */
+.btn-primary {
+    background-color: #9FF781; /* 카카오톡 테마 색상 (원하는 색으로 변경 가능) */
+    border: none; /* 테두리 제거 */
+    color: #fff; /* 글자색 */
+    font-weight: bold; /* 글자 굵기 */
+    padding: 10px 20px; /* 패딩 설정 */
+    cursor: pointer; /* 마우스 오버 시 손가락 아이콘으로 변경 */
+    transition: background-color 0.3s; /* 배경색 변경 애니메이션 효과 */
+}
+
+/* 보내기 버튼에 마우스 호버 시 스타일 */
+.btn-primary:hover {
+    background-color: #68b1aa; /* 약간 어두운 색으로 변경 */
+}
+
+<--========================================================-->
+
+.list-group {
+    max-width: 700px; /* 채팅박스의 최대 너비 */
+    margin: 20px auto; /* 페이지 중앙 정렬 */
+    font-family: Arial, sans-serif; /* 폰트 변경 (선택사항) */
+    background-color: #f1f1f1; /* 채팅박스 배경색 */
+    padding: 10px; /* 채팅박스 안쪽 여백 */
+    border-radius: 10px; /* 채팅박스 모서리 둥글게 */
+}
+
+/* 개별 메시지 아이템 스타일 */
+.list-group-item {
+    background-color: #fefefe; /* 메시지 배경색 */
+    margin-bottom: 8px; /* 메시지 간의 간격 */
+    border: none; /* 테두리 제거 */
+    border-radius: 15px; /* 메시지 모서리 둥글게 */
+    padding: 10px 15px; /* 메시지 안쪽 여백 */
+    position: relative; /* sender 위치 조정을 위한 설정 */
+    word-break: break-word; /* 긴 단어가 줄바꿈되도록 설정 */
+}
+
+/* 메시지 발신자 이름 스타일 */
+.list-group-item:before {
+    content: attr(data-sender); /* data-sender 속성 값을 가져와서 화면에 표시 */
+    position: absolute; /* 절대 위치 지정 */
+    left: 10px; /* 좌측으로부터의 거리 */
+    top: -20px; /* 위쪽으로부터의 거리 */
+    color: #888; /* 글자색 */
+    font-size: 0.8em; /* 글자 크기 */
+}
+
+/* 추가로 발신자 이름을 위해 HTML 수정 */
+<ul class="list-group">
+    <li class="list-group-item" v-for="message in messages" :data-sender="message.sender">
+        {{message.message}}
+    </li>
+</ul>
