@@ -1,6 +1,5 @@
 package com.fundguide.melona.board.leaderboard.repository;
 
-import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
 import com.fundguide.melona.member.entity.MemberEntity;
 import org.springframework.data.domain.Page;

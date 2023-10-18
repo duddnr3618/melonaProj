@@ -1,7 +1,6 @@
 package com.fundguide.melona.board.leaderboard.repository.like;
 
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoard_like;
-import com.fundguide.melona.board.normalBoard.entity.NormalBoard_like;
 
 public interface LeaderboardLikeCustom {
     

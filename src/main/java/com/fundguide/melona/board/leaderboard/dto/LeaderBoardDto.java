@@ -1,6 +1,5 @@
 package com.fundguide.melona.board.leaderboard.dto;
 
-import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

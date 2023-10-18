@@ -1,9 +1,6 @@
 package com.fundguide.melona.board.leaderboard.controller;
 
 import com.fundguide.melona.board.common.dto.ImpeachDTO;
-import com.fundguide.melona.board.community.dto.CommentDto;
-import com.fundguide.melona.board.community.dto.CommunityDto;
-import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.leaderboard.dto.CommentLeaderBoardDto;
 import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
@@ -11,7 +8,6 @@ import com.fundguide.melona.board.leaderboard.service.CommentLeaderBoardService;
 import com.fundguide.melona.board.leaderboard.service.LeaderBoardService;
 import com.fundguide.melona.member.role.MemberRoleState;
 import com.fundguide.melona.member.service.CustomUserDetails;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

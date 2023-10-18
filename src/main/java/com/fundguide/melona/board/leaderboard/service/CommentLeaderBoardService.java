@@ -1,12 +1,6 @@
 package com.fundguide.melona.board.leaderboard.service;
 
-import com.fundguide.melona.board.community.dto.CommentDto;
-import com.fundguide.melona.board.community.entity.CommentEntity;
-import com.fundguide.melona.board.community.entity.CommunityEntity;
-import com.fundguide.melona.board.community.repository.CommentRepository;
-import com.fundguide.melona.board.community.repository.CommunityRepository;
 import com.fundguide.melona.board.leaderboard.dto.CommentLeaderBoardDto;
-import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import com.fundguide.melona.board.leaderboard.entity.CommentLeaderBoardEntity;
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
 import com.fundguide.melona.board.leaderboard.repository.CommentLeaderBoardRepository;
