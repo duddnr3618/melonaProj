@@ -13,6 +13,8 @@ public class ContentsController {
 
     @GetMapping("/contents/board2")
     public String contents2() {
+
+
         return "contents/content_2";
     }
 

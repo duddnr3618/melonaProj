@@ -13,6 +13,7 @@
 
 
 <div layout:fragment="content">
+  <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
 
   <style>
     .customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
@@ -23,10 +24,11 @@
   </style>
 
   <h3> 추천 가이드 </h3>
+  <div id="boards">
   <div id="board">
     <div><a href="/contents/board1">▶ 차트의 분석 (기본적분석과 기술적분석의 이해)</a></div>
     <div><a href="/contents/board2">▶ 피보나치의 이해 (자연의 법칙) </a></div>
-    <div><a href="/contents/board3">▶ 범준 가이드  </a></div>
+  </div>
   </div>
   <br>
   <hr>
@@ -177,7 +179,7 @@
     },
     {
         position: new kakao.maps.LatLng(37.57798199415589, 126.98705472731822), //현대건설
-        imageSrc : '/img/melon.png'
+        imageSrc : '/img/skrbar.png'
     },
     {
         position: new kakao.maps.LatLng( 37.56752836687395, 126.98868083657118), //금호석유화학
@@ -249,7 +251,7 @@
             content:
             '<div class="customoverlay">' +
         '  <a href="https://finance.naver.com/item/main.nhn?code=000720">' +
-        '    <span class="title">현대건설 <br> 시세 : 36,600</span>' +
+        '    <span class="title">현대건설 <br> 시세 : 35,750</span>' +
         '  </a>' +
         '</div>'
         },

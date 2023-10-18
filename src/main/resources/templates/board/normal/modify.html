@@ -3,11 +3,12 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
+<link rel="icon" href="/img/melon.png" type="image/png">
+<title>Melona-일반가이드 수정</title>
 
 
 <div layout:fragment="content">
 
-    <br>
 
     <form th:action="@{/normalBoard/modifyPro}" name="board" method="post">
         <input type="hidden" name="id" th:value="${board.id}">
