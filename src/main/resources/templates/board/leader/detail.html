@@ -51,7 +51,7 @@
 
     <a id="likeButton" th:if="${#authorization.expression('isAuthenticated()')}">
         <div>
-            <img class="uplike-image" src="/img/uplike%20(1).jpg" th:if="${#authorization.expression('isAuthenticated()')}">좋아요!
+            <img class="uplike-image" src="/img/uplike.jpg" th:if="${#authorization.expression('isAuthenticated()')}">좋아요!
         </div>
     </a>
     <a class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}">
