@@ -4,17 +4,17 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 
-<head>
+
 <!--차트 css-->
 <link rel="stylesheet" href="/css/chart/chart.css" type="text/css">
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <meta charset="UTF-8"><!--한글깨짐으로 임시로 넣어둠-->
-</head>
+
 <!--차트 css 끝-->
 
 <div layout:fragment="content">
-
+    <link rel="stylesheet" th:href="@{/css/chart/chart.css}" type="text/css">
 
 
     <div class="container-fluid">
@@ -103,6 +103,7 @@
                 <!-- TradingView Widget END -->
             </div>
         </div>
+        <br><br>
         <div class="col">
             <div class="card" style="width: 490px; height: 600px;">
                 <!-- TradingView Widget BEGIN -->
@@ -156,6 +157,7 @@
                 <!-- TradingView Widget END -->
             </div>
         </div>
+        <br><br>
         <div class="col">
             <div class="card" style="width: 480px; height: 800px;">
                 <!-- TradingView Widget BEGIN -->
