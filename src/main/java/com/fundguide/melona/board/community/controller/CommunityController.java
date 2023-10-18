@@ -4,15 +4,9 @@ import com.fundguide.melona.board.common.dto.ImpeachDTO;
 import com.fundguide.melona.board.community.dto.CommentDto;
 import com.fundguide.melona.board.community.dto.CommunityDto;
 import com.fundguide.melona.board.community.entity.CommunityEntity;
-import com.fundguide.melona.board.community.entity.Community_like;
-import com.fundguide.melona.board.community.repository.like.CommunityLikeRepository;
 import com.fundguide.melona.board.community.service.CommentService;
 import com.fundguide.melona.board.community.service.CommunityService;
-import com.fundguide.melona.member.repository.MemberRepository;
-import com.fundguide.melona.member.repository.MemberRepositoryData;
 import com.fundguide.melona.member.service.CustomUserDetails;
-import com.fundguide.melona.member.service.MemberService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,8 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
-import java.util.prefs.PreferencesFactory;
 
 @Controller
 @RequiredArgsConstructor

@@ -2,11 +2,6 @@ package com.fundguide.melona.board.leaderboard.entity;
 
 import com.fundguide.melona.board.common.entity.BaseTimeEntity;
 import com.fundguide.melona.board.common.role.BoardUsing;
-import com.fundguide.melona.board.community.dto.CommunityDto;
-import com.fundguide.melona.board.community.entity.CommentEntity;
-import com.fundguide.melona.board.community.entity.CommunityEntity;
-import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
-import com.fundguide.melona.board.community.entity.Community_like;
 import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
@@ -54,8 +49,7 @@ public class LeaderBoardEntity extends BaseTimeEntity {
 
     /*----------------------------------------------------------------------------------*/
     /*신고**/
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<LeaderBoardImpeachEntity> impeach = new HashSet<>();
 
     @Enumerated(EnumType.ORDINAL)

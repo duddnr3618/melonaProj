@@ -4,9 +4,6 @@ import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.security.Principal;
-import java.util.Optional;
-
 
 @Entity
 @Getter

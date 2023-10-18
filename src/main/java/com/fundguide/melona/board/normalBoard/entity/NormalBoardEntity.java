@@ -49,8 +49,7 @@ public class NormalBoardEntity extends BaseTimeEntity {
 
   /*----------------------------------------------------------------------------------*/
   /*신고**/
-  @OneToMany(mappedBy = "board", fetch = FetchType.LAZY,
-          cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+  @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private Set<NormalBoardImpeachEntity> impeach = new HashSet<>();
 
   @Enumerated(EnumType.ORDINAL)
