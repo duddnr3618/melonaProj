@@ -3,17 +3,17 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
 
     <link rel="stylesheet" href="../../../static/css/chart/chart.css" type="text/css">
-
+    <link rel="stylesheet" th:href="@{/css/chart/chart.css}" type="text/css">
     <!-- 합쳐지고 최소화된 최신 CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
+    <meta charset="UTF-8"><!--한글깨짐으로 임시로 넣어둠-->
     <style>
 
         /*figure{*/
@@ -24,15 +24,8 @@
 
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="/">jvvp.tistory.com</a>
-
-        </div>
-    </div>
-</div>
-
+<div layout:fragment="content">
+<!--    코인차트 시작-->
 <figure>
     <div class="container-fluid">
         <div class="row">
@@ -40,6 +33,7 @@
         </div>
     </div>
 </figure>
+<!--    코인차트 끝-->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.12.4/jquery.min.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -50,6 +44,7 @@
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src=../../../static/js/chart/coinchart/coinchart.js></script>
-
+    <script th:src="@{/js/chart/coinchart/coinchart.js}"></script>
+</div>
 </body>
 </html>

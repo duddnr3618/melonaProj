@@ -1,47 +1,36 @@
-let chart; // 글로벌 차트 변수 선언
+let chart2; // global
 
-/**
- * 서버에서 데이터를 요청하여 그래프에 추가하고 다시 요청을 예약합니다.
- */
-async function requestData() {
-    const options = {method: 'GET', headers: {accept: 'application/json'}};
-
-    const result = await fetch('https://api.bithumb.com/public/ticker/ALL_KRW', options);
+async function requestData2() {
+    const result = await fetch('https://api.bithumb.com/public/ticker/ALL_KRW');
     if (result.ok) {
         const data = await result.json();
-
-        if (data.status === "0000" && data.data && data.data.ETH) {
-            const ethData = data.data.BTC; // 비트코인 데이터
-            const date = new Date().getTime(); // 현재 시간
-            const value = parseFloat(ethData.closing_price); // 종가
-
+        if (data.status === "0000" && data.data && data.data.BTC) {
+            const date = new Date().getTime(); // current time
+            const value = parseFloat(data.data.BTC.closing_price);
             const point = [date, value];
-            const series = chart.series[0];
-            const shift = series.data.length > 20; // 시리즈가 20보다 길면 첫 번째 포인트 제거
+            const series = chart2.series[0];
+            const shift = series.data.length > 20; // shift if the series is longer than 20
 
-            // 포인트 추가
-            chart.series[0].addPoint(point, true, shift);
+            // add the point
+            chart2.series[0].addPoint(point, true, shift);
 
-            // 1초 후 다시 호출
-            setTimeout(requestData, 1000);
+            // call it again after one second
+            setTimeout(requestData2, 1000);
         }
-    } else {
-        console.error("API 호출 실패:", result.status);
     }
 }
 
-window.addEventListener('load', function() {
-    chart = new Highcharts.Chart({
+window.addEventListener('load', function () {
+    chart2 = new Highcharts.Chart({
         chart: {
-            // 차트2로 변경
             renderTo: 'container2',
             defaultSeriesType: 'spline',
             events: {
-                load: requestData
+                load: requestData2
             }
         },
         title: {
-            text: '빗썸 비트코인 실시간 가격'
+            text: 'Bithumb Bitcoin Real-time Price'
         },
         xAxis: {
             type: 'datetime',
@@ -52,12 +41,12 @@ window.addEventListener('load', function() {
             minPadding: 0.2,
             maxPadding: 0.2,
             title: {
-                text: '가격 (KRW)',
+                text: 'Price (KRW)',
                 margin: 80
             }
         },
         series: [{
-            name: '비트코인 가격',
+            name: '비트코인 Price',
             data: []
         }]
     });

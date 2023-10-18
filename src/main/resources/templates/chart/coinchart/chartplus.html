@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<head>
+    <!--차트 css-->
+    <link rel="stylesheet" href="/css/chart/chart.css" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/chart/chart.css}" type="text/css">
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <meta charset="UTF-8"><!--한글깨짐으로 임시로 넣어둠-->
+</head>
+<!--차트 css 끝-->
+
+
+    <div layout:fragment="content">
+        <!--    코인차트 시작-->
+        <figure>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="container-fluid" id="container"></div>
+                </div>
+            </div>
+        </figure>
+        <!--    코인차트 끝-->
+
+        <!--    코인차트 시작-->
+        <figure>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="container-fluid" id="container2"></div>
+                </div>
+            </div>
+        </figure>
+        <!--    코인차트 끝-->
+
+
+        <!--    코인차트 시작-->
+        <figure>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="container-fluid" id="container3"></div>
+                </div>
+            </div>
+        </figure>
+        <!--    코인차트 끝-->
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 주식 js 시작 -->
+    <script th:src="@{/js/chart/coinchart/coinchart.js}"></script>
+    <script th:src="@{/js/chart/coinchart/coinchart2.js}"></script>
+    <script th:src="@{/js/chart/coinchart/coinchart3.js}"></script>
+    <!-- 주식 js 끝 -->
+
+
+    <!--    차트 라이브러리 시작-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src=../../../static/js/chart/coinchart/coinchart.js></script>
+    <script src=../../../static/js/chart/coinchart/coinchart2.js></script>
+    <script src=../../../static/js/chart/coinchart/coinchart3.js></script>
+    <!--차트 라이브러리 끝-->
+
+</div>
+</html>
