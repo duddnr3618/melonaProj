@@ -2,24 +2,17 @@ package com.fundguide.melona.mypage.Service;
 
 import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.community.repository.CommunityRepository;
-import com.fundguide.melona.board.community.service.CommunityService;
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
 import com.fundguide.melona.board.leaderboard.repository.LeaderBoardRepository;
-import com.fundguide.melona.board.leaderboard.service.LeaderBoardService;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.board.normalBoard.repository.NormalBoardRepository;
-import com.fundguide.melona.board.normalBoard.service.NormalBoardService;
 import com.fundguide.melona.member.entity.MemberEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.lang.reflect.Member;
 
 @Service
 public class MypageService {

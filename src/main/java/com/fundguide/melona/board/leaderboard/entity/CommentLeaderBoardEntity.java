@@ -5,7 +5,6 @@ import com.fundguide.melona.board.leaderboard.dto.CommentLeaderBoardDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Getter

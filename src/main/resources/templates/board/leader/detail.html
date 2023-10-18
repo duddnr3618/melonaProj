@@ -51,7 +51,7 @@
 
     <a id="likeButton" th:if="${#authorization.expression('isAuthenticated()')}">
         <div>
-            <img class="uplike-image" src="/img/uplike%20(1).jpg" th:if="${#authorization.expression('isAuthenticated()')}">좋아요!
+            <img class="uplike-image" src="/img/uplike.jpg" th:if="${#authorization.expression('isAuthenticated()')}">좋아요!
         </div>
     </a>
     <a class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}">
@@ -103,9 +103,6 @@
                 <div class="modal-body">
                     <form id="impeachForm">
                         <input id="id" type="hidden" name="id" th:value="${board.getId()}">
-                        
-                        <input type="hidden" name="id" th:value="${board.getId()}">
-
                         <label for="cause"></label>
                         <input id="cause" type="text" name="cause" value="">
                     </form>

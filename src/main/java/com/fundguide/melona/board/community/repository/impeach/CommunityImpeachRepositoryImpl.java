@@ -3,8 +3,6 @@ package com.fundguide.melona.board.community.repository.impeach;
 
 import com.fundguide.melona.board.common.querydsl_repeatcode.BoardQueryDsl_RepeatCode;
 import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
-import com.fundguide.melona.board.community.entity.Community_like;
-import com.fundguide.melona.board.community.repository.like.CommunityLikeCustom;
 import com.fundguide.melona.management.commonQueryDsl.CommonQueryDsl;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;

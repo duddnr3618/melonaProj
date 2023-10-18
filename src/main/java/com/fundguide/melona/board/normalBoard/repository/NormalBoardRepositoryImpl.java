@@ -4,7 +4,6 @@ package com.fundguide.melona.board.normalBoard.repository;
 import com.fundguide.melona.board.common.dto.BoardSearchDTO;
 import com.fundguide.melona.board.common.querydsl_repeatcode.BoardQueryDsl_RepeatCode;
 import com.fundguide.melona.board.common.role.BoardUsing;
-import com.fundguide.melona.board.normalBoard.dto.NormalBoardDto;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.management.commonQueryDsl.CommonQueryDsl;
 import com.querydsl.core.types.dsl.BooleanExpression;

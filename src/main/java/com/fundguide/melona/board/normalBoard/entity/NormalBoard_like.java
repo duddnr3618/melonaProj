@@ -1,6 +1,5 @@
 package com.fundguide.melona.board.normalBoard.entity;
 
-import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +12,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "normalBoard_like")
+@Table(name = "normal_board_like")
 public class NormalBoard_like {
 
     @Id
@@ -25,7 +24,7 @@ public class NormalBoard_like {
     private MemberEntity memberEntity;
 
     @ManyToOne
-    @JoinColumn(name = "normalBoard_board_id")
+    @JoinColumn(name = "normal_board_board_id")
     private NormalBoardEntity normalBoardEntity;
 
     public static NormalBoard_like likeFastBuilder(NormalBoardEntity normalBoardEntity, MemberEntity memberEntity) {

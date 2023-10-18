@@ -1,7 +1,5 @@
 package com.fundguide.melona.board.leaderboard.controller;
 
-import com.fundguide.melona.board.community.dto.CommentDto;
-import com.fundguide.melona.board.community.service.CommentService;
 import com.fundguide.melona.board.leaderboard.dto.CommentLeaderBoardDto;
 import com.fundguide.melona.board.leaderboard.service.CommentLeaderBoardService;
 import lombok.RequiredArgsConstructor;

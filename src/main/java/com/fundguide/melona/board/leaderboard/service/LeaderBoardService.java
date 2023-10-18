@@ -1,11 +1,6 @@
 package com.fundguide.melona.board.leaderboard.service;
 
 import com.fundguide.melona.board.common.dto.ImpeachDTO;
-import com.fundguide.melona.board.community.dto.CommunityDto;
-import com.fundguide.melona.board.community.entity.CommunityEntity;
-import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
-import com.fundguide.melona.board.community.entity.Community_like;
-import com.fundguide.melona.board.community.service.CommunityService;
 import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardImpeachEntity;
@@ -18,9 +13,7 @@ import com.fundguide.melona.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,8 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -128,19 +119,21 @@ public class LeaderBoardService {
         Optional<LeaderBoardEntity> leaderBoardEntity = leaderBoardRepository.findById(impeachDTO.getId());
 
         try {
-            return leaderBoardEntity.map(oLeaderBoardEntity -> {
+            return leaderBoardEntity.map(o -> {
                 LeaderBoardImpeachEntity impeach = LeaderBoardImpeachEntity.builder()
                         .member(memberEntity)
-                        .board(oLeaderBoardEntity)
+                        .board(o)
                         .cause(impeachDTO.getCause())
                         .build();
 
                 boolean check = leaderBoardImpeachRepository.checkAlreadyImpeach(impeach);
                 if (!check) {
-                    oLeaderBoardEntity.getImpeach().add(impeach);
-                    leaderBoardRepository.save(oLeaderBoardEntity);
+                    o.getImpeach().add(impeach);
+                    leaderBoardRepository.save(o);
+                    System.out.println(" { 값 존재하지 않음 신고 함" + " }");
                     return ResponseEntity.ok().body("신고 성공");
                 } else {
+                    System.out.println(" { 값 이미 존재함" + " }");
                     return ResponseEntity.badRequest().body("이미 신고 하셨습니다.");
                 }
 
