@@ -1,6 +1,7 @@
 package com.fundguide.melona.board.normalBoard.service;
 
 import com.fundguide.melona.board.common.dto.ImpeachDTO;
+import com.fundguide.melona.board.leaderboard.entity.LeaderBoardImpeachEntity;
 import com.fundguide.melona.board.normalBoard.dto.NormalBoardDto;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardImpeachEntity;
@@ -118,7 +119,7 @@ public class NormalBoardService {
         Optional<NormalBoardEntity> normalBoardEntity = normalBoardRepository.findById(impeachDTO.getId());
 
         try {
-            normalBoardEntity.ifPresentOrElse(oNormalBoardEntity -> {
+            return normalBoardEntity.map(oNormalBoardEntity -> {
                 NormalBoardImpeachEntity impeach = NormalBoardImpeachEntity.builder()
                         .member(memberEntity)
                         .board(oNormalBoardEntity)
@@ -126,14 +127,15 @@ public class NormalBoardService {
                         .build();
 
                 boolean check = normalBoardImpeachRepository.checkAlreadyImpeach(impeach);
-                if (check) {
+                if (!check) {
                     oNormalBoardEntity.getImpeach().add(impeach);
                     normalBoardRepository.save(oNormalBoardEntity);
-                    ResponseEntity.badRequest().build();
+                    return ResponseEntity.ok().body("신고 성공");
+                } else {
+                    return ResponseEntity.badRequest().body("이미 신고 하셨습니다.");
                 }
-            }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-            System.out.println(" { 신고 성공" + " }");
-            return ResponseEntity.ok().build();
+
+            }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INSUFFICIENT_STORAGE).build();
         }

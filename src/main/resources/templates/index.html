@@ -8,11 +8,12 @@
 
 
 
+
 <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
-/
 
 
 <div layout:fragment="content">
+  <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
 
   <style>
     .customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
@@ -22,23 +23,18 @@
     .customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
   </style>
 
-
+  <h3> 추천 가이드 </h3>
+  <div id="boards">
   <div id="board">
-    <h3> 메로나 가이드 이용사항</h3>
-    <ul>
-      <li></li>
-      <li></li>
-      <li></li>
-    </ul>
+    <div><a href="/contents/board1">▶ 차트의 분석 (기본적분석과 기술적분석의 이해)</a></div>
+    <div><a href="/contents/board2">▶ 피보나치의 이해 (자연의 법칙) </a></div>
+  </div>
   </div>
   <br>
   <hr>
   <br>
-  <h3>실시간 뉴스</h3>
-
+  <h3>최신인기 뉴스</h3>
 <!--  style="width: 90%; height: 600px; margin-left:50px-->
-
-
     <div id="chart2" style="text-align: center">
   <iframe id="stock1" src="http://localhost:7777/news/list?text=주식" width="1290" height="300"></iframe>
     </div>
@@ -193,6 +189,18 @@
         position: new kakao.maps.LatLng(37.521373200095006, 126.92743515202133), //키움증권
         imageSrc : '/img/skrbar.png'
     },
+    {
+        position: new kakao.maps.LatLng(37.57084313211477, 126.98155460583506), //GS건설
+        imageSrc : '/img/skrbar.png'
+    },
+    {
+        position: new kakao.maps.LatLng(37.51277022643575, 126.93401793468617), //유한양행
+        imageSrc : '/img/skrbar.png'
+    },
+    {
+        position: new kakao.maps.LatLng(37.49672292169863, 127.02688870940946), //삼성증권
+        imageSrc : '/img/melon.png'
+    },
     // 추가적인 데이터 객체들을 필요한 만큼 추가합니다.
     ];
 
@@ -257,11 +265,38 @@
         '</div>'
         },
         {
-            position: new kakao.maps.LatLng(37.521373200095006, 126.92743515202133), //키움증
+            position: new kakao.maps.LatLng(37.521373200095006, 126.92743515202133), //키움증권
             content:
             '<div class="customoverlay">' +
         '  <a href="https://finance.naver.com/item/main.nhn?code=039490">' +
         '    <span class="title">키움증권 <br> 시세 : 102,200</span>' +
+        '  </a>' +
+        '</div>'
+        },
+        {
+            position: new kakao.maps.LatLng(37.57084313211477, 126.98155460583506), //GS건설
+            content:
+            '<div class="customoverlay">' +
+        '  <a href="https://finance.naver.com/item/main.naver?code=006360#">' +
+        '    <span class="title">GS건설 <br> 시세 : 13,280</span>' +
+        '  </a>' +
+        '</div>'
+        },
+        {
+            position: new kakao.maps.LatLng(37.51277022643575, 126.93401793468617), //유한양행
+            content:
+            '<div class="customoverlay">' +
+        '  <a href="https://finance.naver.com/item/main.naver?code=000100">' +
+        '    <span class="title">유한양행 <br> 시세 : 74,500</span>' +
+        '  </a>' +
+        '</div>'
+        },
+        {
+            position: new kakao.maps.LatLng(37.49672292169863, 127.02688870940946), //삼성증권
+            content:
+            '<div class="customoverlay">' +
+        '  <a href="https://finance.naver.com/item/main.naver?code=016360">' +
+        '    <span class="title">삼성증권 <br> 시세 : 37,700</span>' +
         '  </a>' +
         '</div>'
         },
@@ -286,6 +321,8 @@
 
         customOverlay.setMap(map); // 지도에 커스텀 오버레이 추가
     }
+
+
 
   </script>
 
