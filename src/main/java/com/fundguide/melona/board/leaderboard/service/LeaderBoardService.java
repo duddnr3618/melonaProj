@@ -128,7 +128,7 @@ public class LeaderBoardService {
         Optional<LeaderBoardEntity> leaderBoardEntity = leaderBoardRepository.findById(impeachDTO.getId());
 
         try {
-            leaderBoardEntity.ifPresentOrElse(oLeaderBoardEntity -> {
+            return leaderBoardEntity.map(oLeaderBoardEntity -> {
                 LeaderBoardImpeachEntity impeach = LeaderBoardImpeachEntity.builder()
                         .member(memberEntity)
                         .board(oLeaderBoardEntity)
@@ -136,14 +136,15 @@ public class LeaderBoardService {
                         .build();
 
                 boolean check = leaderBoardImpeachRepository.checkAlreadyImpeach(impeach);
-                if (check) {
+                if (!check) {
                     oLeaderBoardEntity.getImpeach().add(impeach);
                     leaderBoardRepository.save(oLeaderBoardEntity);
-                    ResponseEntity.badRequest().build();
+                    return ResponseEntity.ok().body("신고 성공");
+                } else {
+                    return ResponseEntity.badRequest().body("이미 신고 하셨습니다.");
                 }
-            }, () -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-            System.out.println(" { 신고 성공" + " }");
-            return ResponseEntity.ok().build();
+
+            }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INSUFFICIENT_STORAGE).build();
         }

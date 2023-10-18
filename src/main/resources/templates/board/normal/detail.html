@@ -4,6 +4,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/img/melon.png" type="image/png">
+<title>Melona-일반 가이드 상세보기</title>
 
 <div layout:fragment="content">
     <link rel="stylesheet" href="/css/board/detail.css">
@@ -49,7 +51,7 @@
     </div>
     <a id="likeButton" th:if="${#authorization.expression('isAuthenticated()')}">
         <div>
-            <img class="uplike-image" src="/img/uplike%20(1).jpg" th:if="${#authorization.expression('isAuthenticated()')}">좋아요!
+            <img class="uplike-image" src="/img/uplike.jpg" th:if="${#authorization.expression('isAuthenticated()')}">좋아요!
         </div>
     </a>
     <a class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}">
