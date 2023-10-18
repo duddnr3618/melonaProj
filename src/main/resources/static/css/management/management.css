@@ -1,0 +1,53 @@
+hr {
+    margin: 0 auto;
+}
+
+body {
+    justify-content: center;
+}
+
+#AllLayoutBox {
+    display: grid;
+    justify-content: center;
+}
+
+#topbox1 ul{
+    display: flex;
+    justify-content: center;
+}
+
+
+h3{
+    text-align: center;
+}
+
+
+.list-group-item {
+    cursor: pointer;
+}
+
+.list-group-item.active {
+    color: #fff;
+    background-color: #9FF781;
+    border: 1px solid #9FF781 ;
+}
+
+
+
+#AllLayoutBox h3 {
+    margin-top: 20px;
+}
+
+#ResultTable{
+    margin-top :20px;
+}
+
+#LoadingImg{
+    display:none;
+    width:50px;
+    height:auto;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform :translate(-50%,-50%);
+}

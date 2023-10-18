@@ -22,32 +22,26 @@
     .customoverlay:after {content:'';position:absolute;margin-left:-12px;left:50%;bottom:-12px;width:22px;height:12px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
   </style>
 
+  <h3> 추천 가이드 </h3>
+  <div id="board">
+    <div><a href="/contents/board1">▶ 차트의 분석 (기본적분석과 기술적분석의 이해)</a></div>
+    <div><a href="/contents/board2">▶ 피보나치의 이해 (자연의 법칙) </a></div>
+    <div><a href="/contents/board3">▶ 범준 가이드  </a></div>
+  </div>
+  <br>
+  <hr>
+  <br>
+  <h3>최신인기 뉴스</h3>
+<!--  style="width: 90%; height: 600px; margin-left:50px-->
+    <div id="chart2" style="text-align: center">
+  <iframe id="stock1" src="http://localhost:7777/news/list?text=주식" width="1290" height="300"></iframe>
+    </div>
+      <div style="height: 40px;"></div><!--주식 차트 불러오는게 간격을 벌리면 벌릴수록 같이 따라와서 중간에 간격을 둠  -->
 
-  <!--  HEADER에 추가를 해서 주석 처리-->
-  <!--  <br>-->
-  <!--  <div>-->
-  <!--    <ul>-->
-  <!--      <li>뉴스</li>-->
+  <hr><br><br>
 
-  <!--      <li>가이드-->
-  <!--        <ul>-->
-  <!--        <li><a href="/leaderBoard/list">리더가이드</a></li>-->
-  <!--        <li><a href="/normalBoard/list">일반가이드</a></li>-->
-  <!--      </ul>-->
-  <!--      </li>-->
-
-  <!--      <li><a href="/community/list">커뮤니티</a></li>-->
-
-
-
-  <!--      <li></li>-->
-  <!--      <li></li>-->
-  <!--    </ul>-->
-  <!--  </div>-->
-
-  <iframe src="http://localhost:7777/news/list?text=주식" width="1290" height="300"></iframe>
-
-
+  <h3>실시간 차트</h3>
+<div class="container1" style="text-align: center">
   <div class="tradingview-widget-container" style="display:inline-block">
     <div class="tradingview-widget-container__widget"></div>
     <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
@@ -150,18 +144,14 @@
       }
     </script>
   </div>
+</div>
 
 
-<!--  <ul class="section_name">-->
-<!--    <li class="title">Map</li>-->
-<!--    <li>지도로 보는 주식 시세</li>-->
-<!--  </ul>-->
-  <div class="row">
-    <div class="col-md-12 text-center">
-      <h1>지도로 보는 현재가</h1>
-    </div><br/>
-  </div>
-  <div id="map" style="width: 100%; height: 600px;"></div>
+  <ul class="section_name" style="margin-left: 50px;">
+    <li class="title">Map</li>
+    <li>지도로 보는 주식 시세</li>
+  </ul>
+  <div id="map" style="width: 90%; height: 600px; margin-left:50px; "></div>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1df94762a892a81117b69b20792304e8"></script>
 
   <script type="text/javascript">
@@ -334,11 +324,11 @@
 
   </script>
 
-
+  </div>
 
 
   <!-- TradingView Widget END -->
 
 
-</div>
+
 </html>
