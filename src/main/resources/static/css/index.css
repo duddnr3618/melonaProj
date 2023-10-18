@@ -58,5 +58,37 @@ li:hover > ul {
 }
 
 #boards {
-    
+
 }
+
+
+<!-- -->
+/* 컨테이너 스타일 */
+#boards {
+    display: flex;            /* 플렉스박스로 설정 */
+    justify-content: space-between;  /* 요소들 사이에 균등하게 공간 배치 */
+    align-items: flex-start; /* 시작점에 따라 아이템 정렬 */
+    padding: 10px;           /* 여백 추가 */
+}
+
+/* 추천 가이드 및 보드 스타일 */
+h3 {
+    margin-bottom: 10px;     /* 제목 아래에 간격 추가 */
+}
+
+#board {
+
+    margin-right: 5%;       /* 오른쪽 마진으로 비디오와의 간격 조정 */
+}
+
+#board div {
+    margin-bottom: 10px;    /* 링크 간의 간격 */
+}
+
+/* 유튜브 비디오 스타일 */
+.guide-video {
+    flex-shrink: 0;          /* 플렉스박스 내에서 비디오 크기 변경 방지 */
+    width: 35%;             /* 전체 너비의 35% */
+}
+
+

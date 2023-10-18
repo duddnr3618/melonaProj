@@ -358,4 +358,21 @@ div {
 .infoContainer .item > div:first-child {
     margin-bottom: 2px;
 }
+#nav3 a {
+    color:#A4A4A4 ;
+    text-decoration: none;
+    letter-spacing: 5px;
+}
+
+#nav3 a:hover {
+    color: #9FF781;
+}
+#nav4 a {
+    color:#ffffff ;
+    text-decoration: none;
+}
+
+#nav4 a:hover {
+    color: #9FF781;
+}
 
