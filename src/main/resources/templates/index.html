@@ -8,12 +8,11 @@
 
 
 
+
 <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
-/
 
 
 <div layout:fragment="content">
-  <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
 
   <style>
     .customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
@@ -178,7 +177,7 @@
     },
     {
         position: new kakao.maps.LatLng(37.57798199415589, 126.98705472731822), //현대건설
-        imageSrc : '/img/skrbar.png'
+        imageSrc : '/img/melon.png'
     },
     {
         position: new kakao.maps.LatLng( 37.56752836687395, 126.98868083657118), //금호석유화학
@@ -187,6 +186,18 @@
     {
         position: new kakao.maps.LatLng(37.521373200095006, 126.92743515202133), //키움증권
         imageSrc : '/img/skrbar.png'
+    },
+    {
+        position: new kakao.maps.LatLng(37.57084313211477, 126.98155460583506), //GS건설
+        imageSrc : '/img/skrbar.png'
+    },
+    {
+        position: new kakao.maps.LatLng(37.51277022643575, 126.93401793468617), //유한양행
+        imageSrc : '/img/skrbar.png'
+    },
+    {
+        position: new kakao.maps.LatLng(37.49672292169863, 127.02688870940946), //삼성증권
+        imageSrc : '/img/melon.png'
     },
     // 추가적인 데이터 객체들을 필요한 만큼 추가합니다.
     ];
@@ -238,7 +249,7 @@
             content:
             '<div class="customoverlay">' +
         '  <a href="https://finance.naver.com/item/main.nhn?code=000720">' +
-        '    <span class="title">현대건설 <br> 시세 : 35,750</span>' +
+        '    <span class="title">현대건설 <br> 시세 : 36,600</span>' +
         '  </a>' +
         '</div>'
         },
@@ -252,11 +263,38 @@
         '</div>'
         },
         {
-            position: new kakao.maps.LatLng(37.521373200095006, 126.92743515202133), //키움증
+            position: new kakao.maps.LatLng(37.521373200095006, 126.92743515202133), //키움증권
             content:
             '<div class="customoverlay">' +
         '  <a href="https://finance.naver.com/item/main.nhn?code=039490">' +
         '    <span class="title">키움증권 <br> 시세 : 102,200</span>' +
+        '  </a>' +
+        '</div>'
+        },
+        {
+            position: new kakao.maps.LatLng(37.57084313211477, 126.98155460583506), //GS건설
+            content:
+            '<div class="customoverlay">' +
+        '  <a href="https://finance.naver.com/item/main.naver?code=006360#">' +
+        '    <span class="title">GS건설 <br> 시세 : 13,280</span>' +
+        '  </a>' +
+        '</div>'
+        },
+        {
+            position: new kakao.maps.LatLng(37.51277022643575, 126.93401793468617), //유한양행
+            content:
+            '<div class="customoverlay">' +
+        '  <a href="https://finance.naver.com/item/main.naver?code=000100">' +
+        '    <span class="title">유한양행 <br> 시세 : 74,500</span>' +
+        '  </a>' +
+        '</div>'
+        },
+        {
+            position: new kakao.maps.LatLng(37.49672292169863, 127.02688870940946), //삼성증권
+            content:
+            '<div class="customoverlay">' +
+        '  <a href="https://finance.naver.com/item/main.naver?code=016360">' +
+        '    <span class="title">삼성증권 <br> 시세 : 37,700</span>' +
         '  </a>' +
         '</div>'
         },
@@ -281,6 +319,8 @@
 
         customOverlay.setMap(map); // 지도에 커스텀 오버레이 추가
     }
+
+
 
   </script>
 
