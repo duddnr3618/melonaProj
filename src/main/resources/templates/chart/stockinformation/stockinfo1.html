@@ -20,10 +20,11 @@
     <div class="container-fluid">
         <div class="row">
             <!-- First Coin Chart -->
-            <div class="col-md-4 mb-3"> <!-- col-md-4 means it takes up 4 columns (out of 12) on medium-sized screens and up. -->
+            <div class="col-md-4 mb-3">
+                <!-- col-md-4 means it takes up 4 columns (out of 12) on medium-sized screens and up. -->
                 <figure>
                     <div style="width: 500px; height: 500px;">
-                        <div class="container-fluid" id="container" ></div>
+                        <div class="container-fluid" id="container"></div>
                     </div>
                 </figure>
             </div>
@@ -49,8 +50,7 @@
     </div>
 
 
-
-<!-- 주식 시작   -->
+    <!-- 주식 시작   -->
 
     <div class="row row-cols-1 row-cols-md-2 g-4">
         <div class="col">
@@ -58,15 +58,30 @@
                 <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
-                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js" async>
+                    <div class="tradingview-widget-copyright"><a href="@{https://kr.tradingview.com/}"
+                                                                 rel="noopener nofollow" target="_blank"><span
+                            class="blue-text"></span></a></div>
+                    <script type="text/javascript"
+                            src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js" async>
                         {
-                            "width": 480,
-                            "height": 600,
-                            "colorTheme": "light",
-                            "isTransparent": false,
-                            "symbol": "NASDAQ:AAPL",
-                            "locale": "kr"
+                            "width"
+                        :
+                            480,
+                                "height"
+                        :
+                            600,
+                                "colorTheme"
+                        :
+                            "light",
+                                "isTransparent"
+                        :
+                            false,
+                                "symbol"
+                        :
+                            "NASDAQ:AAPL",
+                                "locale"
+                        :
+                            "kr"
                         }
                     </script>
                 </div>
@@ -78,7 +93,9 @@
                 <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container" style="height:100%; width:100%">
                     <div id="tradingview_f2637" style="height:calc(100% - 32px);width:100%"></div>
-                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
+                    <div class="tradingview-widget-copyright"><a href="@{https://kr.tradingview.com/}"
+                                                                 rel="noopener nofollow" target="_blank"><span
+                            class="blue-text"></span></a></div>
                     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
                     <script type="text/javascript">
                         new TradingView.widget(
@@ -109,15 +126,30 @@
                 <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
-                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js" async>
+                    <div class="tradingview-widget-copyright"><a href="@{https://kr.tradingview.com/}"
+                                                                 rel="noopener nofollow" target="_blank"><span
+                            class="blue-text"></span></a></div>
+                    <script type="text/javascript"
+                            src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-profile.js" async>
                         {
-                            "width": 480,
-                            "height": 600,
-                            "colorTheme": "light",
-                            "isTransparent": false,
-                            "symbol": "NASDAQ:TSLA",
-                            "locale": "kr"
+                            "width"
+                        :
+                            480,
+                                "height"
+                        :
+                            600,
+                                "colorTheme"
+                        :
+                            "light",
+                                "isTransparent"
+                        :
+                            false,
+                                "symbol"
+                        :
+                            "NASDAQ:TSLA",
+                                "locale"
+                        :
+                            "kr"
                         }
                     </script>
                 </div>
@@ -129,7 +161,9 @@
                 <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container" style="height:100%;width:100%">
                     <div id="tradingview_4976e" style="height:calc(100% - 32px);width:100%"></div>
-                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
+                    <div class="tradingview-widget-copyright"><a href="@{https://kr.tradingview.com/}"
+                                                                 rel="noopener nofollow" target="_blank"><span
+                            class="blue-text"></span></a></div>
                     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
                     <script type="text/javascript">
                         new TradingView.widget(
@@ -163,17 +197,36 @@
                 <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container">
                     <div class="tradingview-widget-container__widget"></div>
-                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js" async>
+                    <div class="tradingview-widget-copyright"><a href="@{https://kr.tradingview.com/}"
+                                                                 rel="noopener nofollow" target="_blank"><span
+                            class="blue-text"></span></a></div>
+                    <script type="text/javascript"
+                            src="https://s3.tradingview.com/external-embedding/embed-widget-financials.js" async>
                         {
-                            "colorTheme": "light",
-                            "isTransparent": false,
-                            "largeChartUrl": "",
-                            "displayMode": "regular",
-                            "width": 480,
-                            "height": 800,
-                            "symbol": "KRX:005930",
-                            "locale": "kr"
+                            "colorTheme"
+                        :
+                            "light",
+                                "isTransparent"
+                        :
+                            false,
+                                "largeChartUrl"
+                        :
+                            "",
+                                "displayMode"
+                        :
+                            "regular",
+                                "width"
+                        :
+                            480,
+                                "height"
+                        :
+                            800,
+                                "symbol"
+                        :
+                            "KRX:005930",
+                                "locale"
+                        :
+                            "kr"
                         }
                     </script>
                 </div>
@@ -185,7 +238,9 @@
                 <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container" style="height:100%;width:100%">
                     <div id="tradingview_6da72" style="height:calc(100% - 32px);width:100%"></div>
-                    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
+                    <div class="tradingview-widget-copyright"><a href="@{https://kr.tradingview.com/}"
+                                                                 rel="noopener nofollow" target="_blank"><span
+                            class="blue-text"></span></a></div>
                     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
                     <script type="text/javascript">
                         new TradingView.widget(
@@ -222,7 +277,7 @@
     <!-- 주식 js 끝 -->
 
 
-<!--    차트 라이브러리 시작-->
+    <!--    차트 라이브러리 시작-->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/series-label.js"></script>
 
@@ -230,10 +285,10 @@
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <script src=../../../static/js/chart/coinchart/coinchart.js></script>
-    <script src=../../../static/js/chart/coinchart/coinchart2.js></script>
-    <script src=../../../static/js/chart/coinchart/coinchart3.js></script>
-<!--차트 라이브러리 끝-->
+    <script src=/../../static/js/chart/coinchart/coinchart.js></script>
+    <script src=/../../static/js/chart/coinchart/coinchart2.js></script>
+    <script src=/../../static/js/chart/coinchart/coinchart3.js></script>
+    <!--차트 라이브러리 끝-->
 
 </div>
 </html>
