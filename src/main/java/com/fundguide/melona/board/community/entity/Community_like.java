@@ -27,6 +27,7 @@ public class Community_like {
     @JoinColumn(name = "community_board_id")
     private CommunityEntity communityEntity;
 
+    private int boardCount;
 
 
 
@@ -34,6 +35,7 @@ public class Community_like {
         return Community_like.builder()
                 .communityEntity(communityEntity)
                 .memberEntity(memberEntity)
+                .boardCount(communityEntity.getBoardLike().size())
                 .build();
     }
 }
