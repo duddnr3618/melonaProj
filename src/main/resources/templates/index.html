@@ -24,6 +24,7 @@
   </style>
 
   <h3> 추천 가이드 </h3>
+  <br>
   <div id="boards">
   <div id="board">
     <div><a href="/contents/board1">▶ 차트의 분석 (기본적분석과 기술적분석의 이해)</a></div>
@@ -31,7 +32,8 @@
   </div>
     <br>
     <h3>추천 가이드 영상</h3>
-    <div class="guide-video">
+    <br><br>
+    <div class="guide-video" style="text-align: center" >
       <span>
         <iframe width="600" height="360" src="https://www.youtube.com/embed/zCO1chsQLL0?si=zH8scrzr3qI9dOtb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen>
         </iframe>
@@ -46,6 +48,7 @@
   <hr>
   <br>
   <h3>최신인기 뉴스</h3>
+  <br><br>
   <!--  style="width: 90%; height: 600px; margin-left:50px-->
   <div id="chart2" style="text-align: center">
     <iframe id="stock1" th:src="@{/news/list?text='주식'}" width="1290" height="300"></iframe>
@@ -55,11 +58,12 @@
   <hr><br><br>
 
   <h3>실시간 차트</h3>
+  <br><br>
 <div class="container1" style="text-align: center">
   <div class="tradingview-widget-container" style="display:inline-block">
     <div class="tradingview-widget-container__widget"></div>
-    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+    <div class="tradingview-widget-copyright"><a href="@{https://kr.tradingview.com/}" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
+    <script type="text/javascript" th:src="@{https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js}" async>
       {
         "colorTheme": "light",
               "dateRange": "1D",
@@ -109,8 +113,8 @@
   </div>
   <div class="tradingview-widget-container" style="display:inline-block">
     <div class="tradingview-widget-container__widget"></div>
-    <div class="tradingview-widget-copyright"><a href="https://kr.tradingview.com/" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+    <div class="tradingview-widget-copyright"><a href="@{https://kr.tradingview.com/}" rel="noopener nofollow" target="_blank"><span class="blue-text"></span></a></div>
+    <script type="text/javascript" th:src="@{https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js}" async>
       {
         "colorTheme": "light",
               "dateRange": "1D",
@@ -165,171 +169,172 @@
   <hr>
   <br>
   <h3>지도로 보는 주식 시세</h3>
+  <br>
   <div id="map" style="width: 90%; height: 600px; margin-left:50px; "></div>
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1df94762a892a81117b69b20792304e8"></script>
+  <script type="text/javascript" th:src="@{//dapi.kakao.com/v2/maps/sdk.js?appkey=1df94762a892a81117b69b20792304e8}"></script>
 
   <script type="text/javascript">
 
-    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-    var options = { //지도를 생성할 때 필요한 기본 옵션
+    const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+    const options = { //지도를 생성할 때 필요한 기본 옵션
 
-        center: new kakao.maps.LatLng(37.571472339550354, 126.9873501678817), //지도의 중심좌표.
-        level: 3 //지도의 레벨(확대, 축소 정도)
+      center: new kakao.maps.LatLng(37.571472339550354, 126.9873501678817), //지도의 중심좌표.
+      level: 3 //지도의 레벨(확대, 축소 정도)
     };
 
-    var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+    const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
     //다중 마커 위치 데이터 배열입니다.
-    var markerData = [
-    {
-        position: new kakao.maps.LatLng( 37.5673905764459, 126.98517192324017), //미래에셋증권
-        imageSrc : '/img/skrbar.png'
-    },
-    {
+    const markerData = [
+      {
+        position: new kakao.maps.LatLng(37.5673905764459, 126.98517192324017), //미래에셋증권
+        imageSrc: '/img/skrbar.png'
+      },
+      {
         position: new kakao.maps.LatLng(37.5675529120016, 126.98647359527389), //한화
-        imageSrc : '/img/melon.png'
-    },
-    {
+        imageSrc: '/img/melon.png'
+      },
+      {
         position: new kakao.maps.LatLng(37.57798199415589, 126.98705472731822), //현대건설
-        imageSrc : '/img/skrbar.png'
-    },
-    {
-        position: new kakao.maps.LatLng( 37.56752836687395, 126.98868083657118), //금호석유화학
-        imageSrc : '/img/skrbar.png'
-    },
-    {
+        imageSrc: '/img/skrbar.png'
+      },
+      {
+        position: new kakao.maps.LatLng(37.56752836687395, 126.98868083657118), //금호석유화학
+        imageSrc: '/img/skrbar.png'
+      },
+      {
         position: new kakao.maps.LatLng(37.521373200095006, 126.92743515202133), //키움증권
-        imageSrc : '/img/skrbar.png'
-    },
-    {
+        imageSrc: '/img/skrbar.png'
+      },
+      {
         position: new kakao.maps.LatLng(37.57084313211477, 126.98155460583506), //GS건설
-        imageSrc : '/img/skrbar.png'
-    },
-    {
+        imageSrc: '/img/skrbar.png'
+      },
+      {
         position: new kakao.maps.LatLng(37.51277022643575, 126.93401793468617), //유한양행
-        imageSrc : '/img/skrbar.png'
-    },
-    {
+        imageSrc: '/img/skrbar.png'
+      },
+      {
         position: new kakao.maps.LatLng(37.49672292169863, 127.02688870940946), //삼성증권
-        imageSrc : '/img/melon.png'
-    },
-    // 추가적인 데이터 객체들을 필요한 만큼 추가합니다.
+        imageSrc: '/img/melon.png'
+      },
+      // 추가적인 데이터 객체들을 필요한 만큼 추가합니다.
     ];
 
     // 다중 마커 객체들을 담을 배열입니다.
-    var markers = [];
+    const markers = [];
 
     // 다중 마커 생성 및 지도에 추가
-    for (var i = 0; i < markerData.length; i++) {
-        var imageSize = new kakao.maps.Size(40, 60), // 마커이미지의 크기입니다
-            imageOption = {offset: new kakao.maps.Point(20, 60)}; // 마커이미지의 옵션입니다.
+    for (i = 0; i < markerData.length; i++) {
+      const imageSize = new kakao.maps.Size(40, 60), // 마커이미지의 크기입니다
+              imageOption = {offset: new kakao.maps.Point(20, 60)}; // 마커이미지의 옵션입니다.
 
-        var markerImage = new kakao.maps.MarkerImage(markerData[i].imageSrc, imageSize, imageOption),
-            markerPosition = markerData[i].position;
+      const markerImage = new kakao.maps.MarkerImage(markerData[i].imageSrc, imageSize, imageOption),
+              markerPosition = markerData[i].position;
 
-        //마커생성 및 지도에 추가
-        var marker = new kakao.maps.Marker({
-          position: markerPosition,
-            image: markerImage // 마커이미지 설정
-        });
-        marker.setMap(map);
+      //마커생성 및 지도에 추가
+      const marker = new kakao.maps.Marker({
+        position: markerPosition,
+        image: markerImage // 마커이미지 설정
+      });
+      marker.setMap(map);
 
         markers.push(marker); // 생성한 마커 객체를 배열에 저장
 
     }
 
     //다중 커스텀 오버레이 데이터 배열입니다.
-    var overlayData = [
-        {
-            position: new kakao.maps.LatLng( 37.5673905764459, 126.98517192324017), //미래에셋증권
-            content:
-           '<div class="customoverlay">' +
-        '  <a href="https://finance.naver.com/item/main.naver?code=006800">' +
-        '    <span class="title">미래에셋증권 <br> 시세 : 6,490</span>' +
-        '  </a>' +
-        '</div>'
-        },
-        {
-            position: new kakao.maps.LatLng(37.5675529120016, 126.98647359527389), //한화
-            content:
-            '<div class="customoverlay">' +
-        '  <a href="https://finance.naver.com/item/main.nhn?code=000880">' +
-        '    <span class="title">한화 <br> 시세 : 23,950</span>' +
-        '  </a>' +
-        '</div>'
-        },
-        {
-            position: new kakao.maps.LatLng(37.57798199415589, 126.98705472731822), //현대건설
-            content:
-            '<div class="customoverlay">' +
-        '  <a href="https://finance.naver.com/item/main.nhn?code=000720">' +
-        '    <span class="title">현대건설 <br> 시세 : 35,750</span>' +
-        '  </a>' +
-        '</div>'
-        },
-        {
-            position: new kakao.maps.LatLng( 37.56752836687395, 126.98868083657118), //금호석유화학
-            content:
-            '<div class="customoverlay">' +
-        '  <a href="https://finance.naver.com/item/main.nhn?code=011780">' +
-        '    <span class="title">금호석유 <br> 시세 : 129,000</span>' +
-        '  </a>' +
-        '</div>'
-        },
-        {
-            position: new kakao.maps.LatLng(37.521373200095006, 126.92743515202133), //키움증권
-            content:
-            '<div class="customoverlay">' +
-        '  <a href="https://finance.naver.com/item/main.nhn?code=039490">' +
-        '    <span class="title">키움증권 <br> 시세 : 102,200</span>' +
-        '  </a>' +
-        '</div>'
-        },
-        {
-            position: new kakao.maps.LatLng(37.57084313211477, 126.98155460583506), //GS건설
-            content:
-            '<div class="customoverlay">' +
-        '  <a href="https://finance.naver.com/item/main.naver?code=006360#">' +
-        '    <span class="title">GS건설 <br> 시세 : 13,280</span>' +
-        '  </a>' +
-        '</div>'
-        },
-        {
-            position: new kakao.maps.LatLng(37.51277022643575, 126.93401793468617), //유한양행
-            content:
-            '<div class="customoverlay">' +
-        '  <a href="https://finance.naver.com/item/main.naver?code=000100">' +
-        '    <span class="title">유한양행 <br> 시세 : 74,500</span>' +
-        '  </a>' +
-        '</div>'
-        },
-        {
-            position: new kakao.maps.LatLng(37.49672292169863, 127.02688870940946), //삼성증권
-            content:
-            '<div class="customoverlay">' +
-        '  <a href="https://finance.naver.com/item/main.naver?code=016360">' +
-        '    <span class="title">삼성증권 <br> 시세 : 37,700</span>' +
-        '  </a>' +
-        '</div>'
-        },
-        // 추가적인 데이터 객체들을 필요한 만큼 추가합니다.
+    const overlayData = [
+      {
+        position: new kakao.maps.LatLng(37.5673905764459, 126.98517192324017), //미래에셋증권
+        content:
+                '<div class="customoverlay">' +
+                '  <a href="https://finance.naver.com/item/main.naver?code=006800">' +
+                '    <span class="title">미래에셋증권 <br> 시세 : 6,490</span>' +
+                '  </a>' +
+                '</div>'
+      },
+      {
+        position: new kakao.maps.LatLng(37.5675529120016, 126.98647359527389), //한화
+        content:
+                '<div class="customoverlay">' +
+                '  <a href="https://finance.naver.com/item/main.nhn?code=000880">' +
+                '    <span class="title">한화 <br> 시세 : 23,950</span>' +
+                '  </a>' +
+                '</div>'
+      },
+      {
+        position: new kakao.maps.LatLng(37.57798199415589, 126.98705472731822), //현대건설
+        content:
+                '<div class="customoverlay">' +
+                '  <a href="https://finance.naver.com/item/main.nhn?code=000720">' +
+                '    <span class="title">현대건설 <br> 시세 : 35,750</span>' +
+                '  </a>' +
+                '</div>'
+      },
+      {
+        position: new kakao.maps.LatLng(37.56752836687395, 126.98868083657118), //금호석유화학
+        content:
+                '<div class="customoverlay">' +
+                '  <a href="https://finance.naver.com/item/main.nhn?code=011780">' +
+                '    <span class="title">금호석유 <br> 시세 : 129,000</span>' +
+                '  </a>' +
+                '</div>'
+      },
+      {
+        position: new kakao.maps.LatLng(37.521373200095006, 126.92743515202133), //키움증권
+        content:
+                '<div class="customoverlay">' +
+                '  <a href="https://finance.naver.com/item/main.nhn?code=039490">' +
+                '    <span class="title">키움증권 <br> 시세 : 102,200</span>' +
+                '  </a>' +
+                '</div>'
+      },
+      {
+        position: new kakao.maps.LatLng(37.57084313211477, 126.98155460583506), //GS건설
+        content:
+                '<div class="customoverlay">' +
+                '  <a href="https://finance.naver.com/item/main.naver?code=006360#">' +
+                '    <span class="title">GS건설 <br> 시세 : 13,280</span>' +
+                '  </a>' +
+                '</div>'
+      },
+      {
+        position: new kakao.maps.LatLng(37.51277022643575, 126.93401793468617), //유한양행
+        content:
+                '<div class="customoverlay">' +
+                '  <a href="https://finance.naver.com/item/main.naver?code=000100">' +
+                '    <span class="title">유한양행 <br> 시세 : 74,500</span>' +
+                '  </a>' +
+                '</div>'
+      },
+      {
+        position: new kakao.maps.LatLng(37.49672292169863, 127.02688870940946), //삼성증권
+        content:
+                '<div class="customoverlay">' +
+                '  <a href="https://finance.naver.com/item/main.naver?code=016360">' +
+                '    <span class="title">삼성증권 <br> 시세 : 37,700</span>' +
+                '  </a>' +
+                '</div>'
+      },
+      // 추가적인 데이터 객체들을 필요한 만큼 추가합니다.
     ];
 
     //다중 커스텀 오버레이 객체들을 담을 배열입니다.
-    var overlays = [];
+    const overlays = [];
 
     // 다중 커스텀 오버레이 생성 및 지도에 추가
-    for (var i = 0; i < overlayData.length; i++) {
-        var position = overlayData[i].position;
-        var content = overlayData[i].content;
+    for (i = 0; i < overlayData.length; i++) {
+      const position = overlayData[i].position;
+      const content = overlayData[i].content;
 
-        // 커텀 오버레이 생성
-        var customOverlay = new kakao.maps.CustomOverlay({
-            position: position,
-            content: content
-        });
+      // 커텀 오버레이 생성
+      const customOverlay = new kakao.maps.CustomOverlay({
+        position: position,
+        content: content
+      });
 
-        overlays.push(customOverlay); // 생성한 커스텀 오버레이 객체를 배열에 저장
+      overlays.push(customOverlay); // 생성한 커스텀 오버레이 객체를 배열에 저장
 
         customOverlay.setMap(map); // 지도에 커스텀 오버레이 추가
     }
