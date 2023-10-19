@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 public enum MemberRoleState {
-    ROLE_USER, ROLE_AUTO_LEADER, ROLE_SET_LEADER, ROLE_ADMIN, DISABLED, ROLE_OAUTH2;
+    ROLE_USER, ROLE_AUTO_LEADER, ROLE_SET_LEADER, ROLE_ADMIN, DISABLED, ROLE_OAUTH2, ROLE_GUEST;
 
     public static MemberRoleState getRoleState(String role) {
         return memberRoleState(role);

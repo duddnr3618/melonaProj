@@ -9,8 +9,8 @@
 
 
 <div layout:fragment="content">
+    <link rel="stylesheet" href="/css/board/modify.css">
 
-    <br>
 
     <form th:action="@{/leaderBoard/modifyPro}" name="board" method="post">
         <input type="hidden" name="id" th:value="${board.id}">

@@ -56,9 +56,9 @@
                 function switchContent(type) {
                         const frame = document.getElementById('content-frame');
                         if (type === '주식') {
-                                frame.src = "http://localhost:7777/news/list3?text=주식";
+                                frame.src = "/news/list3?text=주식";
                         } else if (type === '코인') {
-                                frame.src = "http://localhost:7777/news/list4?text=코인";
+                                frame.src = "/news/list4?text=코인";
                         }
                 }
         </script>
@@ -71,7 +71,7 @@
                 <button onclick="switchContent('주식')">주식</button>
                 <button onclick="switchContent('코인')">코인</button>
         </nav>
-        <iframe id="content-frame" src="http://localhost:7777/news/list3?text=주식"></iframe>
+        <iframe id="content-frame" th:src="@{/news/list3?text='주식'}"></iframe>
 </div>
 </body>
 </html>

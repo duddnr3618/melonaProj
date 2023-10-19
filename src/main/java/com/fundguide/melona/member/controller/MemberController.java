@@ -97,7 +97,7 @@ public class MemberController {
     public String findInfo() {
         return "member/findInfoForm";
     }
-    @PostMapping("member/findEmailByNickname")  // id/pw 찿는폼에서 닉네임으로 이메일찾기
+    @PostMapping("/findEmailByNickname")  // id/pw 찿는폼에서 닉네임으로 이메일찾기
     @ResponseBody
     public String findEmailByNickname(@RequestBody MemberDto memberDto){
         MemberDto findDto = memberService.duplicatedCheck(memberDto);

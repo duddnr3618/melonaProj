@@ -30,7 +30,9 @@ async function requestData() {
     }
 }
 
+// 페이지 로딩 완료 시 실행
 window.addEventListener('load', function() {
+    // Highcharts 그래프 생성
     chart = new Highcharts.Chart({
         chart: {
             renderTo: 'container',
