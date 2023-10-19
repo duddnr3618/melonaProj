@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,18 +36,23 @@ public class LeaderBoardController {
     public String list(Model model,
                        @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
                        String searchKeyword, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        if(customUserDetails == null) {
-            return "redirect:/member/loginForm";
+
+        String userName;
+        MemberRoleState userRole;
+
+        if(customUserDetails != null) {
+            userName = customUserDetails.getMemberEntity().getMemberName();
+            userRole= customUserDetails.getMemberEntity().getMemberRole();
+        } else {
+            userName = "Guest";
+            userRole= MemberRoleState.ROLE_GUEST; // GUEST 권한 상태로 설정
         }
         Page<LeaderBoardEntity> list = null;
         if (searchKeyword == null) {
             list = leaderBoardService.boardList(pageable);
         } else {
             list = leaderBoardService.searchList(searchKeyword, pageable);
-
         }
-        String userName = customUserDetails.getMemberEntity().getMemberName();
-        MemberRoleState userRole= customUserDetails.getMemberEntity().getMemberRole();
         int nowPage = list.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
