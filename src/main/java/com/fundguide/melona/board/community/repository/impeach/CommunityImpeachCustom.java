@@ -1,7 +1,6 @@
 package com.fundguide.melona.board.community.repository.impeach;
 
 import com.fundguide.melona.board.community.entity.CommunityImpeachEntity;
-import com.fundguide.melona.board.community.entity.Community_like;
 
 public interface CommunityImpeachCustom {
     

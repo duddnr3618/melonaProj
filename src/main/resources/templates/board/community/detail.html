@@ -11,7 +11,7 @@
     <table>
         <tr>
             <th>번호</th>
-            <td th:text="${board.id}"></td>
+            <td id="boardId" th:text="${board.id}"></td>
         </tr>
         <tr>
             <th>제목</th>
@@ -47,7 +47,7 @@
 
     <a id="likeButton" th:if="${#authorization.expression('isAuthenticated()')}">
         <div>
-            <img class="uplike-image" src="/img/uplike%20(1).jpg" th:if="${#authorization.expression('isAuthenticated()')}">좋아요!
+            <img class="uplike-image" src="/img/uplike.jpg" th:if="${#authorization.expression('isAuthenticated()')}">좋아요!
         </div>
     </a>
     <a class="nullPrincipal" th:if="${#authorization.expression('!isAuthenticated()')}">
@@ -101,7 +101,7 @@
                     <form id="impeachForm">
                         <input type="hidden" name="id" th:value="${board.getId()}">
                         <label for="cause"></label>
-                        <input id="cause" type="text" name="cause" value="">
+                        <input id="cause" type="text" name="cause">
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -110,8 +110,6 @@
                 </div>
             </div>
         </div>
-
-        jstest
     </div>
 
     <script>
@@ -131,15 +129,14 @@
         });
         
         $('#likeButton').click(function () {
-            const boardId = $('#id').val();
-            const uri = "/community/like/" + boardId;
-            console.log(uri);
-            axios.put(uri)
+            let boardId = $('#boardId').text();
+            axios.put(`/community/like/${boardId}`)
                 .catch((error) => {
                     console.log(error);
                     if (error.response.status === 400) {
                         if (confirm("이미 좋아요를 누르셨습니다. 취소 하시겠습니까?")) {
-                            axios.delete("/community/like/remove/" + boardId);
+                            let boardId = $('#boardId').text();
+                            axios.delete(`/community/like/remove/${boardId}`);
                         }
                     }
                 });
@@ -181,7 +178,6 @@
                     }
                     output += "</table>";
                     document.getElementById('comment-list').innerHTML = output;
-                    /*document.getElementById('commentWriter').value = '';*/
                     document.getElementById('commentContents').value = '';
                 },
 

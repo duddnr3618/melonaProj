@@ -1,7 +1,6 @@
 package com.fundguide.melona.board.normalBoard.controller;
 
 import com.fundguide.melona.board.common.dto.ImpeachDTO;
-import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import com.fundguide.melona.board.normalBoard.dto.CommentNormalBoardDto;
 import com.fundguide.melona.board.normalBoard.dto.NormalBoardDto;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
@@ -10,7 +9,6 @@ import com.fundguide.melona.board.normalBoard.service.NormalBoardService;
 import com.fundguide.melona.member.service.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.codehaus.groovy.transform.SourceURIASTTransformation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

@@ -1,9 +1,11 @@
 package com.fundguide.melona.websocket.controller;
 
 
+import com.fundguide.melona.member.service.CustomUserDetails;
 import com.fundguide.melona.websocket.model.ChatRoom;
 import com.fundguide.melona.websocket.service.ChatService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +20,10 @@ public class ChatRoomController {
 
     // 채팅 리스트 화면
     @GetMapping("/room")
-    public String rooms(Model model) {
+    public String rooms(Model model, @AuthenticationPrincipal CustomUserDetails details) {
+        if (details != null) {
+            model.addAttribute("userNickname", details.getMemberEntity().getMemberNickname());
+        }
         return "/chat/room";
     }
     // 모든 채팅방 목록 반환

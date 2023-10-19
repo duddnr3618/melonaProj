@@ -1,4 +1,8 @@
 <!doctype html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://thymeleaf.org/extras/spring-security">
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:th=""
       xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
@@ -64,7 +68,12 @@
             {{item.roomName}}
         </li>
     </ul>
+    
+    <div sec:authorize="isAuthenticated()">
+        <div id="userNickname" th:data-nickname="${userNickname}"></div>
+    </div>
 </div>
+
 <!-- JavaScript -->
 <script src="/webjars/vue/2.5.16/dist/vue.min.js"></script>
 <script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
@@ -86,7 +95,6 @@
             createRoom: function() {
                 if("" === this.room_name) {
                     alert("방 제목을 입력해 주십시요.");
-                    return;
                 } else {
                     var params = new URLSearchParams();
                     params.append("name",this.room_name);
@@ -102,8 +110,13 @@
                 }
             },
             enterRoom: function(roomId) {
-                var sender = prompt('대화명을 입력해 주세요.');
-                if(sender !== "") {
+                let sender = $('#userNickname').data('nickname');
+                if(sender === undefined || null) {
+                    let rename = prompt('로그인 하지 않으셨습니다. 대화명을 입력해 주세요.');
+                    localStorage.setItem('wschat.sender',rename);
+                    localStorage.setItem('wschat.roomId',roomId);
+                    location.href="/chat/room/enter/"+roomId;
+                } else {
                     localStorage.setItem('wschat.sender',sender);
                     localStorage.setItem('wschat.roomId',roomId);
                     location.href="/chat/room/enter/"+roomId;

@@ -1,8 +1,7 @@
 package com.fundguide.melona.member.dto;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
+import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;

@@ -1,9 +1,6 @@
 package com.fundguide.melona.board.leaderboard.controller;
 
 import com.fundguide.melona.board.common.dto.ImpeachDTO;
-import com.fundguide.melona.board.community.dto.CommentDto;
-import com.fundguide.melona.board.community.dto.CommunityDto;
-import com.fundguide.melona.board.community.entity.CommunityEntity;
 import com.fundguide.melona.board.leaderboard.dto.CommentLeaderBoardDto;
 import com.fundguide.melona.board.leaderboard.dto.LeaderBoardDto;
 import com.fundguide.melona.board.leaderboard.entity.LeaderBoardEntity;
@@ -11,7 +8,6 @@ import com.fundguide.melona.board.leaderboard.service.CommentLeaderBoardService;
 import com.fundguide.melona.board.leaderboard.service.LeaderBoardService;
 import com.fundguide.melona.member.role.MemberRoleState;
 import com.fundguide.melona.member.service.CustomUserDetails;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,18 +36,23 @@ public class LeaderBoardController {
     public String list(Model model,
                        @PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC)Pageable pageable,
                        String searchKeyword, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        if(customUserDetails == null) {
-            return "redirect:/member/loginForm";
+
+        String userName;
+        MemberRoleState userRole;
+
+        if(customUserDetails != null) {
+            userName = customUserDetails.getMemberEntity().getMemberName();
+            userRole= customUserDetails.getMemberEntity().getMemberRole();
+        } else {
+            userName = "Guest";
+            userRole= MemberRoleState.ROLE_GUEST; // GUEST 권한 상태로 설정
         }
         Page<LeaderBoardEntity> list = null;
         if (searchKeyword == null) {
             list = leaderBoardService.boardList(pageable);
         } else {
             list = leaderBoardService.searchList(searchKeyword, pageable);
-
         }
-        String userName = customUserDetails.getMemberEntity().getMemberName();
-        MemberRoleState userRole= customUserDetails.getMemberEntity().getMemberRole();
         int nowPage = list.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
         int endPage = Math.min(nowPage + 5, list.getTotalPages());
@@ -172,6 +174,7 @@ public class LeaderBoardController {
 
     @PostMapping("/impeach")
     public ResponseEntity<String> impeach(Principal principal, @RequestBody ImpeachDTO impeachDTO) {
+        System.out.println(" { 리더 보드 신고 컨트롤 진입" + " }");
         return leaderBoardService.impeach(principal, impeachDTO);
     }
 
@@ -190,9 +193,4 @@ public class LeaderBoardController {
         System.out.println(" { 좋아요 삭제 진입" + " }");
         return leaderBoardService.likeRemove(principal, boardId);
     }
-
-
-
-
-
 }

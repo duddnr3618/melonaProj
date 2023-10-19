@@ -1,7 +1,6 @@
 package com.fundguide.melona.board.normalBoard.service;
 
 import com.fundguide.melona.board.common.dto.ImpeachDTO;
-import com.fundguide.melona.board.leaderboard.entity.LeaderBoardImpeachEntity;
 import com.fundguide.melona.board.normalBoard.dto.NormalBoardDto;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.board.normalBoard.entity.NormalBoardImpeachEntity;

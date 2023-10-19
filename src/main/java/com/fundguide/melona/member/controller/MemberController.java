@@ -4,7 +4,6 @@ import com.fundguide.melona.member.dto.ExchangeDto;
 import com.fundguide.melona.member.dto.MemberDto;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.mapper.MemberTransMapper;
-import com.fundguide.melona.member.repository.MemberRepository;
 import com.fundguide.melona.member.repository.MemberRepositoryData;
 import com.fundguide.melona.member.role.MemberRoleState;
 import com.fundguide.melona.member.service.CustomUserDetails;
@@ -98,7 +97,7 @@ public class MemberController {
     public String findInfo() {
         return "member/findInfoForm";
     }
-    @PostMapping("member/findEmailByNickname")  // id/pw 찿는폼에서 닉네임으로 이메일찾기
+    @PostMapping("/findEmailByNickname")  // id/pw 찿는폼에서 닉네임으로 이메일찾기
     @ResponseBody
     public String findEmailByNickname(@RequestBody MemberDto memberDto){
         MemberDto findDto = memberService.duplicatedCheck(memberDto);

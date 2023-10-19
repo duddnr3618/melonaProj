@@ -1,7 +1,5 @@
 package com.fundguide.melona.member.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fundguide.melona.board.normalBoard.entity.NormalBoardImpeachEntity;
 import com.fundguide.melona.member.role.MemberLimitConvert;
 import com.fundguide.melona.member.role.MemberLimitState;
 import com.fundguide.melona.member.role.MemberRoleConvert;
@@ -14,8 +12,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Entity

@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 @RequiredArgsConstructor
-//TODO waring block 완성할것
 public class CommunityBoardCategoryHandler implements FilterCategoryHandler {
     private final CommunityRepository communityRepository;
 

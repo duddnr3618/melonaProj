@@ -1,7 +1,6 @@
 package com.fundguide.melona.management.controller;
 
 import com.fundguide.melona.management.service.ManagementService;
-import com.fundguide.melona.member.dto.MemberLeastDTO;
 import com.fundguide.melona.member.entity.MemberEntity;
 import com.fundguide.melona.member.service.MemberService;
 import lombok.RequiredArgsConstructor;

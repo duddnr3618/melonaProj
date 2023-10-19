@@ -1,6 +1,5 @@
 package com.fundguide.melona.board.leaderboard.entity;
 
-import com.fundguide.melona.board.normalBoard.entity.NormalBoardEntity;
 import com.fundguide.melona.member.entity.MemberEntity;
 import jakarta.persistence.*;
 import lombok.*;
