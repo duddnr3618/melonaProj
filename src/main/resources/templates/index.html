@@ -9,7 +9,7 @@
 
 
 <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
-/
+
 
 
 <div layout:fragment="content">
@@ -39,7 +39,7 @@
   <h3>최신인기 뉴스</h3>
   <!--  style="width: 90%; height: 600px; margin-left:50px-->
   <div id="chart2" style="text-align: center">
-    <iframe id="stock1" src="http://localhost:7777/news/list?text=주식" width="1290" height="300"></iframe>
+    <iframe id="stock1" th:src="@{/news/list?text='주식'}" width="1290" height="300"></iframe>
   </div>
   <div style="height: 40px;"></div><!--주식 차트 불러오는게 간격을 벌리면 벌릴수록 같이 따라와서 중간에 간격을 둠  -->
 
