@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CoinChartController3 {
     @GetMapping("/chart/coinchart/coinchart3")
     public String showStockInfo() {
-        return "/chart/coinchart/coinchart3";
+        return "chart/coinchart/coinchart3";
     }
 }

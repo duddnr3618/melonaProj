@@ -62,7 +62,7 @@ public class NewsController3 {
             System.out.println("Error: resultVO3 is null");
         }
 
-        return "/news/list3";
+        return "news/list3";
     }
 }
 

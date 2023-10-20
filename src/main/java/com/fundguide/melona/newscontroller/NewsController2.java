@@ -62,6 +62,6 @@ public class NewsController2 {
             System.out.println("Error: resultVO2 is null");
         }
 
-        return "/news/list2";
+        return "news/list2";
     }
 }

@@ -24,7 +24,7 @@ public class ChatRoomController {
         if (details != null) {
             model.addAttribute("userNickname", details.getMemberEntity().getMemberNickname());
         }
-        return "/chat/room";
+        return "chat/room";
     }
     // 모든 채팅방 목록 반환
     @GetMapping("/rooms")
@@ -42,7 +42,7 @@ public class ChatRoomController {
     @GetMapping("/room/enter/{roomId}")
     public String roomDetail(Model model, @PathVariable String roomId) {
         model.addAttribute("roomId", roomId);
-        return "/chat/roomdetail";
+        return "chat/roomdetail";
     }
     // 특정 채팅방 조회
     @GetMapping("/room/{roomId}")

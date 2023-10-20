@@ -70,7 +70,7 @@ public class LeaderBoardController {
     @GetMapping("/wrtieForm")
     public String writeForm(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         if(customUserDetails == null) {
-            return "redirect:/member/loginForm";
+            return "redirect:member/loginForm";
         }else {
             String userName = customUserDetails.getMemberEntity().getMemberName();
             Long memberId = customUserDetails.getMemberEntity().getId();
