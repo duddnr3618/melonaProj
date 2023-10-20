@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ChartController {
     @GetMapping("/chart/stockinformation/stockinfo1")
     public String showStockInfo() {
-        return "/chart/stockinformation/stockinfo1";
+        return "chart/stockinformation/stockinfo1";
     }
 }

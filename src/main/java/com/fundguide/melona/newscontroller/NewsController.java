@@ -86,7 +86,7 @@ public class NewsController {
             System.out.println("Error: resultVO is null");
         }
 
-        return "/news/list";
+        return "news/list";
 
 //        // ObjectMapper 객체를 사용하여 JSON 문자열을 Java 객체로 변환한다.
 //        try {
